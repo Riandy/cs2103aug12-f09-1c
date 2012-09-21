@@ -6,6 +6,7 @@ using namespace std;
 
 int main()
 {
+    //Funny comment
 	action response;//response from intellisense
 	Intellisense intellisense;
 	string userInput;
