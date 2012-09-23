@@ -6,6 +6,7 @@ using namespace std;
 
 int main()
 {
+    //Funny comment
 	action response;//response from intellisense
 	Intellisense intellisense;
 	string userInput;
@@ -18,6 +19,7 @@ int main()
 	cout <<"priority: "<< response.priority << endl;
 	//for now assumption is user have to follow a seqence to input
 	//this will simulate the gui display to the user
+	//Riandy
 	system("pause");
 	return 0;
 }
