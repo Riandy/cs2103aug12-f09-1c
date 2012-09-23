@@ -11,8 +11,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    ../../Intellisense test/Intellisense test/Intellisense.cpp \
+    ../../Intellisense test/Intellisense test/Intellisense.cpp \
+    intellisense.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    intellisense.h
 
 FORMS    += mainwindow.ui
