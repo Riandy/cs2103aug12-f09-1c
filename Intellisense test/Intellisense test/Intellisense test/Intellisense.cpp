@@ -150,6 +150,22 @@ bool Intellisense::getPriority(vector<string>& tokens)
 
 	return false;
 }
+string Intellisense::getCategory(vector<string>& tokens)
+{
+	string category = "\0";
+	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+	{
+		if(it->at(0) == '#' )
+		{
+			category = it->substr(1,it->size()-1);
+			it = tokens.erase(it);
+			return category;
+		}
+	}
+	return category;
+
+	
+}
 
 string& Intellisense::trim_left_inplace( string& s,  const string& delimiters)
 {
@@ -252,7 +268,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	event.setPriority(getPriority(tokens));
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
-
+	event.setCategory(getCategory(tokens));
 	return event;
 }
 Action Intellisense::deleteOperation(vector<string>& tokens)
