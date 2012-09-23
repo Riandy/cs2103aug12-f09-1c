@@ -14,6 +14,7 @@ void DisplayEvent(Action event)
 	cout<<string("Date : ")<<event.getDate()<<endl;
 	cout<<string("Priority : ")<<event.getPriority()<<endl;
 	cout<<string("Event Name : ")<<event.getEventName()<<endl;
+	cout<<string("Category : ")<<event.getCategory()<<endl;
 	cout<<string("******************")<<endl;
 }
 

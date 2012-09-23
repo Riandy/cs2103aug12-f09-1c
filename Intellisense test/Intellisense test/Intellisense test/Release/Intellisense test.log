@@ -1,22 +1,17 @@
-﻿Build started 24/9/2012 12:49:06 AM.
-     1>Project "C:\Users\Power\Desktop\Project Seample\Intellisense test\Intellisense test\Intellisense test\Intellisense test.vcxproj" on node 2 (rebuild target(s)).
-     1>_PrepareForClean:
-         Deleting file "Release\Intellisense test.lastbuildstate".
-       InitializeBuildStatus:
-         Touching "Release\Intellisense test.unsuccessfulbuild".
+﻿Build started 24/9/2012 1:30:00 AM.
+     1>Project "C:\Users\Power\Desktop\Project Seample\Intellisense test\Intellisense test\Intellisense test\Intellisense test.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\Intellisense test.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Action.cpp "Intellisense test.cpp" Intellisense.cpp stdafx.cpp
-         Action.cpp
-         Intellisense test.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Intellisense.cpp
          Intellisense.cpp
-     1>Intellisense.cpp(220): warning C4018: '<' : signed/unsigned mismatch
-     1>Intellisense.cpp(234): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>Intellisense.cpp(236): warning C4018: '<' : signed/unsigned mismatch
+     1>Intellisense.cpp(250): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : see declaration of 'strcpy'
-     1>Intellisense.cpp(236): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>Intellisense.cpp(252): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(197) : see declaration of 'strtok'
-     1>Intellisense.cpp(240): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>Intellisense.cpp(256): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(197) : see declaration of 'strtok'
-         stdafx.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Power\Desktop\Project Seample\Intellisense test\Intellisense test\Release\Intellisense test.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\Intellisense test.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Power\Desktop\Project Seample\Intellisense test\Intellisense test\Release\Intellisense test.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Power\Desktop\Project Seample\Intellisense test\Intellisense test\Release\Intellisense test.lib" /MACHINE:X86 Release\Action.obj
          "Release\Intellisense test.obj"
@@ -30,8 +25,8 @@
        FinalizeBuildStatus:
          Deleting file "Release\Intellisense test.unsuccessfulbuild".
          Touching "Release\Intellisense test.lastbuildstate".
-     1>Done Building Project "C:\Users\Power\Desktop\Project Seample\Intellisense test\Intellisense test\Intellisense test\Intellisense test.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Users\Power\Desktop\Project Seample\Intellisense test\Intellisense test\Intellisense test\Intellisense test.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.96
+Time Elapsed 00:00:01.24

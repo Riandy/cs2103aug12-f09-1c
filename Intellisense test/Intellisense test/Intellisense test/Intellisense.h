@@ -46,6 +46,7 @@ public:
 	int getDate(vector<string>& tokens);
 	string getEventName(vector<string>& tokens);
 	string getCommand(vector<string>& tokens, string _command);
+	string getCategory(vector<string>& tokens);
 	bool getPriority(vector<string>& tokens);
 	bool isDate(const string& s );
 	void itTest(vector<string> tokens);
