@@ -3,11 +3,46 @@
 
 Action::Action(void)
 {
+	//set default flag to true
+	for(int i=0; i<MAXNOOFPARAMETERS; i++)
+	{
+		statusFlags[i] = true;
+	}
+	eventDetails.EventName="";
+	eventDetails.Date = 0;
+	eventDetails.Priority = false;
+	eventDetails.command = "";
+	eventDetails.category="";
 }
 
 
 Action::~Action(void)
 {
+}
+
+void Action::setAllStatusFlag()
+{
+	if(getEventName() == "" )
+		setStatusFlagAt(INAME,false);
+	else
+		setStatusFlagAt(INAME,true);
+
+	
+	if(getDate() == 0)
+		setStatusFlagAt(IDATE,false);
+	else
+		setStatusFlagAt(IDATE,true);
+
+	if(getPriority() == false )
+		setStatusFlagAt(IPRIORITY,false);
+	else
+		setStatusFlagAt(IPRIORITY,true);
+
+	
+	if(getCategory() == "")
+		setStatusFlagAt(ICATEGORY,false);
+	else
+		setStatusFlagAt(ICATEGORY,true);
 }
 
 
@@ -64,6 +99,15 @@ void Action::setCategory(string newCategory)
 {
 	eventDetails.category = newCategory;
 }
+bool Action::getStatusFlagAt(int index)
+{
+	return statusFlags[index];
+}
+void Action::setStatusFlagAt(int index,bool flag)
+{
+	statusFlags[index] =flag;
+}
+
 
 //for error code
 string feedbackMsg(int errorcode)
@@ -130,7 +174,7 @@ string feedbackMsg(int errorcode)
 		messageOut = "Invalid Date format , please follow ddmmyyyy";
 		break;
 
-		
+
 	}
 	return messageOut;
 }

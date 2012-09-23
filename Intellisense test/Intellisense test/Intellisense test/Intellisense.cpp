@@ -10,8 +10,6 @@ const string Intellisense::sortCommand = "sort";
 const string Intellisense::findCommand = "find";
 const string Intellisense::editCommand = "edit";
 
-
-
 Intellisense::Intellisense(void)
 {
 }
@@ -269,6 +267,8 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setCategory(getCategory(tokens));
+	event.setAllStatusFlag();
+
 	return event;
 }
 Action Intellisense::deleteOperation(vector<string>& tokens)
@@ -276,6 +276,7 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 	Action event;
 	event.setCommand(getCommand(tokens,"DELETE"));
 	event.setEventName(getEventName(tokens));
+	event.setAllStatusFlag();
 
 	return event;
 }
@@ -292,6 +293,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 	Action event;
 	event.setCommand(getCommand(tokens,"DISPLAY"));
 	event.setDate(getDate(tokens));
+	event.setAllStatusFlag();
 
 	return event;
 }
@@ -301,6 +303,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
 	event.setCommand(getCommand(tokens,"MARK"));
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
+	event.setAllStatusFlag();
 
 	return event;
 }
@@ -308,6 +311,7 @@ Action Intellisense::invalidOperation(vector<string>& tokens)
 {
 	Action event;
 	event.setCommand(getCommand(tokens,"INVALID"));
+	event.setAllStatusFlag();
 
 	return event;
 }
@@ -325,6 +329,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
 	event.setPriority(getPriority(tokens));
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
+	event.setAllStatusFlag();
 
 	return event;
 }
@@ -336,6 +341,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 	event.setPriority(getPriority(tokens));
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
+	event.setAllStatusFlag();
 
 	return event;
 }
