@@ -15,6 +15,7 @@ void DisplayEvent(Action event)
 	cout<<string("Priority : ")<<event.getPriority()<<endl;
 	cout<<string("Event Name : ")<<event.getEventName()<<endl;
 	cout<<string("Category : ")<<event.getCategory()<<endl;
+	cout<<string("Req Met : ")<<event.getrequirementsMet()<<endl;
 	cout<<string("******************")<<endl;
 }
 

@@ -268,6 +268,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	event.setEventName(getEventName(tokens));
 	event.setCategory(getCategory(tokens));
 	event.setAllStatusFlag();
+	event.checkAddReq();
 
 	return event;
 }
@@ -277,6 +278,7 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 	event.setCommand(getCommand(tokens,"DELETE"));
 	event.setEventName(getEventName(tokens));
 	event.setAllStatusFlag();
+	event.checkDelReq();
 
 	return event;
 }
@@ -294,6 +296,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 	event.setCommand(getCommand(tokens,"DISPLAY"));
 	event.setDate(getDate(tokens));
 	event.setAllStatusFlag();
+	event.checkDspReq();
 
 	return event;
 }
@@ -304,6 +307,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setAllStatusFlag();
+	event.checkMarkReq();
 
 	return event;
 }
@@ -330,6 +334,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setAllStatusFlag();
+	event.checkFindReq();
 
 	return event;
 }
@@ -342,6 +347,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setAllStatusFlag();
+	event.checkEditReq();
 
 	return event;
 }

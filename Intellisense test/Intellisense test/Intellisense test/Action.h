@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//if we want to extend to more fields we have to add in here
 #define MAXNOOFPARAMETERS 4 // NAME,DATE,PRIORITY,CATEGORY,
 #define INAME 0	//INDEX OF NAME IN THE FLAG ARRAY
 #define IDATE 1
@@ -22,9 +23,9 @@ class Action
 {
 private :
 	Event eventDetails;
-	int statusCode;
+	int statusCode; //removed for current implementation
 	bool statusFlags[MAXNOOFPARAMETERS];
-
+	bool requirementsMet;
 	//not sure what other details you need for version 0.0 prototype
 	//if theres any other fields that you wish to include, do tell me so i can add them in
 
@@ -52,12 +53,26 @@ public:
 
 	bool getStatusFlagAt(int);
 	void setStatusFlagAt(int,bool);
-	
-	void setAllStatusFlag();
+
+	void setAllStatusFlag(); //this is based on the fields that are currently set in it so no parameters needed
+	void getAllStatusFlag(bool *);//change the actual flag array passed in
+
+	bool getrequirementsMet();
+	void setRequirementsMet(bool);
+
+	//These functions below governs the validity  of whether the command can be processed by the main
+	void checkAddReq();//check whether parameters supplied met the minimum requirement for command to be valid
+	void checkDelReq();
+	void checkDspReq();
+	void checkMarkReq();
+	void checkFindReq();
+	void checkEditReq();
 };
 
 
-
+//for now we will display to user a standard template for the command
+//as well as the fields with changing color to indicate fulfiled or not 
+//and whether it is passable and met the min requirement for submission
 // STATUS CODE
 #define INVALIDCOMAND	0
 #define VALIDADD		1

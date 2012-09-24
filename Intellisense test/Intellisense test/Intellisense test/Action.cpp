@@ -12,7 +12,8 @@ Action::Action(void)
 	eventDetails.Date = 0;
 	eventDetails.Priority = false;
 	eventDetails.command = "";
-	eventDetails.category="";
+	eventDetails.category = "";
+	requirementsMet = false;
 }
 
 
@@ -44,7 +45,13 @@ void Action::setAllStatusFlag()
 	else
 		setStatusFlagAt(ICATEGORY,true);
 }
-
+void  Action::getAllStatusFlag(bool *flags)
+{
+	for (int i=0;i<MAXNOOFPARAMETERS;i++)
+	{
+		flags[i] = statusFlags[i];;
+	}
+}
 
 string Action::getEventName()
 {
@@ -106,6 +113,75 @@ bool Action::getStatusFlagAt(int index)
 void Action::setStatusFlagAt(int index,bool flag)
 {
 	statusFlags[index] =flag;
+}
+bool Action::getrequirementsMet()
+{
+	return requirementsMet;
+}
+void Action::setRequirementsMet(bool req)
+{
+	requirementsMet = req;
+}
+
+void Action::checkAddReq()
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+
+void Action::checkDelReq()
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+void Action::checkDspReq()
+{
+	if (statusFlags[ICATEGORY] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+
+}
+void Action::checkMarkReq()	
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+}
+void Action::checkFindReq()	
+{
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[ICATEGORY] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+void Action::checkEditReq()	
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
 }
 
 
