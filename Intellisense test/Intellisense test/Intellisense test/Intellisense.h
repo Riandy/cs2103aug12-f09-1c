@@ -34,6 +34,7 @@ private:
 	static const string sortCommand;
 	static const string findCommand;
 	static const string editCommand;
+	static const string months[12];
 
 
 
@@ -54,6 +55,7 @@ public:
 	operation determinOperation(vector<string>& tokens);
 	string getfirst_Word(string command);
 	bool checkString(const string& input, const string& command);
+	int checkDateString(string token);
 	string removeChar(string s,char chars[]);
 	string& trim(string& s , const string& delimiters = " \f\r\t\v");
 	string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
