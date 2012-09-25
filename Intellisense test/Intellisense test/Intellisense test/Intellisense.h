@@ -48,11 +48,13 @@ public:
 	string getCommand(vector<string>& tokens, string _command);
 	string getCategory(vector<string>& tokens);
 	bool getPriority(vector<string>& tokens);
-	bool isDate(const string& s );
+	string getTime(vector<string>& tokens);
+	bool isAllInt(const string& s );
 	void itTest(vector<string> tokens);
 	operation determinOperation(vector<string>& tokens);
 	string getfirst_Word(string command);
 	bool checkString(const string& input, const string& command);
+	string removeChar(string s,char chars[]);
 	string& trim(string& s , const string& delimiters = " \f\r\t\v");
 	string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
 	string& trim_left_inplace( string& s,  const string& delimiters=" \f\r\t\v");
