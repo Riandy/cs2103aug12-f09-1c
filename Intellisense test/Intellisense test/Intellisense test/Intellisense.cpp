@@ -169,7 +169,18 @@ string Intellisense::getTime(vector<string>& tokens)
 				
 			}
 			
+		}else if(time.size()==3)
+		{
+			if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
+			{
+				if(isAllInt(string(1,time.at(0))))
+				{
+					it=tokens.erase(it);
+					return time;
+				}
+			}
 		}
+	
 	}
 
 	return string("\0");
@@ -227,7 +238,7 @@ int Intellisense::getDate(vector<string>& tokens)
 		string checkString = it->c_str();
 		if(checkString.size()==8)
 		{
-			if(isDate(checkString))
+			if(isAllInt(checkString))
 			{
 				
 				it=tokens.erase(it);
