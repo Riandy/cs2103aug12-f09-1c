@@ -62,6 +62,16 @@ void Action::setEventName(string name)
 	eventDetails.EventName = name;
 }
 
+string Action::getTime()
+{
+	return eventDetails.Time;
+}
+void Action::setTime(string newTime)
+{
+	eventDetails.Time = newTime;
+}
+
+
 int Action::getDate()
 {
 	return eventDetails.Date;

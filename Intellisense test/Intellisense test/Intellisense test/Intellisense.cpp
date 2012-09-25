@@ -148,6 +148,34 @@ bool Intellisense::getPriority(vector<string>& tokens)
 
 	return false;
 }
+
+string Intellisense::getTime(vector<string>& tokens)
+{
+	string time;
+
+	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+	{
+		time=it->c_str();
+		if(time.at(2) == ':' )
+		{
+			if(time.size()==5)
+			{
+				time=removeChar(time,":");
+				if(isAllInt(time))
+				{
+					it=tokens.erase(it);
+					return time;
+				}
+				
+			}
+			
+		}
+	}
+
+	return string("\0");
+}
+
+
 string Intellisense::getCategory(vector<string>& tokens)
 {
 	string category = "\0";
@@ -163,6 +191,15 @@ string Intellisense::getCategory(vector<string>& tokens)
 	return category;
 
 	
+}
+
+string Intellisense::removeChar(string s,char chars[])
+{
+	for (unsigned int i = 0; i < sizeof(chars); ++i)
+	{
+	s.erase (std::remove(s.begin(), s.end(), chars[i]), s.end());
+	}
+	return s;
 }
 
 string& Intellisense::trim_left_inplace( string& s,  const string& delimiters)
@@ -229,7 +266,7 @@ void Intellisense::itTest(vector<string> tokens)
 	cout<<endl;
 }
 
-bool Intellisense::isDate(const string& s)
+bool Intellisense::isAllInt(const string& s)
 {
 	for(int i = 0; i < s.length(); i++)
 	{
@@ -263,6 +300,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 {
 	Action event;
 	event.setCommand(getCommand(tokens,"ADD"));
+	event.setTime(getTime(tokens));
 	event.setPriority(getPriority(tokens));
 	event.setDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
