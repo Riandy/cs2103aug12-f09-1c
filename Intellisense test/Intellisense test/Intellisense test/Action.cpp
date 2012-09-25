@@ -9,7 +9,7 @@ Action::Action(void)
 		statusFlags[i] = true;
 	}
 	eventDetails.EventName="";
-	eventDetails.Date = 0;
+	eventDetails.StartDate ;
 	eventDetails.Priority = false;
 	eventDetails.command = "";
 	eventDetails.category = "";
@@ -29,10 +29,10 @@ void Action::setAllStatusFlag()
 		setStatusFlagAt(INAME,true);
 
 	
-	if(getDate() == 0)
-		setStatusFlagAt(IDATE,false);
-	else
-		setStatusFlagAt(IDATE,true);
+	//if(getStartDate() == NULL)
+	//	setStatusFlagAt(IDATE,false);
+	//else
+	//	setStatusFlagAt(IDATE,true);
 
 	if(getPriority() == false )
 		setStatusFlagAt(IPRIORITY,false);
@@ -72,13 +72,13 @@ void Action::setTime(string newTime)
 }
 
 
-int Action::getDate()
+tm Action::getStartDate()
 {
-	return eventDetails.Date;
+	return eventDetails.StartDate;
 }
-void Action::setDate(int newDate)
+void Action::setStartDate(tm newDate)
 {
-	eventDetails.Date = newDate;
+	eventDetails.StartDate = newDate;
 }
 
 bool Action::getPriority()

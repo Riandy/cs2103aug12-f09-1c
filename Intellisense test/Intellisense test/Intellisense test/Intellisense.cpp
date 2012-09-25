@@ -236,8 +236,15 @@ string& Intellisense::trim(string& s ,const string& delimiters )
 }
 
 
-int Intellisense::getDate(vector<string>& tokens)
+tm Intellisense::getDate(vector<string>& tokens)
 {
+	tm date;
+	date.tm_hour=NULL;
+	date.tm_min=NULL;
+	date.tm_mday=NULL;
+	date.tm_mon=NULL;
+	date.tm_year=NULL;
+
 	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
 	{
 		string checkString = it->c_str();
@@ -245,9 +252,11 @@ int Intellisense::getDate(vector<string>& tokens)
 		{
 			if(isAllInt(checkString))
 			{
-				
 				it=tokens.erase(it);
-				return atoi(checkString.c_str());
+				date.tm_mday=atoi(checkString.substr(0,2).c_str());
+				date.tm_mon=atoi(checkString.substr(2,2).c_str());
+				date.tm_year=atoi(checkString.substr(4,4).c_str());
+				return date;
 			}
 		} 
 		if(checkString.size()==10)
@@ -258,7 +267,10 @@ int Intellisense::getDate(vector<string>& tokens)
 				if(isAllInt(checkString))
 				{
 					it=tokens.erase(it);
-					return atoi(checkString.c_str());
+					date.tm_mday=atoi(checkString.substr(0,2).c_str());
+					date.tm_mon=atoi(checkString.substr(2,2).c_str());
+					date.tm_year=atoi(checkString.substr(4,4).c_str());
+					return date;
 				}
 			}
 		}
@@ -277,17 +289,17 @@ int Intellisense::getDate(vector<string>& tokens)
 				string day =it_day->c_str();
 				if(day.size()>2 || day.size()<=0 || !isAllInt(day))
 				{
-					return NULL;
+					return date;
 				}
 				string year = it_year->c_str();
 				if(year.size()!=4 || !isAllInt(year))
 				{
-					return NULL;
+					return date;
 				}
 				if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
 				{
 
-					return NULL;
+					return date;
 				}
 				int month = check;
 				
@@ -298,7 +310,12 @@ int Intellisense::getDate(vector<string>& tokens)
 
 				it=it_day;
 
-				return atoi(day.c_str())*1000000+month*10000+atoi(year.c_str());
+				date.tm_mday=atoi(day.c_str());
+				date.tm_mon=month;
+				date.tm_year=atoi(year.c_str());
+				return date;
+
+				
 			}
 			}
 		
@@ -306,9 +323,10 @@ int Intellisense::getDate(vector<string>& tokens)
 		
 
 	}
-	return 0;
+	return date;
 	
 }
+
 
 int Intellisense::checkDateString(string token)
 {
@@ -386,7 +404,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	event.setCommand(getCommand(tokens,"ADD"));
 	event.setTime(getTime(tokens));
 	event.setPriority(getPriority(tokens));
-	event.setDate(getDate(tokens));
+	event.setStartDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setCategory(getCategory(tokens));
 	event.setAllStatusFlag();
@@ -416,7 +434,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 {
 	Action event;
 	event.setCommand(getCommand(tokens,"DISPLAY"));
-	event.setDate(getDate(tokens));
+	event.setStartDate(getDate(tokens));
 	event.setAllStatusFlag();
 	event.checkDspReq();
 
@@ -426,7 +444,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
 {
 	Action event;
 	event.setCommand(getCommand(tokens,"MARK"));
-	event.setDate(getDate(tokens));
+	event.setStartDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setAllStatusFlag();
 	event.checkMarkReq();
@@ -453,7 +471,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
 	Action event;
 	event.setCommand(getCommand(tokens,"FIND"));
 	event.setPriority(getPriority(tokens));
-	event.setDate(getDate(tokens));
+	event.setStartDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setAllStatusFlag();
 	event.checkFindReq();
@@ -466,7 +484,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 	Action event;
 	event.setCommand(getCommand(tokens,"EDIT"));
 	event.setPriority(getPriority(tokens));
-	event.setDate(getDate(tokens));
+	event.setStartDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
 	event.setAllStatusFlag();
 	event.checkEditReq();
