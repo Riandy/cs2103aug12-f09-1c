@@ -249,7 +249,8 @@ int Intellisense::getDate(vector<string>& tokens)
 				it=tokens.erase(it);
 				return atoi(checkString.c_str());
 			}
-		}else if(checkString.size()==10)
+		} 
+		if(checkString.size()==10)
 		{
 			if(checkString.at(2) == '\\' && checkString.at(5)=='\\'  || checkString.at(2) == '/' && checkString.at(5)=='/'  )
 			{
@@ -260,9 +261,11 @@ int Intellisense::getDate(vector<string>& tokens)
 					return atoi(checkString.c_str());
 				}
 			}
-		}else 
-		{
-			int check=checkDateString(checkString);
+		}
+
+		    if(tokens.size()>=3)
+			{
+		    int check=checkDateString(checkString);
 			
 			if(check !=-1)
 			{   cout<<it->c_str()<<endl;
@@ -270,13 +273,24 @@ int Intellisense::getDate(vector<string>& tokens)
 				vector<string>::iterator it_day = it++;
 				vector<string>::iterator it_year = ++it;
 
-				int day = atoi(it_day->c_str());
-				cout<<"day :"<<day<<endl;
-				int year = atoi(it_year->c_str());
-				cout<<"year :"<<year<<endl;
+				
+				string day =it_day->c_str();
+				if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+				{
+					return NULL;
+				}
+				string year = it_year->c_str();
+				if(year.size()!=4 || !isAllInt(year))
+				{
+					return NULL;
+				}
+				if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+				{
+
+					return NULL;
+				}
 				int month = check;
-				cout<<"month :"<<month<<endl;
-				cout<<it->c_str()<<endl;
+				
 
 				it_day=tokens.erase(it_day);
 				it_day=tokens.erase(it_day);
@@ -284,10 +298,10 @@ int Intellisense::getDate(vector<string>& tokens)
 
 				it=it_day;
 
-				return day*1000000+month*10000+year;
+				return atoi(day.c_str())*1000000+month*10000+atoi(year.c_str());
 			}
-
-		}
+			}
+		
 			
 		
 
