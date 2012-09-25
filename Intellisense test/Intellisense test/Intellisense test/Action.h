@@ -1,6 +1,7 @@
 #ifndef  ACTION_H
 #define ACTION_H
 #include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ using namespace std;
 struct Event
 {
 	string EventName;
-	int Date;
+	tm StartDate;
 	string Time;
 	bool Priority;	
 	string command;
@@ -44,8 +45,8 @@ public:
 	string getTime();
 	void setTime(string);
 
-	int getDate();
-	void setDate(int );
+	tm getStartDate();
+	void setStartDate( tm);
 
 	bool getPriority();
 	void setPriority(bool);

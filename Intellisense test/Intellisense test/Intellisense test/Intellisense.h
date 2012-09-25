@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <ctime>
 
 #include "Action.h"
 using namespace std;
@@ -44,7 +45,7 @@ public:
 	Action check(string query);
 	vector<string> tokenize(string command);
 	string getOperation(vector<string>& tokens);
-	int getDate(vector<string>& tokens);
+	tm getDate(vector<string>& tokens);
 	string getEventName(vector<string>& tokens);
 	string getCommand(vector<string>& tokens, string _command);
 	string getCategory(vector<string>& tokens);
@@ -60,6 +61,7 @@ public:
 	string& trim(string& s , const string& delimiters = " \f\r\t\v");
 	string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
 	string& trim_left_inplace( string& s,  const string& delimiters=" \f\r\t\v");
+	
 
 	Action addOperation(vector<string>& tokens);
 	Action deleteOperation(vector<string>& tokens);
