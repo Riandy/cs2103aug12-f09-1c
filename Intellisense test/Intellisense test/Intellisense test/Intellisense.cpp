@@ -9,6 +9,7 @@ const string Intellisense::exitCommand = "exit";
 const string Intellisense::sortCommand = "sort";
 const string Intellisense::findCommand = "find";
 const string Intellisense::editCommand = "edit";
+const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
 Intellisense::Intellisense(void)
 {
@@ -187,7 +188,7 @@ string Intellisense::getTime(vector<string>& tokens)
 		
 	
 	}
-	return string("test");
+	return string("\0");
 }
 
 
@@ -259,6 +260,33 @@ int Intellisense::getDate(vector<string>& tokens)
 					return atoi(checkString.c_str());
 				}
 			}
+		}else 
+		{
+			int check=checkDateString(checkString);
+			
+			if(check !=-1)
+			{   cout<<it->c_str()<<endl;
+			    it--;
+				vector<string>::iterator it_day = it++;
+				vector<string>::iterator it_year = ++it;
+
+				int day = atoi(it_day->c_str());
+				cout<<"day :"<<day<<endl;
+				int year = atoi(it_year->c_str());
+				cout<<"year :"<<year<<endl;
+				int month = check;
+				cout<<"month :"<<month<<endl;
+				cout<<it->c_str()<<endl;
+
+				it_day=tokens.erase(it_day);
+				it_day=tokens.erase(it_day);
+				it_day=tokens.erase(it_day);
+
+				it=it_day;
+
+				return day*1000000+month*10000+year;
+			}
+
 		}
 			
 		
@@ -266,6 +294,19 @@ int Intellisense::getDate(vector<string>& tokens)
 	}
 	return 0;
 	
+}
+
+int Intellisense::checkDateString(string token)
+{
+	for(int i=0;i<11;++i)
+	{
+		if(checkString(token,months[i]))
+		{
+			return i+1;
+		}
+	}
+
+	return -1;
 }
 
 
