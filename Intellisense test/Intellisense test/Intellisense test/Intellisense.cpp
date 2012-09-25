@@ -20,7 +20,7 @@ Intellisense::~Intellisense(void)
 }
 
 Action Intellisense::check(string query)
-{
+{	
 	Action event;
 	
 	trim(query);
@@ -156,7 +156,8 @@ string Intellisense::getTime(vector<string>& tokens)
 	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
 	{
 		time=it->c_str();
-		if(time.at(2) == ':' )
+		if(time.size()>=5)
+		{if(time.at(2) == ':' )
 		{
 			if(time.size()==5)
 			{
@@ -168,7 +169,7 @@ string Intellisense::getTime(vector<string>& tokens)
 				}
 				
 			}
-			
+		}
 		}else if(time.size()==3)
 		{
 			if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
@@ -180,10 +181,13 @@ string Intellisense::getTime(vector<string>& tokens)
 				}
 			}
 		}
+		
+
+			
+		
 	
 	}
-
-	return string("\0");
+	return string("test");
 }
 
 
@@ -244,10 +248,24 @@ int Intellisense::getDate(vector<string>& tokens)
 				it=tokens.erase(it);
 				return atoi(checkString.c_str());
 			}
+		}else if(checkString.size()==10)
+		{
+			if(checkString.at(2) == '\\' && checkString.at(5)=='\\'  || checkString.at(2) == '/' && checkString.at(5)=='/'  )
+			{
+				checkString=removeChar(checkString,"/\\");
+				if(isAllInt(checkString))
+				{
+					it=tokens.erase(it);
+					return atoi(checkString.c_str());
+				}
+			}
 		}
-	}
+			
+		
 
+	}
 	return 0;
+	
 }
 
 
