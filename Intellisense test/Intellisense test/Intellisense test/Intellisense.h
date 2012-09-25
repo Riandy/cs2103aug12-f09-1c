@@ -50,7 +50,7 @@ public:
 	string getCommand(vector<string>& tokens, string _command);
 	string getCategory(vector<string>& tokens);
 	bool getPriority(vector<string>& tokens);
-	string getTime(vector<string>& tokens);
+	tm getTime(vector<string>& tokens, tm date);
 	bool isAllInt(const string& s );
 	void itTest(vector<string> tokens);
 	operation determinOperation(vector<string>& tokens);
