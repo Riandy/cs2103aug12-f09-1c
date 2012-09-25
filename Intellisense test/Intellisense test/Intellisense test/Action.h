@@ -16,7 +16,6 @@ struct Event
 {
 	string EventName;
 	tm StartDate;
-	string Time;
 	bool Priority;	
 	string command;
 	string category;
@@ -41,9 +40,6 @@ public:
 	string getEventName();
 	void setEventName(string);
 
-
-	string getTime();
-	void setTime(string);
 
 	tm getStartDate();
 	void setStartDate( tm);

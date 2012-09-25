@@ -8,7 +8,7 @@
 using namespace std;
 
 void DisplayDate(tm date)
-{
+{   
 	cout<<string("Date : ")<<date.tm_mday;
 	cout<<string("/")<<date.tm_mon;
 	cout<<string("/")<<date.tm_year;
@@ -20,8 +20,7 @@ void DisplayDate(tm date)
 void DisplayEvent(Action event)
 {
 	cout<<string("******************")<<endl;
-	cout<<string("Command : ")<<event.getCommand()<<endl;
-	cout<<string("Time : ")<<event.getTime()<<endl;
+    cout<<string("Command : ")<<event.getCommand()<<endl;
 	DisplayDate(event.getStartDate());
 	cout<<string("Priority : ")<<event.getPriority()<<endl;
 	cout<<string("Event Name : ")<<event.getEventName()<<endl;

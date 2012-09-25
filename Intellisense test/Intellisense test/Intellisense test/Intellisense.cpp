@@ -150,9 +150,11 @@ bool Intellisense::getPriority(vector<string>& tokens)
 	return false;
 }
 
-string Intellisense::getTime(vector<string>& tokens)
+tm Intellisense::getTime(vector<string>& tokens,tm date)
 {
 	string time;
+	date.tm_hour=0;
+	date.tm_min=0;
 
 	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
 	{
@@ -166,11 +168,35 @@ string Intellisense::getTime(vector<string>& tokens)
 				if(isAllInt(time))
 				{
 					it=tokens.erase(it);
-					return time;
+					date.tm_hour=atoi(time.substr(0,2).c_str());
+					date.tm_min=atoi(time.substr(2,2).c_str());
+					return date;
 				}
 				
 			}
 		}
+		}else if(time.size()==4)
+		{
+			if(checkString("PM",time.substr(2,2))|| checkString("AM",time.substr(2,2)))
+			{
+				if(isAllInt(time.substr(0,2)))
+				{
+					it=tokens.erase(it);
+					if(checkString("PM",time.substr(2,2)))
+					{
+						date.tm_hour=atoi(time.substr(0,2).c_str())+12;
+						date.tm_min=atoi(time.substr(2,2).c_str());
+						return date;
+					}
+					else
+					{
+						date.tm_hour=atoi(time.substr(0,2).c_str());
+						date.tm_min=atoi(time.substr(2,2).c_str());
+						return date;
+					}
+					
+				}
+			}
 		}else if(time.size()==3)
 		{
 			if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
@@ -178,7 +204,19 @@ string Intellisense::getTime(vector<string>& tokens)
 				if(isAllInt(string(1,time.at(0))))
 				{
 					it=tokens.erase(it);
-					return time;
+					if(checkString("PM",time.substr(1,2)))
+					{
+						date.tm_hour=atoi(time.substr(0,2).c_str())+12;
+						date.tm_min=atoi(time.substr(2,2).c_str());
+						return date;
+					}
+					else
+					{
+						date.tm_hour=atoi(time.substr(0,2).c_str());
+						date.tm_min=atoi(time.substr(2,2).c_str());
+						return date;
+					}
+
 				}
 			}
 		}
@@ -188,7 +226,7 @@ string Intellisense::getTime(vector<string>& tokens)
 		
 	
 	}
-	return string("\0");
+	return date;
 }
 
 
@@ -256,7 +294,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 				date.tm_mday=atoi(checkString.substr(0,2).c_str());
 				date.tm_mon=atoi(checkString.substr(2,2).c_str());
 				date.tm_year=atoi(checkString.substr(4,4).c_str());
-				return date;
+				return date=getTime(tokens,date);
 			}
 		} 
 		if(checkString.size()==10)
@@ -270,7 +308,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 					date.tm_mday=atoi(checkString.substr(0,2).c_str());
 					date.tm_mon=atoi(checkString.substr(2,2).c_str());
 					date.tm_year=atoi(checkString.substr(4,4).c_str());
-					return date;
+					return date=getTime(tokens,date);
 				}
 			}
 		}
@@ -289,17 +327,17 @@ tm Intellisense::getDate(vector<string>& tokens)
 				string day =it_day->c_str();
 				if(day.size()>2 || day.size()<=0 || !isAllInt(day))
 				{
-					return date;
+					return date=getTime(tokens,date);
 				}
 				string year = it_year->c_str();
 				if(year.size()!=4 || !isAllInt(year))
 				{
-					return date;
+					return date=getTime(tokens,date);
 				}
 				if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
 				{
 
-					return date;
+					return date=getTime(tokens,date);
 				}
 				int month = check;
 				
@@ -313,7 +351,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 				date.tm_mday=atoi(day.c_str());
 				date.tm_mon=month;
 				date.tm_year=atoi(year.c_str());
-				return date;
+				return date=getTime(tokens,date);
 
 				
 			}
@@ -323,14 +361,14 @@ tm Intellisense::getDate(vector<string>& tokens)
 		
 
 	}
-	return date;
+	return date=getTime(tokens,date);
 	
 }
 
 
 int Intellisense::checkDateString(string token)
 {
-	for(int i=0;i<11;++i)
+	for(int i=0;i<=11;++i)
 	{
 		if(checkString(token,months[i]))
 		{
@@ -402,7 +440,6 @@ Action Intellisense::addOperation(vector<string>& tokens)
 {
 	Action event;
 	event.setCommand(getCommand(tokens,"ADD"));
-	event.setTime(getTime(tokens));
 	event.setPriority(getPriority(tokens));
 	event.setStartDate(getDate(tokens));
 	event.setEventName(getEventName(tokens));
