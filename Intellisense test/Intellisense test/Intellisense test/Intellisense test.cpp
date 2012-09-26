@@ -45,7 +45,6 @@ int main()
 		response=intellisense.check(userInput);
 		DisplayEvent(response);
 		cout<<string("Req Met : ")<<intellisense.getrequirementsMet()<<endl;
-		
 	}
 
 	

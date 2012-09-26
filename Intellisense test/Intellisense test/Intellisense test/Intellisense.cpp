@@ -648,6 +648,7 @@ void Intellisense::checkEditReq()
 
 string Intellisense::getFeedback()
 {
+
 	return _feedback;
 }
 void Intellisense::setFeedback(string newFeedback)
@@ -656,7 +657,41 @@ void Intellisense::setFeedback(string newFeedback)
 }
 
 string Intellisense::getParameter()
-{
+{// output the string based on the flags set
+	if(statusFlags[INAME])
+	{
+		_parameter ="<font color=green>[NAME]</font>";
+	}
+	else
+	{
+		_parameter ="<font color=red>[NAME]</font>";
+	}
+	if(statusFlags[IDATE])
+	{
+		_parameter =_parameter + "<font color=green>[IDATE]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[IDATE]</font>";
+	}
+	if(statusFlags[IPRIORITY])
+	{
+		_parameter =_parameter + "<font color=green>[IPRIORITY]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[IPRIORITY]</font>";
+	}
+	if(statusFlags[ICATEGORY])
+	{
+		_parameter =_parameter + "<font color=green>[ICATEGORY]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[ICATEGORY]</font>";
+	}
+	
+	
 	return _parameter;
 }
 void Intellisense::setParameter(string newParameter)
