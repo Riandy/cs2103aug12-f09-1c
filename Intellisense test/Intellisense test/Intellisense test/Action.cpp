@@ -54,15 +54,6 @@ void Action::setPriority(string newPriority)
 	_task._priority = newPriority;
 }
 
-int Action::getStatusCode()
-{
-	return statusCode;
-}
-void Action::setStatusCode(int newCode)
-{
-	statusCode = newCode;
-}
-
 string Action::getCommand()
 {
 	return this->_command;

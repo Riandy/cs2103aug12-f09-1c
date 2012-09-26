@@ -25,7 +25,6 @@ class Action
 {
 private :
 	task _task;
-	int statusCode; //removed for current implementation
 	string _command;
 	//not sure what other details you need for version 0.0 prototype
 	//if theres any other fields that you wish to include, do tell me so i can add them in
