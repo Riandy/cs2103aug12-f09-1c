@@ -12,19 +12,20 @@ using namespace std;
 #define IPRIORITY 2
 #define ICATEGORY 3
 
-struct Event
+struct task
 {
-	string EventName;
-	tm StartDate;
-	bool Priority;	
-	string command;
-	string category;
+	string _description;
+	tm _startDate;
+	tm _endDate;
+	string _priority;	
+	string _catergory;
+	int _id;
 };
 class Action
 {
 private :
-	Event eventDetails;
-
+	task _task;
+	string _command;
 	//not sure what other details you need for version 0.0 prototype
 	//if theres any other fields that you wish to include, do tell me so i can add them in
 
@@ -42,14 +43,12 @@ public:
 	tm getStartDate();
 	void setStartDate( tm);
 
-	bool getPriority();
-	void setPriority(bool);
+	string getPriority();
+	void setPriority(string);
 
 	string getCategory();
 	void setCategory(string);
 
-	int getStatusCode();
-	void setStatusCode(int); 
 
 
 };
