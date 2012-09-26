@@ -13,6 +13,11 @@ const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","
 
 Intellisense::Intellisense(void)
 {
+	for(int i=0; i<MAXNOOFPARAMETERS; i++)
+	{
+		statusFlags[i] = true;
+	}
+	requirementsMet = false;
 }
 
 
@@ -23,7 +28,7 @@ Intellisense::~Intellisense(void)
 Action Intellisense::check(string query)
 {	
 	Action task;
-	
+
 	trim(query);
 
 	vector<string> buffer = tokenize(query);
@@ -61,7 +66,7 @@ Action Intellisense::check(string query)
 		break;
 	}
 
-	
+
 	return task;
 }
 
@@ -172,7 +177,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 					date.tm_min=atoi(time.substr(2,2).c_str());
 					return date;
 				}
-				
+
 			}
 		}
 		}else if(time.size()==4)
@@ -194,7 +199,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 						date.tm_min=atoi(time.substr(2,2).c_str());
 						return date;
 					}
-					
+
 				}
 			}
 		}else if(time.size()==3)
@@ -220,11 +225,11 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 				}
 			}
 		}
-		
 
-			
-		
-	
+
+
+
+
 	}
 	return date;
 }
@@ -244,14 +249,14 @@ string Intellisense::getCategory(vector<string>& tokens)
 	}
 	return category;
 
-	
+
 }
 
 string Intellisense::removeChar(string s,char chars[])
 {
 	for (unsigned int i = 0; i < sizeof(chars); ++i)
 	{
-	s.erase (std::remove(s.begin(), s.end(), chars[i]), s.end());
+		s.erase (std::remove(s.begin(), s.end(), chars[i]), s.end());
 	}
 	return s;
 }
@@ -313,56 +318,56 @@ tm Intellisense::getDate(vector<string>& tokens)
 			}
 		}
 
-		    if(tokens.size()>=3)
-			{
-		    int check=checkDateString(checkString);
-			
+		if(tokens.size()>=3)
+		{
+			int check=checkDateString(checkString);
+
 			if(check !=-1)
 			{   cout<<it->c_str()<<endl;
-			    it--;
-				vector<string>::iterator it_day = it++;
-				vector<string>::iterator it_year = ++it;
+			it--;
+			vector<string>::iterator it_day = it++;
+			vector<string>::iterator it_year = ++it;
 
-				
-				string day =it_day->c_str();
-				if(day.size()>2 || day.size()<=0 || !isAllInt(day))
-				{
-					return date=getTime(tokens,date);
-				}
-				string year = it_year->c_str();
-				if(year.size()!=4 || !isAllInt(year))
-				{
-					return date=getTime(tokens,date);
-				}
-				if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
-				{
 
-					return date=getTime(tokens,date);
-				}
-				int month = check;
-				
-
-				it_day=tokens.erase(it_day);
-				it_day=tokens.erase(it_day);
-				it_day=tokens.erase(it_day);
-
-				it=it_day;
-
-				date.tm_mday=atoi(day.c_str());
-				date.tm_mon=month;
-				date.tm_year=atoi(year.c_str());
+			string day =it_day->c_str();
+			if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+			{
 				return date=getTime(tokens,date);
+			}
+			string year = it_year->c_str();
+			if(year.size()!=4 || !isAllInt(year))
+			{
+				return date=getTime(tokens,date);
+			}
+			if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+			{
 
-				
+				return date=getTime(tokens,date);
 			}
+			int month = check;
+
+
+			it_day=tokens.erase(it_day);
+			it_day=tokens.erase(it_day);
+			it_day=tokens.erase(it_day);
+
+			it=it_day;
+
+			date.tm_mday=atoi(day.c_str());
+			date.tm_mon=month;
+			date.tm_year=atoi(year.c_str());
+			return date=getTime(tokens,date);
+
+
 			}
-		
-			
-		
+		}
+
+
+
 
 	}
 	return date=getTime(tokens,date);
-	
+
 }
 
 
@@ -393,15 +398,15 @@ string Intellisense::getEventName(vector<string>& tokens)
 
 void Intellisense::itTest(vector<string> tokens)
 {
-	
+
 
 	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
 	{
 		cout<<it->c_str();
-			
-		
+
+
 	}
-	
+
 
 	cout<<endl;
 }
@@ -410,7 +415,7 @@ bool Intellisense::isAllInt(const string& s)
 {
 	for(int i = 0; i < s.length(); i++)
 	{
-	  if(! (s[i] >= '0' && s[i] <= '9' || s[i] == ' ') ) return false;
+		if(! (s[i] >= '0' && s[i] <= '9' || s[i] == ' ') ) return false;
 	}
 	return true;
 }
@@ -444,8 +449,8 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	task.setStartDate(getDate(tokens));
 	task.setEventName(getEventName(tokens));
 	task.setCategory(getCategory(tokens));
-	task.setAllStatusFlag();
-	task.checkAddReq();
+	setAllStatusFlag(task);
+	checkAddReq();
 
 	return task;
 }
@@ -454,8 +459,8 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 	Action task;
 	task.setCommand(getCommand(tokens,"DELETE"));
 	task.setEventName(getEventName(tokens));
-	task.setAllStatusFlag();
-	task.checkDelReq();
+	setAllStatusFlag(task);
+	checkDelReq();
 
 	return task;
 }
@@ -472,8 +477,8 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 	Action task;
 	task.setCommand(getCommand(tokens,"DISPLAY"));
 	task.setStartDate(getDate(tokens));
-	task.setAllStatusFlag();
-	task.checkDspReq();
+	setAllStatusFlag(task);
+	checkDspReq();
 
 	return task;
 }
@@ -483,8 +488,8 @@ Action Intellisense::markOperation(vector<string>& tokens)
 	task.setCommand(getCommand(tokens,"MARK"));
 	task.setStartDate(getDate(tokens));
 	task.setEventName(getEventName(tokens));
-	task.setAllStatusFlag();
-	task.checkMarkReq();
+	setAllStatusFlag(task);
+	checkMarkReq();
 
 	return task;
 }
@@ -492,7 +497,7 @@ Action Intellisense::invalidOperation(vector<string>& tokens)
 {
 	Action task;
 	task.setCommand(getCommand(tokens,"INVALID"));
-	task.setAllStatusFlag();
+	setAllStatusFlag(task);
 
 	return task;
 }
@@ -510,8 +515,8 @@ Action Intellisense::findOperation(vector<string>& tokens)
 	task.setPriority(getPriority(tokens));
 	task.setStartDate(getDate(tokens));
 	task.setEventName(getEventName(tokens));
-	task.setAllStatusFlag();
-	task.checkFindReq();
+	setAllStatusFlag(task);
+	checkFindReq();
 
 	return task;
 }
@@ -523,8 +528,138 @@ Action Intellisense::editOperation(vector<string>& tokens)
 	task.setPriority(getPriority(tokens));
 	task.setStartDate(getDate(tokens));
 	task.setEventName(getEventName(tokens));
-	task.setAllStatusFlag();
-	task.checkEditReq();
+	setAllStatusFlag(task);//i have to set my own flag and add the two string into the action flag
+	checkEditReq();
 
 	return task;
+}
+
+
+
+void Intellisense::setAllStatusFlag(Action task)
+{
+	if(task.getEventName() == "" )
+		setStatusFlagAt(INAME,false);
+	else
+		setStatusFlagAt(INAME,true);
+
+
+	//if(task.getStartDate() == NULL)
+	//	setStatusFlagAt(IDATE,false);
+	//else
+	//	setStatusFlagAt(IDATE,true);
+
+	if(task.getPriority() == false )
+		setStatusFlagAt(IPRIORITY,false);
+	else
+		setStatusFlagAt(IPRIORITY,true);
+
+
+	if(task.getCategory() == "")
+		setStatusFlagAt(ICATEGORY,false);
+	else
+		setStatusFlagAt(ICATEGORY,true);
+}
+void  Intellisense::getAllStatusFlag(bool *flags)
+{
+	for (int i=0;i<MAXNOOFPARAMETERS;i++)
+	{
+		flags[i] = statusFlags[i];;
+	}
+}
+
+bool Intellisense::getStatusFlagAt(int index)
+{
+	return statusFlags[index];
+}
+void Intellisense::setStatusFlagAt(int index,bool flag)
+{
+	statusFlags[index] = flag;
+}
+bool Intellisense::getrequirementsMet()
+{
+	return requirementsMet;
+}
+void Intellisense::setRequirementsMet(bool req)
+{
+	requirementsMet = req;
+}
+
+void Intellisense::checkAddReq()
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+
+void Intellisense::checkDelReq()
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+void Intellisense::checkDspReq()
+{
+	if (statusFlags[ICATEGORY] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+
+}
+void Intellisense::checkMarkReq()	
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+}
+void Intellisense::checkFindReq()	
+{
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[ICATEGORY] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+void Intellisense::checkEditReq()	
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+
+string Intellisense::getFeedback()
+{
+	return _feedback;
+}
+void Intellisense::setFeedback(string newFeedback)
+{
+	_feedback=newFeedback;
+}
+
+string Intellisense::getParameter()
+{
+	return _parameter;
+}
+void Intellisense::setParameter(string newParameter)
+{
+	_parameter = newParameter;
 }

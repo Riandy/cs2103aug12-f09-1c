@@ -4,16 +4,13 @@
 Action::Action(void)
 {
 	//set default flag to true
-	for(int i=0; i<MAXNOOFPARAMETERS; i++)
-	{
-		statusFlags[i] = true;
-	}
+
 	eventDetails.EventName="";
 	eventDetails.StartDate ;
 	eventDetails.Priority = false;
 	eventDetails.command = "";
 	eventDetails.category = "";
-	requirementsMet = false;
+
 }
 
 
@@ -21,37 +18,7 @@ Action::~Action(void)
 {
 }
 
-void Action::setAllStatusFlag()
-{
-	if(getEventName() == "" )
-		setStatusFlagAt(INAME,false);
-	else
-		setStatusFlagAt(INAME,true);
 
-	
-	//if(getStartDate() == NULL)
-	//	setStatusFlagAt(IDATE,false);
-	//else
-	//	setStatusFlagAt(IDATE,true);
-
-	if(getPriority() == false )
-		setStatusFlagAt(IPRIORITY,false);
-	else
-		setStatusFlagAt(IPRIORITY,true);
-
-	
-	if(getCategory() == "")
-		setStatusFlagAt(ICATEGORY,false);
-	else
-		setStatusFlagAt(ICATEGORY,true);
-}
-void  Action::getAllStatusFlag(bool *flags)
-{
-	for (int i=0;i<MAXNOOFPARAMETERS;i++)
-	{
-		flags[i] = statusFlags[i];;
-	}
-}
 
 string Action::getEventName()
 {
@@ -107,83 +74,6 @@ string Action::getCategory()
 void Action::setCategory(string newCategory)
 {
 	eventDetails.category = newCategory;
-}
-bool Action::getStatusFlagAt(int index)
-{
-	return statusFlags[index];
-}
-void Action::setStatusFlagAt(int index,bool flag)
-{
-	statusFlags[index] =flag;
-}
-bool Action::getrequirementsMet()
-{
-	return requirementsMet;
-}
-void Action::setRequirementsMet(bool req)
-{
-	requirementsMet = req;
-}
-
-void Action::checkAddReq()
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-}
-
-void Action::checkDelReq()
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-}
-void Action::checkDspReq()
-{
-	if (statusFlags[ICATEGORY] )
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[IDATE] )
-	{
-		requirementsMet = true;
-	}
-
-}
-void Action::checkMarkReq()	
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[IDATE] )
-	{
-		requirementsMet = true;
-	}
-}
-void Action::checkFindReq()	
-{
-	if (statusFlags[IDATE] )
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[ICATEGORY] )
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-}
-void Action::checkEditReq()	
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
 }
 
 
