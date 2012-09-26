@@ -543,11 +543,14 @@ void Intellisense::setAllStatusFlag(Action task)
 	else
 		setStatusFlagAt(INAME,true);
 
-
-	//if(task.getStartDate() == NULL)
-	//	setStatusFlagAt(IDATE,false);
-	//else
-	//	setStatusFlagAt(IDATE,true);
+	bool isDateNotSet;
+	isDateNotSet = (task.getStartDate().tm_year == 0	&& 
+					task.getStartDate().tm_mon	== 0   && 
+					task.getStartDate().tm_mday == 0);
+	if(isDateNotSet)
+		setStatusFlagAt(IDATE,false);
+	else
+		setStatusFlagAt(IDATE,true);
 
 	if(task.getPriority() == false )
 		setStatusFlagAt(IPRIORITY,false);

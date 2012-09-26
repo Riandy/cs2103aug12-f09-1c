@@ -6,11 +6,12 @@ Action::Action(void)
 	//set default flag to true
 
 	eventDetails.EventName="";
-	eventDetails.StartDate ;
+	eventDetails.StartDate.tm_year = 0 ;
+	eventDetails.StartDate.tm_mon	= 0;
+	eventDetails.StartDate.tm_mday = 0;
 	eventDetails.Priority = false;
 	eventDetails.command = "";
 	eventDetails.category = "";
-
 }
 
 
