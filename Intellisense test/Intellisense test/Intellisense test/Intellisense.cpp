@@ -22,7 +22,7 @@ Intellisense::~Intellisense(void)
 
 Action Intellisense::check(string query)
 {	
-	Action event;
+	Action task;
 	
 	trim(query);
 
@@ -31,38 +31,38 @@ Action Intellisense::check(string query)
 	switch(determinOperation(buffer))
 	{
 	case ADD: 
-		event=addOperation(buffer); 
+		task=addOperation(buffer); 
 		break;
 	case DELETE: 
-		event=deleteOperation(buffer);
+		task=deleteOperation(buffer);
 		break;
 	case DISPLAY: 
-		event=displayOperation(buffer); 
+		task=displayOperation(buffer); 
 		break;
 	case MARK: 
-		event=markOperation(buffer); 
+		task=markOperation(buffer); 
 		break;
 	case SORT: 
-		event=sortOperation(buffer); 
+		task=sortOperation(buffer); 
 		break;
 	case FIND: 
-		event=findOperation(buffer); 
+		task=findOperation(buffer); 
 		break;
 	case EDIT: 
-		event=editOperation(buffer); 
+		task=editOperation(buffer); 
 		break;
 	case EXIT: 
-		event=exitOperation(buffer); 
+		task=exitOperation(buffer); 
 		break;
 	case INVALID: 
-		event=invalidOperation(buffer); 
+		task=invalidOperation(buffer); 
 		break;
 	default:
 		break;
 	}
 
 	
-	return event;
+	return task;
 }
 
 
@@ -438,93 +438,93 @@ vector<string> Intellisense::tokenize(string command)
 
 Action Intellisense::addOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"ADD"));
-	event.setPriority(getPriority(tokens));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setCategory(getCategory(tokens));
-	event.setAllStatusFlag();
-	event.checkAddReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"ADD"));
+	task.setPriority(getPriority(tokens));
+	task.setStartDate(getDate(tokens));
+	task.setEventName(getEventName(tokens));
+	task.setCategory(getCategory(tokens));
+	task.setAllStatusFlag();
+	task.checkAddReq();
 
-	return event;
+	return task;
 }
 Action Intellisense::deleteOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"DELETE"));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkDelReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"DELETE"));
+	task.setEventName(getEventName(tokens));
+	task.setAllStatusFlag();
+	task.checkDelReq();
 
-	return event;
+	return task;
 }
 Action Intellisense::exitOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"EXIT"));
+	Action task;
+	task.setCommand(getCommand(tokens,"EXIT"));
 
-	return event;
+	return task;
 
 }
 Action Intellisense::displayOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"DISPLAY"));
-	event.setStartDate(getDate(tokens));
-	event.setAllStatusFlag();
-	event.checkDspReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"DISPLAY"));
+	task.setStartDate(getDate(tokens));
+	task.setAllStatusFlag();
+	task.checkDspReq();
 
-	return event;
+	return task;
 }
 Action Intellisense::markOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"MARK"));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkMarkReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"MARK"));
+	task.setStartDate(getDate(tokens));
+	task.setEventName(getEventName(tokens));
+	task.setAllStatusFlag();
+	task.checkMarkReq();
 
-	return event;
+	return task;
 }
 Action Intellisense::invalidOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"INVALID"));
-	event.setAllStatusFlag();
+	Action task;
+	task.setCommand(getCommand(tokens,"INVALID"));
+	task.setAllStatusFlag();
 
-	return event;
+	return task;
 }
 Action Intellisense::sortOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"SORT"));
+	Action task;
+	task.setCommand(getCommand(tokens,"SORT"));
 
-	return event;
+	return task;
 }
 Action Intellisense::findOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"FIND"));
-	event.setPriority(getPriority(tokens));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkFindReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"FIND"));
+	task.setPriority(getPriority(tokens));
+	task.setStartDate(getDate(tokens));
+	task.setEventName(getEventName(tokens));
+	task.setAllStatusFlag();
+	task.checkFindReq();
 
-	return event;
+	return task;
 }
 
 Action Intellisense::editOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"EDIT"));
-	event.setPriority(getPriority(tokens));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkEditReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"EDIT"));
+	task.setPriority(getPriority(tokens));
+	task.setStartDate(getDate(tokens));
+	task.setEventName(getEventName(tokens));
+	task.setAllStatusFlag();
+	task.checkEditReq();
 
-	return event;
+	return task;
 }
