@@ -451,6 +451,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	task.setEventName(getEventName(tokens));
 	setAllStatusFlag(task);
 	checkAddReq();
+	//smartfill 
 
 	return task;
 }

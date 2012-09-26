@@ -50,15 +50,6 @@ void Action::setPriority(bool newPriority)
 	eventDetails.Priority = newPriority;
 }
 
-int Action::getStatusCode()
-{
-	return statusCode;
-}
-void Action::setStatusCode(int newCode)
-{
-	statusCode = newCode;
-}
-
 string Action::getCommand()
 {
 	return eventDetails.command;

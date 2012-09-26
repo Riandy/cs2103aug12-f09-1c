@@ -24,7 +24,6 @@ class Action
 {
 private :
 	Event eventDetails;
-	int statusCode; //removed for current implementation
 
 	//not sure what other details you need for version 0.0 prototype
 	//if theres any other fields that you wish to include, do tell me so i can add them in
