@@ -25,7 +25,7 @@ void DisplayEvent(Action task)
 	cout<<string("Priority : ")<<task.getPriority()<<endl;
 	cout<<string("Event Name : ")<<task.getEventName()<<endl;
 	cout<<string("Category : ")<<task.getCategory()<<endl;
-	cout<<string("Req Met : ")<<task.getrequirementsMet()<<endl;
+	//cout<<string("Req Met : ")<<task.getrequirementsMet()<<endl;
 	cout<<string("******************")<<endl;
 }
 
@@ -44,6 +44,7 @@ int main()
 		getline(cin,userInput);
 		response=intellisense.check(userInput);
 		DisplayEvent(response);
+		cout<<string("Req Met : ")<<intellisense.getrequirementsMet()<<endl;
 		
 	}
 

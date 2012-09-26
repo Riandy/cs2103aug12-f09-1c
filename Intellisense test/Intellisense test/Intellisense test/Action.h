@@ -25,8 +25,7 @@ class Action
 private :
 	Event eventDetails;
 	int statusCode; //removed for current implementation
-	bool statusFlags[MAXNOOFPARAMETERS];
-	bool requirementsMet;
+
 	//not sure what other details you need for version 0.0 prototype
 	//if theres any other fields that you wish to include, do tell me so i can add them in
 
@@ -53,22 +52,7 @@ public:
 	int getStatusCode();
 	void setStatusCode(int); 
 
-	bool getStatusFlagAt(int);
-	void setStatusFlagAt(int,bool);
 
-	void setAllStatusFlag(); //this is based on the fields that are currently set in it so no parameters needed
-	void getAllStatusFlag(bool *);//change the actual flag array passed in
-
-	bool getrequirementsMet();
-	void setRequirementsMet(bool);
-
-	//These functions below governs the validity  of whether the command can be processed by the main
-	void checkAddReq();//check whether parameters supplied met the minimum requirement for command to be valid
-	void checkDelReq();
-	void checkDspReq();
-	void checkMarkReq();
-	void checkFindReq();
-	void checkEditReq();
 };
 
 

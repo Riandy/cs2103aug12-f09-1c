@@ -36,8 +36,10 @@ private:
 	static const string findCommand;
 	static const string editCommand;
 	static const string months[12];
-
-
+	bool statusFlags[MAXNOOFPARAMETERS];
+	bool requirementsMet;
+	string _feedback;
+	string _parameter;
 
 public:
 	Intellisense(void);
@@ -73,6 +75,29 @@ public:
 	Action findOperation(vector<string>& tokens);
 	Action editOperation(vector<string>& tokens);
 
+	bool getStatusFlagAt(int);
+	void setStatusFlagAt(int,bool);
+
+	void setAllStatusFlag(Action task); //this is based on the task that is passed in
+	void getAllStatusFlag(bool *);//change the actual flag array passed in
+
+	bool getrequirementsMet();
+	void setRequirementsMet(bool);
+
+	//These functions below governs the validity  of whether the command can be processed by the main
+	void checkAddReq();//check whether parameters supplied met the minimum requirement for command to be valid
+	void checkDelReq();
+	void checkDspReq();
+	void checkMarkReq();
+	void checkFindReq();
+	void checkEditReq();
+
+
+	string getFeedback();
+	void setFeedback(string);
+
+	string getParameter();
+	void setParameter(string);
 
 };
 
