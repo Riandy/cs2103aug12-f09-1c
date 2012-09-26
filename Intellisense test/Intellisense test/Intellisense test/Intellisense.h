@@ -92,7 +92,7 @@ public:
 	void checkFindReq();
 	void checkEditReq();
 
-
+	void smartAutoFill(Action &task);
 	string getFeedback();
 	void setFeedback(string);
 

@@ -451,7 +451,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	task.setEventName(getEventName(tokens));
 	setAllStatusFlag(task);
 	checkAddReq();
-
+	smartAutoFill(task);//auto fill some of the fields that are unentered
 	return task;
 }
 Action Intellisense::deleteOperation(vector<string>& tokens)
@@ -700,4 +700,20 @@ string Intellisense::getParameter()
 void Intellisense::setParameter(string newParameter)
 {
 	_parameter = newParameter;
+}
+
+void Intellisense::smartAutoFill(Action &task)
+{
+	bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0 && task.getStartDate().tm_mday ==0);
+	if (isDateNotentered)
+	{//we auto fill in todays day if date is unentered
+		//
+		time_t timeNow;
+		struct tm * timeinfo;
+		time (&timeNow);
+		timeinfo = localtime ( &timeNow );
+		timeinfo->tm_year+=1900;//add 1900 years to fit our format
+		timeinfo->tm_mon+=1; //to fit our format
+		task.setStartDate(*timeinfo);
+	}
 }
