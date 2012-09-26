@@ -17,15 +17,15 @@ void DisplayDate(tm date)
 }
 
 
-void DisplayEvent(Action event)
+void DisplayEvent(Action task)
 {
 	cout<<string("******************")<<endl;
-    cout<<string("Command : ")<<event.getCommand()<<endl;
-	DisplayDate(event.getStartDate());
-	cout<<string("Priority : ")<<event.getPriority()<<endl;
-	cout<<string("Event Name : ")<<event.getEventName()<<endl;
-	cout<<string("Category : ")<<event.getCategory()<<endl;
-	cout<<string("Req Met : ")<<event.getrequirementsMet()<<endl;
+    cout<<string("Command : ")<<task.getCommand()<<endl;
+	DisplayDate(task.getStartDate());
+	cout<<string("Priority : ")<<task.getPriority()<<endl;
+	cout<<string("Event Name : ")<<task.getEventName()<<endl;
+	cout<<string("Category : ")<<task.getCategory()<<endl;
+	cout<<string("Req Met : ")<<task.getrequirementsMet()<<endl;
 	cout<<string("******************")<<endl;
 }
 
