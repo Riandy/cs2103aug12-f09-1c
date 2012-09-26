@@ -14,7 +14,7 @@ Action::Action(void)
 	_task._endDate.tm_mday = 0;
 	_task._priority = "LOW";
 	this->_command = "";
-	_task._catergory = "";
+	_task._category = "";
 	_task._id=0;
 }
 
@@ -66,11 +66,19 @@ void Action::setCommand(string newCommand)
 
 string Action::getCategory()
 {
-	return _task._catergory;
+	return _task._category;
 }
 void Action::setCategory(string newCategory)
 {
-	_task._catergory = newCategory;
+	_task._category = newCategory;
 }
 
 
+int Action::getID()
+{
+	return _task._id;
+}
+void Action::setID(int newID)
+{
+	_task._id = newID;
+}
