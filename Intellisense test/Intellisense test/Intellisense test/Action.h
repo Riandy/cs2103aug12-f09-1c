@@ -18,7 +18,7 @@ struct task
 	tm _startDate;
 	tm _endDate;
 	string _priority;	
-	string _catergory;
+	string _category;
 	int _id;
 };
 class Action
@@ -49,13 +49,9 @@ public:
 	string getCategory();
 	void setCategory(string);
 
+	int getID();
+	void setID(int);
 
 
 };
-
-
-
-
-
-
 #endif;

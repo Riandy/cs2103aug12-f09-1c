@@ -545,8 +545,8 @@ void Intellisense::setAllStatusFlag(Action task)
 
 	bool isDateNotSet;
 	isDateNotSet = (task.getStartDate().tm_year == 0	&& 
-					task.getStartDate().tm_mon	== 0   && 
-					task.getStartDate().tm_mday == 0);
+		task.getStartDate().tm_mon	== 0   && 
+		task.getStartDate().tm_mday == 0);
 	if(isDateNotSet)
 		setStatusFlagAt(IDATE,false);
 	else
@@ -693,8 +693,8 @@ string Intellisense::getParameter()
 	{
 		_parameter =_parameter + "<font color=red>[ICATEGORY]</font>";
 	}
-	
-	
+
+
 	return _parameter;
 }
 void Intellisense::setParameter(string newParameter)

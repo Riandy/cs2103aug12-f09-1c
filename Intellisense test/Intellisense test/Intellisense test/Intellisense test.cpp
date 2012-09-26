@@ -20,7 +20,7 @@ void DisplayDate(tm date)
 void DisplayEvent(Action task)
 {
 	cout<<string("******************")<<endl;
-    cout<<string("Command : ")<<task.getCommand()<<endl;
+	cout<<string("Command : ")<<task.getCommand()<<endl;
 	DisplayDate(task.getStartDate());
 	cout<<string("Priority : ")<<task.getPriority()<<endl;
 	cout<<string("Event Name : ")<<task.getEventName()<<endl;
@@ -35,22 +35,22 @@ void DisplayEvent(Action task)
 
 int main()
 {   Action response;
-	Intellisense intellisense;
-	string userInput;
+Intellisense intellisense;
+string userInput;
 
-	while(true)
-	{
-		cout<<"command: ";
-		getline(cin,userInput);
-		response=intellisense.check(userInput);
-		DisplayEvent(response);
-		cout<<string("Req Met : ")<<intellisense.getrequirementsMet()<<endl;
-		cout<<string(" ")<<intellisense.getParameter()<<endl;
-	}
-
-	
+while(true)
+{
+	cout<<"command: ";
+	getline(cin,userInput);
+	response=intellisense.check(userInput);
+	DisplayEvent(response);
+	cout<<string("Req Met : ")<<intellisense.getrequirementsMet()<<endl;
+	cout<<string(" ")<<intellisense.getParameter()<<endl;
+}
 
 
-	return 0;
+
+
+return 0;
 }
 

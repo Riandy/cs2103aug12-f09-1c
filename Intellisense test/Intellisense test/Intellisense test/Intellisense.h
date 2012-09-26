@@ -63,7 +63,7 @@ public:
 	string& trim(string& s , const string& delimiters = " \f\r\t\v");
 	string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
 	string& trim_left_inplace( string& s,  const string& delimiters=" \f\r\t\v");
-	
+
 
 	Action addOperation(vector<string>& tokens);
 	Action deleteOperation(vector<string>& tokens);
