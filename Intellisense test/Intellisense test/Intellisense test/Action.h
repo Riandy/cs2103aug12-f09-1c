@@ -42,6 +42,7 @@ public:
 
 	tm getStartDate();
 	void setStartDate( tm);
+    void setStartDateWithoutTime(tm);
 
 	string getPriority();
 	void setPriority(string);

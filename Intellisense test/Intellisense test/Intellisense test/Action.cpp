@@ -43,6 +43,13 @@ tm Action::getStartDate()
 void Action::setStartDate(tm newDate)
 {
 	_task._startDate = newDate;
+	
+}
+void Action::setStartDateWithoutTime(tm newDate)
+{
+	_task._startDate.tm_mday=newDate.tm_mday;
+	_task._startDate.tm_mon=newDate.tm_mon;
+	_task._startDate.tm_year=newDate.tm_year;
 }
 
 string Action::getPriority()
