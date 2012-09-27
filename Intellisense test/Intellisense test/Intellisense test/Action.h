@@ -44,6 +44,9 @@ public:
 	void setStartDate( tm);
     void setStartDateWithoutTime(tm);
 
+	tm getEndDate();
+	void setEndDate( tm);
+
 	string getPriority();
 	void setPriority(string);
 
@@ -52,6 +55,8 @@ public:
 
 	int getID();
 	void setID(int);
+
+	void determineDate(tm date1,tm date2);
 
 
 };

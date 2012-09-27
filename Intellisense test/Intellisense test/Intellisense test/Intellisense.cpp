@@ -446,7 +446,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 	Action task;
 	task.setCommand(getCommand(tokens,"ADD"));
 	task.setPriority(getPriority(tokens));
-	task.setStartDate(getDate(tokens));
+	task.determineDate(getDate(tokens),getDate(tokens));
 	task.setCategory(getCategory(tokens));
 	task.setEventName(getEventName(tokens));
 	setAllStatusFlag(task);
