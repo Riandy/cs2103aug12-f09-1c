@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDesktopWidget>
 
 namespace Ui {
 class MainWindow;
@@ -16,7 +17,9 @@ public:
     ~MainWindow();
 
 private:
-    void changeAutoResolution();
+    void changeGeometry();
+    int getPosX(int maxX);
+    int getPosY(int maxY);
 
     Ui::MainWindow *ui;
     QPoint dragStartPosition;
