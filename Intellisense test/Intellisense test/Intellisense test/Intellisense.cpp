@@ -13,6 +13,11 @@ const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","
 
 Intellisense::Intellisense(void)
 {
+	for(int i=0; i<MAXNOOFPARAMETERS; i++)
+	{
+		statusFlags[i] = true;
+	}
+	requirementsMet = false;
 }
 
 
@@ -22,8 +27,8 @@ Intellisense::~Intellisense(void)
 
 Action Intellisense::check(string query)
 {	
-	Action event;
-	
+	Action task;
+
 	trim(query);
 
 	vector<string> buffer = tokenize(query);
@@ -31,38 +36,38 @@ Action Intellisense::check(string query)
 	switch(determinOperation(buffer))
 	{
 	case ADD: 
-		event=addOperation(buffer); 
+		task=addOperation(buffer); 
 		break;
 	case DELETE: 
-		event=deleteOperation(buffer);
+		task=deleteOperation(buffer);
 		break;
 	case DISPLAY: 
-		event=displayOperation(buffer); 
+		task=displayOperation(buffer); 
 		break;
 	case MARK: 
-		event=markOperation(buffer); 
+		task=markOperation(buffer); 
 		break;
 	case SORT: 
-		event=sortOperation(buffer); 
+		task=sortOperation(buffer); 
 		break;
 	case FIND: 
-		event=findOperation(buffer); 
+		task=findOperation(buffer); 
 		break;
 	case EDIT: 
-		event=editOperation(buffer); 
+		task=editOperation(buffer); 
 		break;
 	case EXIT: 
-		event=exitOperation(buffer); 
+		task=exitOperation(buffer); 
 		break;
 	case INVALID: 
-		event=invalidOperation(buffer); 
+		task=invalidOperation(buffer); 
 		break;
 	default:
 		break;
 	}
 
-	
-	return event;
+
+	return task;
 }
 
 
@@ -135,7 +140,7 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 }
 
 
-bool Intellisense::getPriority(vector<string>& tokens)
+string Intellisense::getPriority(vector<string>& tokens)
 {
 	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
 	{
@@ -143,11 +148,11 @@ bool Intellisense::getPriority(vector<string>& tokens)
 		if((checkString.compare(string("HIGH"))==0) || checkString.compare(string("high"))==0)
 		{
 			it=tokens.erase(it);
-			return true;
+			return string("HIGH");
 		}
 	}
 
-	return false;
+	return string("LOW");
 }
 
 tm Intellisense::getTime(vector<string>& tokens,tm date)
@@ -172,7 +177,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 					date.tm_min=atoi(time.substr(2,2).c_str());
 					return date;
 				}
-				
+
 			}
 		}
 		}else if(time.size()==4)
@@ -194,7 +199,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 						date.tm_min=atoi(time.substr(2,2).c_str());
 						return date;
 					}
-					
+
 				}
 			}
 		}else if(time.size()==3)
@@ -220,11 +225,11 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 				}
 			}
 		}
-		
 
-			
-		
-	
+
+
+
+
 	}
 	return date;
 }
@@ -244,14 +249,14 @@ string Intellisense::getCategory(vector<string>& tokens)
 	}
 	return category;
 
-	
+
 }
 
 string Intellisense::removeChar(string s,char chars[])
 {
 	for (unsigned int i = 0; i < sizeof(chars); ++i)
 	{
-	s.erase (std::remove(s.begin(), s.end(), chars[i]), s.end());
+		s.erase (std::remove(s.begin(), s.end(), chars[i]), s.end());
 	}
 	return s;
 }
@@ -313,56 +318,56 @@ tm Intellisense::getDate(vector<string>& tokens)
 			}
 		}
 
-		    if(tokens.size()>=3)
-			{
-		    int check=checkDateString(checkString);
-			
+		if(tokens.size()>=3)
+		{
+			int check=checkDateString(checkString);
+
 			if(check !=-1)
 			{   cout<<it->c_str()<<endl;
-			    it--;
-				vector<string>::iterator it_day = it++;
-				vector<string>::iterator it_year = ++it;
+			it--;
+			vector<string>::iterator it_day = it++;
+			vector<string>::iterator it_year = ++it;
 
-				
-				string day =it_day->c_str();
-				if(day.size()>2 || day.size()<=0 || !isAllInt(day))
-				{
-					return date=getTime(tokens,date);
-				}
-				string year = it_year->c_str();
-				if(year.size()!=4 || !isAllInt(year))
-				{
-					return date=getTime(tokens,date);
-				}
-				if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
-				{
 
-					return date=getTime(tokens,date);
-				}
-				int month = check;
-				
-
-				it_day=tokens.erase(it_day);
-				it_day=tokens.erase(it_day);
-				it_day=tokens.erase(it_day);
-
-				it=it_day;
-
-				date.tm_mday=atoi(day.c_str());
-				date.tm_mon=month;
-				date.tm_year=atoi(year.c_str());
+			string day =it_day->c_str();
+			if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+			{
 				return date=getTime(tokens,date);
+			}
+			string year = it_year->c_str();
+			if(year.size()!=4 || !isAllInt(year))
+			{
+				return date=getTime(tokens,date);
+			}
+			if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+			{
 
-				
+				return date=getTime(tokens,date);
 			}
+			int month = check;
+
+
+			it_day=tokens.erase(it_day);
+			it_day=tokens.erase(it_day);
+			it_day=tokens.erase(it_day);
+
+			it=it_day;
+
+			date.tm_mday=atoi(day.c_str());
+			date.tm_mon=month;
+			date.tm_year=atoi(year.c_str());
+			return date=getTime(tokens,date);
+
+
 			}
-		
-			
-		
+		}
+
+
+
 
 	}
 	return date=getTime(tokens,date);
-	
+
 }
 
 
@@ -393,15 +398,15 @@ string Intellisense::getEventName(vector<string>& tokens)
 
 void Intellisense::itTest(vector<string> tokens)
 {
-	
+
 
 	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
 	{
 		cout<<it->c_str();
-			
-		
+
+
 	}
-	
+
 
 	cout<<endl;
 }
@@ -410,7 +415,7 @@ bool Intellisense::isAllInt(const string& s)
 {
 	for(int i = 0; i < s.length(); i++)
 	{
-	  if(! (s[i] >= '0' && s[i] <= '9' || s[i] == ' ') ) return false;
+		if(! (s[i] >= '0' && s[i] <= '9' || s[i] == ' ') ) return false;
 	}
 	return true;
 }
@@ -438,93 +443,303 @@ vector<string> Intellisense::tokenize(string command)
 
 Action Intellisense::addOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"ADD"));
-	event.setPriority(getPriority(tokens));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setCategory(getCategory(tokens));
-	event.setAllStatusFlag();
-	event.checkAddReq();
-
-	return event;
+	Action task;
+	task.setCommand(getCommand(tokens,"ADD"));
+	task.setPriority(getPriority(tokens));
+	task.determineDate(getDate(tokens),getDate(tokens));
+	task.setCategory(getCategory(tokens));
+	task.setEventName(getEventName(tokens));
+	setAllStatusFlag(task);
+	checkAddReq();
+	smartAutoFill(task);//auto fill some of the fields that are unentered
+	return task;
 }
 Action Intellisense::deleteOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"DELETE"));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkDelReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"DELETE"));
+	task.setEventName(getEventName(tokens));
+	setAllStatusFlag(task);
+	checkDelReq();
 
-	return event;
+	return task;
 }
 Action Intellisense::exitOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"EXIT"));
+	Action task;
+	task.setCommand(getCommand(tokens,"EXIT"));
 
-	return event;
+	return task;
 
 }
 Action Intellisense::displayOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"DISPLAY"));
-	event.setStartDate(getDate(tokens));
-	event.setAllStatusFlag();
-	event.checkDspReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"DISPLAY"));
+	task.setStartDate(getDate(tokens));
+	setAllStatusFlag(task);
+	checkDspReq();
 
-	return event;
+	return task;
 }
 Action Intellisense::markOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"MARK"));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkMarkReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"MARK"));
+	task.setStartDate(getDate(tokens));
+	task.setEventName(getEventName(tokens));
+	setAllStatusFlag(task);
+	checkMarkReq();
 
-	return event;
+	return task;
 }
 Action Intellisense::invalidOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"INVALID"));
-	event.setAllStatusFlag();
+	Action task;
+	task.setCommand(getCommand(tokens,"INVALID"));
+	setAllStatusFlag(task);
 
-	return event;
+	return task;
 }
 Action Intellisense::sortOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"SORT"));
+	Action task;
+	task.setCommand(getCommand(tokens,"SORT"));
 
-	return event;
+	return task;
 }
 Action Intellisense::findOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"FIND"));
-	event.setPriority(getPriority(tokens));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkFindReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"FIND"));
+	task.setPriority(getPriority(tokens));
+	task.setStartDate(getDate(tokens));
+	task.setEventName(getEventName(tokens));
+	setAllStatusFlag(task);
+	checkFindReq();
 
-	return event;
+	return task;
 }
 
 Action Intellisense::editOperation(vector<string>& tokens)
 {
-	Action event;
-	event.setCommand(getCommand(tokens,"EDIT"));
-	event.setPriority(getPriority(tokens));
-	event.setStartDate(getDate(tokens));
-	event.setEventName(getEventName(tokens));
-	event.setAllStatusFlag();
-	event.checkEditReq();
+	Action task;
+	task.setCommand(getCommand(tokens,"EDIT"));
+	task.setPriority(getPriority(tokens));
+	task.setStartDate(getDate(tokens));
+	task.setEventName(getEventName(tokens));
+	setAllStatusFlag(task);
+	checkEditReq();
 
-	return event;
+	return task;
+}
+
+
+
+void Intellisense::setAllStatusFlag(Action task)
+{
+	if(task.getEventName() == "" )
+		setStatusFlagAt(INAME,false);
+	else
+		setStatusFlagAt(INAME,true);
+
+	bool isDateNotSet;
+	isDateNotSet = (task.getStartDate().tm_year == 0	&& 
+		task.getStartDate().tm_mon	== 0   && 
+		task.getStartDate().tm_mday == 0);
+	if(isDateNotSet)
+		setStatusFlagAt(IDATE,false);
+	else
+		setStatusFlagAt(IDATE,true);
+
+	bool isDateEndNotSet;
+	isDateNotSet = (task.getEndDate().tm_year == 0	&& 
+		task.getEndDate().tm_mon	== 0   && 
+		task.getEndDate().tm_mday == 0);
+	if(isDateNotSet)
+		setStatusFlagAt(IDATEEND,false);
+	else
+		setStatusFlagAt(IDATEEND,true);
+
+	if(task.getPriority() == "LOW" )
+		setStatusFlagAt(IPRIORITY,false);
+	else
+		setStatusFlagAt(IPRIORITY,true);
+
+
+	if(task.getCategory() == "")
+		setStatusFlagAt(ICATEGORY,false);
+	else
+		setStatusFlagAt(ICATEGORY,true);
+}
+void  Intellisense::getAllStatusFlag(bool *flags)
+{
+	for (int i=0;i<MAXNOOFPARAMETERS;i++)
+	{
+		flags[i] = statusFlags[i];;
+	}
+}
+
+bool Intellisense::getStatusFlagAt(int index)
+{
+	return statusFlags[index];
+}
+void Intellisense::setStatusFlagAt(int index,bool flag)
+{
+	statusFlags[index] = flag;
+}
+bool Intellisense::getrequirementsMet()
+{
+	return requirementsMet;
+}
+void Intellisense::setRequirementsMet(bool req)
+{
+	requirementsMet = req;
+}
+
+void Intellisense::checkAddReq()
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+
+void Intellisense::checkDelReq()
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+void Intellisense::checkDspReq()
+{
+	if (statusFlags[ICATEGORY] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+
+}
+void Intellisense::checkMarkReq()	
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+}
+void Intellisense::checkFindReq()	
+{
+	if (statusFlags[IDATE] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[ICATEGORY] )
+	{
+		requirementsMet = true;
+	}
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+void Intellisense::checkEditReq()	
+{
+	if (statusFlags[INAME])
+	{
+		requirementsMet = true;
+	}
+}
+
+string Intellisense::getFeedback()
+{
+
+	return _feedback;
+}
+void Intellisense::setFeedback(string newFeedback)
+{
+	_feedback=newFeedback;
+}
+
+string Intellisense::getParameter()
+{// output the string based on the flags set
+	if(statusFlags[INAME])
+	{
+		_parameter ="<font color=green>[NAME]</font>";
+	}
+	else
+	{
+		_parameter ="<font color=red>[NAME]</font>";
+	}
+	if(statusFlags[IDATE])
+	{
+		_parameter =_parameter + "<font color=green>[StartDate]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[StartDate]</font>";
+	}
+	if(statusFlags[IDATEEND])
+	{
+		_parameter =_parameter + "<font color=green>[EndDate]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[EndDate]</font>";
+	}
+
+	if(statusFlags[IPRIORITY])
+	{
+		_parameter =_parameter + "<font color=green>[IPRIORITY]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[IPRIORITY]</font>";
+	}
+	if(statusFlags[ICATEGORY])
+	{
+		_parameter =_parameter + "<font color=green>[ICATEGORY]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[ICATEGORY]</font>";
+	}
+
+
+	return _parameter;
+}
+void Intellisense::setParameter(string newParameter)
+{
+	_parameter = newParameter;
+}
+
+void Intellisense::smartAutoFill(Action &task)
+{
+	bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0 && task.getStartDate().tm_mday ==0);
+	if (isDateNotentered)
+	{//we auto fill in todays day if date is unentered
+		//
+		time_t timeNow;
+		struct tm * timeinfo;
+		time (&timeNow);
+		timeinfo = localtime ( &timeNow );
+		timeinfo->tm_year+=1900;//add 1900 years to fit our format
+		timeinfo->tm_mon+=1; //to fit our format
+		if(task.getStartDate().tm_hour==0 && task.getStartDate().tm_min==00)
+		{
+			task.setStartDate(*timeinfo);
+		}
+		else
+		{
+			task.setStartDateWithoutTime(*timeinfo);
+		}
+
+	}
 }
