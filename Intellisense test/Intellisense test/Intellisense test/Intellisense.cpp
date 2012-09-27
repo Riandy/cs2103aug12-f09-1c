@@ -528,7 +528,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 	task.setPriority(getPriority(tokens));
 	task.setStartDate(getDate(tokens));
 	task.setEventName(getEventName(tokens));
-	setAllStatusFlag(task);//i have to set my own flag and add the two string into the action flag
+	setAllStatusFlag(task);
 	checkEditReq();
 
 	return task;
@@ -551,6 +551,15 @@ void Intellisense::setAllStatusFlag(Action task)
 		setStatusFlagAt(IDATE,false);
 	else
 		setStatusFlagAt(IDATE,true);
+
+	bool isDateEndNotSet;
+	isDateNotSet = (task.getEndDate().tm_year == 0	&& 
+		task.getEndDate().tm_mon	== 0   && 
+		task.getEndDate().tm_mday == 0);
+	if(isDateNotSet)
+		setStatusFlagAt(IDATEEND,false);
+	else
+		setStatusFlagAt(IDATEEND,true);
 
 	if(task.getPriority() == "LOW" )
 		setStatusFlagAt(IPRIORITY,false);
@@ -671,12 +680,21 @@ string Intellisense::getParameter()
 	}
 	if(statusFlags[IDATE])
 	{
-		_parameter =_parameter + "<font color=green>[IDATE]</font>";
+		_parameter =_parameter + "<font color=green>[StartDate]</font>";
 	}
 	else
 	{
-		_parameter =_parameter + "<font color=red>[IDATE]</font>";
+		_parameter =_parameter + "<font color=red>[StartDate]</font>";
 	}
+	if(statusFlags[IDATEEND])
+	{
+		_parameter =_parameter + "<font color=green>[EndDate]</font>";
+	}
+	else
+	{
+		_parameter =_parameter + "<font color=red>[EndDate]</font>";
+	}
+
 	if(statusFlags[IPRIORITY])
 	{
 		_parameter =_parameter + "<font color=green>[IPRIORITY]</font>";
@@ -715,11 +733,13 @@ void Intellisense::smartAutoFill(Action &task)
 		timeinfo->tm_year+=1900;//add 1900 years to fit our format
 		timeinfo->tm_mon+=1; //to fit our format
 		if(task.getStartDate().tm_hour==0 && task.getStartDate().tm_min==00)
-		{task.setStartDate(*timeinfo);}
+		{
+			task.setStartDate(*timeinfo);
+		}
 		else
 		{
 			task.setStartDateWithoutTime(*timeinfo);
 		}
-		
+
 	}
 }
