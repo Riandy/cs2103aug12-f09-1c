@@ -140,7 +140,7 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 }
 
 
-bool Intellisense::getPriority(vector<string>& tokens)
+string Intellisense::getPriority(vector<string>& tokens)
 {
 	for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
 	{
@@ -148,11 +148,11 @@ bool Intellisense::getPriority(vector<string>& tokens)
 		if((checkString.compare(string("HIGH"))==0) || checkString.compare(string("high"))==0)
 		{
 			it=tokens.erase(it);
-			return true;
+			return string("HIGH");
 		}
 	}
 
-	return false;
+	return string("LOW");
 }
 
 tm Intellisense::getTime(vector<string>& tokens,tm date)
@@ -552,7 +552,7 @@ void Intellisense::setAllStatusFlag(Action task)
 	else
 		setStatusFlagAt(IDATE,true);
 
-	if(task.getPriority() == false )
+	if(task.getPriority() == "LOW" )
 		setStatusFlagAt(IPRIORITY,false);
 	else
 		setStatusFlagAt(IPRIORITY,true);
