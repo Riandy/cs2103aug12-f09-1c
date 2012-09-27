@@ -50,7 +50,7 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="Sframe" name="frame" native="true">
+   <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -63,7 +63,6 @@
      <string notr="true">#frame
 {
 	background-image: url(:/bg/scenary.jpg);
- 	border-radius: 40px;
 	 border-style: groove;
      border-width: 4px;
      border-color:rgb(203, 203, 203); 
@@ -160,7 +159,7 @@
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>-6</x>
+       <x>-5</x>
        <y>-8</y>
        <width>491</width>
        <height>51</height>
@@ -169,7 +168,7 @@
      <property name="styleSheet">
       <string notr="true">#label_4
 {
-	background-image: url(:/bg/testtitle.gif);
+	background-image: url(:/bg/2nd_testtitle.gif);
 }</string>
      </property>
      <property name="text">
@@ -296,13 +295,6 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>Sframe</class>
-   <extends>QWidget</extends>
-   <header>sframe.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="Resource.qrc"/>
  </resources>
@@ -314,12 +306,12 @@ p, li { white-space: pre-wrap; }
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>536</x>
-     <y>58</y>
+     <x>541</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
-     <x>602</x>
-     <y>61</y>
+     <x>622</x>
+     <y>29</y>
     </hint>
    </hints>
   </connection>
