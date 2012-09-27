@@ -22,6 +22,7 @@ void DisplayEvent(Action task)
 	cout<<string("******************")<<endl;
 	cout<<string("Command : ")<<task.getCommand()<<endl;
 	DisplayDate(task.getStartDate());
+	DisplayDate(task.getEndDate());
 	cout<<string("Priority : ")<<task.getPriority()<<endl;
 	cout<<string("Event Name : ")<<task.getEventName()<<endl;
 	cout<<string("Category : ")<<task.getCategory()<<endl;

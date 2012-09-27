@@ -45,6 +45,81 @@ void Action::setStartDate(tm newDate)
 	_task._startDate = newDate;
 	
 }
+
+tm Action::getEndDate()
+{
+	return _task._endDate;
+}
+void Action::setEndDate(tm newDate)
+{
+	_task._endDate = newDate;
+
+}
+
+void Action::determineDate(tm date1,tm date2)
+{
+	if(date1.tm_year > date2.tm_year)
+	{
+		setStartDate(date2);setEndDate(date1);
+		return;
+	}else if(date2.tm_year>date1.tm_year)
+	{
+		setStartDate(date1);setEndDate(date2);
+		return;
+	}else if(date2.tm_year == date1.tm_year)
+	{
+		if(date1.tm_mon>date2.tm_mon)
+		{
+			setStartDate(date2);setEndDate(date1);
+			return;
+		}else if(date2.tm_mon > date1.tm_mon)
+		{
+			setStartDate(date1);setEndDate(date2);
+			return;
+		}else if(date1.tm_mon==date2.tm_mon)
+		{
+			if(date1.tm_mday>date2.tm_mday)
+			{
+				setStartDate(date2);setEndDate(date1);
+				return;
+			}else if(date2.tm_mday > date1.tm_mday)
+			{
+				setStartDate(date1);setEndDate(date2);
+				return;
+			}else if(date1.tm_mday == date2.tm_mday)
+			{
+
+				if(date1.tm_hour>date2.tm_hour)
+				{
+					setStartDate(date2);setEndDate(date1);
+					return;
+				}else if(date2.tm_hour > date1.tm_hour)
+				{
+					setStartDate(date1);setEndDate(date2);
+					return;
+				}else if(date2.tm_hour==date1.tm_hour)
+				{
+					if(date1.tm_min>date2.tm_min)
+					{
+						setStartDate(date2);setEndDate(date1);
+						return;
+					}else if(date2.tm_min>date1.tm_min)
+					{
+						setStartDate(date1);setEndDate(date2);
+						return;
+					}else if (date1.tm_min==date2.tm_min)
+					{
+						setStartDate(date2);setEndDate(date1);
+						return;
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+
 void Action::setStartDateWithoutTime(tm newDate)
 {
 	_task._startDate.tm_mday=newDate.tm_mday;
