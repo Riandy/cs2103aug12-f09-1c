@@ -17,15 +17,16 @@ void DisplayDate(tm date)
 }
 
 
-void DisplayEvent(Action event)
+void DisplayEvent(Action task)
 {
 	cout<<string("******************")<<endl;
-    cout<<string("Command : ")<<event.getCommand()<<endl;
-	DisplayDate(event.getStartDate());
-	cout<<string("Priority : ")<<event.getPriority()<<endl;
-	cout<<string("Event Name : ")<<event.getEventName()<<endl;
-	cout<<string("Category : ")<<event.getCategory()<<endl;
-	cout<<string("Req Met : ")<<event.getrequirementsMet()<<endl;
+	cout<<string("Command : ")<<task.getCommand()<<endl;
+	DisplayDate(task.getStartDate());
+	DisplayDate(task.getEndDate());
+	cout<<string("Priority : ")<<task.getPriority()<<endl;
+	cout<<string("Event Name : ")<<task.getEventName()<<endl;
+	cout<<string("Category : ")<<task.getCategory()<<endl;
+	//cout<<string("Req Met : ")<<task.getrequirementsMet()<<endl;
 	cout<<string("******************")<<endl;
 }
 
@@ -35,21 +36,22 @@ void DisplayEvent(Action event)
 
 int main()
 {   Action response;
-	Intellisense intellisense;
-	string userInput;
+Intellisense intellisense;
+string userInput;
 
-	while(true)
-	{
-		cout<<"command: ";
-		getline(cin,userInput);
-		response=intellisense.check(userInput);
-		DisplayEvent(response);
-		
-	}
+while(true)
+{
+	cout<<"command: ";
+	getline(cin,userInput);
+	response=intellisense.check(userInput);
+	DisplayEvent(response);
+	cout<<string("Req Met : ")<<intellisense.getrequirementsMet()<<endl;
+	cout<<string(" ")<<intellisense.getParameter()<<endl;
+}
 
-	
 
 
-	return 0;
+
+return 0;
 }
 
