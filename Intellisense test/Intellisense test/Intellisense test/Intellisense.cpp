@@ -714,6 +714,12 @@ void Intellisense::smartAutoFill(Action &task)
 		timeinfo = localtime ( &timeNow );
 		timeinfo->tm_year+=1900;//add 1900 years to fit our format
 		timeinfo->tm_mon+=1; //to fit our format
-		task.setStartDate(*timeinfo);
+		if(task.getStartDate().tm_hour==0 && task.getStartDate().tm_min==00)
+		{task.setStartDate(*timeinfo);}
+		else
+		{
+			task.setStartDateWithoutTime(*timeinfo);
+		}
+		
 	}
 }
