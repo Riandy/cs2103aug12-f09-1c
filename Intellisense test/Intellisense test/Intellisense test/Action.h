@@ -6,11 +6,12 @@
 using namespace std;
 
 //if we want to extend to more fields we have to add in here
-#define MAXNOOFPARAMETERS 4 // NAME,DATE,PRIORITY,CATEGORY,
+#define MAXNOOFPARAMETERS 5 // NAME,DATE,PRIORITY,CATEGORY,
 #define INAME 0	//INDEX OF NAME IN THE FLAG ARRAY
 #define IDATE 1
 #define IPRIORITY 2
 #define ICATEGORY 3
+#define IDATEEND 4
 
 struct task
 {
@@ -26,8 +27,6 @@ class Action
 private :
 	task _task;
 	string _command;
-	//not sure what other details you need for version 0.0 prototype
-	//if theres any other fields that you wish to include, do tell me so i can add them in
 
 public:
 	Action(void);
@@ -42,7 +41,7 @@ public:
 
 	tm getStartDate();
 	void setStartDate( tm);
-    void setStartDateWithoutTime(tm);
+	void setStartDateWithoutTime(tm);
 
 	tm getEndDate();
 	void setEndDate( tm);

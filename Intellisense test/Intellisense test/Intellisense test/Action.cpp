@@ -43,7 +43,7 @@ tm Action::getStartDate()
 void Action::setStartDate(tm newDate)
 {
 	_task._startDate = newDate;
-	
+
 }
 
 tm Action::getEndDate()
@@ -116,7 +116,7 @@ void Action::determineDate(tm date1,tm date2)
 			}
 		}
 	}
-	
+
 }
 
 
