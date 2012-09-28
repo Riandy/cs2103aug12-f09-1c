@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2012-09-18T00:01:37
+# Project created by QtCreator 2012-09-27T00:43:49
 #
 #-------------------------------------------------
 
@@ -12,11 +12,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ../../Intellisense test/Intellisense test/Intellisense.cpp \
-    ../../Intellisense test/Intellisense test/Intellisense.cpp \
-    intellisense.cpp
+    Sframe.cpp
 
 HEADERS  += mainwindow.h \
-    intellisense.h
+    Sframe.h
 
 FORMS    += mainwindow.ui
