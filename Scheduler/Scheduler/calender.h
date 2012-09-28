@@ -6,40 +6,33 @@
 #include <vector>
 #include <stdlib.h>
 #include <ctime>
+#include "Action.h"
 
 using namespace std;
 
-
+//struct task
+//{
+//	string _description;
+//	tm _startDate;
+//	tm _endDate;
+//	string _priority;	
+//	string _category;
+//	int _id;
+//};
 
 class calender
 {
 public:
-	struct task
-	{
-		string _description;
-		int _startDate;
-		int _endDate;
-		string _priority; //HIGH OR LOW
-		int _id;      
-		string _category;
-	
-	};
 
 private:
-	
-
-
 
 	int _numberTasks;
 	vector<task> _storage;
 	//ifstream infile;
 	//ofstream outfile;
 
-
-
 	bool writeFile();
 	bool loadFile();
-
 
 	
 public:
