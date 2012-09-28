@@ -8,11 +8,10 @@ private:
 	
 	calender eventCalender;
 
-
 public:
 	scheduler();
 	~scheduler();
-
-
+	bool executeCommand(string command,calender::task newTask);
+	//pass in action
 };
 #endif
