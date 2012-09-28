@@ -11,7 +11,7 @@ calender::~calender()
 {
 }
 
-bool calender::addItem(task* currentTask)
+bool calender::addItem(task currentTask)
 {
 	_storage.push_back(currentTask);
 	_numberTasks++;
@@ -27,28 +27,6 @@ bool calender::deleteItem(int taskID)
 	return true;
 }
 
-// The only command available publicly. Scheduler will parse from Seample then send a string, and task.
-void calender::execute(string command, task currentTask)
-{
-if (command=="add") 
-{
-	task* placeholderTask = &currentTask;
-	this->addItem(placeholderTask);
-}
-
-// Can't really remember if I need to delete the memory space.
-else if (command=="delete")
-{
-	task* placeholderTask = new task;
-	placeholderTask = &currentTask;
-	int IDTag = placeholderTask->_id;
-
-	this->deleteItem(IDTag);
-
-	delete placeholderTask;
-}
-}
-
 
 //Riandy, could you write these two? Don't have to append strings yet. Just basic saving per line.
 // The vector is called _storage.
@@ -60,13 +38,72 @@ bool calender::writeFile()
 
 	for (int i=0;i<int(_storage.size());i++)
 	{
-		writeFile<<"Description : "<<_storage[i]->_description<<endl;
-		writeFile<<"Start_Date : "<<_storage[i]->_startDate<<endl;
-		writeFile<<"End_Date : "<<_storage[i]->_endDate<<endl;
-		writeFile<<"Priority : "<<_storage[i]->_priority<<endl<<endl;
+		writeFile<<"Description : "<<_storage[i]._description<<endl;
+		//change to tm struct
+		//writeFile<<"Start_Date : "<<_storage[i]._startDate<<endl;
+		//writeFile<<"End_Date : "<<_storage[i]._endDate<<endl;
+		writeFile<<"Priority : "<<_storage[i]._priority<<endl<<endl;
 	}
 	return true;
 }
+
+bool calender::searchID(int taskID)
+{
+	if (taskID > int(_storage.size()))
+		return false;
+	else
+		return true;
+}
+
+
+bool calender::editTask(task edited)
+{
+
+return true;
+}
+
+vector<task> calender::SearchByCat(string searchItem)
+{
+	
+	vector<task> _bufferStorage;
+	for (int i = 0; i < int(_storage.size()); i++)
+	{
+		string  bufferString = _storage[i]._category;
+		if (bufferString.find(searchItem))
+		{
+			_bufferStorage.push_back(_storage[i]);
+			
+		}
+	}
+	return _bufferStorage;
+}
+
+vector<task> calender::SearchByTask(string searchItem)
+{
+	
+	vector<task> _bufferStorage;
+	for (int i = 0; i < int(_storage.size()); i++)
+	{
+		string  bufferString = _storage[i]._description;
+		if (bufferString.find(searchItem))
+		{
+			_bufferStorage.push_back(_storage[i]);
+			
+		}
+	}
+	return _bufferStorage;
+} // please check the _bufferStorage.size() in the scheduler
+
+
+
+vector<task> calender::displayDatabase()
+{
+    return _storage;
+}
+
+
+
+
 bool calender::loadFile()
 {
 	//clear all the content of the storage before loading the new one from
@@ -76,7 +113,8 @@ bool calender::loadFile()
 	
 	ifstream readFile("storage.txt");
 	string temp,description;
-	int priority,startDate,endDate,count=0;
+	int priority,count=0;
+	int startDate,endDate;
 
 	while(readFile>>temp)
 	{
@@ -99,12 +137,12 @@ bool calender::loadFile()
 
 		task* newTask= new task;
 		newTask->_description=description;
-		newTask->_startDate=startDate;
+		//newTask->_startDate=startDate;
 		newTask->_priority=priority;
-		newTask->_endDate=endDate;
+		//newTask->_endDate=endDate;
 		newTask->_id=count;
 
-		_storage.push_back(newTask);
+		_storage.push_back(*newTask);
 	}
 	return true;
 }
