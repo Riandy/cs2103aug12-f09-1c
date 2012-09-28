@@ -19,18 +19,27 @@ public:
 
     bool isStandardView();
 
-public slots:
-    void runInput(QString input);
+private slots:
+    void check(QString input);
+
+    void passScheduler(QString input);
+
+    void changeView();
+
+private:
+    void emptyResponse();
+
+    void send(QVector <QString> feedback);
 
 private:
     bool standardViewFlag;
+
+    const static QString MESSAGE_AVAILABLE_COMMANDS;
 
     //GUI interfaces ==================
     MainWindow seample;
     StandardView standard;
     //=================================
-
-    QVector <QString> feedback;
 
 
 };

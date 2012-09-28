@@ -1,20 +1,32 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2012-09-27T00:43:49
+# Project created by QtCreator 2012-09-26T07:47:37
 #
 #-------------------------------------------------
 
 QT       += core gui
 
-TARGET = SeamPLE
+TARGET = untitled
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    Sframe.cpp
+    Sframe.cpp \
+    standardview.cpp \
+    mainwindow.cpp \
+    GuiControl.cpp
 
-HEADERS  += mainwindow.h \
-    Sframe.h
+HEADERS  += \
+    Sframe.h \
+    standardview.h \
+    mainwindow.h \
+    GuiControl.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    standardview.ui \
+    mainwindow.ui
+
+RESOURCES += \
+    Resource.qrc
+
+OTHER_FILES +=

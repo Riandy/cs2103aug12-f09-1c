@@ -1,10 +1,11 @@
 #include <QtGui/QApplication>
-#include "GuiType.h"
+#include "GuiControl.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GuiType view(true);
+    GuiControl view;
+    view.setStandardView(false);
     view.showGui();
 
     return a.exec();
