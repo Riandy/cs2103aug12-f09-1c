@@ -4,16 +4,18 @@
 Action::Action(void)
 {
 	//set default flag to true
-	for(int i=0; i<MAXNOOFPARAMETERS; i++)
-	{
-		statusFlags[i] = true;
-	}
-	eventDetails.EventName="";
-	eventDetails.StartDate ;
-	eventDetails.Priority = false;
-	eventDetails.command = "";
-	eventDetails.category = "";
-	requirementsMet = false;
+
+	_task._description="";
+	_task._startDate.tm_year = 0 ;
+	_task._startDate.tm_mon	= 0;
+	_task._startDate.tm_mday = 0;
+	_task._endDate.tm_year = 0 ;
+	_task._endDate.tm_mon	= 0;
+	_task._endDate.tm_mday = 0;
+	_task._priority = "LOW";
+	this->_command = "";
+	_task._category = "";
+	_task._id=0;
 }
 
 
@@ -21,238 +23,144 @@ Action::~Action(void)
 {
 }
 
-void Action::setAllStatusFlag()
-{
-	if(getEventName() == "" )
-		setStatusFlagAt(INAME,false);
-	else
-		setStatusFlagAt(INAME,true);
 
-	
-	//if(getStartDate() == NULL)
-	//	setStatusFlagAt(IDATE,false);
-	//else
-	//	setStatusFlagAt(IDATE,true);
-
-	if(getPriority() == false )
-		setStatusFlagAt(IPRIORITY,false);
-	else
-		setStatusFlagAt(IPRIORITY,true);
-
-	
-	if(getCategory() == "")
-		setStatusFlagAt(ICATEGORY,false);
-	else
-		setStatusFlagAt(ICATEGORY,true);
-}
-void  Action::getAllStatusFlag(bool *flags)
-{
-	for (int i=0;i<MAXNOOFPARAMETERS;i++)
-	{
-		flags[i] = statusFlags[i];;
-	}
-}
 
 string Action::getEventName()
 {
-	return eventDetails.EventName;
+	return _task._description;
 }
 void Action::setEventName(string name)
 {
-	eventDetails.EventName = name;
+	_task._description = name;
 }
 
 
 
 tm Action::getStartDate()
 {
-	return eventDetails.StartDate;
+	return _task._startDate;
 }
 void Action::setStartDate(tm newDate)
 {
-	eventDetails.StartDate = newDate;
+	_task._startDate = newDate;
+
 }
 
-bool Action::getPriority()
+tm Action::getEndDate()
 {
-	return eventDetails.Priority;
+	return _task._endDate;
 }
-void Action::setPriority(bool newPriority)
+void Action::setEndDate(tm newDate)
 {
-	eventDetails.Priority = newPriority;
+	_task._endDate = newDate;
+
 }
 
-int Action::getStatusCode()
+void Action::determineDate(tm date1,tm date2)
 {
-	return statusCode;
+	if(date1.tm_year > date2.tm_year)
+	{
+		setStartDate(date2);setEndDate(date1);
+		return;
+	}else if(date2.tm_year>date1.tm_year)
+	{
+		setStartDate(date1);setEndDate(date2);
+		return;
+	}else if(date2.tm_year == date1.tm_year)
+	{
+		if(date1.tm_mon>date2.tm_mon)
+		{
+			setStartDate(date2);setEndDate(date1);
+			return;
+		}else if(date2.tm_mon > date1.tm_mon)
+		{
+			setStartDate(date1);setEndDate(date2);
+			return;
+		}else if(date1.tm_mon==date2.tm_mon)
+		{
+			if(date1.tm_mday>date2.tm_mday)
+			{
+				setStartDate(date2);setEndDate(date1);
+				return;
+			}else if(date2.tm_mday > date1.tm_mday)
+			{
+				setStartDate(date1);setEndDate(date2);
+				return;
+			}else if(date1.tm_mday == date2.tm_mday)
+			{
+
+				if(date1.tm_hour>date2.tm_hour)
+				{
+					setStartDate(date2);setEndDate(date1);
+					return;
+				}else if(date2.tm_hour > date1.tm_hour)
+				{
+					setStartDate(date1);setEndDate(date2);
+					return;
+				}else if(date2.tm_hour==date1.tm_hour)
+				{
+					if(date1.tm_min>date2.tm_min)
+					{
+						setStartDate(date2);setEndDate(date1);
+						return;
+					}else if(date2.tm_min>date1.tm_min)
+					{
+						setStartDate(date1);setEndDate(date2);
+						return;
+					}else if (date1.tm_min==date2.tm_min)
+					{
+						setStartDate(date2);setEndDate(date1);
+						return;
+					}
+				}
+			}
+		}
+	}
+
 }
-void Action::setStatusCode(int newCode)
+
+
+void Action::setStartDateWithoutTime(tm newDate)
 {
-	statusCode = newCode;
+	_task._startDate.tm_mday=newDate.tm_mday;
+	_task._startDate.tm_mon=newDate.tm_mon;
+	_task._startDate.tm_year=newDate.tm_year;
 }
+
+string Action::getPriority()
+{
+	return _task._priority;
+}
+void Action::setPriority(string newPriority)
+{
+	_task._priority = newPriority;
+}
+
 
 string Action::getCommand()
 {
-	return eventDetails.command;
+	return this->_command;
 }
 void Action::setCommand(string newCommand)
 {
-	eventDetails.command = newCommand;
+	this->_command = newCommand;
 }
 
 string Action::getCategory()
 {
-	return eventDetails.category;
+	return _task._category;
 }
 void Action::setCategory(string newCategory)
 {
-	eventDetails.category = newCategory;
-}
-bool Action::getStatusFlagAt(int index)
-{
-	return statusFlags[index];
-}
-void Action::setStatusFlagAt(int index,bool flag)
-{
-	statusFlags[index] =flag;
-}
-bool Action::getrequirementsMet()
-{
-	return requirementsMet;
-}
-void Action::setRequirementsMet(bool req)
-{
-	requirementsMet = req;
-}
-
-void Action::checkAddReq()
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-}
-
-void Action::checkDelReq()
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-}
-void Action::checkDspReq()
-{
-	if (statusFlags[ICATEGORY] )
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[IDATE] )
-	{
-		requirementsMet = true;
-	}
-
-}
-void Action::checkMarkReq()	
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[IDATE] )
-	{
-		requirementsMet = true;
-	}
-}
-void Action::checkFindReq()	
-{
-	if (statusFlags[IDATE] )
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[ICATEGORY] )
-	{
-		requirementsMet = true;
-	}
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
-}
-void Action::checkEditReq()	
-{
-	if (statusFlags[INAME])
-	{
-		requirementsMet = true;
-	}
+	_task._category = newCategory;
 }
 
 
-//for error code
-string feedbackMsg(int errorcode)
-{ //i think this part has no need to be extracted to static const string since the purpose of the function 
-	//is to solely convert errorcode to error messages. What do you think wenbin?
-	string messageOut;
-	switch (errorcode)
-	{
-	case INVALIDCOMAND:
-		messageOut = "Invalid Operation. Eg.add, del, edit, find ,dsp, mark  ";	
-		break;
-	case VALIDADD :
-		messageOut = "Event successfully added.";
-		break;
-	case VALIDDEL :
-		messageOut = "Event successfully deleted.";
-		break;
-	case VALIDEDIT :
-		messageOut = "Event Edited. ";
-		break;
-	case VALIDFIND :
-		messageOut = "Displaying Search resutlts...";
-		break;
-	case VALIDDISPLAY :
-		messageOut = "Displaying Search resutlts.";
-		break;
-	case VALIDMARK:
-		messageOut = "Event has been marked.";
-		break;
-	case ERR_ADD_D:
-		messageOut = "Invalid Date format.Eg add meeting 24082012 ";
-		break;
-	case ERR_ADD_P:
-		messageOut = "Invalid priority. Priority please enter H or L ";
-		break;
-	case ERR_DEL_T:
-		messageOut = "Invalid Task name , Event not found";
-		break;
-	case ERR_EDIT_NT:
-		messageOut = "No fields entered For editing.";
-		break;
-	case ERR_EDIT_T:
-		messageOut = "Invalid Task name , Event not found";
-		break;
-	case ERR_EDIT_D:
-		messageOut = "Invalid Date format , please follow ddmmyyyy or ...more to be decided";
-		break;
-	case ERR_EDIT_P:
-		messageOut = "Invalid Priority. Priority please enter H or L ";
-		break;
-	case ERR_FIND_D:
-		messageOut = "Invalid Date format , please follow ddmmyyyy";
-		break;
-	case ERR_FIND_P:
-		messageOut = "Invalid Priority. Priority please enter H or L";
-		break;
-	case ERR_DSP_D:
-		messageOut = "Invalid Date format , please follow ddmmyyyy";
-		break;
-	case ERR_MARK_T:
-		messageOut = "Invalid Task name , Task not found";
-		break;
-	case ERR_MARK_D:
-		messageOut = "Invalid Date format , please follow ddmmyyyy";
-		break;
-
-
-	}
-	return messageOut;
+int Action::getID()
+{
+	return _task._id;
+}
+void Action::setID(int newID)
+{
+	_task._id = newID;
 }
