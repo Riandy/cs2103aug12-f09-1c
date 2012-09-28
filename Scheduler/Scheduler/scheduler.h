@@ -1,17 +1,18 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 #include "calender.h"
+#include "Action.h"
 
 class scheduler
 {
 private:
-	
+	vector<string> result;
 	calender eventCalender;
 
 public:
 	scheduler();
 	~scheduler();
-	bool executeCommand(string command,calender::task newTask);
+	vector<string> executeCommand(Action newaction);
 	//pass in action
 };
 #endif

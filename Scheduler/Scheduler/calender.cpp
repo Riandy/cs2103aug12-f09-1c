@@ -39,8 +39,9 @@ bool calender::writeFile()
 	for (int i=0;i<int(_storage.size());i++)
 	{
 		writeFile<<"Description : "<<_storage[i]._description<<endl;
-		writeFile<<"Start_Date : "<<_storage[i]._startDate<<endl;
-		writeFile<<"End_Date : "<<_storage[i]._endDate<<endl;
+		//change to tm struct
+		//writeFile<<"Start_Date : "<<_storage[i]._startDate<<endl;
+		//writeFile<<"End_Date : "<<_storage[i]._endDate<<endl;
 		writeFile<<"Priority : "<<_storage[i]._priority<<endl<<endl;
 	}
 	return true;
@@ -61,7 +62,7 @@ bool calender::editTask(task edited)
 return true;
 }
 
-vector<calender::task> calender::SearchByCat(string searchItem)
+vector<task> calender::SearchByCat(string searchItem)
 {
 	
 	vector<task> _bufferStorage;
@@ -77,7 +78,7 @@ vector<calender::task> calender::SearchByCat(string searchItem)
 	return _bufferStorage;
 }
 
-vector<calender::task> calender::SearchByTask(string searchItem)
+vector<task> calender::SearchByTask(string searchItem)
 {
 	
 	vector<task> _bufferStorage;
@@ -95,7 +96,7 @@ vector<calender::task> calender::SearchByTask(string searchItem)
 
 
 
-vector<calender::task> calender::displayDatabase()
+vector<task> calender::displayDatabase()
 {
     return _storage;
 }
@@ -136,9 +137,9 @@ bool calender::loadFile()
 
 		task* newTask= new task;
 		newTask->_description=description;
-		newTask->_startDate=startDate;
+		//newTask->_startDate=startDate;
 		newTask->_priority=priority;
-		newTask->_endDate=endDate;
+		//newTask->_endDate=endDate;
 		newTask->_id=count;
 
 		_storage.push_back(*newTask);
