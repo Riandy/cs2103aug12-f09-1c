@@ -17,7 +17,7 @@
    <iconset resource="Resource.qrc">
     <normaloff>:/bg/calendar.gif</normaloff>:/bg/calendar.gif</iconset>
   </property>
-  <widget class="Sframe" name="frame" native="true">
+  <widget class="Sframe" name="frame">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -213,7 +213,7 @@
      <property name="styleSheet">
       <string notr="true">#label_2
 {
-	;
+	
 }</string>
      </property>
      <property name="text">
@@ -304,13 +304,6 @@ p, li { white-space: pre-wrap; }
    <zorder>pushButton_2</zorder>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>Sframe</class>
-   <extends>QWidget</extends>
-   <header>sframe.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="Resource.qrc"/>
  </resources>
@@ -322,12 +315,12 @@ p, li { white-space: pre-wrap; }
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>569</x>
-     <y>99</y>
+     <x>572</x>
+     <y>101</y>
     </hint>
     <hint type="destinationlabel">
-     <x>644</x>
-     <y>56</y>
+     <x>651</x>
+     <y>59</y>
     </hint>
    </hints>
   </connection>
