@@ -12,6 +12,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 {
 	//get the command type
 	string command=newAction.getCommand();
+	taskVector.clear();
 	
 	//process the given information to task
 	task newTask;
@@ -24,19 +25,23 @@ vector<string> scheduler::executeCommand(Action newAction)
 
 	if(command=="ADD")
 	{
+		// We want to add, then show the new database to the user
 		eventCalender.addItem(newTask);
+		taskVector = eventCalender.displayDatabase();
+		convertToString(taskVector);
 	}
 	else if(command=="DELETE")
 	{
-		if(eventCalender.searchID(newTask._id))
+		if(eventCalender.checkID(newTask._id))
 		{
-			//if id found in the database
-			//then perform deletion
+			// We want to delete, then show the new database to the user
 			eventCalender.deleteItem(newTask._id);
+			taskVector = eventCalender.displayDatabase();
+			convertToString(taskVector);
 		}
 		else
 		{
-			//return to user that deletion fails because id doesn't exist
+			_result.push_back(ERROR_NOT_FOUND);
 
 		}
 	}
@@ -47,48 +52,57 @@ vector<string> scheduler::executeCommand(Action newAction)
 	else if(command=="FIND")
 	{
 		//can find by category or task
-		//case 1: if category is not empty
+		//case 1: if category is not empty (are we using "" or 0 flag?)
 		if(newTask._category!="")
-		{
-			//remember to store the result in a vector later
-			taskvector = eventCalender.SearchByCat(newTask._category);
-			convertToString(taskvector);
+		{		
+			taskVector = eventCalender.SearchByCat(newTask._category);
+			convertToString(taskVector);
 
 		}
 		//case 2: search by task
-		else
+		else if (newTask._description!="")
 		{
-			//remember to store it in the vector later
-			
 			taskVector = eventCalender.SearchByTask(newTask._description);
 			convertToString(taskVector);
 
 		}
+		else
+			generalError();
 	}
+	else if (command=="DISPLAY")
+	{
+		taskVector = eventCalender.displayDatabase();
+		convertToString(taskVector);
+	}
+	else
+		 generalError();
 
-	return result;
+	
+	return _result;
 }
-/*	
 
-WE NEED TO IMPLEMENT A DISPLAY FUNCTION
-
-*/
-
-string sheduler::convertToString(vector<task> taskVector)
+void scheduler::convertToString(vector<task> taskVector)
 {
 	
 	int vectorSize = taskVector.size();
 	for (int i = 0; i < vectorSize; i++)
 		
 	{
-		sstream str;
-		str<<taskVector[i]._description;
-	//	str<<taskVector[i].asctime(_startdate);
-		str<<taskVector[i]._priority;
-		str<<taskVector[i]._category;
-		str<<taskVector[i]._id;
-		result.push(str);
-
+		stringstream strStream;
+		strStream<<taskVector[i]._description;
+	//	strStream<<taskVector[i].asctime(_startDate);
+	//	strStream<<taskVector[i].acstime(_endDate);
+		strStream<<taskVector[i]._priority;
+		strStream<<taskVector[i]._category;
+		strStream<<taskVector[i]._id;
+		string taskString = strStream.str();
+		_result.push_back(taskString);
 	}
 
+}
+
+
+void scheduler::generalError()
+{
+	_result.push_back(ERROR_INTELLISENSE_CHECK);
 }

@@ -47,7 +47,7 @@ bool calender::writeFile()
 	return true;
 }
 
-bool calender::searchID(int taskID)
+bool calender::checkID(int taskID)
 {
 	if (taskID > int(_storage.size()))
 		return false;

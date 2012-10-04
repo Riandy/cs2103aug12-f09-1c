@@ -1,21 +1,27 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 #include "calender.h"
-#include "Action.h"
 #include <sstream>
+#include "Action.h"
+
+// Ensure that this error is synchronous with the errors sent from Intellisense.
+static string ERROR_NOT_FOUND = "Error - The item does not exist.";
+static string ERROR_INTELLISENSE_CHECK = "Error - The system failed to process your request. Please try again";
 
 class scheduler
 {
 private:
-	vector<string> result;
+	vector<string> _result;
 	vector<task> taskVector;
 	calender eventCalender;
-	string convertToString(vector calender::task);
+	void convertToString(vector<task> taskVector);
+	void generalError();
 
 public:
 	scheduler();
 	~scheduler();
 	vector<string> executeCommand(Action newaction);
+
 	//pass in action
 };
 #endif
