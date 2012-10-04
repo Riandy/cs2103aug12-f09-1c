@@ -51,15 +51,44 @@ vector<string> scheduler::executeCommand(Action newAction)
 		if(newTask._category!="")
 		{
 			//remember to store the result in a vector later
-			eventCalender.SearchByCat(newTask._category);
+			taskvector = eventCalender.SearchByCat(newTask._category);
+			convertToString(taskvector);
+
 		}
 		//case 2: search by task
 		else
 		{
 			//remember to store it in the vector later
-			eventCalender.SearchByTask(newTask._description);
+			
+			taskVector = eventCalender.SearchByTask(newTask._description);
+			convertToString(taskVector);
+
 		}
 	}
 
 	return result;
+}
+/*	
+
+WE NEED TO IMPLEMENT A DISPLAY FUNCTION
+
+*/
+
+string sheduler::convertToString(vector<task> taskVector)
+{
+	
+	int vectorSize = taskVector.size();
+	for (int i = 0; i < vectorSize; i++)
+		
+	{
+		sstream str;
+		str<<taskVector[i]._description;
+	//	str<<taskVector[i].asctime(_startdate);
+		str<<taskVector[i]._priority;
+		str<<taskVector[i]._category;
+		str<<taskVector[i]._id;
+		result.push(str);
+
+	}
+
 }
