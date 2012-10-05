@@ -16,7 +16,7 @@ private:
 	calender eventCalender;
 	void convertToString(vector<task> taskVector);
 	void generalError();
-
+	string convertToDate(tm _date);
 public:
 	scheduler();
 	~scheduler();
@@ -24,4 +24,6 @@ public:
 
 	//pass in action
 };
+
+
 #endif

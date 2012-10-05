@@ -13,7 +13,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 	//get the command type
 	string command=newAction.getCommand();
 	taskVector.clear();
-	
+	_result.clear();
 	//process the given information to task
 	task newTask;
 	newTask._category=newAction.getCategory();
@@ -88,10 +88,13 @@ void scheduler::convertToString(vector<task> taskVector)
 	for (int i = 0; i < vectorSize; i++)
 		
 	{
+		string _startDate = convertToDate(taskVector[i]._startDate);
+		string _endDate = convertToDate(taskVector[i]._endDate);
+
 		stringstream strStream;
 		strStream<<taskVector[i]._description;
-	//	strStream<<taskVector[i].asctime(_startDate);
-	//	strStream<<taskVector[i].acstime(_endDate);
+		strStream<<_startDate;
+		strStream<<_endDate;
 		strStream<<taskVector[i]._priority;
 		strStream<<taskVector[i]._category;
 		strStream<<taskVector[i]._id;
@@ -101,6 +104,19 @@ void scheduler::convertToString(vector<task> taskVector)
 
 }
 
+
+string scheduler::convertToDate(tm _date)
+{
+	string _result;
+	_result = _date.tm_min;
+	_result += _date.tm_hour;
+	_result += _date.tm_mday;
+	_result += _date.tm_mon;
+	_result += _date.tm_year;
+	return _result;
+
+
+}
 
 void scheduler::generalError()
 {
