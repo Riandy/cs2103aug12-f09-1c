@@ -81,12 +81,14 @@
     <ClInclude Include="Intellisense.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="task.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="Intellisense test.cpp" />
     <ClCompile Include="Intellisense.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="task.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

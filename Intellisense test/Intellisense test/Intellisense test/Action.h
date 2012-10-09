@@ -2,6 +2,7 @@
 #define ACTION_H
 #include <string>
 #include <ctime>
+#include "task.h"
 
 using namespace std;
 
@@ -13,15 +14,7 @@ using namespace std;
 #define ICATEGORY 3
 #define IDATEEND 4
 
-struct task
-{
-	string _description;
-	tm _startDate;
-	tm _endDate;
-	string _priority;	
-	string _category;
-	int _id;
-};
+
 class Action
 {
 private :
