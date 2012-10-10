@@ -14,13 +14,21 @@ SOURCES += main.cpp\
     Sframe.cpp \
     standardview.cpp \
     mainwindow.cpp \
-    GuiControl.cpp
+    GuiControl.cpp \
+    intellisense.cpp \
+    Action.cpp \
+    task.cpp \
+    seample.cpp
 
 HEADERS  += \
     Sframe.h \
     standardview.h \
     mainwindow.h \
-    GuiControl.h
+    GuiControl.h \
+    intellisense.h \
+    Action.h \
+    task.h \
+    seample.h
 
 FORMS    += \
     standardview.ui \
