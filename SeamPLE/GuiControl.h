@@ -32,6 +32,8 @@ public:
 
     void send(QVector <QString> feedback);
 
+    void feedback(QString feedback);
+
 private slots:
     void check(QString input);
 

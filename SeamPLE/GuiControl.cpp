@@ -146,3 +146,17 @@ void GuiControl::send(QVector <QString> feedback)
         seample.showFeedbackInputEdit(feedback[1]);
     }
 }
+
+void GuiControl::feedback(QString feedback)
+{
+    if (isStandardView())
+    {
+        standard.showFeedbackLabel(feedback);
+
+    }
+    else
+    {
+        seample.showFeedbackLabel(feedback);
+
+    }
+}

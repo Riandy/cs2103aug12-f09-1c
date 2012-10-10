@@ -32,6 +32,6 @@ void Seample::init(int argc, char *argv[])
       feedback.push_back("");
       qDebug()<<feedback[1];
       cout<<userInput<<endl;
-      _view->send(feedback);
+      _view->feedback(feedback[0]);
 
   }
