@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/bg">
+        <file>brown.jpg</file>
+        <file>scenary.jpg</file>
+        <file>inapplogo.png</file>
+        <file>small.gif</file>
+        <file>exit.gif</file>
+        <file>invis.gif</file>
+        <file>calendar.gif</file>
+        <file>testtitle.gif</file>
+        <file>2nd_testtitle.gif</file>
+        <file>enlarge.gif</file>
+        <file>toSmall.gif</file>
+    </qresource>
+</RCC>
