@@ -6,7 +6,8 @@
 #include <vector>
 #include <stdlib.h>
 #include <ctime>
-#include "Action.h"
+#include <sstream>
+#include "task.h"
 
 using namespace std;
 
@@ -18,7 +19,8 @@ private:
 
 	int _numberTasks;
 	vector<task> _storage;
-
+//@Riandy: make this public just for testing purpose
+public:	
 	bool writeFile();
 	bool loadFile();
 

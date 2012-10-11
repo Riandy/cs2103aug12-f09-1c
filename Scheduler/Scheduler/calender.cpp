@@ -4,7 +4,7 @@
 calender::calender()
 {
 	_numberTasks = 0;
-	
+	calender::loadFile();
 }
 
 calender::~calender()
@@ -38,11 +38,11 @@ bool calender::writeFile()
 
 	for (int i=0;i<int(_storage.size());i++)
 	{
-		writeFile<<"Description : "<<_storage[i]._description<<endl;
+		writeFile<<"Description : "<<_storage[i].getEventName()<<endl;
 		//change to tm struct
 		//writeFile<<"Start_Date : "<<_storage[i]._startDate<<endl;
 		//writeFile<<"End_Date : "<<_storage[i]._endDate<<endl;
-		writeFile<<"Priority : "<<_storage[i]._priority<<endl<<endl;
+		writeFile<<"Priority : "<<_storage[i].getPriority()<<endl<<endl;
 	}
 	return true;
 }
@@ -68,7 +68,7 @@ vector<task> calender::SearchByCat(string searchItem)
 	vector<task> _bufferStorage;
 	for (int i = 0; i < int(_storage.size()); i++)
 	{
-		string  bufferString = _storage[i]._category;
+		string  bufferString = _storage[i].getCategory();
 		if (bufferString.find(searchItem))
 		{
 			_bufferStorage.push_back(_storage[i]);
@@ -84,7 +84,7 @@ vector<task> calender::SearchByTask(string searchItem)
 	vector<task> _bufferStorage;
 	for (int i = 0; i < int(_storage.size()); i++)
 	{
-		string  bufferString = _storage[i]._description;
+		string  bufferString = _storage[i].getEventName();
 		if (bufferString.find(searchItem))
 		{
 			_bufferStorage.push_back(_storage[i]);
@@ -106,43 +106,95 @@ vector<task> calender::displayDatabase()
 
 bool calender::loadFile()
 {
+	//@Riandy
 	//clear all the content of the storage before loading the new one from
 	//storage textfile
-
 	_storage.clear();
+
+	cout<<"Hello I am Loading"<<endl;
 	
 	ifstream readFile("storage.txt");
-	string temp,description;
-	int priority,count=0;
-	int startDate,endDate;
+	
+	string temp,description,priority,category;
+	char space;
+	int count=0;
+	string startDate,endDate;
+	//variable temp is used to read unecessary string/ character
 
 	while(readFile>>temp)
 	{
 		count++;
+	
 		//read the semicolon
 		readFile>>temp;
+		//read the space
+		readFile.get(space);
 		getline(readFile,description);
-
-		readFile>>temp;
-		readFile>>temp;
-		readFile>>startDate;
-
-		readFile>>temp;
-		readFile>>temp;
-		readFile>>endDate;
+		//cout<<description<<endl;
 		
+		readFile>>temp;
+		//cout<<temp;
+		readFile>>temp;
+		getline(readFile,startDate);
+		istringstream iss(startDate);
+		tm _startDate;
+		iss >> _startDate.tm_yday;
+		iss >> temp;
+		iss >> _startDate.tm_mon;
+		iss >> temp;
+		iss >> _startDate.tm_year;
+		iss >> temp;
+		iss >> _startDate.tm_hour;
+		iss >> temp;
+		iss >> _startDate.tm_min;
+		iss >> temp;
+		iss >> _startDate.tm_sec;
+
+		//cout<<_startDate.tm_yday<<" "<<_startDate.tm_sec<<endl;
+		//cout<<description<<endl;
+		//readFile>>startDate;
+
+		readFile>>temp;
+		//cout<<temp;
+		readFile>>temp;
+		getline(readFile,endDate);
+		istringstream isss(endDate);
+		tm _endDate;
+		isss >> _endDate.tm_yday;
+		isss >> temp;
+		isss >> _endDate.tm_mon;
+		isss >> temp;
+		isss >> _endDate.tm_year;
+		isss >> temp;
+		isss >> _endDate.tm_hour;
+		isss >> temp;
+		isss >> _endDate.tm_min;
+		isss >> temp;
+		isss >> _endDate.tm_sec;
+		//cout<<_endDate.tm_yday<<" "<<_endDate.tm_sec<<endl;
+
 		readFile>>temp;
 		readFile>>temp;
 		readFile>>priority;
+		//cout<<priority<<endl;
+
+		readFile>>temp;
+		readFile>>temp;
+		readFile>>category;
+		//cout<<category<<endl;
 
 		task* newTask= new task;
-		newTask->_description=description;
-		//newTask->_startDate=startDate;
-		newTask->_priority=priority;
-		//newTask->_endDate=endDate;
-		newTask->_id=count;
-
+		newTask->setID(count);
+		newTask->setEventName(description);
+		newTask->setStartDate(_startDate);
+		newTask->setEndDate(_endDate);
+		newTask->setPriority(priority);
+		
 		_storage.push_back(*newTask);
+
 	}
+	cout<<_storage.size()<<endl;
+	cout<<_storage.begin()->getEventName()<<endl;
+	cout<<_storage.at(1).getEventName()<<endl;
 	return true;
 }
