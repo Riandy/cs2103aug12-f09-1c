@@ -12,7 +12,7 @@ scheduler::~scheduler()
 vector<string> scheduler::executeCommand(Action newAction)
 {
 
-    cout<<"HERE I AM"<<endl;
+
 
     //get the command type
     string command=newAction.getCommand();
