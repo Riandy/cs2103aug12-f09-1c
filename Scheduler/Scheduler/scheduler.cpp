@@ -92,6 +92,7 @@ void scheduler::convertToString(vector<task> taskVector)
 		string _startDate = convertToDate(taskVector[i].getStartDate());
 		string _endDate = convertToDate(taskVector[i].getEndDate());
 
+		//@John
 		stringstream strStream;
 		strStream<<taskVector[i].getEventName();
 		strStream<<_startDate;
@@ -101,22 +102,22 @@ void scheduler::convertToString(vector<task> taskVector)
 		strStream<<taskVector[i].getID();
 		string taskString = strStream.str();
 		_result.push_back(taskString);
+
 	}
 
 }
 
-
+//@Riandy : changed the format abit
 string scheduler::convertToDate(tm _date)
 {
 	string _result;
-	_result = _date.tm_min;
-	_result += _date.tm_hour;
-	_result += _date.tm_mday;
-	_result += _date.tm_mon;
-	_result += _date.tm_year;
+	_result = _date.tm_yday + " / ";
+	_result += _date.tm_mon + " / ";
+	_result += _date.tm_year + " - ";
+	_result += _date.tm_hour + " : ";
+	_result += _date.tm_mon + " : ";
+	_result += _date.tm_sec ;
 	return _result;
-
-
 }
 
 void scheduler::generalError()

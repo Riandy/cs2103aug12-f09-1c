@@ -38,5 +38,8 @@ vector<task> SearchByCat(string searchItem);
 vector<task> SearchByTask(string searchItem); 
 vector<task> displayDatabase(); 
 
+//implement the convert to date
+string convertToDate(tm _date);
+
 };
 #endif
