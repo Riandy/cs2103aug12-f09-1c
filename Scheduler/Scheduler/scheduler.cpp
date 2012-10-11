@@ -14,14 +14,15 @@ vector<string> scheduler::executeCommand(Action newAction)
 	string command=newAction.getCommand();
 	taskVector.clear();
 	_result.clear();
+
 	//process the given information to task
 	task newTask;
-	newTask._category=newAction.getCategory();
-	newTask._description=newAction.getEventName();
-	newTask._endDate=newAction.getEndDate();
-	newTask._priority=newAction.getPriority();
-	newTask._startDate=newAction.getStartDate();
-	newTask._id=newAction.getID();
+	newTask.setEventName(newAction.getEventName());
+	newTask.setCategory(newAction.getCategory());
+	newTask.setPriority(newAction.getPriority());
+	newTask.setStartDate(newAction.getStartDate());
+	newTask.setEndDate(newAction.getEndDate());
+	newTask.setID(newAction.getID());
 
 	if(command=="ADD")
 	{
@@ -32,10 +33,10 @@ vector<string> scheduler::executeCommand(Action newAction)
 	}
 	else if(command=="DELETE")
 	{
-		if(eventCalender.checkID(newTask._id))
+		if(eventCalender.checkID(newTask.getID()))
 		{
 			// We want to delete, then show the new database to the user
-			eventCalender.deleteItem(newTask._id);
+			eventCalender.deleteItem(newTask.getID());
 			taskVector = eventCalender.displayDatabase();
 			convertToString(taskVector);
 		}
@@ -53,16 +54,16 @@ vector<string> scheduler::executeCommand(Action newAction)
 	{
 		//can find by category or task
 		//case 1: if category is not empty (are we using "" or 0 flag?)
-		if(newTask._category!="")
+		if(newTask.getCategory()!="")
 		{		
-			taskVector = eventCalender.SearchByCat(newTask._category);
+			taskVector = eventCalender.SearchByCat(newTask.getCategory());
 			convertToString(taskVector);
 
 		}
 		//case 2: search by task
-		else if (newTask._description!="")
+		else if (newTask.getEventName()!="")
 		{
-			taskVector = eventCalender.SearchByTask(newTask._description);
+			taskVector = eventCalender.SearchByTask(newTask.getEventName());
 			convertToString(taskVector);
 
 		}
@@ -88,16 +89,16 @@ void scheduler::convertToString(vector<task> taskVector)
 	for (int i = 0; i < vectorSize; i++)
 		
 	{
-		string _startDate = convertToDate(taskVector[i]._startDate);
-		string _endDate = convertToDate(taskVector[i]._endDate);
+		string _startDate = convertToDate(taskVector[i].getStartDate());
+		string _endDate = convertToDate(taskVector[i].getEndDate());
 
 		stringstream strStream;
-		strStream<<taskVector[i]._description;
+		strStream<<taskVector[i].getEventName();
 		strStream<<_startDate;
 		strStream<<_endDate;
-		strStream<<taskVector[i]._priority;
-		strStream<<taskVector[i]._category;
-		strStream<<taskVector[i]._id;
+		strStream<<taskVector[i].getPriority();
+		strStream<<taskVector[i].getCategory();
+		strStream<<taskVector[i].getID();
 		string taskString = strStream.str();
 		_result.push_back(taskString);
 	}
