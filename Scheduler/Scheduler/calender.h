@@ -19,8 +19,6 @@ private:
 
 	int _numberTasks;
 	vector<task> _storage;
-//@Riandy: make this public just for testing purpose
-public:	
 	bool writeFile();
 	bool loadFile();
 

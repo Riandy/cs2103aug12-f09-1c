@@ -5,7 +5,6 @@ calender::calender()
 {
 	_numberTasks = 0;
 	calender::loadFile();
-	writeFile();
 }
 
 calender::~calender()
@@ -26,8 +25,13 @@ string calender::convertToDate(tm _date)
 
 bool calender::addItem(task currentTask)
 {
+	currentTask.setID(++_numberTasks);
+	cout<<"add item is called"<<endl;
+	cout<<"storage size after add"<<_storage.size()<<endl;
 	_storage.push_back(currentTask);
-	_numberTasks++;
+	cout<<"storage size after add"<<_storage.size()<<endl;
+	writeFile();
+	//_numberTasks++;
 	return true;
 }
 
@@ -35,8 +39,10 @@ bool calender::addItem(task currentTask)
 // 1 when the user is doing input. 
 bool calender::deleteItem(int taskID)
 {
-	_storage.erase(_storage.begin() + (taskID-1));
+
+	_storage.erase(_storage.begin()+taskID-1);
 	_numberTasks--;
+	writeFile();
 	return true;
 }
 
@@ -133,13 +139,13 @@ bool calender::loadFile()
 	
 	string temp,description,priority,category;
 	char space;
-	int count=0;
+	_numberTasks=0;
 	string startDate,endDate;
 	//variable temp is used to read unecessary string/ character
 
 	while(readFile>>temp)
 	{
-		count++;
+		_numberTasks++;
 	
 		//read the semicolon
 		readFile>>temp;
@@ -169,7 +175,7 @@ bool calender::loadFile()
 		//cout<<_startDate.tm_yday<<" "<<_startDate.tm_sec<<endl;
 		//cout<<description<<endl;
 		//readFile>>startDate;
-		cout<<"date : "<<_startDate.tm_min<<endl;
+		//cout<<"date : "<<_startDate.tm_min<<endl;
 		readFile>>temp;
 		//cout<<temp;
 		readFile>>temp;
@@ -200,7 +206,7 @@ bool calender::loadFile()
 		//cout<<category<<endl;
 
 		task* newTask= new task;
-		newTask->setID(count);
+		newTask->setID(_numberTasks);
 		newTask->setEventName(description);
 		newTask->setStartDate(_startDate);
 		newTask->setEndDate(_endDate);
