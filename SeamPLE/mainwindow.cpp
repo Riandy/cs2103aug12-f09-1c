@@ -50,7 +50,7 @@ void MainWindow::enterTriggered()
 
 void MainWindow::changeViewTriggered()
 {
-    emit toStandardView();
+    emit toStandardView(ui->lineEdit->text(), ui->label->text());
 }
 
 void MainWindow:: changeGeometry()
