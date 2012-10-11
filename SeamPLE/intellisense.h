@@ -1,7 +1,7 @@
 #ifndef	INTELLISENSE_H
 #define INTELLISENSE_H
 #include <sstream>
-#include <string.h>
+#include <string>
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -101,4 +101,4 @@ public:
 
 };
 
-#endif
+#endif;

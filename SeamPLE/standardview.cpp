@@ -51,7 +51,7 @@ void StandardView::enterTriggered()
 
 void StandardView::changeViewTriggered()
 {
-    emit toSeampleView(ui->lineEdit->text(),ui->label->text());
+    emit toSeampleView();
 }
 
 void StandardView:: changeAutoResolution()

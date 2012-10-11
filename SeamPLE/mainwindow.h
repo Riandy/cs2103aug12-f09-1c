@@ -26,7 +26,7 @@ signals:
 
     void run(QString input);
 
-    void toStandardView(QString input, QString inputChecked);
+    void toStandardView();
 
 private slots:
     void recieve(QString input);
