@@ -1,14 +1,12 @@
 #include <QtGui/QApplication>
 #include "GuiControl.h"
-#include "seample.h"
 
 int main(int argc, char *argv[])
 {
-    static Seample app;
-    app.init(argc,argv);
+    QApplication a(argc, argv);
+    GuiControl view;
+    view.setStandardView(false);
+    view.showGui();
 
-
-
-
-    return 0;
+    return a.exec();
 }

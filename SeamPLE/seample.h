@@ -9,7 +9,8 @@
 #include <iostream>
 #include "seample.h"
 
-class GuiControl;
+//WY: Comment out for now
+//class GuiControl;
 
 class Seample
 {

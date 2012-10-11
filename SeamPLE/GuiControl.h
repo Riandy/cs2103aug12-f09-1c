@@ -5,56 +5,34 @@
 #include "mainwindow.h"
 #include "standardview.h"
 #include <QDebug>
-#include <string>
-#include "seample.h"
-
-
-using namespace std;
-
-class Seample;
 
 class GuiControl: public QObject
 {
     Q_OBJECT
-
-
 
 public:
     explicit GuiControl(QObject *parent = 0);
 
     void showGui();
 
-    void init(Seample *_app);
-
     void setStandardView (bool flag);
 
     bool isStandardView();
-
-    void send(QVector <QString> feedback);
-
-    void feedback(QString feedback);
 
 private slots:
     void check(QString input);
 
     void passScheduler(QString input);
 
-    void changeView();
+    void changeView(QString input, QString inputChecked);
 
 private:
-
-    Seample *app;
-
-
     void emptyResponse();
 
-
-
+    void send(QVector <QString> feedback);
 
 private:
     bool standardViewFlag;
-
-
 
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 
