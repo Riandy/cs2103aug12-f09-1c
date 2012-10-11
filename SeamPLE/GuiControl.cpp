@@ -88,7 +88,8 @@ void GuiControl::check(QString input)
 void GuiControl::passScheduler(QString input)
 {
     //Code to be implemented here to be sent into  scheduler classes
-    qDebug() << "found";
+    // qDebug() << "found";
+    this->app->fireAction();
 }
 
 void GuiControl::changeView(QString input, QString inputChecked)

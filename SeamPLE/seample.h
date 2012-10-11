@@ -8,9 +8,10 @@
 #include <string>
 #include <iostream>
 #include "seample.h"
+#include "scheduler.h"
 
-//WY: Comment out for now
-//class GuiControl;
+class GuiControl;
+class scheduler;
 
 class Seample
 {
@@ -20,6 +21,7 @@ private:
     Action response;
     Intellisense intellisense;
     GuiControl *_view;
+    scheduler  *_scheduler;
     QVector <QString> feedback;
 
 public:
@@ -27,6 +29,7 @@ public:
     void init(int argc, char *argv[]);
     void updateUserInput(string userInput);
     void run(string _userInput);
+    void fireAction();
 };
 
 #endif // SEAMPLE_H
