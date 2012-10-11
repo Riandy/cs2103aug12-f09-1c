@@ -5,11 +5,24 @@ calender::calender()
 {
 	_numberTasks = 0;
 	calender::loadFile();
+	writeFile();
 }
 
 calender::~calender()
 {
 }
+
+string calender::convertToDate(tm _date)
+{
+	string _result;
+	ostringstream convert;
+	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
+	_result=convert.str();
+	//cout<<"YAY"<<_result<<endl;
+	return _result;
+}
+
 
 bool calender::addItem(task currentTask)
 {
@@ -39,11 +52,14 @@ bool calender::writeFile()
 	for (int i=0;i<int(_storage.size());i++)
 	{
 		writeFile<<"Description : "<<_storage[i].getEventName()<<endl;
-		//change to tm struct
-		//writeFile<<"Start_Date : "<<_storage[i]._startDate<<endl;
-		//writeFile<<"End_Date : "<<_storage[i]._endDate<<endl;
-		writeFile<<"Priority : "<<_storage[i].getPriority()<<endl<<endl;
+		//changed to tm struct
+		writeFile<<"Start_Date : "<<convertToDate(_storage[i].getStartDate())<<endl;
+		writeFile<<"End_Date : "<<convertToDate(_storage[i].getEndDate())<<endl;
+		writeFile<<"Priority : "<<_storage[i].getPriority()<<endl;
+		writeFile<<"Category : "<<_storage[i].getCategory()<<endl<<endl;
+		//cout<<"Test Date : "<<convertToDate(_storage[i].getStartDate())<<endl;
 	}
+
 	return true;
 }
 
@@ -153,7 +169,7 @@ bool calender::loadFile()
 		//cout<<_startDate.tm_yday<<" "<<_startDate.tm_sec<<endl;
 		//cout<<description<<endl;
 		//readFile>>startDate;
-
+		cout<<"date : "<<_startDate.tm_min<<endl;
 		readFile>>temp;
 		//cout<<temp;
 		readFile>>temp;
@@ -189,12 +205,9 @@ bool calender::loadFile()
 		newTask->setStartDate(_startDate);
 		newTask->setEndDate(_endDate);
 		newTask->setPriority(priority);
-		
+		newTask->setCategory(category);
 		_storage.push_back(*newTask);
 
 	}
-	cout<<_storage.size()<<endl;
-	cout<<_storage.begin()->getEventName()<<endl;
-	cout<<_storage.at(1).getEventName()<<endl;
 	return true;
 }
