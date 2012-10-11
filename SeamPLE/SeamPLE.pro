@@ -18,7 +18,9 @@ SOURCES += main.cpp\
     intellisense.cpp \
     Action.cpp \
     task.cpp \
-    seample.cpp
+    seample.cpp \
+    scheduler.cpp \
+    calender.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -28,7 +30,9 @@ HEADERS  += \
     intellisense.h \
     Action.h \
     task.h \
-    seample.h
+    seample.h \
+    scheduler.h \
+    calender.h
 
 FORMS    += \
     standardview.ui \

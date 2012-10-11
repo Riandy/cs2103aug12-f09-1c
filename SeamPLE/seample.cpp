@@ -34,7 +34,10 @@ void Seample::init(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     GuiControl view;
+    scheduler scheduler;
+    _scheduler = &scheduler;
     _view=&view;
+    scheduler.init(this);
     view.init(this);
     view.setStandardView(false);
     view.showGui();
@@ -59,5 +62,11 @@ void Seample::init(int argc, char *argv[])
       DisplayEvent(response);
       _view->feedback(feedback[0]);
       feedback.clear();
+
+  }
+
+  void Seample::fireAction()
+  {
+      this->_scheduler->executeCommand(response);
 
   }
