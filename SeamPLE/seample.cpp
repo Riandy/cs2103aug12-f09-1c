@@ -33,14 +33,9 @@ Seample::Seample()
 void Seample::init(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GuiControl view;
     scheduler scheduler;
     _scheduler = &scheduler;
-    _view=&view;
     scheduler.init(this);
-    view.init(this);
-    view.setStandardView(false);
-    view.showGui();
 
     a.exec();
 }
@@ -50,23 +45,50 @@ void Seample::init(int argc, char *argv[])
      this->userInput=userInput;
  }
 
-  void Seample::run(string _userInput)
-  {
-      userInput=_userInput;
+ QVector <QString> Seample::run(bool runCommand, string _userInput)
+ {
+     userInput=_userInput;
+     response=intellisense.check(userInput);
 
+     if (runCommand)
+     {
+          fireAction();
+     }
+     else
+     {
+         feedback.push_back(QString::fromStdString(intellisense.getParameter()));
 
-      response=intellisense.check(userInput);
-      feedback.push_back(QString::fromUtf8(intellisense.getParameter().c_str()));
-      feedback.push_back("");
-      qDebug()<<feedback[0];
-      DisplayEvent(response);
-      _view->feedback(feedback[0]);
-      feedback.clear();
+         //Following line is running the input back to GUI. Needs to be
+         //replaced by feedback string later
+         feedback.push_back(QString::fromStdString(_userInput));
+         qDebug()<<feedback[1];
+         DisplayEvent(response);
 
-  }
+     }
 
-  void Seample::fireAction()
-  {
-      this->_scheduler->executeCommand(response);
+     QVector <QString> result = feedback;
+     feedback.clear();
 
-  }
+     return result;
+ }
+
+ QVector <QString> Seample::fireAction()
+ {
+     vector <string> result =_scheduler->executeCommand(response);
+     return convertQString(result);
+ }
+
+ //Following function is for converting vector of QString
+ //to QVector of QString
+ QVector <QString> Seample::convertQString(vector <string> input)
+ {
+     int size = input.size();
+     QVector <QString> converted;
+
+     for (int i = 0 ; i < size ; i++)
+     {
+         converted.push_back(QString::fromStdString(input[i]));
+     }
+
+     return converted;
+ }

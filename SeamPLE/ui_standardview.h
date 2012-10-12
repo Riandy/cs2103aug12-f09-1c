@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Tue Oct 9 12:28:44 2012
+** Created: Thu Oct 11 16:30:56 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,14 +20,13 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
-#include "sframe.h"
 
 QT_BEGIN_NAMESPACE
 
 class Ui_StandardView
 {
 public:
-    Sframe *frame;
+    QFrame *frame;
     QFrame *line;
     QPushButton *pushButton;
     QLabel *label_3;
@@ -42,13 +41,13 @@ public:
     {
         if (StandardView->objectName().isEmpty())
             StandardView->setObjectName(QString::fromUtf8("StandardView"));
-        StandardView->resize(719, 300);
+        StandardView->resize(895, 593);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
         StandardView->setWindowIcon(icon);
-        frame = new Sframe(StandardView);
+        frame = new QFrame(StandardView);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(120, 80, 491, 161));
+        frame->setGeometry(QRect(10, 10, 831, 561));
         frame->setStyleSheet(QString::fromUtf8("#frame\n"
 "{\n"
 "	background-image: url(:/bg/scenary.jpg);\n"
@@ -145,7 +144,7 @@ public:
         label_2->setFont(font1);
         label_2->setStyleSheet(QString::fromUtf8("#label_2\n"
 "{\n"
-"	;\n"
+"	\n"
 "}"));
         label = new QLabel(frame_2);
         label->setObjectName(QString::fromUtf8("label"));

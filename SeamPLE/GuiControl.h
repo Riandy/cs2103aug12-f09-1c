@@ -4,7 +4,7 @@
 #include <QVector>
 #include "mainwindow.h"
 #include "standardview.h"
-#include <QDebug>
+#include "seample.h"
 
 class GuiControl: public QObject
 {
@@ -34,11 +34,15 @@ private:
 private:
     bool standardViewFlag;
 
+    //Control class that controls the input sent in and send the appropriate
+    //results back to be printed
+    Seample inputProcessor;
+
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 
     //GUI interfaces ==================
-    MainWindow seample;
-    StandardView standard;
+    MainWindow seampleGui;
+    StandardView standardGui;
     //=================================
 
 

@@ -1,7 +1,7 @@
 #ifndef SEAMPLE_H
 #define SEAMPLE_H
 #include <QtGui/QApplication>
-#include "GuiControl.h"
+
 #include "Intellisense.h"
 #include "Action.h"
 #include <QDebug>
@@ -20,16 +20,19 @@ private:
     string userInput;
     Action response;
     Intellisense intellisense;
-    GuiControl *_view;
     scheduler  *_scheduler;
     QVector <QString> feedback;
+
+    //Following function is for converting vector of QString
+    //to QVector of QString
+    QVector <QString> convertQString (vector <string> buffer);
 
 public:
     Seample();
     void init(int argc, char *argv[]);
     void updateUserInput(string userInput);
-    void run(string _userInput);
-    void fireAction();
+    QVector <QString> run(bool runCommand, string _userInput);
+    QVector <QString> fireAction();
 };
 
 #endif // SEAMPLE_H
