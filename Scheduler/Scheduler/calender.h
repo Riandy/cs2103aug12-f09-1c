@@ -6,7 +6,8 @@
 #include <vector>
 #include <stdlib.h>
 #include <ctime>
-#include "Action.h"
+#include <sstream>
+#include "task.h"
 
 using namespace std;
 
@@ -18,7 +19,6 @@ private:
 
 	int _numberTasks;
 	vector<task> _storage;
-
 	bool writeFile();
 	bool loadFile();
 
@@ -35,6 +35,9 @@ bool editTask(task edited);
 vector<task> SearchByCat(string searchItem); 
 vector<task> SearchByTask(string searchItem); 
 vector<task> displayDatabase(); 
+
+//implement the convert to date
+string convertToDate(tm _date);
 
 };
 #endif
