@@ -1,5 +1,4 @@
 #include "scheduler.h"
-#include "seample.h"
 
 scheduler::scheduler()
 {
@@ -11,20 +10,19 @@ scheduler::~scheduler()
 
 vector<string> scheduler::executeCommand(Action newAction)
 {
-
-
-
     //get the command type
     string command=newAction.getCommand();
-    taskVector.clear();
-    _result.clear();
+
+   // this->taskVector.clear();
+    //this->_result.clear();
+
     //process the given information to task
     task newTask;
-    newTask.setCategory(newAction.getCategory());
     newTask.setEventName(newAction.getEventName());
-    newTask.setEndDate(newAction.getEndDate());
+    newTask.setCategory(newAction.getCategory());
     newTask.setPriority(newAction.getPriority());
     newTask.setStartDate(newAction.getStartDate());
+    newTask.setEndDate(newAction.getEndDate());
     newTask.setID(newAction.getID());
 
     if(command=="ADD")
@@ -40,8 +38,8 @@ vector<string> scheduler::executeCommand(Action newAction)
         {
             // We want to delete, then show the new database to the user
             eventCalender.deleteItem(newTask.getID());
-            taskVector = eventCalender.displayDatabase();
-            convertToString(taskVector);
+            //taskVector = eventCalender.displayDatabase();
+            //convertToString(taskVector);
         }
         else
         {
@@ -90,6 +88,8 @@ void scheduler::init(Seample *_app)
     this->app=_app;
 }
 
+
+
 void scheduler::convertToString(vector<task> taskVector)
 {
 
@@ -100,31 +100,31 @@ void scheduler::convertToString(vector<task> taskVector)
         string _startDate = convertToDate(taskVector[i].getStartDate());
         string _endDate = convertToDate(taskVector[i].getEndDate());
 
-        stringstream strStream;
-        strStream<<taskVector[i].getEventName();
-        strStream<<_startDate;
-        strStream<<_endDate;
-        strStream<<taskVector[i].getPriority();
-        strStream<<taskVector[i].getCategory();
-        strStream<<taskVector[i].getID();
-        string taskString = strStream.str();
-        _result.push_back(taskString);
+        //use ostringstream to convert id to string
+        ostringstream convert;
+        convert << taskVector.at(i).getID();
+        string id= convert.str();
+
+        _result.push_back(id);
+        _result.push_back(taskVector.at(i).getEventName());
+        _result.push_back(_startDate);
+        _result.push_back(_endDate);
+        _result.push_back(taskVector.at(i).getPriority());
+        _result.push_back(taskVector.at(i).getCategory());
+
     }
 
 }
 
-
+//@Riandy : changed the format abit (TESTED)
 string scheduler::convertToDate(tm _date)
 {
     string _result;
-    _result = _date.tm_min;
-    _result += _date.tm_hour;
-    _result += _date.tm_mday;
-    _result += _date.tm_mon;
-    _result += _date.tm_year;
+    ostringstream convert;
+    convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
+    _result=convert.str();
     return _result;
-
-
 }
 
 void scheduler::generalError()

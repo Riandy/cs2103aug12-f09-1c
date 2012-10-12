@@ -35,8 +35,7 @@ void Seample::init(int argc, char *argv[])
     QApplication a(argc, argv);
     scheduler scheduler;
     _scheduler = &scheduler;
-    scheduler.init(this);
-
+    this->_scheduler->init(this);
     a.exec();
 }
 
