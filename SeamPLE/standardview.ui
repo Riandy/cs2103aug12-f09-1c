@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>719</width>
-    <height>300</height>
+    <width>895</width>
+    <height>593</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,13 +17,13 @@
    <iconset resource="Resource.qrc">
     <normaloff>:/bg/calendar.gif</normaloff>:/bg/calendar.gif</iconset>
   </property>
-  <widget class="Sframe" name="frame">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>80</y>
-     <width>491</width>
-     <height>161</height>
+     <x>10</x>
+     <y>10</y>
+     <width>721</width>
+     <height>461</height>
     </rect>
    </property>
    <property name="styleSheet">
