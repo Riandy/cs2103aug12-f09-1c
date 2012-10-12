@@ -85,8 +85,6 @@ void GuiControl::passScheduler(QString input)
     //Code to be implemented here to be sent into  scheduler classes
     bool emptyInput = (input.size() == 0);
 
-
-
     if (emptyInput)
     {
         emptyResponse();
@@ -102,10 +100,12 @@ void GuiControl::passScheduler(QString input)
         {
             if (!isStandardView())
             {
+                cout<<"MEOW"<<endl;
                 changeView("",output[0]);
             }
             else
             {
+                cout<<"MEOW123"<<endl;
                 standardGui.showFeedbackInputEdit("");
                 standardGui.showFeedbackLabel(output[0]);
             }

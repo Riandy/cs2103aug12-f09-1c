@@ -83,10 +83,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
-void scheduler::init(Seample *_app)
-{
-    this->app=_app;
-}
+
 
 
 

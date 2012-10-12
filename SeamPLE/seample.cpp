@@ -33,9 +33,6 @@ Seample::Seample()
 void Seample::init(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    scheduler scheduler;
-    _scheduler = &scheduler;
-    this->_scheduler->init(this);
     a.exec();
 }
 
@@ -51,7 +48,7 @@ void Seample::init(int argc, char *argv[])
 
      if (runCommand)
      {
-          fireAction();
+          feedback = fireAction();
      }
      else
      {
@@ -60,7 +57,7 @@ void Seample::init(int argc, char *argv[])
          //Following line is running the input back to GUI. Needs to be
          //replaced by feedback string later
          feedback.push_back(QString::fromStdString(_userInput));
-         qDebug()<<feedback[1];
+         //qDebug()<<feedback[1];
          DisplayEvent(response);
 
      }
@@ -73,7 +70,7 @@ void Seample::init(int argc, char *argv[])
 
  QVector <QString> Seample::fireAction()
  {
-     vector <string> result =_scheduler->executeCommand(response);
+     vector <string> result =_scheduler.executeCommand(response);
      return convertQString(result);
  }
 

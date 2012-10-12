@@ -11,7 +11,7 @@
 #include "scheduler.h"
 
 class GuiControl;
-class scheduler;
+
 
 class Seample
 {
@@ -20,7 +20,7 @@ private:
     string userInput;
     Action response;
     Intellisense intellisense;
-    scheduler  *_scheduler;
+    scheduler  _scheduler;
     QVector <QString> feedback;
 
     //Following function is for converting vector of QString
