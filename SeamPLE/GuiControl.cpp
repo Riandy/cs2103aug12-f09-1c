@@ -100,19 +100,17 @@ void GuiControl::passScheduler(QString input)
         {
             if (!isStandardView())
             {
-                cout<<"MEOW"<<endl;
                 changeView("",output[0]);
             }
             else
             {
-                cout<<"MEOW123"<<endl;
                 standardGui.showFeedbackInputEdit("");
                 standardGui.showFeedbackLabel(output[0]);
             }
         }
         else
         {
-            output.push_back("");
+            output[1] = "";
             send(output);
         }
     }
