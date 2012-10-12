@@ -14,14 +14,15 @@ vector<string> scheduler::executeCommand(Action newAction)
 	string command=newAction.getCommand();
 	taskVector.clear();
 	_result.clear();
+
 	//process the given information to task
 	task newTask;
-	newTask._category=newAction.getCategory();
-	newTask._description=newAction.getEventName();
-	newTask._endDate=newAction.getEndDate();
-	newTask._priority=newAction.getPriority();
-	newTask._startDate=newAction.getStartDate();
-	newTask._id=newAction.getID();
+	newTask.setEventName(newAction.getEventName());
+	newTask.setCategory(newAction.getCategory());
+	newTask.setPriority(newAction.getPriority());
+	newTask.setStartDate(newAction.getStartDate());
+	newTask.setEndDate(newAction.getEndDate());
+	newTask.setID(newAction.getID());
 
 	if(command=="ADD")
 	{
@@ -32,12 +33,12 @@ vector<string> scheduler::executeCommand(Action newAction)
 	}
 	else if(command=="DELETE")
 	{
-		if(eventCalender.checkID(newTask._id))
+		if(eventCalender.checkID(newTask.getID()))
 		{
 			// We want to delete, then show the new database to the user
-			eventCalender.deleteItem(newTask._id);
-			taskVector = eventCalender.displayDatabase();
-			convertToString(taskVector);
+			eventCalender.deleteItem(newTask.getID());
+			//taskVector = eventCalender.displayDatabase();
+			//convertToString(taskVector);
 		}
 		else
 		{
@@ -53,16 +54,16 @@ vector<string> scheduler::executeCommand(Action newAction)
 	{
 		//can find by category or task
 		//case 1: if category is not empty (are we using "" or 0 flag?)
-		if(newTask._category!="")
+		if(newTask.getCategory()!="")
 		{		
-			taskVector = eventCalender.SearchByCat(newTask._category);
+			taskVector = eventCalender.SearchByCat(newTask.getCategory());
 			convertToString(taskVector);
 
 		}
 		//case 2: search by task
-		else if (newTask._description!="")
+		else if (newTask.getEventName()!="")
 		{
-			taskVector = eventCalender.SearchByTask(newTask._description);
+			taskVector = eventCalender.SearchByTask(newTask.getEventName());
 			convertToString(taskVector);
 
 		}
@@ -88,34 +89,34 @@ void scheduler::convertToString(vector<task> taskVector)
 	for (int i = 0; i < vectorSize; i++)
 		
 	{
-		string _startDate = convertToDate(taskVector[i]._startDate);
-		string _endDate = convertToDate(taskVector[i]._endDate);
+		string _startDate = convertToDate(taskVector[i].getStartDate());
+		string _endDate = convertToDate(taskVector[i].getEndDate());
+		
+		//use ostringstream to convert id to string
+		ostringstream convert;
+		convert << taskVector.at(i).getID();
+		string id= convert.str();
 
-		stringstream strStream;
-		strStream<<taskVector[i]._description;
-		strStream<<_startDate;
-		strStream<<_endDate;
-		strStream<<taskVector[i]._priority;
-		strStream<<taskVector[i]._category;
-		strStream<<taskVector[i]._id;
-		string taskString = strStream.str();
-		_result.push_back(taskString);
+		_result.push_back(id);
+		_result.push_back(taskVector.at(i).getEventName());
+		_result.push_back(_startDate);
+		_result.push_back(_endDate);
+		_result.push_back(taskVector.at(i).getPriority());
+		_result.push_back(taskVector.at(i).getCategory());
+
 	}
 
 }
 
-
+//@Riandy : changed the format abit (TESTED)
 string scheduler::convertToDate(tm _date)
 {
 	string _result;
-	_result = _date.tm_min;
-	_result += _date.tm_hour;
-	_result += _date.tm_mday;
-	_result += _date.tm_mon;
-	_result += _date.tm_year;
+	ostringstream convert;
+	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
+	_result=convert.str();
 	return _result;
-
-
 }
 
 void scheduler::generalError()
