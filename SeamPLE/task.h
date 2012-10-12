@@ -1,5 +1,8 @@
+#ifndef TASK_H
+#define TASK_H
 #include <string>
 #include <ctime>
+#include <iostream>
 
 using namespace std;
 
@@ -16,8 +19,8 @@ private:
 
 
 public:
-    task(void);
-    ~task(void);
+    task();
+    ~task();
 
     string getEventName();
     void setEventName(string);
@@ -41,4 +44,4 @@ public:
 
 
 };
-
+#endif

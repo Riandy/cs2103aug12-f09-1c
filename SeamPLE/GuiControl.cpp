@@ -85,6 +85,8 @@ void GuiControl::passScheduler(QString input)
     //Code to be implemented here to be sent into  scheduler classes
     bool emptyInput = (input.size() == 0);
 
+
+
     if (emptyInput)
     {
         emptyResponse();
