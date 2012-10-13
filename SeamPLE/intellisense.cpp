@@ -142,16 +142,25 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 
 string Intellisense::getPriority(vector<string>& tokens)
 {
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    if(tokens.size()>0)
+{
+    string checkHeadString =  tokens.front();
+    string checkTailString =  tokens.back();
+
+
+
+    if((checkHeadString.compare(string("HIGH"))==0)|| checkHeadString.compare(string("high"))==0)
     {
-        string checkString = it->c_str();
-        if((checkString.compare(string("HIGH"))==0) || checkString.compare(string("high"))==0)
-        {
-            it=tokens.erase(it);
-            return string("HIGH");
-        }
+        tokens.erase(tokens.begin());
+        return string("HIGH");
     }
 
+    if((checkTailString.compare(string("HIGH"))==0)|| checkTailString.compare(string("high"))==0)
+    {
+        tokens.pop_back();
+        return string("HIGH");
+    }
+}
     return string("LOW");
 }
 
@@ -455,9 +464,9 @@ Action Intellisense::addOperation(vector<string>& tokens)
 {
     Action task;
     task.setCommand(getCommand(tokens,"ADD"));
-    task.setPriority(getPriority(tokens));
     task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
+    task.setPriority(getPriority(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkAddReq();
