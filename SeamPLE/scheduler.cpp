@@ -71,7 +71,8 @@ vector<string> scheduler::executeCommand(Action newAction)
 	else
 		 generalError();
 
-	
+
+    _result.push_back("");
 	return _result;
 }
 
