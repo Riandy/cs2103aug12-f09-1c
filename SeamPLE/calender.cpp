@@ -26,7 +26,7 @@ string calender::convertToDate(tm _date)
 bool calender::addItem(task currentTask)
 {
     currentTask.setID(++_numberTasks);
-    cout<<"add item is called"<<endl;
+
     cout<<"storage size after add"<<_storage.size()<<endl;
     _storage.push_back(currentTask);
     cout<<"storage size after add"<<_storage.size()<<endl;
@@ -133,7 +133,7 @@ bool calender::loadFile()
     //storage textfile
     _storage.clear();
 
-    cout<<"Hello I am Loading"<<endl;
+
 
     ifstream readFile("storage.txt");
 
