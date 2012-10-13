@@ -18,7 +18,6 @@ string calender::convertToDate(tm _date)
     convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
     convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
     _result=convert.str();
-    //cout<<"YAY"<<_result<<endl;
     return _result;
 }
 
@@ -26,12 +25,8 @@ string calender::convertToDate(tm _date)
 bool calender::addItem(task currentTask)
 {
     currentTask.setID(++_numberTasks);
-
-    cout<<"storage size after add"<<_storage.size()<<endl;
     _storage.push_back(currentTask);
-    cout<<"storage size after add"<<_storage.size()<<endl;
     writeFile();
-    //_numberTasks++;
     return true;
 }
 
@@ -39,6 +34,8 @@ bool calender::addItem(task currentTask)
 // 1 when the user is doing input.
 bool calender::deleteItem(int taskID)
 {
+    if(taskID<1)
+        return false;
 
     _storage.erase(_storage.begin()+taskID-1);
     _numberTasks--;
@@ -57,13 +54,21 @@ bool calender::writeFile()
 
     for (int i=0;i<int(_storage.size());i++)
     {
+        /*
+        //previous version before using the toString method
         writeFile<<"Description : "<<_storage[i].getEventName()<<endl;
         //changed to tm struct
         writeFile<<"Start_Date : "<<convertToDate(_storage[i].getStartDate())<<endl;
         writeFile<<"End_Date : "<<convertToDate(_storage[i].getEndDate())<<endl;
         writeFile<<"Priority : "<<_storage[i].getPriority()<<endl;
         writeFile<<"Category : "<<_storage[i].getCategory()<<endl<<endl;
-        //cout<<"Test Date : "<<convertToDate(_storage[i].getStartDate())<<endl;
+        */
+        vector<string> _event;
+        _event=_storage[i].toString();
+        for(int j=1;j<_event.size();j++)
+            writeFile<<_event.at(j)<<endl;
+        writeFile<<endl;
+        _event.clear();
     }
 
     return true;
@@ -71,7 +76,7 @@ bool calender::writeFile()
 
 bool calender::checkID(int taskID)
 {
-    if (taskID > int(_storage.size()))
+    if (taskID > int(_storage.size()) || taskID<1)
         return false;
     else
         return true;
@@ -91,7 +96,7 @@ vector<task> calender::SearchByCat(string searchItem)
     for (int i = 0; i < int(_storage.size()); i++)
     {
         string  bufferString = _storage[i].getCategory();
-        if (bufferString.find(searchItem))
+        if (bufferString.find(searchItem,0)!=string::npos)
         {
             _bufferStorage.push_back(_storage[i]);
 
@@ -107,7 +112,7 @@ vector<task> calender::SearchByTask(string searchItem)
     for (int i = 0; i < int(_storage.size()); i++)
     {
         string  bufferString = _storage[i].getEventName();
-        if (bufferString.find(searchItem))
+        if (bufferString.find(searchItem,0)!=string::npos)
         {
             _bufferStorage.push_back(_storage[i]);
 
@@ -123,17 +128,12 @@ vector<task> calender::displayDatabase()
     return _storage;
 }
 
-
-
-
 bool calender::loadFile()
 {
     //@Riandy
     //clear all the content of the storage before loading the new one from
     //storage textfile
     _storage.clear();
-
-
 
     ifstream readFile("storage.txt");
 
@@ -152,7 +152,7 @@ bool calender::loadFile()
         //read the space
         readFile.get(space);
         getline(readFile,description);
-        //cout<<description<<endl;
+        //cout<<"Event Name : "<<description<<endl;
 
         readFile>>temp;
         //cout<<temp;

@@ -3,7 +3,8 @@
 #include <string>
 #include <ctime>
 #include <iostream>
-
+#include <vector>
+#include <sstream>
 using namespace std;
 
 
@@ -42,6 +43,9 @@ public:
     int getID();
     void setID(int);
 
+    string convertToDate(tm);
+
+    vector<string> toString();
 
 };
 #endif

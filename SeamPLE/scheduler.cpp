@@ -81,7 +81,7 @@ void scheduler::convertToString(vector<task> taskVector)
 	
 	int vectorSize = taskVector.size();
 	string firstPosition;
-	ostringstream tempString;
+    ostringstream tempString;
 	tempString << "You have ";
 	tempString << taskVector.size();
 	tempString << " results found.";
@@ -90,7 +90,7 @@ void scheduler::convertToString(vector<task> taskVector)
 	for (int i = 0; i < vectorSize; i++)
 		
 	{
-		string _startDate = convertToDate(taskVector[i].getStartDate());
+    /*	string _startDate = convertToDate(taskVector[i].getStartDate());
 		string _endDate = convertToDate(taskVector[i].getEndDate());
 		
 		//use ostringstream to convert id to string
@@ -104,12 +104,20 @@ void scheduler::convertToString(vector<task> taskVector)
 		_result.push_back(_endDate);
 		_result.push_back(taskVector.at(i).getPriority());
 		_result.push_back(taskVector.at(i).getCategory());
-
+    */
+        vector<string> temp;
+        temp=taskVector[i].toString();
+        for(int j=0;j<int(temp.size());j++)
+            _result.push_back(temp.at(j));
+        //clear the temp
+        temp.clear();
 	}
 
 }
 
+/*
 
+//@Riandy says: this is no longer needed since we have implement this method in task class
 string scheduler::convertToDate(tm _date)
 {
 	string _result;
@@ -119,7 +127,7 @@ string scheduler::convertToDate(tm _date)
 	_result=convert.str();
 	return _result;
 }
-
+*/
 void scheduler::generalError()
 {
 	_result.push_back(ERROR_INTELLISENSE_CHECK);
