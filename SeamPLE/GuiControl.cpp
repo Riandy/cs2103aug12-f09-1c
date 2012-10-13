@@ -150,6 +150,11 @@ void GuiControl::emptyResponse()
 
 void GuiControl::send(QVector <QString> feedback)
 {
+    if(feedback.size()<2)              //defensive programming, to ensure feedback has >2 elements
+    {
+        feedback.push_back("");
+    }
+
     if (isStandardView())
     {
         standardGui.showFeedbackLabel(feedback[0]);
