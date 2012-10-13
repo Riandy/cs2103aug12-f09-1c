@@ -7,9 +7,13 @@ task::task(void)
     _startDate.tm_year = 0 ;
     _startDate.tm_mon	= 0;
     _startDate.tm_mday = 0;
+    _startDate.tm_min =0;
+    _startDate.tm_hour=0;
     _endDate.tm_year = 0 ;
     _endDate.tm_mon	= 0;
     _endDate.tm_mday = 0;
+    _endDate.tm_hour=0;
+    _endDate.tm_min=0;
     _priority = "LOW";
     _category = "";
     _id=0;

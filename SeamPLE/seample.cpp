@@ -71,6 +71,7 @@ void Seample::init(int argc, char *argv[])
  QVector <QString> Seample::fireAction()
  {
      vector <string> result =_scheduler.executeCommand(response);
+
      return convertQString(result);
  }
 
