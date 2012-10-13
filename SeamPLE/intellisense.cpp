@@ -327,6 +327,23 @@ tm Intellisense::getDate(vector<string>& tokens)
             }
         }
 
+        if(checkString.size()==8)
+        {
+            if(checkString.at(1) == '\\' && checkString.at(3)=='\\'  || checkString.at(1) == '/' && checkString.at(3)=='/'  )
+            {
+                checkString=removeChar(checkString,"/\\");
+                if(isAllInt(checkString))
+                {
+                    it=tokens.erase(it);
+                    date.tm_mday=atoi(checkString.substr(0,1).c_str());
+                    date.tm_mon=atoi(checkString.substr(1,1).c_str());
+                    date.tm_year=atoi(checkString.substr(2,4).c_str());
+                    return date=getTime(tokens,date);
+                }
+            }
+        }
+
+
         if(tokens.size()>=3)
         {
             int check=checkDateString(checkString);
@@ -342,11 +359,6 @@ tm Intellisense::getDate(vector<string>& tokens)
             }
             --it;
             vector<string>::iterator it_year = ++it;
-
-
-
-
-
 
             string day =it_day->c_str();
             if(day.size()>2 || day.size()<=0 || !isAllInt(day))

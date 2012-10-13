@@ -169,6 +169,7 @@ void GuiControl::emptyResponse()
 
 void GuiControl::send(QVector <QString> feedback)
 {
+
     if (isStandardView())
     {
         standardGui.showFeedbackLabel(feedback[0]);
