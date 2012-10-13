@@ -26,24 +26,19 @@ vector<string> scheduler::executeCommand(Action newAction)
 
 	if(command=="ADD")
 	{
-		// We want to add, then show the new database to the user
 		eventCalender.addItem(newTask);
-		taskVector = eventCalender.displayDatabase();
-		convertToString(taskVector);
+		_result.push_back(ADD_SUCCESS);
 	}
 	else if(command=="DELETE")
 	{
 		if(eventCalender.checkID(newTask.getID()))
 		{
-			// We want to delete, then show the new database to the user
 			eventCalender.deleteItem(newTask.getID());
-			//taskVector = eventCalender.displayDatabase();
-			//convertToString(taskVector);
+			_result.push_back(DELETE_SUCCESS);
 		}
 		else
 		{
 			_result.push_back(ERROR_NOT_FOUND);
-
 		}
 	}
 	else if(command=="EDIT")
@@ -52,13 +47,11 @@ vector<string> scheduler::executeCommand(Action newAction)
 	}
 	else if(command=="FIND")
 	{
-		//can find by category or task
-		//case 1: if category is not empty (are we using "" or 0 flag?)
+		//case 1: search by category
 		if(newTask.getCategory()!="")
 		{		
 			taskVector = eventCalender.SearchByCat(newTask.getCategory());
 			convertToString(taskVector);
-
 		}
 		//case 2: search by task
 		else if (newTask.getEventName()!="")
@@ -86,6 +79,13 @@ void scheduler::convertToString(vector<task> taskVector)
 {
 	
 	int vectorSize = taskVector.size();
+	string firstPosition;
+	ostringstream tempString;
+	tempString << "You have ";
+	tempString << taskVector.size();
+	tempString << " results found.";
+	firstPosition = tempString.str();
+	_result.push_back(firstPosition);
 	for (int i = 0; i < vectorSize; i++)
 		
 	{
@@ -108,7 +108,7 @@ void scheduler::convertToString(vector<task> taskVector)
 
 }
 
-//@Riandy : changed the format abit (TESTED)
+
 string scheduler::convertToDate(tm _date)
 {
 	string _result;
