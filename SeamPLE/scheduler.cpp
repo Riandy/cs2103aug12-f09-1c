@@ -114,7 +114,7 @@ string scheduler::convertToDate(tm _date)
 {
 	string _result;
 	ostringstream convert;
-	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
 	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
 	_result=convert.str();
 	return _result;
