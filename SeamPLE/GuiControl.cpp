@@ -76,6 +76,16 @@ void GuiControl::check(QString input)
     {
         bool command = false;
         QVector <QString> output = inputProcessor.run(command,input.toStdString());
+        bool invalidSchedulerReturn = (output.size() < 2);
+
+        if (invalidSchedulerReturn)
+        {
+            output.clear();
+            output.push_front("INTELLISENSE IS NOT WORKING");
+            output.push_back(input);
+        }
+
+
         send(output);
     }
 }
@@ -93,7 +103,7 @@ void GuiControl::passScheduler(QString input)
     {
         bool command = true;
         QVector <QString> output = inputProcessor.run(command,input.toStdString());
-        bool needStandardView = (output.size()>1);
+        bool needStandardView = (output.size()>2);
 
         //Only commands to hold this should be find and search for now
         if (needStandardView)
@@ -110,7 +120,16 @@ void GuiControl::passScheduler(QString input)
         }
         else
         {
-            output.push_front("");
+            //Push empty line to the start of the vector. This additional portion
+            //is required for send function to output empty line for input line
+            output.push_back("");
+            bool invalidSchedulerReturn = (output.size() == 1);
+
+            if (invalidSchedulerReturn)
+            {
+                output.push_front("SCHEDULER IS NOT WORKING");
+            }
+
             send(output);
         }
     }
