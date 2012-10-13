@@ -93,10 +93,10 @@ void GuiControl::passScheduler(QString input)
     {
         bool command = true;
         QVector <QString> output = inputProcessor.run(command,input.toStdString());
-        int size = output.size();
+        bool needStandardView = (output.size()>1);
 
         //Only commands to hold this should be find and search for now
-        if ((output[size-1]).compare("STANDARDVIEW") == 0)
+        if (needStandardView)
         {
             if (!isStandardView())
             {
@@ -110,7 +110,7 @@ void GuiControl::passScheduler(QString input)
         }
         else
         {
-            output[1] = "";
+            output.push_front("");
             send(output);
         }
     }

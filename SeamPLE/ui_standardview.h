@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Thu Oct 11 16:30:56 2012
+** Created: Sat Oct 13 04:03:31 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,6 +19,8 @@
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QScrollBar>
+#include <QtGui/QTabWidget>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +37,10 @@ public:
     QLineEdit *lineEdit;
     QLabel *label_2;
     QLabel *label;
+    QTabWidget *tabWidget;
+    QWidget *tab;
+    QWidget *tab_2;
+    QScrollBar *verticalScrollBar;
     QPushButton *pushButton_2;
 
     void setupUi(QWidget *StandardView)
@@ -47,7 +53,7 @@ public:
         StandardView->setWindowIcon(icon);
         frame = new QFrame(StandardView);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(10, 10, 831, 561));
+        frame->setGeometry(QRect(10, 10, 721, 461));
         frame->setStyleSheet(QString::fromUtf8("#frame\n"
 "{\n"
 "	background-image: url(:/bg/scenary.jpg);\n"
@@ -112,7 +118,7 @@ public:
 "}"));
         frame_2 = new QFrame(frame);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        frame_2->setGeometry(QRect(0, 40, 491, 121));
+        frame_2->setGeometry(QRect(0, 40, 721, 421));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
         lineEdit = new QLineEdit(frame_2);
@@ -157,6 +163,20 @@ public:
 "{\n"
 "\n"
 "}"));
+        tabWidget = new QTabWidget(frame_2);
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setGeometry(QRect(10, 130, 571, 251));
+        tabWidget->setUsesScrollButtons(false);
+        tab = new QWidget();
+        tab->setObjectName(QString::fromUtf8("tab"));
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
+        verticalScrollBar = new QScrollBar(tab_2);
+        verticalScrollBar->setObjectName(QString::fromUtf8("verticalScrollBar"));
+        verticalScrollBar->setGeometry(QRect(550, 0, 16, 231));
+        verticalScrollBar->setOrientation(Qt::Vertical);
+        tabWidget->addTab(tab_2, QString());
         pushButton_2 = new QPushButton(frame);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setGeometry(QRect(410, 10, 20, 20));
@@ -195,6 +215,9 @@ public:
         retranslateUi(StandardView);
         QObject::connect(pushButton, SIGNAL(clicked()), StandardView, SLOT(close()));
 
+        tabWidget->setCurrentIndex(1);
+
+
         QMetaObject::connectSlotsByName(StandardView);
     } // setupUi
 
@@ -219,6 +242,8 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MV Boli'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffaa00;\">Available Commands: add, delete, mark, unmark, edit and find</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StandardView", "Tab 1", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StandardView", "Tab 2", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QString());
     } // retranslateUi
 
