@@ -323,14 +323,14 @@ tm Intellisense::getDate(vector<string>& tokens)
             int check=checkDateString(checkString);
 
             if(check !=-1)
-            {   cout<<it->c_str()<<endl;
+            {
             it--;
             vector<string>::iterator it_day = it++;
 
-            if(it_day++ == tokens.end())
-            {   cout<<"EXIT"<<endl;
+            if(++it == tokens.end())
+            {                // wenbin's own note, iterator unexplained
                 return date=getTime(tokens,date);
-            }cout<<"I AM HERE"<<endl;
+            }
             --it;
             vector<string>::iterator it_year = ++it;
 
