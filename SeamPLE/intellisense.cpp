@@ -326,7 +326,17 @@ tm Intellisense::getDate(vector<string>& tokens)
             {   cout<<it->c_str()<<endl;
             it--;
             vector<string>::iterator it_day = it++;
+
+            if(it_day++ == tokens.end())
+            {   cout<<"EXIT"<<endl;
+                return date=getTime(tokens,date);
+            }cout<<"I AM HERE"<<endl;
+            --it;
             vector<string>::iterator it_year = ++it;
+
+
+
+
 
 
             string day =it_day->c_str();
