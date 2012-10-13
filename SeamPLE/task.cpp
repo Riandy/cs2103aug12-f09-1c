@@ -81,3 +81,34 @@ void task::setID(int newID)
 {
     _id = newID;
 }
+
+string task::convertToDate(tm _date)
+{
+    string _result;
+    ostringstream convert;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
+    _result=convert.str();
+    //cout<<"YAY"<<_result<<endl;
+    return _result;
+}
+
+vector<string> task::toString()
+{
+    vector<string> result;
+    string _startDate = convertToDate(getStartDate());
+    string _endDate = convertToDate(getEndDate());
+
+    //use ostringstream to convert id to string
+    ostringstream convert;
+    convert << getID();
+    string id= convert.str();
+
+    result.push_back(id);
+    result.push_back("Description : "+getEventName());
+    result.push_back("Start_Date : "+_startDate);
+    result.push_back("End_Date : "+_endDate);
+    result.push_back("Priority : "+getPriority());
+    result.push_back("Category : "+getCategory());
+    return result;
+}
