@@ -293,6 +293,7 @@ tm Intellisense::getDate(vector<string>& tokens)
     tm date;
     date.tm_hour=NULL;
     date.tm_min=NULL;
+    date.tm_sec=NULL;
     date.tm_mday=NULL;
     date.tm_mon=NULL;
     date.tm_year=NULL;
@@ -338,6 +339,38 @@ tm Intellisense::getDate(vector<string>& tokens)
                     date.tm_mday=atoi(checkString.substr(0,1).c_str());
                     date.tm_mon=atoi(checkString.substr(1,1).c_str());
                     date.tm_year=atoi(checkString.substr(2,4).c_str());
+                    return date=getTime(tokens,date);
+                }
+            }
+        }
+
+        if(checkString.size()==9)
+        {
+            if(checkString.at(2) == '\\' && checkString.at(4)=='\\'  || checkString.at(2) == '/' && checkString.at(4)=='/'  )
+            {
+                checkString=removeChar(checkString,"/\\");
+                if(isAllInt(checkString))
+                {
+                    it=tokens.erase(it);
+                    date.tm_mday=atoi(checkString.substr(0,2).c_str());
+                    date.tm_mon=atoi(checkString.substr(2,1).c_str());
+                    date.tm_year=atoi(checkString.substr(3,4).c_str());
+                    return date=getTime(tokens,date);
+                }
+            }
+        }
+
+        if(checkString.size()==9)
+        {
+            if(checkString.at(1) == '\\' && checkString.at(4)=='\\'  || checkString.at(1) == '/' && checkString.at(4)=='/'  )
+            {
+                checkString=removeChar(checkString,"/\\");
+                if(isAllInt(checkString))
+                {
+                    it=tokens.erase(it);
+                    date.tm_mday=atoi(checkString.substr(0,1).c_str());
+                    date.tm_mon=atoi(checkString.substr(1,2).c_str());
+                    date.tm_year=atoi(checkString.substr(3,4).c_str());
                     return date=getTime(tokens,date);
                 }
             }
