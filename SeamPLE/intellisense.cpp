@@ -9,6 +9,7 @@ const string Intellisense::exitCommand = "exit";
 const string Intellisense::sortCommand = "sort";
 const string Intellisense::findCommand = "find";
 const string Intellisense::editCommand = "edit";
+const string Intellisense::undoCommand = "undo";
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
 Intellisense::Intellisense(void)
@@ -62,6 +63,9 @@ Action Intellisense::check(string query)
     case INVALID:
         task=invalidOperation(buffer);
         break;
+    case UNDO:
+        task=undoOperation(buffer);
+        break;
     default:
         break;
     }
@@ -100,7 +104,12 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     }else if(checkString(commandword,exitCommand))
     {
         return EXIT;
-    }else
+    }
+    else if(checkString(commandword,undoCommand))
+    {
+        return UNDO;
+    }
+    else
     {
         return INVALID;
     }
@@ -520,6 +529,14 @@ Action Intellisense::invalidOperation(vector<string>& tokens)
 
     return task;
 }
+Action Intellisense::undoOperation(vector<string>& tokens)
+{
+    Action task;
+    task.setCommand(getCommand(tokens,"UNDO"));
+    setAllStatusFlag(task);
+    return task;
+}
+
 Action Intellisense::sortOperation(vector<string>& tokens)
 {
     Action task;
