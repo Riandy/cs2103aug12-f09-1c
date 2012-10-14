@@ -61,7 +61,8 @@ Action Intellisense::check(string query)
         task=exitOperation(buffer);
         break;
     case INVALID:
-        task=invalidOperation(buffer);
+        //task=invalidOperation(buffer);
+        task=quickAddOperation(buffer);
         break;
     case UNDO:
         task=undoOperation(buffer);
@@ -152,24 +153,24 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 string Intellisense::getPriority(vector<string>& tokens)
 {
     if(tokens.size()>0)
-{
-    string checkHeadString =  tokens.front();
-    string checkTailString =  tokens.back();
-
-
-
-    if((checkHeadString.compare(string("HIGH"))==0)|| checkHeadString.compare(string("high"))==0)
     {
-        tokens.erase(tokens.begin());
-        return string("HIGH");
-    }
+        string checkHeadString =  tokens.front();
+        string checkTailString =  tokens.back();
 
-    if((checkTailString.compare(string("HIGH"))==0)|| checkTailString.compare(string("high"))==0)
-    {
-        tokens.pop_back();
-        return string("HIGH");
+
+
+        if((checkHeadString.compare(string("HIGH"))==0)|| checkHeadString.compare(string("high"))==0)
+        {
+            tokens.erase(tokens.begin());
+            return string("HIGH");
+        }
+
+        if((checkTailString.compare(string("HIGH"))==0)|| checkTailString.compare(string("high"))==0)
+        {
+            tokens.pop_back();
+            return string("HIGH");
+        }
     }
-}
     return string("LOW");
 }
 
@@ -184,20 +185,20 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
         time=it->c_str();
         if(time.size()>=5)
         {if(time.at(2) == ':' )
-        {
-            if(time.size()==5)
             {
-                time=removeChar(time,":");
-                if(isAllInt(time))
+                if(time.size()==5)
                 {
-                    it=tokens.erase(it);
-                    date.tm_hour=atoi(time.substr(0,2).c_str());
-                    date.tm_min=atoi(time.substr(2,2).c_str());
-                    return date;
-                }
+                    time=removeChar(time,":");
+                    if(isAllInt(time))
+                    {
+                        it=tokens.erase(it);
+                        date.tm_hour=atoi(time.substr(0,2).c_str());
+                        date.tm_min=atoi(time.substr(2,2).c_str());
+                        return date;
+                    }
 
+                }
             }
-        }
         }else if(time.size()==4)
         {
             if(checkString("PM",time.substr(2,2))|| checkString("AM",time.substr(2,2)))
@@ -342,49 +343,49 @@ tm Intellisense::getDate(vector<string>& tokens)
 
             if(check !=-1)
             {
-            it--;
-            vector<string>::iterator it_day = it++;
+                it--;
+                vector<string>::iterator it_day = it++;
 
-            if(++it == tokens.end())
-            {                // wenbin's own note, iterator unexplained
+                if(++it == tokens.end())
+                {                // wenbin's own note, iterator unexplained
+                    return date=getTime(tokens,date);
+                }
+                --it;
+                vector<string>::iterator it_year = ++it;
+
+
+
+
+
+
+                string day =it_day->c_str();
+                if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+                {
+                    return date=getTime(tokens,date);
+                }
+                string year = it_year->c_str();
+                if(year.size()!=4 || !isAllInt(year))
+                {
+                    return date=getTime(tokens,date);
+                }
+                if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+                {
+
+                    return date=getTime(tokens,date);
+                }
+                int month = check;
+
+
+                it_day=tokens.erase(it_day);
+                it_day=tokens.erase(it_day);
+                it_day=tokens.erase(it_day);
+
+                it=it_day;
+
+                date.tm_mday=atoi(day.c_str());
+                date.tm_mon=month;
+                date.tm_year=atoi(year.c_str());
                 return date=getTime(tokens,date);
-            }
-            --it;
-            vector<string>::iterator it_year = ++it;
-
-
-
-
-
-
-            string day =it_day->c_str();
-            if(day.size()>2 || day.size()<=0 || !isAllInt(day))
-            {
-                return date=getTime(tokens,date);
-            }
-            string year = it_year->c_str();
-            if(year.size()!=4 || !isAllInt(year))
-            {
-                return date=getTime(tokens,date);
-            }
-            if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
-            {
-
-                return date=getTime(tokens,date);
-            }
-            int month = check;
-
-
-            it_day=tokens.erase(it_day);
-            it_day=tokens.erase(it_day);
-            it_day=tokens.erase(it_day);
-
-            it=it_day;
-
-            date.tm_mday=atoi(day.c_str());
-            date.tm_mon=month;
-            date.tm_year=atoi(year.c_str());
-            return date=getTime(tokens,date);
 
 
             }
@@ -521,11 +522,25 @@ Action Intellisense::markOperation(vector<string>& tokens)
 
     return task;
 }
-Action Intellisense::invalidOperation(vector<string>& tokens)
+//Action Intellisense::invalidOperation(vector<string>& tokens)
+Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
     Action task;
-    task.setCommand(getCommand(tokens,"INVALID"));
+    //task.setCommand(getCommand(tokens,"INVALID"));//remove this as we now treat this as quick add instead
+    //start of quick add algo
+    //this is where we perform the quick add algorithm
+    task.setCommand("ADD");// we assume add if no command word is found
+    task.determineDate(getDate(tokens),getDate(tokens));//expand this to quick add date function
+    task.setCategory(getCategory(tokens));
+    task.setPriority(getPriority(tokens));
+    task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
+    checkAddReq();
+    smartAutoFill(task);//auto fill some of the fields that are unentered
+    return task;
+    //the end of quick add
+    setAllStatusFlag(task);
+
 
     return task;
 }
@@ -581,8 +596,8 @@ void Intellisense::setAllStatusFlag(Action task)
 
     bool isDateNotSet;
     isDateNotSet = (task.getStartDate().tm_year == 0	&&
-        task.getStartDate().tm_mon	== 0   &&
-        task.getStartDate().tm_mday == 0);
+                    task.getStartDate().tm_mon	== 0   &&
+                    task.getStartDate().tm_mday == 0);
     if(isDateNotSet)
         setStatusFlagAt(IDATE,false);
     else
@@ -590,8 +605,8 @@ void Intellisense::setAllStatusFlag(Action task)
 
     bool isDateEndNotSet;
     isDateNotSet = (task.getEndDate().tm_year == 0	&&
-        task.getEndDate().tm_mon	== 0   &&
-        task.getEndDate().tm_mday == 0);
+                    task.getEndDate().tm_mon	== 0   &&
+                    task.getEndDate().tm_mday == 0);
     if(isDateNotSet)
         setStatusFlagAt(IDATEEND,false);
     else

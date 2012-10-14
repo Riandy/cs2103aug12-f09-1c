@@ -72,7 +72,8 @@ public:
     Action exitOperation(vector<string>& tokens);
     Action displayOperation(vector<string>& tokens);
     Action markOperation(vector<string>& tokens);
-    Action invalidOperation(vector<string>& tokens);
+    //Action invalidOperation(vector<string>& tokens);
+    Action quickAddOperation(vector<string>& tokens);
     Action sortOperation(vector<string>& tokens);
     Action findOperation(vector<string>& tokens);
     Action editOperation(vector<string>& tokens);
