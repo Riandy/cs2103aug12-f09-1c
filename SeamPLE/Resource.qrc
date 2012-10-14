@@ -8,8 +8,8 @@
         <file>invis.gif</file>
         <file>scenary.jpg</file>
         <file>small.gif</file>
-        <file>testtitle.gif</file>
         <file>toSmall.gif</file>
         <file>calendar.gif</file>
+        <file>testtitle.gif</file>
     </qresource>
 </RCC>

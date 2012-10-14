@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Oct 11 16:29:41 2012
+** Created: Sun Oct 14 09:31:29 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -161,6 +161,7 @@ public:
 "{\n"
 "\n"
 "}"));
+        label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
         label_2 = new QLabel(frame_2);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(330, 3, 151, 51));
