@@ -1,6 +1,6 @@
 #include "seample.h"
 
-
+/*
 void DisplayDate(tm date)
 {
     cout<<string("Date : ")<<date.tm_mday;
@@ -23,7 +23,7 @@ void DisplayEvent(Action task)
     //cout<<string("Req Met : ")<<task.getrequirementsMet()<<endl;
     cout<<string("******************")<<endl;
 }
-
+*/
 
 Seample::Seample()
 {
@@ -58,7 +58,7 @@ void Seample::init(int argc, char *argv[])
          //replaced by feedback string later
          feedback.push_back(QString::fromStdString(_userInput));
          //qDebug()<<feedback[1];
-         DisplayEvent(response);
+         //DisplayEvent(response);
 
      }
 
