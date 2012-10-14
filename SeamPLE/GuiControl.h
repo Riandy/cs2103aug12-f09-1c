@@ -17,7 +17,6 @@ public:
 
     void setStandardView (bool flag);
 
-    bool isStandardView();
 
 private slots:
     void check(QString input);
@@ -27,9 +26,15 @@ private slots:
     void changeView(QString input, QString inputChecked);
 
 private:
+    bool isStandardView();
+
     void emptyResponse();
 
     void send(QVector <QString> feedback);
+
+    void setStandardGuiSignals();
+
+    void setSeampleGuiSignals();
 
 private:
     bool standardViewFlag;

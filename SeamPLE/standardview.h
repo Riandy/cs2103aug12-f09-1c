@@ -1,8 +1,8 @@
 #ifndef STANDARDVIEW_H
 #define STANDARDVIEW_H
 
-#include <QMainWindow>
 #include <QString>
+#include "GuiShortcuts.h"
 
 namespace Ui {
 class StandardView;
@@ -36,12 +36,10 @@ private slots:
 
 private:
     void changeAutoResolution();
+
     Ui::StandardView *ui;
 
-
-
-
-
+    GuiShortcuts allShortcuts;
 };
 
 #endif // STANDARDVIEW_H

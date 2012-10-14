@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
+    allShortcuts.setShortcutsTo(this);
+
     connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
             this,SLOT(recieve(QString)));
 
@@ -18,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
             this,SLOT(enterTriggered()));
 
     connect(ui->pushButton_2,SIGNAL(clicked()),
+            this,SLOT(changeViewTriggered()));
+
+    connect(allShortcuts.switchView,SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
 }
 
