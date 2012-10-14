@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include <QDesktopWidget>
 #include <QString>
+#include "GuiShortcuts.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +41,8 @@ private:
     int getPosY(int maxY);
 
     Ui::MainWindow *ui;
+
+    GuiShortcuts allShortcuts;
 
 };
 

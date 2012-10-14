@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     task.cpp \
     seample.cpp \
     scheduler.cpp \
-    calender.cpp
+    calender.cpp \
+    GuiShortcuts.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -32,7 +33,8 @@ HEADERS  += \
     task.h \
     seample.h \
     scheduler.h \
-    calender.h
+    calender.h \
+    GuiShortcuts.h
 
 FORMS    += \
     standardview.ui \
