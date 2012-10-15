@@ -20,7 +20,8 @@ enum operation{
     FIND,
     EDIT,
     INVALID,
-    UNDO
+    UNDO,
+    REDO
 };
 
 
@@ -37,6 +38,7 @@ private:
     static const string findCommand;
     static const string editCommand;
     static const string undoCommand;
+    static const string redoCommand;
     static const string months[12];
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
@@ -78,6 +80,7 @@ public:
     Action findOperation(vector<string>& tokens);
     Action editOperation(vector<string>& tokens);
     Action undoOperation(vector<string>& tokens);
+    Action redoOperation(vector<string>& tokens);
 
     bool getStatusFlagAt(int);
     void setStatusFlagAt(int,bool);
