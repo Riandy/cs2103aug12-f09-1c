@@ -10,6 +10,7 @@ const string Intellisense::sortCommand = "sort";
 const string Intellisense::findCommand = "find";
 const string Intellisense::editCommand = "edit";
 const string Intellisense::undoCommand = "undo";
+const string Intellisense::redoCommand = "redo";
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
 Intellisense::Intellisense(void)
@@ -67,6 +68,9 @@ Action Intellisense::check(string query)
     case UNDO:
         task=undoOperation(buffer);
         break;
+    case REDO:
+        task=redoOperation(buffer);
+        break;
     default:
         break;
     }
@@ -109,6 +113,10 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     else if(checkString(commandword,undoCommand))
     {
         return UNDO;
+    }
+    else if(checkString(commandword,redoCommand))
+    {
+        return REDO;
     }
     else
     {
@@ -548,6 +556,13 @@ Action Intellisense::undoOperation(vector<string>& tokens)
 {
     Action task;
     task.setCommand(getCommand(tokens,"UNDO"));
+    setAllStatusFlag(task);
+    return task;
+}
+Action Intellisense::redoOperation(vector<string>& tokens)
+{
+    Action task;
+    task.setCommand(getCommand(tokens,"REDO"));
     setAllStatusFlag(task);
     return task;
 }
