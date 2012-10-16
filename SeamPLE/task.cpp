@@ -15,7 +15,7 @@ task::task(void)
     _endDate.tm_hour=0;
     _endDate.tm_min=0;
     _priority = "LOW";
-    _category = "";
+    _category = "#";
     _id=0;
 }
 
