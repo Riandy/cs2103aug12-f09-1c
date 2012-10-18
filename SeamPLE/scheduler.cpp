@@ -23,7 +23,84 @@ vector<string> scheduler::executeCommand(Action newAction)
 	newTask.setStartDate(newAction.getStartDate());
 	newTask.setEndDate(newAction.getEndDate());
 	newTask.setID(newAction.getID());
+	// Switch instead of using if cases.
 
+	/*switch (command){
+
+	case (ADD): 
+			{
+				eventCalender.addItem(newTask);
+				_result.push_back(ADD_SUCCESS);
+			}
+
+	case (DELETE):
+			{
+				if(eventCalender.checkID(newTask.getID()))
+				{
+					eventCalender.deleteItem(newTask.getID());
+					_result.push_back(DELETE_SUCCESS);
+				}
+				else
+				{
+					_result.push_back(ERROR_NOT_FOUND);
+				}
+			}
+	case (EDIT):
+			{
+				//not yet implemented
+			}
+
+	case (FIND):
+			{
+				//case 1: search by category
+				if(newTask.getCategory()!="")
+				{		
+					taskVector = eventCalender.SearchByCat(newTask.getCategory());
+					convertToString(taskVector);
+				}
+				//case 2: search by task
+				else if (newTask.getEventName()!="")
+				{
+					taskVector = eventCalender.SearchByTask(newTask.getEventName());
+					convertToString(taskVector);
+
+				}
+				else
+					generalError();
+			}
+	case (DISPLAY):
+			{
+				taskVector = eventCalender.displayDatabase();
+				convertToString(taskVector);
+			}
+
+	case (UNDO):
+			{
+				if (eventCalender.undoAction())
+					_result.push_back(UNDO_SUCCESS);
+				else
+					_result.push_back(UNDO_FAILURE);
+			}
+	case (REDO):
+			{
+				if (eventCalender.redoAction())
+					_result.push_back(REDO_SUCCESS);
+				else
+					_result.push_back(REDO_FAILURE);
+			}
+
+	case(TODAY):
+			{
+				taskVector = eventCalender.getToday();
+				convertToString(taskVector);
+			}
+	case default:
+				 generalError();
+
+	}
+	*/
+
+	
 	if(command=="ADD")
 	{
 		eventCalender.addItem(newTask);
@@ -68,11 +145,32 @@ vector<string> scheduler::executeCommand(Action newAction)
 		taskVector = eventCalender.displayDatabase();
 		convertToString(taskVector);
 	}
-	else
+
+	else if (command=="UNDO")
+	{
+		if (eventCalender.undoAction())
+			_result.push_back(UNDO_SUCCESS);
+		else
+			_result.push_back(UNDO_FAILURE);
+	}
+
+	else if (command == "REDO")
+	{
+		if (eventCalender.redoAction())
+			_result.push_back(REDO_SUCCESS);
+		else
+			_result.push_back(REDO_FAILURE);
+	}
+
+	else if (command == "TODAY") // CHECK THE COMMAND NAME SENT FROM ACTION
+	{
+		taskVector = eventCalender.getToday();
+		convertToString(taskVector);
+	}
+	else	
 		 generalError();
 
-
-    _result.push_back("");
+	
 	return _result;
 }
 
@@ -81,7 +179,7 @@ void scheduler::convertToString(vector<task> taskVector)
 	
 	int vectorSize = taskVector.size();
 	string firstPosition;
-    ostringstream tempString;
+	ostringstream tempString;
 	tempString << "You have ";
 	tempString << taskVector.size();
 	tempString << " results found.";
@@ -90,7 +188,7 @@ void scheduler::convertToString(vector<task> taskVector)
 	for (int i = 0; i < vectorSize; i++)
 		
 	{
-    /*	string _startDate = convertToDate(taskVector[i].getStartDate());
+		string _startDate = convertToDate(taskVector[i].getStartDate());
 		string _endDate = convertToDate(taskVector[i].getEndDate());
 		
 		//use ostringstream to convert id to string
@@ -104,30 +202,22 @@ void scheduler::convertToString(vector<task> taskVector)
 		_result.push_back(_endDate);
 		_result.push_back(taskVector.at(i).getPriority());
 		_result.push_back(taskVector.at(i).getCategory());
-    */
-        vector<string> temp;
-        temp=taskVector[i].toString();
-        for(int j=0;j<int(temp.size());j++)
-            _result.push_back(temp.at(j));
-        //clear the temp
-        temp.clear();
+
 	}
 
 }
 
-/*
 
-//@Riandy says: this is no longer needed since we have implement this method in task class
 string scheduler::convertToDate(tm _date)
 {
 	string _result;
 	ostringstream convert;
-    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
 	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
 	_result=convert.str();
 	return _result;
 }
-*/
+
 void scheduler::generalError()
 {
 	_result.push_back(ERROR_INTELLISENSE_CHECK);

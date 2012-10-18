@@ -23,7 +23,84 @@ vector<string> scheduler::executeCommand(Action newAction)
 	newTask.setStartDate(newAction.getStartDate());
 	newTask.setEndDate(newAction.getEndDate());
 	newTask.setID(newAction.getID());
+	// Switch instead of using if cases.
 
+	/*switch (command){
+
+	case (ADD): 
+			{
+				eventCalender.addItem(newTask);
+				_result.push_back(ADD_SUCCESS);
+			}
+
+	case (DELETE):
+			{
+				if(eventCalender.checkID(newTask.getID()))
+				{
+					eventCalender.deleteItem(newTask.getID());
+					_result.push_back(DELETE_SUCCESS);
+				}
+				else
+				{
+					_result.push_back(ERROR_NOT_FOUND);
+				}
+			}
+	case (EDIT):
+			{
+				//not yet implemented
+			}
+
+	case (FIND):
+			{
+				//case 1: search by category
+				if(newTask.getCategory()!="")
+				{		
+					taskVector = eventCalender.SearchByCat(newTask.getCategory());
+					convertToString(taskVector);
+				}
+				//case 2: search by task
+				else if (newTask.getEventName()!="")
+				{
+					taskVector = eventCalender.SearchByTask(newTask.getEventName());
+					convertToString(taskVector);
+
+				}
+				else
+					generalError();
+			}
+	case (DISPLAY):
+			{
+				taskVector = eventCalender.displayDatabase();
+				convertToString(taskVector);
+			}
+
+	case (UNDO):
+			{
+				if (eventCalender.undoAction())
+					_result.push_back(UNDO_SUCCESS);
+				else
+					_result.push_back(UNDO_FAILURE);
+			}
+	case (REDO):
+			{
+				if (eventCalender.redoAction())
+					_result.push_back(REDO_SUCCESS);
+				else
+					_result.push_back(REDO_FAILURE);
+			}
+
+	case(TODAY):
+			{
+				taskVector = eventCalender.getToday();
+				convertToString(taskVector);
+			}
+	case default:
+				 generalError();
+
+	}
+	*/
+
+	
 	if(command=="ADD")
 	{
 		eventCalender.addItem(newTask);
@@ -68,7 +145,29 @@ vector<string> scheduler::executeCommand(Action newAction)
 		taskVector = eventCalender.displayDatabase();
 		convertToString(taskVector);
 	}
-	else
+
+	else if (command=="UNDO")
+	{
+		if (eventCalender.undoAction())
+			_result.push_back(UNDO_SUCCESS);
+		else
+			_result.push_back(UNDO_FAILURE);
+	}
+
+	else if (command == "REDO")
+	{
+		if (eventCalender.redoAction())
+			_result.push_back(REDO_SUCCESS);
+		else
+			_result.push_back(REDO_FAILURE);
+	}
+
+	else if (command == "TODAY") // CHECK THE COMMAND NAME SENT FROM ACTION
+	{
+		taskVector = eventCalender.getToday();
+		convertToString(taskVector);
+	}
+	else	
 		 generalError();
 
 	
