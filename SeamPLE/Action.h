@@ -49,6 +49,7 @@ public:
     void setID(int);
 
     void determineDate(tm date1,tm date2);
+    bool checkDateEmpty(tm date);
 
 
 };

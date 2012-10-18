@@ -217,3 +217,30 @@ bool calender::loadFile()
 	}
 	return true;
 }
+
+// Allow 3 undo, allow one redo. 
+bool calender::undoAction()
+{ 
+	if (_history.size() == 0)
+		return false;
+	else
+		// SOME CODE HERE
+		return true;
+}
+
+bool calender::redoAction()
+{
+	if (sizeof(_lastUndo) == 0)
+		return false;
+	else
+
+		// SOME CODE HERE
+	return true;
+}
+
+// NOT DONE
+vector<task> calender::getToday() 
+{
+	vector<task> _bufferStorage;
+	return _bufferStorage;
+}
