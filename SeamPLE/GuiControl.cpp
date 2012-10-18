@@ -71,7 +71,8 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     {
         bool command = true;
         QVector <QString> output = inputProcessor.run(command,input.toStdString());
-        bool needStandardView = (output.size()>2);
+        int capacity = output.size();
+        bool needStandardView = (capacity>2);
 
         //Only commands to hold this should be find and search for now
         if (needStandardView)
@@ -86,7 +87,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                 standardGui.showFeedbackLabel(output[0]);
                 standardGui.showFocusInInputEdit(inputBarHasFocus);
             }
-            //standardGui
+            standardGui.showTableResults(output.mid(1,capacity - 1));
         }
         else
         {

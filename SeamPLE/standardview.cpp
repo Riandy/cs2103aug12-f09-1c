@@ -31,16 +31,19 @@ StandardView::StandardView(QWidget *parent) :
     //from input line
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
 
+    _tail = NULL;
+
     //Table should always have 2 column. No change is done
     //to column count in the rest of the code
     ui->tableWidget->setColumnCount(2);
     ui->tableWidget->setColumnWidth(0, 40);
-    ui->tableWidget->setColumnWidth(1, 680);
-    ui->tableWidget->setRowCount(1);
+    ui->tableWidget->setColumnWidth(1, 662);
+
 }
 
 StandardView::~StandardView()
 {
+    resetTableContents();
     delete ui;
 }
 
@@ -61,7 +64,24 @@ void StandardView:: showFocusInInputEdit (bool focus)
 
 void StandardView::showTableResults(QVector <QString> output)
 {
-    ui->tableWidget->setRowCount(output.size());
+    //Make sure all contents for last showing is removed and replaced
+    //with the current content
+    resetTableContents();
+
+    ui->tabWidget->setCurrentIndex(1);
+    int rowAmount = output.size();
+    ui->tableWidget->setRowCount(rowAmount);
+
+    for (int i = 0; i < rowAmount ; i++)
+    {
+        TableListNode *cell = new TableListNode;
+        cell->index.setText(QString("[%1]").arg(i+1));
+        cell->index.setTextAlignment(Qt::AlignCenter);
+        cell->content.setText(output[i]);
+        ui->tableWidget->setItem(i,0,&(cell->index));
+        ui->tableWidget->setItem(i,1,&(cell->content));
+        addTableContent(cell);
+    }
 }
 
 void StandardView::recieve(QString input)
@@ -82,4 +102,47 @@ void StandardView::changeViewTriggered()
 void StandardView:: changeAutoResolution()
 {
     this->setWindowState(Qt::WindowMaximized);
+}
+
+//Add a table cell to the linklist for all table cells
+void StandardView::addTableContent(TableListNode *curr)
+{
+    //For the first element in linklist, we must ensure that it
+    //links back to itself
+    if (_tail == NULL)
+    {
+        _tail = curr;
+        _tail->next = _tail;
+        _tail->prev = _tail;
+    }
+    //Subsequent elements are placed as the last cell of the link list
+    else
+    {
+        curr->next = _tail->next;
+        curr->prev = _tail;
+        _tail->next = curr;
+        curr->next->prev = curr;
+        _tail = curr;
+    }
+}
+
+//Remove all dynamically allocated memory given to table widget
+void StandardView:: resetTableContents()
+{
+    while (_tail != NULL)
+    {
+        if (_tail->next == _tail)
+        {
+            delete _tail;
+            _tail = NULL;
+        }
+        else
+        {
+            TableListNode *curr = _tail->next;
+            _tail->next = curr->next;
+            _tail->next->prev = _tail;
+            delete curr;
+        }
+    }
+    ui->tableWidget->clearContents();
 }

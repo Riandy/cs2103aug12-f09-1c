@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Fri Oct 19 00:32:33 2012
+** Created: Fri Oct 19 02:52:55 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -125,20 +125,39 @@ public:
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setGeometry(QRect(40, 130, 731, 381));
         tabWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
-        tabWidget->setStyleSheet(QString::fromUtf8("QTabBar::tab {\n"
-"background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E1E1E1, stop: 0.4 #DDDDDD, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);\n"
+        tabWidget->setStyleSheet(QString::fromUtf8("QTabBar::tab:first {\n"
+"background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(255, 111, 111, 255), stop:0.369318 rgba(225, 0, 0, 255), stop:0.636364 rgba(255, 0, 0, 255), stop:0.977273 rgba(255, 95, 95, 255));\n"
+"\n"
 "border: 4px; \n"
-"border-color: rgb(144,147,149);\n"
-"border-style:ridge;  \n"
+"border-color: rgb(152, 0, 0);\n"
+"border-style:outset;  \n"
 "border-top-left-radius: 30px;\n"
 "border-top-right-radius: 10px;\n"
 "min-width: 364px;\n"
 "min-height: 30px;\n"
 "}\n"
 "\n"
-"QTabBar::tab:selected, QTabBar::tab:hover {\n"
-"background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fafafa, stop: 0.4 #f4f4f4, stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);\n"
+"QTabBar::tab:first:selected, QTabBar::tab:first:hover {\n"
+"	background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(255, 104, 104, 255), stop:0.369318 rgba(225, 22, 22, 255), stop:0.636364 rgba(255, 23, 23, 255), stop:0.977273 rgba(255, 99, 99, 255));\n"
 "}\n"
+"\n"
+"QTabBar::tab:last {\n"
+"	\n"
+"	background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(109, 191, 64, 255), stop:0.369318 rgba(15, 155, 13, 255), stop:0.636364 rgba(12, 151, 22, 255), stop:0.977273 rgba(104, 192, 57, 255))"
+                        ";\n"
+"border: 4px; \n"
+"border-color:  rgb(0, 85, 0);\n"
+"border-style:outset;  \n"
+"border-top-left-radius: 30px;\n"
+"border-top-right-radius: 10px;\n"
+"min-width: 364px;\n"
+"min-height: 30px;\n"
+"}\n"
+"\n"
+"QTabBar::tab:last:selected, QTabBar::tab:last:hover {\n"
+"	background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(132, 191, 100, 255), stop:0.369318 rgba(32, 155, 30, 255), stop:0.636364 rgba(34, 151, 42, 255), stop:0.977273 rgba(137, 192, 107, 255));\n"
+"}\n"
+"\n"
 "QTabBar::tab:!selected {\n"
 "margin-top: 10px; /* make non-selected tabs look smaller */\n"
 "}\n"
@@ -155,6 +174,7 @@ public:
 "QTabBar::tab:only-one {\n"
 "margin: 0; /* if there is only one tab, we don't want overlapping margins */\n"
 "}"));
+        tabWidget->setIconSize(QSize(16, 17));
         tabWidget->setUsesScrollButtons(false);
         tabWidget->setDocumentMode(true);
         tab = new QWidget();
@@ -325,7 +345,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MV Boli'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffaa00;\">Available Commands: add, delete, mark, unmark, edit and find</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StandardView", "Tab 1", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StandardView", "Event for the day", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -336,7 +356,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Palatino Linotype'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#aa0000;\">RESULTS</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StandardView", "Tab 2", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StandardView", "Command Results", 0, QApplication::UnicodeUTF8));
         label_4->setText(QString());
         label_3->setText(QString());
         pushButton_2->setText(QString());
