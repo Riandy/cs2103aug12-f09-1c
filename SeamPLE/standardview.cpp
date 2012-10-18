@@ -30,6 +30,13 @@ StandardView::StandardView(QWidget *parent) :
     //Prevent change view push button from snatching focus
     //from input line
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
+
+    //Table should always have 2 column. No change is done
+    //to column count in the rest of the code
+    ui->tableWidget->setColumnCount(2);
+    ui->tableWidget->setColumnWidth(0, 40);
+    ui->tableWidget->setColumnWidth(1, 680);
+    ui->tableWidget->setRowCount(1);
 }
 
 StandardView::~StandardView()
@@ -50,6 +57,11 @@ void StandardView::showFeedbackInputEdit(QString output)
 void StandardView:: showFocusInInputEdit (bool focus)
 {
     ui->lineEdit->setFocusInput(focus);
+}
+
+void StandardView::showTableResults(QVector <QString> output)
+{
+    ui->tableWidget->setRowCount(output.size());
 }
 
 void StandardView::recieve(QString input)

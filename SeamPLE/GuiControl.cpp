@@ -86,6 +86,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                 standardGui.showFeedbackLabel(output[0]);
                 standardGui.showFocusInInputEdit(inputBarHasFocus);
             }
+            //standardGui
         }
         else
         {
