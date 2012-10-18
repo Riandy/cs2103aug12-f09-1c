@@ -58,7 +58,7 @@ void GuiControl::check(QString input)
     }
 }
 
-void GuiControl::passScheduler(QString input)
+void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 {
     //Code to be implemented here to be sent into  scheduler classes
     bool emptyInput = (input.size() == 0);
@@ -78,12 +78,13 @@ void GuiControl::passScheduler(QString input)
         {
             if (!isStandardView())
             {
-                changeView("",output[0]);
+                changeView("",output[0], inputBarHasFocus);
             }
             else
             {
                 standardGui.showFeedbackInputEdit("");
                 standardGui.showFeedbackLabel(output[0]);
+                standardGui.showFocusInInputEdit(inputBarHasFocus);
             }
         }
         else
@@ -103,7 +104,7 @@ void GuiControl::passScheduler(QString input)
     }
 }
 
-void GuiControl::changeView(QString input, QString inputChecked)
+void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHasFocus)
 {
     setStandardView(!isStandardView());
 
@@ -113,6 +114,7 @@ void GuiControl::changeView(QString input, QString inputChecked)
         standardGui.show();
         standardGui.showFeedbackInputEdit(input);
         standardGui.showFeedbackLabel(inputChecked);
+        standardGui.showFocusInInputEdit(inputBarHasFocus);
     }
     else
     {
@@ -120,6 +122,7 @@ void GuiControl::changeView(QString input, QString inputChecked)
         seampleGui.show();
         seampleGui.showFeedbackInputEdit(input);
         seampleGui.showFeedbackLabel(inputChecked);
+        seampleGui.showFocusInInputEdit(inputBarHasFocus);
     }
 }
 
@@ -164,12 +167,12 @@ void GuiControl::setStandardGuiSignals()
 
     //Recieve signal from standardGui to run slot for checking
     //scheduler
-    connect(&standardGui,SIGNAL(run(QString)),
-            this,SLOT(passScheduler(QString)));
+    connect(&standardGui,SIGNAL(run(QString, bool)),
+            this,SLOT(passScheduler(QString, bool)));
 
     //Recieve signal from standardGui to run slot for changing views
-    connect(&standardGui,SIGNAL(toSeampleView(QString, QString)),
-            this,SLOT(changeView(QString, QString)));
+    connect(&standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
+            this,SLOT(changeView(QString, QString, bool)));
 
 }
 
@@ -182,10 +185,10 @@ void GuiControl::setSeampleGuiSignals()
 
     //Recieve signal from standardGui to run slot for checking
     //scheduler
-    connect(&seampleGui,SIGNAL(run(QString)),
-            this,SLOT(passScheduler(QString)));
+    connect(&seampleGui,SIGNAL(run(QString, bool)),
+            this,SLOT(passScheduler(QString, bool)));
 
     //Recieve signal from standardGui to run slot for changing views
-    connect(&seampleGui,SIGNAL(toStandardView(QString, QString)),
-            this,SLOT(changeView(QString, QString)));
+    connect(&seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
+            this,SLOT(changeView(QString, QString, bool)));
 }

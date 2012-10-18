@@ -2,8 +2,8 @@
 #define GUICONTROL_H
 
 #include <QVector>
-#include "mainwindow.h"
-#include "standardview.h"
+#include "SeampleView.h"
+#include "StandardView.h"
 #include "seample.h"
 
 class GuiControl: public QObject
@@ -21,9 +21,9 @@ public:
 private slots:
     void check(QString input);
 
-    void passScheduler(QString input);
+    void passScheduler(QString input, bool inputBarHasFocus);
 
-    void changeView(QString input, QString inputChecked);
+    void changeView(QString input, QString inputChecked, bool inputBarHasFocus);
 
 private:
     bool isStandardView();
@@ -46,7 +46,7 @@ private:
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 
     //GUI interfaces ==================
-    MainWindow seampleGui;
+    SeampleView seampleGui;
     StandardView standardGui;
     //=================================
 

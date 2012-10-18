@@ -12,8 +12,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     Sframe.cpp \
-    standardview.cpp \
-    mainwindow.cpp \
     GuiControl.cpp \
     intellisense.cpp \
     Action.cpp \
@@ -21,12 +19,13 @@ SOURCES += main.cpp\
     seample.cpp \
     scheduler.cpp \
     calender.cpp \
-    GuiShortcuts.cpp
+    GuiShortcuts.cpp \
+    SeampleView.cpp \
+    StandardView.cpp \
+    SLineEdit.cpp
 
 HEADERS  += \
     Sframe.h \
-    standardview.h \
-    mainwindow.h \
     GuiControl.h \
     intellisense.h \
     Action.h \
@@ -34,11 +33,14 @@ HEADERS  += \
     seample.h \
     scheduler.h \
     calender.h \
-    GuiShortcuts.h
+    GuiShortcuts.h \
+    SeampleView.h \
+    StandardView.h \
+    SLineEdit.h
 
 FORMS    += \
-    standardview.ui \
-    mainwindow.ui
+    SeampleView.ui \
+    StandardView.ui
 
 RESOURCES += \
     Resource.qrc

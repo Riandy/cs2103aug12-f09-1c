@@ -1,9 +1,9 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "SeampleView.h"
+#include "ui_SeampleView.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+SeampleView::SeampleView(QWidget *parent) :
     QMainWindow(parent, Qt::FramelessWindowHint),
-    ui(new Ui::MainWindow)
+    ui(new Ui::SeampleView)
 {
     ui->setupUi(this);
     changeGeometry();
@@ -26,39 +26,44 @@ MainWindow::MainWindow(QWidget *parent) :
             this,SLOT(changeViewTriggered()));
 }
 
-MainWindow::~MainWindow()
+SeampleView::~SeampleView()
 {
     delete ui;
 }
 
 //Function to change GUI interface label to contain output string
-void MainWindow::showFeedbackLabel(QString output)
+void SeampleView::showFeedbackLabel(QString output)
 {
     ui->label->setText(output);
 }
 
 //Function to change GUI interface label to contain output string
-void MainWindow::showFeedbackInputEdit(QString output)
+void SeampleView::showFeedbackInputEdit(QString output)
 {
     ui->lineEdit->setText(output);
 }
 
-void MainWindow::recieve(QString input)
+void SeampleView:: showFocusInInputEdit (bool focus)
+{
+    ui->lineEdit->setFocusInput(focus);
+}
+
+void SeampleView::recieve(QString input)
 {
     emit relay(input);
 }
 
-void MainWindow::enterTriggered()
+void SeampleView::enterTriggered()
 {
-    emit run(ui->lineEdit->text());
+    emit run(ui->lineEdit->text(), ui->lineEdit->getFocusInput());
 }
 
-void MainWindow::changeViewTriggered()
+void SeampleView::changeViewTriggered()
 {
-    emit toStandardView(ui->lineEdit->text(), ui->label->text());
+    emit toStandardView(ui->lineEdit->text(), ui->label->text(), ui->lineEdit->getFocusInput());
 }
 
-void MainWindow:: changeGeometry()
+void SeampleView:: changeGeometry()
 {
     this->setWindowState(Qt::WindowMaximized);
     QDesktopWidget screen;
@@ -70,12 +75,13 @@ void MainWindow:: changeGeometry()
                                  this->ui->frame->height());
 }
 
-int MainWindow:: getPosX(int maxX)
+int SeampleView:: getPosX(int maxX)
 {
     return maxX - this->ui->frame->width();
 }
 
-int MainWindow:: getPosY(int maxY)
+int SeampleView:: getPosY(int maxY)
 {
     return maxY - this->ui->frame->height();
 }
+

@@ -14,6 +14,7 @@ void Sframe::mousePressEvent(QMouseEvent *event)
         dragStartCursorPosition = event->globalPos();
         bufferPosition = this->geometry();
     }
+    QFrame::mousePressEvent(event);
 }
 
 void Sframe::mouseMoveEvent(QMouseEvent *event)
@@ -29,6 +30,7 @@ void Sframe::mouseMoveEvent(QMouseEvent *event)
         this->setGeometry(getPosX(event->globalX()),getPosY(event->globalY()),
                           this->width(),this->height());
     }
+    QFrame::mouseMoveEvent(event);
 }
 
 int Sframe::getPosX(int cursorPosX)

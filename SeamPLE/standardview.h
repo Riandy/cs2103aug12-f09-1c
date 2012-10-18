@@ -3,6 +3,7 @@
 
 #include <QString>
 #include "GuiShortcuts.h"
+#include "SLineEdit.h"
 
 namespace Ui {
 class StandardView;
@@ -20,12 +21,14 @@ public:
 
     void showFeedbackInputEdit(QString output);
 
+    void showFocusInInputEdit (bool focus);
+
 signals:
     void relay(QString input);
 
-    void run (QString input);
+    void run (QString input, bool focus);
 
-    void toSeampleView(QString input, QString inputChecked);
+    void toSeampleView(QString input, QString inputChecked, bool focus);
 
 private slots:
     void recieve(QString input);

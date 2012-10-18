@@ -1,5 +1,5 @@
-#include "standardview.h"
-#include "ui_standardview.h"
+#include "StandardView.h"
+#include "ui_StandardView.h"
 
 StandardView::StandardView(QWidget *parent) :
     QMainWindow(parent, Qt::FramelessWindowHint),
@@ -43,6 +43,12 @@ void StandardView::showFeedbackInputEdit(QString output)
     ui->lineEdit->setText(output);
 }
 
+void StandardView:: showFocusInInputEdit (bool inputBarHasFocus)
+{
+    if (inputBarHasFocus)
+        ui->lineEdit->setFocus(Qt::OtherFocusReason );
+}
+
 void StandardView::recieve(QString input)
 {
     emit relay(input);
@@ -50,16 +56,15 @@ void StandardView::recieve(QString input)
 
 void StandardView::enterTriggered()
 {
-    emit run(ui->lineEdit->text());
+    emit run(ui->lineEdit->text(), ui->lineEdit->getFocusInput());
 }
 
 void StandardView::changeViewTriggered()
 {
-    emit toSeampleView(ui->lineEdit->text(),ui->label->text());
+    emit toSeampleView(ui->lineEdit->text(),ui->label->text(), ui->lineEdit->getFocusInput());
 }
 
 void StandardView:: changeAutoResolution()
 {
     this->setWindowState(Qt::WindowMaximized);
 }
-

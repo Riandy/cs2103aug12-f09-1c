@@ -1,14 +1,14 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindow.ui'
+** Form generated from reading UI file 'seampleview.ui'
 **
-** Created: Mon 15. Oct 22:37:42 2012
+** Created: Thu Oct 18 18:37:09 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_MAINWINDOW_H
-#define UI_MAINWINDOW_H
+#ifndef UI_SEAMPLEVIEW_H
+#define UI_SEAMPLEVIEW_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -17,14 +17,14 @@
 #include <QtGui/QFrame>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
+#include <slineedit.h>
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_SeampleView
 {
 public:
     QWidget *centralWidget;
@@ -34,34 +34,34 @@ public:
     QLabel *label_3;
     QLabel *label_4;
     QFrame *frame_2;
-    QLineEdit *lineEdit;
+    SLineEdit *lineEdit;
     QLabel *label;
     QLabel *label_2;
     QPushButton *pushButton_2;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *SeampleView)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->setEnabled(true);
-        MainWindow->resize(626, 237);
-        MainWindow->setCursor(QCursor(Qt::ArrowCursor));
-        MainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
-        MainWindow->setAcceptDrops(false);
+        if (SeampleView->objectName().isEmpty())
+            SeampleView->setObjectName(QString::fromUtf8("SeampleView"));
+        SeampleView->setWindowModality(Qt::NonModal);
+        SeampleView->setEnabled(true);
+        SeampleView->resize(626, 237);
+        SeampleView->setCursor(QCursor(Qt::ArrowCursor));
+        SeampleView->setContextMenuPolicy(Qt::DefaultContextMenu);
+        SeampleView->setAcceptDrops(false);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
-        MainWindow->setWindowIcon(icon);
-        MainWindow->setWindowOpacity(1);
-        MainWindow->setLayoutDirection(Qt::LeftToRight);
-        MainWindow->setAutoFillBackground(false);
-        MainWindow->setStyleSheet(QString::fromUtf8("#centralWidget\n"
+        SeampleView->setWindowIcon(icon);
+        SeampleView->setWindowOpacity(1);
+        SeampleView->setLayoutDirection(Qt::LeftToRight);
+        SeampleView->setAutoFillBackground(false);
+        SeampleView->setStyleSheet(QString::fromUtf8("#centralWidget\n"
 "{\n"
 "	\n"
 "}"));
-        MainWindow->setDocumentMode(false);
-        MainWindow->setTabShape(QTabWidget::Rounded);
-        centralWidget = new QWidget(MainWindow);
+        SeampleView->setDocumentMode(false);
+        SeampleView->setTabShape(QTabWidget::Rounded);
+        centralWidget = new QWidget(SeampleView);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         frame = new QFrame(centralWidget);
         frame->setObjectName(QString::fromUtf8("frame"));
@@ -132,7 +132,7 @@ public:
         frame_2->setGeometry(QRect(0, 40, 491, 121));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
-        lineEdit = new QLineEdit(frame_2);
+        lineEdit = new SLineEdit(frame_2);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(20, 60, 451, 31));
         QFont font;
@@ -164,7 +164,7 @@ public:
         label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
         label_2 = new QLabel(frame_2);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(330, 3, 151, 51));
+        label_2->setGeometry(QRect(320, 10, 151, 51));
         QFont font2;
         font2.setFamily(QString::fromUtf8("AR JULIAN"));
         font2.setPointSize(16);
@@ -209,30 +209,30 @@ public:
         line->raise();
         frame_2->raise();
         pushButton_2->raise();
-        MainWindow->setCentralWidget(centralWidget);
+        SeampleView->setCentralWidget(centralWidget);
 
-        retranslateUi(MainWindow);
-        QObject::connect(pushButton, SIGNAL(clicked()), MainWindow, SLOT(close()));
+        retranslateUi(SeampleView);
+        QObject::connect(pushButton, SIGNAL(clicked()), SeampleView, SLOT(close()));
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(SeampleView);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *SeampleView)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Test", 0, QApplication::UnicodeUTF8));
+        SeampleView->setWindowTitle(QApplication::translate("SeampleView", "Test", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QString());
         label_3->setText(QString());
         label_4->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        lineEdit->setToolTip(QApplication::translate("MainWindow", "Enter your commands here", 0, QApplication::UnicodeUTF8));
+        lineEdit->setToolTip(QApplication::translate("SeampleView", "Enter your commands here", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         lineEdit->setText(QString());
-        label->setText(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        label->setText(QApplication::translate("SeampleView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MV Boli'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffaa00;\">Available Commands: add, delete, mark, unmark, edit and find</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        label_2->setText(QApplication::translate("SeampleView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'AR JULIAN'; font-size:16pt; font-weight:600; font-style:normal;\">\n"
@@ -244,9 +244,9 @@ public:
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class SeampleView: public Ui_SeampleView {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_MAINWINDOW_H
+#endif // UI_SEAMPLEVIEW_H

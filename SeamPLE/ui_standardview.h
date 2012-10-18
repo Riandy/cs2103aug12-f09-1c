@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Mon 15. Oct 22:37:42 2012
+** Created: Thu Oct 18 18:37:05 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -17,11 +17,11 @@
 #include <QtGui/QFrame>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QTabWidget>
 #include <QtGui/QTableWidget>
 #include <QtGui/QWidget>
+#include <slineedit.h>
 #include "sframe.h"
 
 QT_BEGIN_NAMESPACE
@@ -35,7 +35,7 @@ public:
     QLabel *label_3;
     QLabel *label_4;
     QFrame *frame_2;
-    QLineEdit *lineEdit;
+    SLineEdit *lineEdit;
     QLabel *label_2;
     QLabel *label;
     QTabWidget *tabWidget;
@@ -124,7 +124,7 @@ public:
         frame_2->setGeometry(QRect(0, 40, 811, 531));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
-        lineEdit = new QLineEdit(frame_2);
+        lineEdit = new SLineEdit(frame_2);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(50, 60, 701, 31));
         QFont font;

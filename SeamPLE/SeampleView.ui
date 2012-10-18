@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>SeampleView</class>
+ <widget class="QMainWindow" name="SeampleView">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -194,7 +194,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="SLineEdit" name="lineEdit">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -264,8 +264,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>3</y>
+        <x>320</x>
+        <y>10</y>
         <width>151</width>
         <height>51</height>
        </rect>
@@ -352,7 +352,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>SeampleView</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
