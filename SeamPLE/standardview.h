@@ -1,6 +1,7 @@
 #ifndef STANDARDVIEW_H
 #define STANDARDVIEW_H
 
+#include <QVector>
 #include <QString>
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
@@ -22,6 +23,8 @@ public:
     void showFeedbackInputEdit(QString output);
 
     void showFocusInInputEdit (bool focus);
+
+    void showTableResults(QVector <QString> output);
 
 signals:
     void relay(QString input);

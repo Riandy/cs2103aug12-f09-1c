@@ -1,7 +1,6 @@
 #ifndef GUICONTROL_H
 #define GUICONTROL_H
 
-#include <QVector>
 #include "SeampleView.h"
 #include "StandardView.h"
 #include "seample.h"

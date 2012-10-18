@@ -52,97 +52,6 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>750</x>
-      <y>10</y>
-      <width>20</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">#pushButton
-{
-	border-style: solid;
-	border-radius: 5px;
-	border-width: 3px;
-	border-color: gray;
-}
-#pushButton:hover 
-{
-	border-style: outset;
-	border-radius: 5px;
-	border-width:3px;
-	border-color: gray;
-}
-
-#pushButton:pressed 
-{
-	border-style: inset;
-	border-radius: 5px;
-	border-width:3px;
-	border-color: gray;
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="Resource.qrc">
-      <normaloff>:/bg/exit.gif</normaloff>:/bg/exit.gif</iconset>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>10</y>
-      <width>71</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">#label_3
-{
-	background-image: url(:/bg/small.gif);
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>-10</x>
-      <y>-4</y>
-      <width>821</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">#label_4
-{
-	background-image: url(:/bg/testtitle.gif);
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
@@ -152,13 +61,7 @@
       <height>531</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="SLineEdit" name="lineEdit">
+    <widget class="SLineEdit" name="lineEdit" native="true">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -189,7 +92,7 @@
 }
 </string>
      </property>
-     <property name="text">
+     <property name="text" stdset="0">
       <string/>
      </property>
     </widget>
@@ -266,14 +169,18 @@ p, li { white-space: pre-wrap; }
        <height>381</height>
       </rect>
      </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::DefaultContextMenu</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">QTabBar::tab {
 background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #E1E1E1, stop: 0.4 #DDDDDD, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-border: 2px rgb(144,147,149);
-border-style:solid;  
+border: 4px; 
+border-color: rgb(144,147,149);
+border-style:ridge;  
 border-top-left-radius: 30px;
 border-top-right-radius: 10px;
-min-width: 368px;
+min-width: 364px;
 min-height: 30px;
 }
 
@@ -303,10 +210,38 @@ margin: 0; /* if there is only one tab, we don't want overlapping margins */
      <property name="usesScrollButtons">
       <bool>false</bool>
      </property>
+     <property name="documentMode">
+      <bool>true</bool>
+     </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>Tab 1</string>
       </attribute>
+      <widget class="QFrame" name="frame_3">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>728</width>
+         <height>331</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#frame_3
+{
+	background-color: rgb(255, 170, 0);
+	 border-style: ridge;
+     border-width: 4px;
+     border-color:  rgb(255, 0, 0);
+}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -364,7 +299,7 @@ p, li { white-space: pre-wrap; }
          <x>3</x>
          <y>30</y>
          <width>721</width>
-         <height>331</height>
+         <height>297</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -376,107 +311,117 @@ p, li { white-space: pre-wrap; }
        <property name="horizontalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="dragDropOverwriteMode">
+        <bool>false</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+       <property name="cornerButtonEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="rowCount">
+        <number>0</number>
+       </property>
+       <property name="columnCount">
+        <number>0</number>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>350</number>
+       </attribute>
+       <attribute name="horizontalHeaderMinimumSectionSize">
+        <number>50</number>
+       </attribute>
        <attribute name="verticalHeaderVisible">
         <bool>false</bool>
        </attribute>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>New Row</string>
-        </property>
-       </row>
-       <column>
-        <property name="text">
-         <string/>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string/>
-        </property>
-       </column>
-       <item row="0" column="0">
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item row="0" column="1">
-        <property name="text">
-         <string/>
-        </property>
-       </item>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>25</number>
+       </attribute>
       </widget>
+      <widget class="QFrame" name="frame_4">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>728</width>
+         <height>331</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#frame_4
+{
+	background-color: rgb(170, 255, 127);
+	 border-style: ridge;
+     border-width: 4px;
+     border-color: rgb(170, 170, 0);
+}</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+      </widget>
+      <zorder>frame_4</zorder>
+      <zorder>label_5</zorder>
+      <zorder>label_6</zorder>
+      <zorder>tableWidget</zorder>
      </widget>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>-4</y>
+      <width>821</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#label_4
+{
+	background-image: url(:/bg/testtitle.gif);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>10</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#label_3
+{
+	background-image: url(:/bg/small.gif);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>724</x>
       <y>10</y>
       <width>20</width>
       <height>20</height>
@@ -514,12 +459,59 @@ p, li { white-space: pre-wrap; }
       <normaloff>:/bg/toSmall.gif</normaloff>:/bg/toSmall.gif</iconset>
     </property>
    </widget>
-   <zorder>label_4</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>label_3</zorder>
-   <zorder>line</zorder>
-   <zorder>frame_2</zorder>
-   <zorder>pushButton_2</zorder>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>757</x>
+      <y>10</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#pushButton
+{
+	border-style: solid;
+	border-radius: 5px;
+	border-width: 3px;
+	border-color: gray;
+}
+#pushButton:hover 
+{
+	border-style: outset;
+	border-radius: 5px;
+	border-width:3px;
+	border-color: gray;
+}
+
+#pushButton:pressed 
+{
+	border-style: inset;
+	border-radius: 5px;
+	border-width:3px;
+	border-color: gray;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Resource.qrc">
+      <normaloff>:/bg/exit.gif</normaloff>:/bg/exit.gif</iconset>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
@@ -527,6 +519,11 @@ p, li { white-space: pre-wrap; }
    <class>Sframe</class>
    <extends>QWidget</extends>
    <header>sframe.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SLineEdit</class>
+   <extends>QWidget</extends>
+   <header>slineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>
@@ -540,8 +537,8 @@ p, li { white-space: pre-wrap; }
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>572</x>
-     <y>101</y>
+     <x>767</x>
+     <y>89</y>
     </hint>
     <hint type="destinationlabel">
      <x>651</x>
