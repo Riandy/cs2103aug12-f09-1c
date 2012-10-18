@@ -13,7 +13,7 @@ class SeampleView;
 class SeampleView : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
     explicit SeampleView(QWidget *parent = 0);
     ~SeampleView();
@@ -47,7 +47,7 @@ private:
 
     Ui::SeampleView *ui;
 
-    GuiShortcuts allShortcuts;
+    GuiShortcuts _allShortcuts;
 
 };
 

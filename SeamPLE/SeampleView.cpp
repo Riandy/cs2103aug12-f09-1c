@@ -11,7 +11,7 @@ SeampleView::SeampleView(QWidget *parent) :
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    allShortcuts.setShortcutsTo(this);
+    _allShortcuts.setShortcutsTo(this);
 
     connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
             this,SLOT(recieve(QString)));
@@ -22,8 +22,12 @@ SeampleView::SeampleView(QWidget *parent) :
     connect(ui->pushButton_2,SIGNAL(clicked()),
             this,SLOT(changeViewTriggered()));
 
-    connect(allShortcuts.switchView,SIGNAL(triggered()),
+    connect(_allShortcuts.switchView,SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
+
+    //Prevent change view push button from snatching focus
+    //from input line
+    ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
 }
 
 SeampleView::~SeampleView()
