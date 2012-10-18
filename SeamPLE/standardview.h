@@ -42,7 +42,7 @@ private:
 
     Ui::StandardView *ui;
 
-    GuiShortcuts allShortcuts;
+    GuiShortcuts _allShortcuts;
 };
 
 #endif // STANDARDVIEW_H

@@ -13,7 +13,7 @@ StandardView::StandardView(QWidget *parent) :
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    allShortcuts.setShortcutsTo(this);
+    _allShortcuts.setShortcutsTo(this);
 
     connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
             this,SLOT(recieve(QString)));
@@ -24,8 +24,12 @@ StandardView::StandardView(QWidget *parent) :
     connect(ui->pushButton_2,SIGNAL(clicked()),
             this,SLOT(changeViewTriggered()));
 
-    connect(allShortcuts.switchView,SIGNAL(triggered()),
+    connect(_allShortcuts.switchView,SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
+
+    //Prevent change view push button from snatching focus
+    //from input line
+    ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
 }
 
 StandardView::~StandardView()
@@ -43,10 +47,9 @@ void StandardView::showFeedbackInputEdit(QString output)
     ui->lineEdit->setText(output);
 }
 
-void StandardView:: showFocusInInputEdit (bool inputBarHasFocus)
+void StandardView:: showFocusInInputEdit (bool focus)
 {
-    if (inputBarHasFocus)
-        ui->lineEdit->setFocus(Qt::OtherFocusReason );
+    ui->lineEdit->setFocusInput(focus);
 }
 
 void StandardView::recieve(QString input)
