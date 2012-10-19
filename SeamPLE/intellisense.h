@@ -29,6 +29,9 @@ class Intellisense
 {
 private:
 
+    static bool instanceFlag;
+    static Intellisense *intellisense;
+    Intellisense(void);
     static const string addCommand;
     static const string deleteCommand;
     static const string markCommand;
@@ -46,7 +49,7 @@ private:
     string _parameter;
 
 public:
-    Intellisense(void);
+    static Intellisense* getInstance();
     ~Intellisense(void);
     Action check(string query);
     vector<string> tokenize(string command);
