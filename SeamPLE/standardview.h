@@ -2,8 +2,8 @@
 #define STANDARDVIEW_H
 
 #include <QVector>
-#include <QString>
 #include <QTableWidgetItem>
+#include <QString>
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
