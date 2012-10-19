@@ -50,7 +50,22 @@ private slots:
 
     void changeViewTriggered();
 
-    //void
+    void undoTriggered();
+
+    void redoTriggered();
+
+    void addTriggered();
+
+    void findTriggered();
+
+    void displayTriggered();
+
+    void deleteTriggered();
+
+    void editTriggered();
+
+    void changeWorkingTabTriggered();
+
 
 private:
     void changeAutoResolution();

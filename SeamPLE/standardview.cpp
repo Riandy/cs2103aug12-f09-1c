@@ -93,11 +93,11 @@ void StandardView::showTableResults(QVector <QString> output)
 
     if (rowAmount > 0)
     {
-        ui->label_6->setText("");
+        ui->label_8->setText("");
     }
     else
     {
-        ui->label_6->setText(MESSAGE_NO_CURRENT_RESULTS);
+        ui->label_8->setText(MESSAGE_NO_CURRENT_RESULTS);
     }
 }
 
@@ -114,6 +114,46 @@ void StandardView::enterTriggered()
 void StandardView::changeViewTriggered()
 {
     emit toSeampleView(ui->lineEdit->text(),ui->label->text(), ui->lineEdit->getFocusInput());
+}
+\
+void StandardView::undoTriggered()
+{
+    emit run("undo", ui->lineEdit->getFocusInput());
+}
+
+void StandardView::redoTriggered()
+{
+    emit run("redo", ui->lineEdit->getFocusInput());
+}
+
+void StandardView::addTriggered()
+{
+    ui->lineEdit->setText("add");
+}
+
+void StandardView::findTriggered()
+{
+    ui->lineEdit->setText("find");
+}
+
+void StandardView::displayTriggered()
+{
+    emit run("display", ui->lineEdit->getFocusInput());
+}
+
+void StandardView::deleteTriggered()
+{
+    ui->lineEdit->setText("delete");
+}
+
+void StandardView::editTriggered()
+{
+    ui->lineEdit->setText("edit");
+}
+
+void StandardView::changeWorkingTabTriggered()
+{
+
 }
 
 void StandardView:: changeAutoResolution()
@@ -177,4 +217,28 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
+
+    connect(_allShortcuts.getUndoKey(),SIGNAL(triggered()),
+            this,SLOT(undoTriggered()));
+
+    connect(_allShortcuts.getRedoKey(),SIGNAL(triggered()),
+            this,SLOT(redoTriggered()));
+
+    connect(_allShortcuts.getAddKey(),SIGNAL(triggered()),
+            this,SLOT(addTriggered()));
+
+    connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
+            this,SLOT(findTriggered()));
+
+    connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
+            this,SLOT(displayTriggered()));
+
+    connect(_allShortcuts.getDeleteKey(),SIGNAL(triggered()),
+            this,SLOT(deleteTriggered()));
+
+    connect(_allShortcuts.getEditKey(),SIGNAL(triggered()),
+            this,SLOT(editTriggered()));
+
+    connect(_allShortcuts.getChangeWorkingTabKey(),SIGNAL(triggered()),
+            this,SLOT(changeWorkingTabTriggered()));
 }

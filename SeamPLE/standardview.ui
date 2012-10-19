@@ -223,7 +223,7 @@ margin: 0; /* if there is only one tab, we don't want overlapping margins */
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="iconSize">
       <size>
@@ -420,6 +420,7 @@ p, li { white-space: pre-wrap; }
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
+       <zorder>label_6</zorder>
       </widget>
       <widget class="QLabel" name="label_8">
        <property name="geometry">

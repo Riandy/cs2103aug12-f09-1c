@@ -70,7 +70,7 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
 
     _add = new QAction(Gui);
     Gui->addAction(_add);
-    _add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
+    _add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
 
     _find = new QAction(Gui);
     Gui->addAction(_find);
@@ -78,7 +78,7 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
 
     _display = new QAction(Gui);
     Gui->addAction(_display);
-    _display->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    _display->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_B));
 
     _delete = new QAction(Gui);
     Gui->addAction(_delete);
@@ -95,7 +95,7 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
 
     _changeWorkingTab = new QAction(Gui);
     Gui->addAction(_changeWorkingTab);
-    _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+    _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
 }
 
 QAction* GuiShortcuts::getSwitchViewKey()
