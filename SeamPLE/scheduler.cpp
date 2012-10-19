@@ -1,10 +1,5 @@
 #include "scheduler.h"
 
-const string scheduler:: COLOUR_FRONT_CHOOSE_COLOUR =
-        "<font size=4 face=\"MV Boli\" color = \"";
-const string scheduler:: COLOUR_FRONT_CHOSEN_COLOUR = "\">";
-const string scheduler:: COLOUR_END_TAG = "</font>";
-
 scheduler::scheduler()
 {
 }
@@ -109,28 +104,19 @@ vector<string> scheduler::executeCommand(Action newAction)
 	if(command=="ADD")
 	{
 		eventCalender.addItem(newTask);
-        _result.push_back(COLOUR_FRONT_CHOOSE_COLOUR + "#C4FF00"
-                          + COLOUR_FRONT_CHOSEN_COLOUR + ADD_SUCCESS
-                          + COLOUR_END_TAG);
+		_result.push_back(ADD_SUCCESS);
 	}
 	else if(command=="DELETE")
 	{
-        const char *c = (newTask.getEventName()).c_str();
-        int id = atoi(c);
-//        if(eventCalender.checkID(newTask.getID()))
-//        {
-//            eventCalender.deleteItem(newTask.getID());
-//            _result.push_back(DELETE_SUCCESS);
-//        }
-        if(eventCalender.checkID(id))
-        {
-            eventCalender.deleteItem(id);
-            _result.push_back(DELETE_SUCCESS);
-        }
-        else
-        {
-            _result.push_back(ERROR_NOT_FOUND);
-        }
+		if(eventCalender.checkID(newTask.getID()))
+		{
+			eventCalender.deleteItem(newTask.getID());
+			_result.push_back(DELETE_SUCCESS);
+		}
+		else
+		{
+			_result.push_back(ERROR_NOT_FOUND);
+		}
 	}
 	else if(command=="EDIT")
 	{
@@ -226,7 +212,7 @@ string scheduler::convertToDate(tm _date)
 {
 	string _result;
 	ostringstream convert;
-	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
 	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
 	_result=convert.str();
 	return _result;

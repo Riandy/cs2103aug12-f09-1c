@@ -157,6 +157,19 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
     return command;
 }
 
+int Intellisense::getID(vector<string>& tokens)
+{
+    if(tokens.size()==0 || isAllInt(tokens.front())== false)
+    {
+        return -1;
+    }
+    else
+    {
+        return atoi(tokens.front().c_str());
+    }
+
+}
+
 
 string Intellisense::getPriority(vector<string>& tokens)
 {
@@ -311,6 +324,7 @@ tm Intellisense::getDate(vector<string>& tokens)
     tm date;
     date.tm_hour=NULL;
     date.tm_min=NULL;
+    date.tm_sec=NULL;
     date.tm_mday=NULL;
     date.tm_mon=NULL;
     date.tm_year=NULL;
@@ -345,55 +359,67 @@ tm Intellisense::getDate(vector<string>& tokens)
             }
         }
 
+        if(checkString.size()==8)
+        {
+            if(checkString.at(1) == '\\' && checkString.at(3)=='\\'  || checkString.at(1) == '/' && checkString.at(3)=='/'  )
+            {
+                checkString=removeChar(checkString,"/\\");
+                if(isAllInt(checkString))
+                {
+                    it=tokens.erase(it);
+                    date.tm_mday=atoi(checkString.substr(0,1).c_str());
+                    date.tm_mon=atoi(checkString.substr(1,1).c_str());
+                    date.tm_year=atoi(checkString.substr(2,4).c_str());
+                    return date=getTime(tokens,date);
+                }
+            }
+        }
+
+
         if(tokens.size()>=3)
         {
             int check=checkDateString(checkString);
 
             if(check !=-1)
             {
-                it--;
-                vector<string>::iterator it_day = it++;
+            it--;
+            vector<string>::iterator it_day = it++;
 
-                if(++it == tokens.end())
-                {                // wenbin's own note, iterator unexplained
-                    return date=getTime(tokens,date);
-                }
-                --it;
-                vector<string>::iterator it_year = ++it;
-
-
-
-
-
-
-                string day =it_day->c_str();
-                if(day.size()>2 || day.size()<=0 || !isAllInt(day))
-                {
-                    return date=getTime(tokens,date);
-                }
-                string year = it_year->c_str();
-                if(year.size()!=4 || !isAllInt(year))
-                {
-                    return date=getTime(tokens,date);
-                }
-                if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
-                {
-
-                    return date=getTime(tokens,date);
-                }
-                int month = check;
-
-
-                it_day=tokens.erase(it_day);
-                it_day=tokens.erase(it_day);
-                it_day=tokens.erase(it_day);
-
-                it=it_day;
-
-                date.tm_mday=atoi(day.c_str());
-                date.tm_mon=month;
-                date.tm_year=atoi(year.c_str());
+            if(++it == tokens.end())
+            {                // wenbin's own note, iterator unexplained
                 return date=getTime(tokens,date);
+            }
+            --it;
+            vector<string>::iterator it_year = ++it;
+
+            string day =it_day->c_str();
+            if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+            {
+                return date=getTime(tokens,date);
+            }
+            string year = it_year->c_str();
+            if(year.size()!=4 || !isAllInt(year))
+            {
+                return date=getTime(tokens,date);
+            }
+            if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+            {
+
+                return date=getTime(tokens,date);
+            }
+            int month = check;
+
+
+            it_day=tokens.erase(it_day);
+            it_day=tokens.erase(it_day);
+            it_day=tokens.erase(it_day);
+
+            it=it_day;
+
+            date.tm_mday=atoi(day.c_str());
+            date.tm_mon=month;
+            date.tm_year=atoi(year.c_str());
+            return date=getTime(tokens,date);
 
 
             }
@@ -406,6 +432,7 @@ tm Intellisense::getDate(vector<string>& tokens)
     return date=getTime(tokens,date);
 
 }
+
 
 
 int Intellisense::checkDateString(string token)
@@ -495,7 +522,14 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 {
     Action task;
     task.setCommand(getCommand(tokens,"DELETE"));
-    task.setEventName(getEventName(tokens));
+    int ID = getID(tokens);
+    if(ID == -1)
+    {
+     task.setEventName(getEventName(tokens));
+    }else
+    {
+        task.setID(ID);
+    }
     setAllStatusFlag(task);
     checkDelReq();
 

@@ -53,6 +53,7 @@ public:
     string getOperation(vector<string>& tokens);
     tm getDate(vector<string>& tokens);
     string getEventName(vector<string>& tokens);
+    int getID(vector<string>& tokens);
     string getCommand(vector<string>& tokens, string _command);
     string getCategory(vector<string>& tokens);
     string getPriority(vector<string>& tokens);
