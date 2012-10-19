@@ -10,7 +10,7 @@ StandardView::StandardView(QWidget *parent) :
 {
     //Default settings according to UI form
     ui->setupUi(this);
-    changeAutoResolution();
+    changeGeometry();
 
     //To make pri window transparent as focus is on
     //sec window
@@ -30,6 +30,7 @@ StandardView::StandardView(QWidget *parent) :
     ui->tableWidget->setColumnCount(2);
     ui->tableWidget->setColumnWidth(0, 40);
     ui->tableWidget->setColumnWidth(1, 662);
+
 
 }
 
@@ -90,7 +91,6 @@ void StandardView::showTableResults(QVector <QString> output)
         addTableContent(cell);
     }
 
-
     if (rowAmount > 0)
     {
         ui->label_8->setText("");
@@ -113,9 +113,11 @@ void StandardView::enterTriggered()
 
 void StandardView::changeViewTriggered()
 {
+    //Reset the coordinates of the current window before view is changed
+    changeGeometry();
     emit toSeampleView(ui->lineEdit->text(),ui->label->text(), ui->lineEdit->getFocusInput());
 }
-\
+
 void StandardView::undoTriggered()
 {
     //emit run(GuiShortcuts::COMMAND_UNDO, ui->lineEdit->getFocusInput());
@@ -176,11 +178,6 @@ void StandardView::clearTriggered()
     emit relay("");
 }
 
-void StandardView:: changeAutoResolution()
-{
-    this->setWindowState(Qt::WindowMaximized);
-}
-
 //Add a table cell to the linklist for all table cells
 void StandardView::addTableContent(TableListNode *curr)
 {
@@ -222,6 +219,28 @@ void StandardView:: resetTableContents()
         }
     }
     ui->tableWidget->clearContents();
+}
+
+void StandardView:: changeGeometry()
+{
+    this->setWindowState(Qt::WindowMaximized);
+    QDesktopWidget screen;
+    QRect sample = screen.availableGeometry(-1);
+
+    this->ui->frame->setGeometry(getPosX(sample.bottomRight().x()),
+                                 getPosY(sample.bottomRight().y()),
+                                 this->ui->frame->width(),
+                                 this->ui->frame->height());
+}
+
+int StandardView:: getPosX(int maxX)
+{
+    return maxX - this->ui->frame->width();
+}
+
+int StandardView:: getPosY(int maxY)
+{
+    return maxY - this->ui->frame->height();
 }
 
 void StandardView:: setSignals()
