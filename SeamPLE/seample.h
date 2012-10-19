@@ -19,8 +19,8 @@ class Seample
 private:
     string userInput;
     Action response;
-    Intellisense intellisense;
-    scheduler  _scheduler;
+    Intellisense *intellisense;
+    scheduler  *_scheduler;
     QVector <QString> feedback;
 
     //Following function is for converting vector of QString
