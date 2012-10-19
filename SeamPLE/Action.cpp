@@ -46,8 +46,23 @@ void Action::setEndDate(tm newDate)
 
 }
 
+bool Action::checkDateEmpty(tm date)
+{
+    if(date.tm_year ==0 || date.tm_mon ==0 || date.tm_mday ==0)
+    {
+        return true;}
+    else{
+    return false;}
+}
+
+
 void Action::determineDate(tm date1,tm date2)
 {
+    if(checkDateEmpty(date1))
+    {
+        setStartDate(date2);
+        return;
+    }
     if(date1.tm_year > date2.tm_year)
     {
         setStartDate(date2);setEndDate(date1);
