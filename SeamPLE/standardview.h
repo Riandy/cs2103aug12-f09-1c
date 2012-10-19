@@ -3,7 +3,6 @@
 
 #include <QVector>
 #include <QTableWidgetItem>
-#include <QString>
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 

@@ -118,42 +118,55 @@ void StandardView::changeViewTriggered()
 \
 void StandardView::undoTriggered()
 {
-    emit run("undo", ui->lineEdit->getFocusInput());
+    //emit run(GuiShortcuts::COMMAND_UNDO, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::redoTriggered()
 {
-    emit run("redo", ui->lineEdit->getFocusInput());
+    //emit run(GuiShortcuts::COMMAND_REDO, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::addTriggered()
 {
-    ui->lineEdit->setText("add");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
+    ui->lineEdit->setFocusInput(true);
 }
 
 void StandardView::findTriggered()
 {
-    ui->lineEdit->setText("find");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
+    ui->lineEdit->setFocusInput(true);
 }
 
 void StandardView::displayTriggered()
 {
-    emit run("display", ui->lineEdit->getFocusInput());
+    emit run(GuiShortcuts::COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::deleteTriggered()
 {
-    ui->lineEdit->setText("delete");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
+    ui->lineEdit->setFocusInput(true);
 }
 
 void StandardView::editTriggered()
 {
-    ui->lineEdit->setText("edit");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
+    ui->lineEdit->setFocusInput(true);
 }
 
 void StandardView::changeWorkingTabTriggered()
 {
+    bool atFirstTab = ui->tabWidget->currentIndex() == 0;
 
+    if (atFirstTab)
+    {
+        ui->tabWidget->setCurrentIndex(1);
+    }
+    else
+    {
+        ui->tabWidget->setCurrentIndex(0);
+    }
 }
 
 void StandardView:: changeAutoResolution()
