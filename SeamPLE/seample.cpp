@@ -20,6 +20,7 @@ void DisplayEvent(Action task)
     cout<<string("Priority : ")<<task.getPriority()<<endl;
     cout<<string("Event Name : ")<<task.getEventName()<<endl;
     cout<<string("Category : ")<<task.getCategory()<<endl;
+    cout<<string("ID : ")<<task.getID()<<endl;
     //cout<<string("Req Met : ")<<task.getrequirementsMet()<<endl;
     cout<<string("******************")<<endl;
 }
