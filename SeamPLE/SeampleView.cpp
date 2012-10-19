@@ -22,7 +22,7 @@ SeampleView::SeampleView(QWidget *parent) :
     connect(ui->pushButton_2,SIGNAL(clicked()),
             this,SLOT(changeViewTriggered()));
 
-    connect(_allShortcuts.switchView,SIGNAL(triggered()),
+    connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
 
     //Prevent change view push button from snatching focus
