@@ -1,6 +1,9 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
+const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
+        "No Search Results Available";
+
 StandardView::StandardView(QWidget *parent) :
     QMainWindow(parent, Qt::FramelessWindowHint),
     ui(new Ui::StandardView)
@@ -25,6 +28,9 @@ StandardView::StandardView(QWidget *parent) :
             this,SLOT(changeViewTriggered()));
 
     connect(_allShortcuts.switchView,SIGNAL(triggered()),
+            this,SLOT(changeViewTriggered()));
+
+    connect(_allShortcuts.hideShowView,SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
 
     //Prevent change view push button from snatching focus
@@ -68,8 +74,23 @@ void StandardView::showTableResults(QVector <QString> output)
     //with the current content
     resetTableContents();
 
+//    ui->tabWidget->setCurrentIndex(1);
+//    int rowAmount = output.size();
+//    ui->tableWidget->setRowCount(rowAmount);
+
+//    for (int i = 0; i < rowAmount ; i++)
+//    {
+//        TableListNode *cell = new TableListNode;
+//        cell->index.setText(QString("[%1]").arg(i+1));
+//        cell->index.setTextAlignment(Qt::AlignCenter);
+//        cell->content.setText(output[i]);
+//        ui->tableWidget->setItem(i,0,&(cell->index));
+//        ui->tableWidget->setItem(i,1,&(cell->content));
+//        addTableContent(cell);
+//    }
+
     ui->tabWidget->setCurrentIndex(1);
-    int rowAmount = output.size();
+    int rowAmount = output.size()/6;
     ui->tableWidget->setRowCount(rowAmount);
 
     for (int i = 0; i < rowAmount ; i++)
@@ -77,10 +98,20 @@ void StandardView::showTableResults(QVector <QString> output)
         TableListNode *cell = new TableListNode;
         cell->index.setText(QString("[%1]").arg(i+1));
         cell->index.setTextAlignment(Qt::AlignCenter);
-        cell->content.setText(output[i]);
+        cell->content.setText(output[1+(i*6)]);
         ui->tableWidget->setItem(i,0,&(cell->index));
         ui->tableWidget->setItem(i,1,&(cell->content));
         addTableContent(cell);
+    }
+
+
+    if (rowAmount > 0)
+    {
+        ui->label_6->setText("");
+    }
+    else
+    {
+        ui->label_6->setText(MESSAGE_NO_CURRENT_RESULTS);
     }
 }
 
@@ -146,3 +177,4 @@ void StandardView:: resetTableContents()
     }
     ui->tableWidget->clearContents();
 }
+

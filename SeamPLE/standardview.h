@@ -62,6 +62,8 @@ private:
     GuiShortcuts _allShortcuts;
 
     TableListNode *_tail;
+
+    const static QString MESSAGE_NO_CURRENT_RESULTS;
 };
 
 #endif // STANDARDVIEW_H

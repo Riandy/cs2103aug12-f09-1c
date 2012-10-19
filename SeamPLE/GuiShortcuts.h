@@ -4,7 +4,7 @@
 #include <QAction>
 #include <QMainWindow>
 
-class GuiShortcuts
+class GuiShortcuts: public QWidget
 {
 public:
     ~GuiShortcuts();
@@ -13,6 +13,14 @@ public:
 
 public:
     QAction* switchView;
+
+    QAction* undo;
+
+    QAction* redo;
+
+    QAction* changeWorkingTab;
+
+    QAction* hideShowView;
 
 };
 

@@ -39,10 +39,12 @@ bool calender::addItem(task currentTask)
 // 1 when the user is doing input. 
 bool calender::deleteItem(int taskID)
 {
+    cout << taskID;
+    _storage.erase(_storage.begin()+taskID-1);
 
-	_storage.erase(_storage.begin()+taskID-1);
-	_numberTasks--;
-	writeFile();
+    _numberTasks--;
+
+    writeFile();
 	return true;
 }
 

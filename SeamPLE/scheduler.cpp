@@ -1,5 +1,10 @@
 #include "scheduler.h"
 
+const string scheduler:: COLOUR_FRONT_CHOOSE_COLOUR =
+        "<font size=3 face=\"MV Boli\" color = \"";
+const string scheduler:: COLOUR_FRONT_CHOSEN_COLOUR = "\">";
+const string scheduler:: COLOUR_END_TAG = "</font>";
+
 scheduler::scheduler()
 {
 }
@@ -104,19 +109,28 @@ vector<string> scheduler::executeCommand(Action newAction)
 	if(command=="ADD")
 	{
 		eventCalender.addItem(newTask);
-		_result.push_back(ADD_SUCCESS);
+        _result.push_back(COLOUR_FRONT_CHOOSE_COLOUR + "green"
+                          + COLOUR_FRONT_CHOSEN_COLOUR + ADD_SUCCESS
+                          + COLOUR_END_TAG);
 	}
 	else if(command=="DELETE")
 	{
-		if(eventCalender.checkID(newTask.getID()))
-		{
-			eventCalender.deleteItem(newTask.getID());
-			_result.push_back(DELETE_SUCCESS);
-		}
-		else
-		{
-			_result.push_back(ERROR_NOT_FOUND);
-		}
+        const char *c = (newTask.getEventName()).c_str();
+        int id = atoi(c);
+//        if(eventCalender.checkID(newTask.getID()))
+//        {
+//            eventCalender.deleteItem(newTask.getID());
+//            _result.push_back(DELETE_SUCCESS);
+//        }
+        if(eventCalender.checkID(id))
+        {
+            eventCalender.deleteItem(id);
+            _result.push_back(DELETE_SUCCESS);
+        }
+        else
+        {
+            _result.push_back(ERROR_NOT_FOUND);
+        }
 	}
 	else if(command=="EDIT")
 	{
