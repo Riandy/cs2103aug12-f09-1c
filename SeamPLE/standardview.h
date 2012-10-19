@@ -2,6 +2,7 @@
 #define STANDARDVIEW_H
 
 #include <QVector>
+#include <QDesktopWidget>
 #include <QTableWidgetItem>
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
@@ -69,11 +70,15 @@ private slots:
 
 
 private:
-    void changeAutoResolution();
-
     void addTableContent(TableListNode *curr);
 
     void resetTableContents();
+
+    void changeGeometry();
+
+    int getPosX(int maxX);
+
+    int getPosY(int maxY);
 
     void setSignals();
 
