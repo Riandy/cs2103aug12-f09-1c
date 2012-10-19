@@ -7,21 +7,43 @@
 class GuiShortcuts: public QWidget
 {
 public:
+    GuiShortcuts();
+
     ~GuiShortcuts();
 
     void setShortcutsTo(QMainWindow* Gui);
 
+    void setStandardShortcutsTo(QMainWindow* Gui);
+
+    QAction* getSwitchViewKey();
+
+    QAction* getUndoKey();
+
+    QAction* getRedoKey();
+
+    QAction* getChangeWorkingTabKey();
+
+    QAction* getAddKey();
+
+    QAction* getFindKey();
+
+    QAction* getDisplayKey();
+
+    QAction* getDeleteKey();
+
+    QAction* getEditKey();
+
+
 public:
-    QAction* switchView;
-
-    QAction* undo;
-
-    QAction* redo;
-
-    QAction* changeWorkingTab;
-
-    QAction* hideShowView;
-
+    QAction* _switchView;
+    QAction* _undo;
+    QAction* _redo;
+    QAction* _changeWorkingTab;
+    QAction* _add;
+    QAction* _find;
+    QAction* _display;
+    QAction* _delete;
+    QAction* _edit;
 };
 
 #endif // GUISHORTCUTS_H
