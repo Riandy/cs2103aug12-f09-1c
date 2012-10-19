@@ -10,7 +10,7 @@ class GuiControl: public QObject
     Q_OBJECT
 
 public:
-    explicit GuiControl(QObject *parent = 0);
+    GuiControl();
 
     void showGui();
 
@@ -36,17 +36,17 @@ private:
     void setSeampleGuiSignals();
 
 private:
-    bool standardViewFlag;
+    bool _standardViewFlag;
 
     //Control class that controls the input sent in and send the appropriate
     //results back to be printed
-    Seample inputProcessor;
+    Seample _inputProcessor;
 
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 
     //GUI interfaces ==================
-    SeampleView seampleGui;
-    StandardView standardGui;
+    SeampleView _seampleGui;
+    StandardView _standardGui;
     //=================================
 
 

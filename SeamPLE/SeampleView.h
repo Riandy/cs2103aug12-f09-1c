@@ -45,6 +45,8 @@ private:
 
     int getPosY(int maxY);
 
+    void setSignals();
+
     Ui::SeampleView *ui;
 
     GuiShortcuts _allShortcuts;

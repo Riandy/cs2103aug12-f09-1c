@@ -19,8 +19,8 @@ private:
     int getPosX(int cursorPosX);
     int getPosY(int cursorPosY);
 
-    QPoint dragStartCursorPosition;
-    QRect bufferPosition;
+    QPoint _dragStartCursorPosition;
+    QRect _bufferPosition;
 
 };
 #endif
