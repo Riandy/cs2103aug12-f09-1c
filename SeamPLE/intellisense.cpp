@@ -157,6 +157,19 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
     return command;
 }
 
+int Intellisense::getID(vector<string>& tokens)
+{
+    if(tokens.size()==0 || isAllInt(tokens.front())== false)
+    {
+        return -1;
+    }
+    else
+    {
+        return atoi(tokens.front().c_str());
+    }
+
+}
+
 
 string Intellisense::getPriority(vector<string>& tokens)
 {
@@ -508,7 +521,14 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 {
     Action task;
     task.setCommand(getCommand(tokens,"DELETE"));
-    task.setEventName(getEventName(tokens));
+    int ID = getID(tokens);
+    if(ID == -1)
+    {
+     task.setEventName(getEventName(tokens));
+    }else
+    {
+        task.setID(ID);
+    }
     setAllStatusFlag(task);
     checkDelReq();
 
