@@ -59,40 +59,40 @@ void SeampleView::changeViewTriggered()
 
 void SeampleView::undoTriggered()
 {
-    //emit run("undo", ui->lineEdit->getFocusInput());
+    //emit run(GuiShortcuts::COMMAND_UNDO, ui->lineEdit->getFocusInput());
 }
 
 void SeampleView::redoTriggered()
 {
-    //emit run("redo", ui->lineEdit->getFocusInput());
+    //emit run(GuiShortcuts::COMMAND_REDO, ui->lineEdit->getFocusInput());
 }
 
 void SeampleView::addTriggered()
 {
-    ui->lineEdit->setText("add ");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
     ui->lineEdit->setFocusInput(true);
 }
 
 void SeampleView::findTriggered()
 {
-    ui->lineEdit->setText("find ");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
     ui->lineEdit->setFocusInput(true);
 }
 
 void SeampleView::displayTriggered()
 {
-    emit run("display", ui->lineEdit->getFocusInput());
+    emit run(GuiShortcuts::COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
 }
 
 void SeampleView::deleteTriggered()
 {
-    ui->lineEdit->setText("delete ");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
     ui->lineEdit->setFocusInput(true);
 }
 
 void SeampleView::editTriggered()
 {
-    ui->lineEdit->setText("edit ");
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
     ui->lineEdit->setFocusInput(true);
 }
 

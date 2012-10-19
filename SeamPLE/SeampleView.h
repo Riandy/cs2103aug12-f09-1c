@@ -2,7 +2,6 @@
 #define SEAMPLEVIEW_H
 
 #include <QDesktopWidget>
-#include <QString>
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 

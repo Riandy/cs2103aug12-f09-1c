@@ -1,5 +1,14 @@
 #include "GuiShortcuts.h"
 
+
+const QString GuiShortcuts:: COMMAND_UNDO = "undo";
+const QString GuiShortcuts:: COMMAND_REDO = "redo";
+const QString GuiShortcuts:: COMMAND_ADD = "add ";
+const QString GuiShortcuts:: COMMAND_FIND = "find ";
+const QString GuiShortcuts:: COMMAND_DISPLAY = "display";
+const QString GuiShortcuts:: COMMAND_DELETE = "delete ";
+const QString GuiShortcuts:: COMMAND_EDIT = "edit ";
+
 GuiShortcuts::GuiShortcuts()
 {
     _switchView = NULL;
