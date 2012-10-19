@@ -4,8 +4,10 @@
 #include <QAction>
 #include <QMainWindow>
 
-class GuiShortcuts: public QWidget
+
+class GuiShortcuts
 {
+
 public:
     GuiShortcuts();
 
@@ -33,8 +35,7 @@ public:
 
     QAction* getEditKey();
 
-
-public:
+private:
     QAction* _switchView;
     QAction* _undo;
     QAction* _redo;

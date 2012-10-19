@@ -16,19 +16,8 @@ StandardView::StandardView(QWidget *parent) :
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    _allShortcuts.setShortcutsTo(this);
-
-    connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
-            this,SLOT(recieve(QString)));
-
-    connect(ui->lineEdit,SIGNAL(returnPressed()),
-            this,SLOT(enterTriggered()));
-
-    connect(ui->pushButton_2,SIGNAL(clicked()),
-            this,SLOT(changeViewTriggered()));
-
-    connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
-            this,SLOT(changeViewTriggered()));
+    _allShortcuts.setStandardShortcutsTo(this);
+    setSignals();
 
     //Prevent change view push button from snatching focus
     //from input line
@@ -175,3 +164,17 @@ void StandardView:: resetTableContents()
     ui->tableWidget->clearContents();
 }
 
+void StandardView:: setSignals()
+{
+    connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
+            this,SLOT(recieve(QString)));
+
+    connect(ui->lineEdit,SIGNAL(returnPressed()),
+            this,SLOT(enterTriggered()));
+
+    connect(ui->pushButton_2,SIGNAL(clicked()),
+            this,SLOT(changeViewTriggered()));
+
+    connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
+            this,SLOT(changeViewTriggered()));
+}

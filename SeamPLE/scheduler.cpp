@@ -1,7 +1,7 @@
 #include "scheduler.h"
 
 const string scheduler:: COLOUR_FRONT_CHOOSE_COLOUR =
-        "<font size=3 face=\"MV Boli\" color = \"";
+        "<font size=4 face=\"MV Boli\" color = \"";
 const string scheduler:: COLOUR_FRONT_CHOSEN_COLOUR = "\">";
 const string scheduler:: COLOUR_END_TAG = "</font>";
 
@@ -109,7 +109,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 	if(command=="ADD")
 	{
 		eventCalender.addItem(newTask);
-        _result.push_back(COLOUR_FRONT_CHOOSE_COLOUR + "green"
+        _result.push_back(COLOUR_FRONT_CHOOSE_COLOUR + "#C4FF00"
                           + COLOUR_FRONT_CHOSEN_COLOUR + ADD_SUCCESS
                           + COLOUR_END_TAG);
 	}

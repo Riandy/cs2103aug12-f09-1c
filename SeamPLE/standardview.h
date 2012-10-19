@@ -50,12 +50,16 @@ private slots:
 
     void changeViewTriggered();
 
+    //void
+
 private:
     void changeAutoResolution();
 
     void addTableContent(TableListNode *curr);
 
     void resetTableContents();
+
+    void setSignals();
 
     Ui::StandardView *ui;
 

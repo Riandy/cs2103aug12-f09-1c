@@ -7,23 +7,13 @@ SeampleView::SeampleView(QWidget *parent) :
 {
     ui->setupUi(this);
     changeGeometry();
+
     //To make pri window transparent as focus is on
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
     _allShortcuts.setShortcutsTo(this);
-
-    connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
-            this,SLOT(recieve(QString)));
-
-    connect(ui->lineEdit,SIGNAL(returnPressed()),
-            this,SLOT(enterTriggered()));
-
-    connect(ui->pushButton_2,SIGNAL(clicked()),
-            this,SLOT(changeViewTriggered()));
-
-    connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
-            this,SLOT(changeViewTriggered()));
+    setSignals();
 
     //Prevent change view push button from snatching focus
     //from input line
@@ -89,3 +79,17 @@ int SeampleView:: getPosY(int maxY)
     return maxY - this->ui->frame->height();
 }
 
+void SeampleView:: setSignals()
+{
+    connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
+            this,SLOT(recieve(QString)));
+
+    connect(ui->lineEdit,SIGNAL(returnPressed()),
+            this,SLOT(enterTriggered()));
+
+    connect(ui->pushButton_2,SIGNAL(clicked()),
+            this,SLOT(changeViewTriggered()));
+
+    connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
+            this,SLOT(changeViewTriggered()));
+}

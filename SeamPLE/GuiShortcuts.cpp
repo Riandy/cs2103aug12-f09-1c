@@ -53,6 +53,7 @@ GuiShortcuts::~GuiShortcuts()
     }
 }
 
+
 void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
 {
     _switchView = new QAction(Gui);
@@ -68,24 +69,24 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 
     _add = new QAction(Gui);
-    Gui->addAction(_redo);
-    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
+    Gui->addAction(_add);
+    _add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
 
     _find = new QAction(Gui);
-    Gui->addAction(_redo);
-    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F));
+    Gui->addAction(_find);
+    _find->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F));
 
     _display = new QAction(Gui);
-    Gui->addAction(_redo);
-    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    Gui->addAction(_display);
+    _display->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
 
     _delete = new QAction(Gui);
-    Gui->addAction(_redo);
-    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_D));
+    Gui->addAction(_delete);
+    _delete->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_D));
 
     _edit = new QAction(Gui);
-    Gui->addAction(_redo);
-    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
+    Gui->addAction(_edit);
+    _edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
 }
 
 void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
@@ -94,7 +95,7 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
 
     _changeWorkingTab = new QAction(Gui);
     Gui->addAction(_changeWorkingTab);
-    _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
 }
 
 QAction* GuiShortcuts::getSwitchViewKey()
