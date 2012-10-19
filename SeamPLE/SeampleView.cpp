@@ -70,13 +70,13 @@ void SeampleView::redoTriggered()
 void SeampleView::addTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
 }
 
 void SeampleView::findTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
 }
 
 void SeampleView::displayTriggered()
@@ -87,13 +87,20 @@ void SeampleView::displayTriggered()
 void SeampleView::deleteTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
 }
 
 void SeampleView::editTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
+}
+
+void SeampleView::clearTriggered()
+{
+    showFocusInInputEdit(true);
+    showFeedbackInputEdit("");
+    emit relay("");
 }
 
 void SeampleView:: changeGeometry()
@@ -152,4 +159,7 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getEditKey(),SIGNAL(triggered()),
             this,SLOT(editTriggered()));
+
+    connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
+            this,SLOT(clearTriggered()));
 }
