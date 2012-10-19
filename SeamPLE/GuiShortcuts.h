@@ -45,6 +45,7 @@ public:
 
     QAction* getEditKey();
 
+    QAction* getClearKey();
 
 private:
     QAction* _switchView;
@@ -56,6 +57,7 @@ private:
     QAction* _display;
     QAction* _delete;
     QAction* _edit;
+    QAction* _clear;
 };
 
 #endif // GUISHORTCUTS_H

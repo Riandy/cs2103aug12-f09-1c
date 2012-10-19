@@ -65,6 +65,8 @@ private slots:
 
     void changeWorkingTabTriggered();
 
+    void clearTriggered();
+
 
 private:
     void changeAutoResolution();

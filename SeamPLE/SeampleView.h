@@ -51,6 +51,8 @@ private slots:
 
     void editTriggered();
 
+    void clearTriggered();
+
 private:
     void changeGeometry();
 

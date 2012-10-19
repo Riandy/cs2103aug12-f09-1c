@@ -129,13 +129,13 @@ void StandardView::redoTriggered()
 void StandardView::addTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
 }
 
 void StandardView::findTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
 }
 
 void StandardView::displayTriggered()
@@ -146,13 +146,13 @@ void StandardView::displayTriggered()
 void StandardView::deleteTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
 }
 
 void StandardView::editTriggered()
 {
     ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
-    ui->lineEdit->setFocusInput(true);
+    showFocusInInputEdit(true);
 }
 
 void StandardView::changeWorkingTabTriggered()
@@ -167,6 +167,13 @@ void StandardView::changeWorkingTabTriggered()
     {
         ui->tabWidget->setCurrentIndex(0);
     }
+}
+
+void StandardView::clearTriggered()
+{
+    showFocusInInputEdit(true);
+    showFeedbackInputEdit("");
+    emit relay("");
 }
 
 void StandardView:: changeAutoResolution()
@@ -254,4 +261,7 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getChangeWorkingTabKey(),SIGNAL(triggered()),
             this,SLOT(changeWorkingTabTriggered()));
+
+    connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
+            this,SLOT(clearTriggered()));
 }

@@ -20,6 +20,7 @@ GuiShortcuts::GuiShortcuts()
     _display = NULL;
     _delete = NULL;
     _edit = NULL;
+    _clear = NULL;
 }
 
 GuiShortcuts::~GuiShortcuts()
@@ -60,6 +61,10 @@ GuiShortcuts::~GuiShortcuts()
     {
         delete _edit;
     }
+    if (_clear != NULL)
+    {
+        delete _clear;
+    }
 }
 
 
@@ -96,6 +101,10 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _edit = new QAction(Gui);
     Gui->addAction(_edit);
     _edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
+
+    _clear = new QAction(Gui);
+    Gui->addAction(_clear);
+    _clear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
 }
 
 void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
@@ -150,4 +159,9 @@ QAction* GuiShortcuts::getDeleteKey()
 QAction* GuiShortcuts::getEditKey()
 {
     return _edit;
+}
+
+QAction* GuiShortcuts::getClearKey()
+{
+    return _clear;
 }
