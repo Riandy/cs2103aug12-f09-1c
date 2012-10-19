@@ -324,6 +324,7 @@ tm Intellisense::getDate(vector<string>& tokens)
     tm date;
     date.tm_hour=NULL;
     date.tm_min=NULL;
+    date.tm_sec=NULL;
     date.tm_mday=NULL;
     date.tm_mon=NULL;
     date.tm_year=NULL;
