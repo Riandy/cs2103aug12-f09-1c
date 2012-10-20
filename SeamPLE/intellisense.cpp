@@ -259,7 +259,9 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
     date.tm_hour=0;
     date.tm_min=0;
 
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    vector<string>::iterator it=tokens.begin();
+    while (it!=tokens.end())
     {
         time=it->c_str();
         if(time.size()>=5)
@@ -327,7 +329,8 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 
 
 
-
+        if (it!=tokens.end())
+            ++it;//only increment if it is not the last position
     }
     return date;
 }
