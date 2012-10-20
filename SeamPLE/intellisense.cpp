@@ -13,6 +13,24 @@ const string Intellisense::undoCommand = "undo";
 const string Intellisense::redoCommand = "redo";
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
+bool Intellisense::instanceFlag = false;
+Intellisense* Intellisense::intellisense = NULL;
+
+Intellisense* Intellisense::getInstance()
+{
+    if(!instanceFlag)
+    {
+        intellisense = new Intellisense();
+        instanceFlag=true;
+        return intellisense;
+    }
+    else
+    {
+        return intellisense;
+    }
+
+}
+
 Intellisense::Intellisense(void)
 {
     for(int i=0; i<MAXNOOFPARAMETERS; i++)
@@ -25,6 +43,8 @@ Intellisense::Intellisense(void)
 
 Intellisense::~Intellisense(void)
 {
+    instanceFlag=false;
+
 }
 
 Action Intellisense::check(string query)
