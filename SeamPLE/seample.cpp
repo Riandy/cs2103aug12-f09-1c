@@ -68,8 +68,8 @@ void Seample::init(int argc, char *argv[])
  {
      userInput=_userInput;
      response=intellisense->check(userInput);
-
-     if (runCommand)
+     cout<<"REquirements met:"<<intellisense->getrequirementsMet()<<endl;
+     if (runCommand && intellisense->getrequirementsMet())
      {
           feedback = fireAction();
      }
