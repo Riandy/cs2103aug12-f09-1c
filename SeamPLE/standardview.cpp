@@ -10,7 +10,7 @@ StandardView::StandardView(QWidget *parent) :
 {
     //Default settings according to UI form
     ui->setupUi(this);
-    changeAutoResolution();
+    changeGeometry();
 
     //To make pri window transparent as focus is on
     //sec window
@@ -30,6 +30,7 @@ StandardView::StandardView(QWidget *parent) :
     ui->tableWidget->setColumnCount(2);
     ui->tableWidget->setColumnWidth(0, 40);
     ui->tableWidget->setColumnWidth(1, 662);
+
 
 }
 
@@ -90,14 +91,13 @@ void StandardView::showTableResults(QVector <QString> output)
         addTableContent(cell);
     }
 
-
     if (rowAmount > 0)
     {
-        ui->label_6->setText("");
+        ui->label_8->setText("");
     }
     else
     {
-        ui->label_6->setText(MESSAGE_NO_CURRENT_RESULTS);
+        ui->label_8->setText(MESSAGE_NO_CURRENT_RESULTS);
     }
 }
 
@@ -113,12 +113,69 @@ void StandardView::enterTriggered()
 
 void StandardView::changeViewTriggered()
 {
+    //Reset the coordinates of the current window before view is changed
+    changeGeometry();
     emit toSeampleView(ui->lineEdit->text(),ui->label->text(), ui->lineEdit->getFocusInput());
 }
 
-void StandardView:: changeAutoResolution()
+void StandardView::undoTriggered()
 {
-    this->setWindowState(Qt::WindowMaximized);
+    //emit run(GuiShortcuts::COMMAND_UNDO, ui->lineEdit->getFocusInput());
+}
+
+void StandardView::redoTriggered()
+{
+    //emit run(GuiShortcuts::COMMAND_REDO, ui->lineEdit->getFocusInput());
+}
+
+void StandardView::addTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
+    showFocusInInputEdit(true);
+}
+
+void StandardView::findTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
+    showFocusInInputEdit(true);
+}
+
+void StandardView::displayTriggered()
+{
+    emit run(GuiShortcuts::COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
+}
+
+void StandardView::deleteTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
+    showFocusInInputEdit(true);
+}
+
+void StandardView::editTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
+    showFocusInInputEdit(true);
+}
+
+void StandardView::changeWorkingTabTriggered()
+{
+    bool atFirstTab = ui->tabWidget->currentIndex() == 0;
+
+    if (atFirstTab)
+    {
+        ui->tabWidget->setCurrentIndex(1);
+    }
+    else
+    {
+        ui->tabWidget->setCurrentIndex(0);
+    }
+}
+
+void StandardView::clearTriggered()
+{
+    showFocusInInputEdit(true);
+    showFeedbackInputEdit("");
+    emit relay("");
 }
 
 //Add a table cell to the linklist for all table cells
@@ -164,6 +221,28 @@ void StandardView:: resetTableContents()
     ui->tableWidget->clearContents();
 }
 
+void StandardView:: changeGeometry()
+{
+    this->setWindowState(Qt::WindowMaximized);
+    QDesktopWidget screen;
+    QRect sample = screen.availableGeometry(-1);
+
+    this->ui->frame->setGeometry(getPosX(sample.bottomRight().x()),
+                                 getPosY(sample.bottomRight().y()),
+                                 this->ui->frame->width(),
+                                 this->ui->frame->height());
+}
+
+int StandardView:: getPosX(int maxX)
+{
+    return maxX - this->ui->frame->width();
+}
+
+int StandardView:: getPosY(int maxY)
+{
+    return maxY - this->ui->frame->height();
+}
+
 void StandardView:: setSignals()
 {
     connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
@@ -177,4 +256,31 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
+
+    connect(_allShortcuts.getUndoKey(),SIGNAL(triggered()),
+            this,SLOT(undoTriggered()));
+
+    connect(_allShortcuts.getRedoKey(),SIGNAL(triggered()),
+            this,SLOT(redoTriggered()));
+
+    connect(_allShortcuts.getAddKey(),SIGNAL(triggered()),
+            this,SLOT(addTriggered()));
+
+    connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
+            this,SLOT(findTriggered()));
+
+    connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
+            this,SLOT(displayTriggered()));
+
+    connect(_allShortcuts.getDeleteKey(),SIGNAL(triggered()),
+            this,SLOT(deleteTriggered()));
+
+    connect(_allShortcuts.getEditKey(),SIGNAL(triggered()),
+            this,SLOT(editTriggered()));
+
+    connect(_allShortcuts.getChangeWorkingTabKey(),SIGNAL(triggered()),
+            this,SLOT(changeWorkingTabTriggered()));
+
+    connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
+            this,SLOT(clearTriggered()));
 }

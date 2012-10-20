@@ -57,6 +57,52 @@ void SeampleView::changeViewTriggered()
     emit toStandardView(ui->lineEdit->text(), ui->label->text(), ui->lineEdit->getFocusInput());
 }
 
+void SeampleView::undoTriggered()
+{
+    //emit run(GuiShortcuts::COMMAND_UNDO, ui->lineEdit->getFocusInput());
+}
+
+void SeampleView::redoTriggered()
+{
+    //emit run(GuiShortcuts::COMMAND_REDO, ui->lineEdit->getFocusInput());
+}
+
+void SeampleView::addTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
+    showFocusInInputEdit(true);
+}
+
+void SeampleView::findTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
+    showFocusInInputEdit(true);
+}
+
+void SeampleView::displayTriggered()
+{
+    emit run(GuiShortcuts::COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
+}
+
+void SeampleView::deleteTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
+    showFocusInInputEdit(true);
+}
+
+void SeampleView::editTriggered()
+{
+    ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
+    showFocusInInputEdit(true);
+}
+
+void SeampleView::clearTriggered()
+{
+    showFocusInInputEdit(true);
+    showFeedbackInputEdit("");
+    emit relay("");
+}
+
 void SeampleView:: changeGeometry()
 {
     this->setWindowState(Qt::WindowMaximized);
@@ -92,4 +138,28 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
+    \
+    connect(_allShortcuts.getUndoKey(),SIGNAL(triggered()),
+            this,SLOT(undoTriggered()));
+
+    connect(_allShortcuts.getRedoKey(),SIGNAL(triggered()),
+            this,SLOT(redoTriggered()));
+
+    connect(_allShortcuts.getAddKey(),SIGNAL(triggered()),
+            this,SLOT(addTriggered()));
+
+    connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
+            this,SLOT(findTriggered()));
+
+    connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
+            this,SLOT(displayTriggered()));
+
+    connect(_allShortcuts.getDeleteKey(),SIGNAL(triggered()),
+            this,SLOT(deleteTriggered()));
+
+    connect(_allShortcuts.getEditKey(),SIGNAL(triggered()),
+            this,SLOT(editTriggered()));
+
+    connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
+            this,SLOT(clearTriggered()));
 }

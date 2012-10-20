@@ -2,7 +2,6 @@
 #define SEAMPLEVIEW_H
 
 #include <QDesktopWidget>
-#include <QString>
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
@@ -37,6 +36,22 @@ private slots:
     void enterTriggered();
 
     void changeViewTriggered();
+
+    void undoTriggered();
+
+    void redoTriggered();
+
+    void addTriggered();
+
+    void findTriggered();
+
+    void displayTriggered();
+
+    void deleteTriggered();
+
+    void editTriggered();
+
+    void clearTriggered();
 
 private:
     void changeGeometry();
