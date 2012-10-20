@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     GuiShortcuts.cpp \
     SeampleView.cpp \
     StandardView.cpp \
-    SLineEdit.cpp
+    SLineEdit.cpp \
+    RegisterHotKey.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -36,7 +37,9 @@ HEADERS  += \
     GuiShortcuts.h \
     SeampleView.h \
     StandardView.h \
-    SLineEdit.h
+    SLineEdit.h \
+    stdafx.h \
+    targetver.h
 
 FORMS    += \
     SeampleView.ui \

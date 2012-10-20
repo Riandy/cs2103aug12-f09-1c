@@ -150,12 +150,10 @@ void GuiControl::send(QVector <QString> feedback)
     if (isStandardView())
     {
         _standardGui.showFeedbackLabel(feedback[0]);
-        _standardGui.showFeedbackInputEdit(feedback[1]);
     }
     else
     {
         _seampleGui.showFeedbackLabel(feedback[0]);
-        _seampleGui.showFeedbackInputEdit(feedback[1]);
     }
 }
 
