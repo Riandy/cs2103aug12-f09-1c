@@ -52,7 +52,7 @@ bool Action::checkDateEmpty(tm date)
     {
         return true;}
     else{
-    return false;}
+        return false;}
 }
 
 
@@ -169,4 +169,12 @@ int Action::getID()
 void Action::setID(int newID)
 {
     _task.setID(newID);
+}
+int Action::getDateType()
+{
+    return _task.getDateType();
+}
+void Action::setDateType(int datetype)
+{
+    _task.setDateType(datetype);
 }

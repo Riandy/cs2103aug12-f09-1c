@@ -32,7 +32,7 @@ private:
     static bool instanceFlag;
     static Intellisense *intellisense;
     Intellisense(void);
-   /* static const string addCommand;
+    /* static const string addCommand;
     static const string deleteCommand;
     static const string markCommand;
     static const string displayCommand;
@@ -46,7 +46,7 @@ private:
 
     static const string months[12];
 
-//    added array support for commands
+    //    added array support for commands
 
     const static string addCommandArray[];
     const static string deleteCommandArray[];
@@ -59,7 +59,7 @@ private:
     const static string undoCommandArray[];
     const static string redoCommandArray[];
 
-//end of added array support for commands
+    //end of added array support for commands
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
     string _feedback;
@@ -77,6 +77,7 @@ public:
     string getCommand(vector<string>& tokens, string _command);
     string getCategory(vector<string>& tokens);
     string getPriority(vector<string>& tokens);
+    int getDateType(vector<string>& tokens);
     tm getTime(vector<string>& tokens, tm date);
     bool isAllInt(const string& s );
     void itTest(vector<string> tokens);

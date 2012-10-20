@@ -49,6 +49,9 @@ public:
     int getID();
     void setID(int);
 
+    int getDateType();
+    void setDateType(int datetype);
+
     void determineDate(tm date1,tm date2);
     bool checkDateEmpty(tm date);
 
