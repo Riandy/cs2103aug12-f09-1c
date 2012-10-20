@@ -1,11 +1,29 @@
 #include "scheduler.h"
 
+bool scheduler::instanceFlag=false;
+scheduler* scheduler::_scheduler=NULL;
+
+scheduler* scheduler::getInstance()
+{
+    if(!instanceFlag)
+    {
+        _scheduler=new scheduler();
+        instanceFlag=true;
+        return _scheduler;
+    }
+    else
+    {
+        return _scheduler;
+    }
+}
+
 scheduler::scheduler()
 {
 }
 
 scheduler::~scheduler()
 {
+    instanceFlag = false;
 }
 
 vector<string> scheduler::executeCommand(Action newAction)
