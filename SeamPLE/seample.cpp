@@ -1,5 +1,7 @@
 #include "seample.h"
 
+bool Seample::instanceFlag=false;
+Seample* Seample::seample=NULL;
 
 void DisplayDate(tm date)
 {
@@ -30,6 +32,25 @@ Seample::Seample()
 {
     intellisense=Intellisense::getInstance();
     _scheduler=scheduler::getInstance();
+}
+
+Seample::~Seample()
+{
+    instanceFlag = false;
+}
+
+Seample* Seample::getInstance()
+{
+    if(!instanceFlag)
+    {
+        seample=new Seample();
+        instanceFlag=true;
+        return seample;
+    }
+    else
+    {
+        return seample;
+    }
 }
 
 void Seample::init(int argc, char *argv[])

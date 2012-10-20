@@ -17,6 +17,9 @@ class Seample
 {
 
 private:
+    static bool instanceFlag;
+    static Seample *seample;
+    Seample();
     string userInput;
     Action response;
     Intellisense *intellisense;
@@ -28,7 +31,8 @@ private:
     QVector <QString> convertQString (vector <string> buffer);
 
 public:
-    Seample();
+    static Seample* getInstance();
+    ~Seample();
     void init(int argc, char *argv[]);
     void updateUserInput(string userInput);
     QVector <QString> run(bool runCommand, string _userInput);
