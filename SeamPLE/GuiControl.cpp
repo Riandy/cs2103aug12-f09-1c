@@ -9,6 +9,7 @@ GuiControl::GuiControl()
 {
     setStandardGuiSignals();
     setSeampleGuiSignals();
+    _inputProcessor = Seample::getInstance();
 }
 
 void GuiControl:: showGui()
@@ -42,7 +43,7 @@ void GuiControl::check(QString input)
     else
     {
         bool command = false;
-        QVector <QString> output = _inputProcessor.run(command,input.toStdString());
+        QVector <QString> output = _inputProcessor->run(command,input.toStdString());
         bool invalidSchedulerReturn = (output.size() < 2);
 
         if (invalidSchedulerReturn)
@@ -69,7 +70,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     else
     {
         bool command = true;
-        QVector <QString> output = _inputProcessor.run(command,input.toStdString());
+        QVector <QString> output = _inputProcessor->run(command,input.toStdString());
         int capacity = output.size();
         bool needStandardView = (capacity>2);
 

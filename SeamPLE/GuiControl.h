@@ -40,7 +40,7 @@ private:
 
     //Control class that controls the input sent in and send the appropriate
     //results back to be printed
-    Seample _inputProcessor;
+    Seample *_inputProcessor;
 
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 
