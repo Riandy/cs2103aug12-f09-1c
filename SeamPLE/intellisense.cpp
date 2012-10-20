@@ -1,17 +1,5 @@
 #include "Intellisense.h"
 
-/*
-const string Intellisense::addCommand ="add";
-const string Intellisense::deleteCommand ="delete";
-const string Intellisense::markCommand = "mark";
-const string Intellisense::displayCommand= "display";
-const string Intellisense::exitCommand = "exit";
-const string Intellisense::sortCommand = "sort";
-const string Intellisense::findCommand = "find";
-const string Intellisense::editCommand = "edit";
-const string Intellisense::undoCommand = "undo";
-const string Intellisense::redoCommand = "redo";
-*/
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
 //changed to array
@@ -757,8 +745,8 @@ void Intellisense::setAllStatusFlag(Action task)
 
     bool isDateEndNotSet;
     isDateEndNotSet = (task.getEndDate().tm_year == 0	&&
-                    task.getEndDate().tm_mon	== 0   &&
-                    task.getEndDate().tm_mday == 0);
+                       task.getEndDate().tm_mon	== 0   &&
+                       task.getEndDate().tm_mday == 0);
     if(isDateEndNotSet)
         setStatusFlagAt(IDATEEND,false);
     else

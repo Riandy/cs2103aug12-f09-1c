@@ -69,7 +69,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
 {
     userInput = _userInput;
     response = intellisense->check(userInput);
-    cout<<"REquirements met:"<<intellisense->getrequirementsMet()<<endl;
+    cout<<"Requirements met:"<<intellisense->getrequirementsMet()<<endl;
     if (runCommand && intellisense->getrequirementsMet())
         //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
         //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
