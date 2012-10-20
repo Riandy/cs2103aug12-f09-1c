@@ -19,21 +19,20 @@ static string REDO_FAILURE = "Redo operation was unsuccessful";
 class scheduler
 {
 private:
-    static bool instanceFlag;
+	    static bool instanceFlag;
     static scheduler *_scheduler;
-    scheduler();
-    const static string COLOUR_FRONT_CHOOSE_COLOUR;
-    const static string COLOUR_FRONT_CHOSEN_COLOUR;
-    const static string COLOUR_END_TAG;
-
+		    scheduler();
 	vector<string> _result;
 	vector<task> taskVector;
 	calender eventCalender;
 	void convertToString(vector<task> taskVector);
+	void updateGUI(vector<task> taskVector);
 	void generalError();
 	string convertToDate(tm _date);
 
+	
 public:
+
     static scheduler* getInstance();
 	~scheduler();
 	vector<string> executeCommand(Action newaction);
