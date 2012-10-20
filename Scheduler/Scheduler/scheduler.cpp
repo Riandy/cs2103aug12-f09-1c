@@ -43,16 +43,16 @@ vector<string> scheduler::executeCommand(Action newAction)
     newTask.setEndDate(newAction.getEndDate());
     newTask.setID(newAction.getID());
     // Switch instead of using if cases.
+ /*
+    switch (determinOperation(command)){
 
-    /*switch (command){
-
-    case (ADD):
+    case ADD:
             {
                 eventCalender.addItem(newTask);
                 _result.push_back(ADD_SUCCESS);
             }
 
-    case (DELETE):
+   case (DELETE):
             {
                 if(eventCalender.checkID(newTask.getID()))
                 {
@@ -129,17 +129,36 @@ vector<string> scheduler::executeCommand(Action newAction)
     }
     else if(command=="DELETE")
     {
-        if(eventCalender.checkID(newTask.getID()))
-        {
-            eventCalender.deleteItem(newTask.getID());
-            _result.push_back(DELETE_SUCCESS);
-            taskVector = eventCalender.displayDatabase();
-            updateGUI(taskVector);
-        }
-        else
-        {
-            _result.push_back(ERROR_NOT_FOUND);
-        }
+		if (newTask.getEventName() != "")
+		{
+			string searchItem = newTask.getEventName();
+			int taskID = eventCalender.getTaskID(searchItem);
+			if (taskID == NOTFOUND)
+				_result.push_back(ERROR_NOT_FOUND);
+			else 
+			{
+				eventCalender.deleteItem(taskID);
+				_result.push_back(DELETE_SUCCESS);
+				taskVector = eventCalender.displayDatabase();
+				updateGUI(taskVector);
+			}
+		}
+		else
+		{
+	
+			  if(eventCalender.checkID(newTask.getID()))
+			  {
+			    eventCalender.deleteItem(newTask.getID());
+					_result.push_back(DELETE_SUCCESS);
+					taskVector = eventCalender.displayDatabase();
+					updateGUI(taskVector);
+			 }
+			 else
+			 {
+		        _result.push_back(ERROR_NOT_FOUND);
+			 }
+		}
+		
     }
     else if(command=="EDIT")
     {

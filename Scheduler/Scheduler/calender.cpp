@@ -112,6 +112,19 @@ vector<task> calender::SearchByTask(string searchItem)
 	return _bufferStorage;
 } // please check the _bufferStorage.size() in the scheduler
 
+int calender::getTaskID(string searchItem)
+{
+	int taskID = NOTFOUND;
+	for (int i=0; i< int(_storage.size()); i++)
+	{
+		if (_storage[i].getEventName() == searchItem)
+			taskID = i;
+	}
+
+	return taskID;
+}
+
+
 
 
 vector<task> calender::displayDatabase()
