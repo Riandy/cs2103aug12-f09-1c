@@ -60,58 +60,58 @@ void Seample::init(int argc, char *argv[])
     a.exec();
 }
 
- void Seample::updateUserInput(string userInput)
- {
-     this->userInput=userInput;
- }
+void Seample::updateUserInput(string userInput)
+{
+    this->userInput=userInput;
+}
 
- QVector <QString> Seample::run(bool runCommand, string _userInput)
- {
-     userInput=_userInput;
-     response=intellisense->check(userInput);
-     cout<<"REquirements met:"<<intellisense->getrequirementsMet()<<endl;
-     if (runCommand && intellisense->getrequirementsMet())
-      //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
-      //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
-     {
-          feedback = fireAction();
-     }
-     else
-     {
-         feedback.push_back(QString::fromStdString(intellisense->getParameter()));
+QVector <QString> Seample::run(bool runCommand, string _userInput)
+{
+    userInput=_userInput;
+    response=intellisense->check(userInput);
+    cout<<"REquirements met:"<<intellisense->getrequirementsMet()<<endl;
+    if (runCommand && intellisense->getrequirementsMet())
+        //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
+        //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
+    {
+        feedback = fireAction();
+    }
+    else
+    {
+        feedback.push_back(QString::fromStdString(intellisense->getParameter()));
 
-         //Following line is running the input back to GUI. Needs to be
-         //replaced by feedback string later
-         feedback.push_back(QString::fromStdString(_userInput));
-         //qDebug()<<feedback[1];
-         DisplayEvent(response);
+        //Following line is running the input back to GUI. Needs to be
+        //replaced by feedback string later
+        feedback.push_back(QString::fromStdString(_userInput));
+        //qDebug()<<feedback[1];
+        DisplayEvent(response);
 
-     }
+    }
 
-     QVector <QString> result = feedback;
-     feedback.clear();
+    QVector <QString> result = feedback;
+    feedback.clear();
 
-     return result;
- }
+    return result;
+}
 
- QVector <QString> Seample::fireAction()
- {
-     vector <string> result =_scheduler->executeCommand(response);
+QVector <QString> Seample::fireAction()
+{
+    vector <string> result =_scheduler->executeCommand(response);
 
-     return convertQString(result);
- }
+    return convertQString(result);
+}
 
- //Following function is for converting vector of QString
- //to QVector of QString
- QVector <QString> Seample::convertQString(vector <string> input)
- {
-     int size = input.size();
-     QVector <QString> converted;
+//Following function is for converting vector of QString
+//to QVector of QString
+QVector <QString> Seample::convertQString(vector <string> input)
+{
+    int size = input.size();
+    QVector <QString> converted;
 
-     for (int i = 0 ; i < size ; i++)
-     {
-         converted.push_back(QString::fromStdString(input[i]));
-     }
+    for (int i = 0 ; i < size ; i++)
+    {
+        converted.push_back(QString::fromStdString(input[i]));
+    }
 
-     return converted;
- }
+    return converted;
+}
