@@ -19,7 +19,7 @@ class Seample
 private:
     string userInput;
     Action response;
-    Intellisense intellisense;
+    Intellisense *intellisense;
     scheduler  _scheduler;
     QVector <QString> feedback;
 

@@ -28,7 +28,7 @@ void DisplayEvent(Action task)
 
 Seample::Seample()
 {
-
+    intellisense=Intellisense::getInstance();
 }
 
 void Seample::init(int argc, char *argv[])
@@ -45,7 +45,7 @@ void Seample::init(int argc, char *argv[])
  QVector <QString> Seample::run(bool runCommand, string _userInput)
  {
      userInput=_userInput;
-     response=intellisense.check(userInput);
+     response=intellisense->check(userInput);
 
      if (runCommand)
      {
@@ -53,7 +53,7 @@ void Seample::init(int argc, char *argv[])
      }
      else
      {
-         feedback.push_back(QString::fromStdString(intellisense.getParameter()));
+         feedback.push_back(QString::fromStdString(intellisense->getParameter()));
 
          //Following line is running the input back to GUI. Needs to be
          //replaced by feedback string later
