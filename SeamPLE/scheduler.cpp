@@ -26,6 +26,7 @@ scheduler::~scheduler()
     instanceFlag = false;
 }
 
+
 vector<string> scheduler::executeCommand(Action newAction)
 {
 	//get the command type
@@ -123,6 +124,8 @@ vector<string> scheduler::executeCommand(Action newAction)
 	{
 		eventCalender.addItem(newTask);
 		_result.push_back(ADD_SUCCESS);
+		taskVector = eventCalender.displayDatabase();
+		updateGUI(taskVector);
 	}
 	else if(command=="DELETE")
 	{
@@ -130,6 +133,8 @@ vector<string> scheduler::executeCommand(Action newAction)
 		{
 			eventCalender.deleteItem(newTask.getID());
 			_result.push_back(DELETE_SUCCESS);
+			taskVector = eventCalender.displayDatabase();
+			updateGUI(taskVector);
 		}
 		else
 		{
@@ -230,7 +235,7 @@ string scheduler::convertToDate(tm _date)
 {
 	string _result;
 	ostringstream convert;
-    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
 	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
 	_result=convert.str();
 	return _result;
@@ -240,3 +245,31 @@ void scheduler::generalError()
 {
 	_result.push_back(ERROR_INTELLISENSE_CHECK);
 }
+
+
+void scheduler::updateGUI(vector<task> taskVector)
+{
+	int vectorSize = taskVector.size();
+
+	for (int i = 0; i < vectorSize; i++)
+		
+	{
+		string _startDate = convertToDate(taskVector[i].getStartDate());
+		string _endDate = convertToDate(taskVector[i].getEndDate());
+		
+		//use ostringstream to convert id to string
+		ostringstream convert;
+		convert << taskVector.at(i).getID();
+		string id= convert.str();
+
+		_result.push_back(id);
+		_result.push_back(taskVector.at(i).getEventName());
+		_result.push_back(_startDate);
+		_result.push_back(_endDate);
+		_result.push_back(taskVector.at(i).getPriority());
+		_result.push_back(taskVector.at(i).getCategory());
+
+	}
+}
+
+

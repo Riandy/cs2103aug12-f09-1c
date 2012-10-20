@@ -18,13 +18,19 @@ public:
 
 private:
 
-	int _numberTasks;
+
 	vector<task> _storage;
 	bool writeFile();
 	bool loadFile();
-	stack<task> _history;
-	task _lastUndo[1];
-	
+stack<string> _history;
+	stack <task> _deleteHistory;
+	stack <task> _editHistory;
+	// for redo bro.
+	stack<task> _redoHistory;
+
+	void saveDelete(int taskID);
+	void saveEdit();
+	void saveHistory(string command);
 public:
 	
 calender();

@@ -1,12 +1,31 @@
 #include "scheduler.h"
 
+bool scheduler::instanceFlag=false;
+scheduler* scheduler::_scheduler=NULL;
+
+scheduler* scheduler::getInstance()
+{
+    if(!instanceFlag)
+    {
+        _scheduler=new scheduler();
+        instanceFlag=true;
+        return _scheduler;
+    }
+    else
+    {
+        return _scheduler;
+    }
+}
+
 scheduler::scheduler()
 {
 }
 
 scheduler::~scheduler()
 {
+    instanceFlag = false;
 }
+
 
 vector<string> scheduler::executeCommand(Action newAction)
 {
@@ -105,6 +124,8 @@ vector<string> scheduler::executeCommand(Action newAction)
 	{
 		eventCalender.addItem(newTask);
 		_result.push_back(ADD_SUCCESS);
+		taskVector = eventCalender.displayDatabase();
+		updateGUI(taskVector);
 	}
 	else if(command=="DELETE")
 	{
@@ -112,6 +133,8 @@ vector<string> scheduler::executeCommand(Action newAction)
 		{
 			eventCalender.deleteItem(newTask.getID());
 			_result.push_back(DELETE_SUCCESS);
+			taskVector = eventCalender.displayDatabase();
+			updateGUI(taskVector);
 		}
 		else
 		{
@@ -222,3 +245,31 @@ void scheduler::generalError()
 {
 	_result.push_back(ERROR_INTELLISENSE_CHECK);
 }
+
+
+void scheduler::updateGUI(vector<task> taskVector)
+{
+	int vectorSize = taskVector.size();
+
+	for (int i = 0; i < vectorSize; i++)
+		
+	{
+		string _startDate = convertToDate(taskVector[i].getStartDate());
+		string _endDate = convertToDate(taskVector[i].getEndDate());
+		
+		//use ostringstream to convert id to string
+		ostringstream convert;
+		convert << taskVector.at(i).getID();
+		string id= convert.str();
+
+		_result.push_back(id);
+		_result.push_back(taskVector.at(i).getEventName());
+		_result.push_back(_startDate);
+		_result.push_back(_endDate);
+		_result.push_back(taskVector.at(i).getPriority());
+		_result.push_back(taskVector.at(i).getCategory());
+
+	}
+}
+
+

@@ -3,7 +3,7 @@
 
 calender::calender()
 {
-	_numberTasks = 0;
+
 	calender::loadFile();
 }
 
@@ -25,32 +25,28 @@ string calender::convertToDate(tm _date)
 
 bool calender::addItem(task currentTask)
 {
-	currentTask.setID(++_numberTasks);
+	// currentTask.setID(_storage.size());
+	saveHistory("add");
 	cout<<"add item is called"<<endl;
 	cout<<"storage size after add"<<_storage.size()<<endl;
 	_storage.push_back(currentTask);
 	cout<<"storage size after add"<<_storage.size()<<endl;
 	writeFile();
-	//_numberTasks++;
 	return true;
 }
 
-// The reason we delete at taskID-1 is because _storage.begin() is [0], but task ID starts from 
-// 1 when the user is doing input. 
+
 bool calender::deleteItem(int taskID)
 {
-
+	saveHistory("del");
+	saveDelete(taskID-1);
 	_storage.erase(_storage.begin()+taskID-1);
-	_numberTasks--;
+	
 	writeFile();
 	return true;
 }
 
 
-//Riandy, could you write these two? Don't have to append strings yet. Just basic saving per line.
-// The vector is called _storage.
-// Format should be integer for number of items, and cin to variable _numberTasks
-// Then the description, date, date, priority. If you want you can issue an ID to the number as you load (just the [i] position + 1 in the for-loop)
 bool calender::writeFile()
 {
 	ofstream writeFile("storage.txt");
@@ -133,19 +129,19 @@ bool calender::loadFile()
 	//storage textfile
 	_storage.clear();
 
-	cout<<"Hello I am Loading"<<endl;
+	cout<<"Hello World"<<endl;
 	
 	ifstream readFile("storage.txt");
 	
 	string temp,description,priority,category;
 	char space;
-	_numberTasks=0;
+
 	string startDate,endDate;
 	//variable temp is used to read unecessary string/ character
 
 	while(readFile>>temp)
 	{
-		_numberTasks++;
+	
 	
 		//read the semicolon
 		readFile>>temp;
@@ -206,7 +202,7 @@ bool calender::loadFile()
 		//cout<<category<<endl;
 
 		task* newTask= new task;
-		newTask->setID(_numberTasks);
+		newTask->setID(_storage.size());
 		newTask->setEventName(description);
 		newTask->setStartDate(_startDate);
 		newTask->setEndDate(_endDate);
@@ -224,13 +220,30 @@ bool calender::undoAction()
 	if (_history.size() == 0)
 		return false;
 	else
-		// SOME CODE HERE
+	{
+		string lastCommand = _history.top();
+		if (lastCommand == "add")
+		{
+			int ID = _storage.size()-1;
+
+			_redoHistory.push(_storage[ID]);
+			_storage.erase(_storage.begin()+ID);
+
+		}
+		else if (lastCommand == "del")
+		{
+			task tempTask = _deleteHistory.top();
+			_storage.push_back(tempTask);
+			_deleteHistory.pop();
+		}
+	}
+		_history.pop();
 		return true;
 }
 
 bool calender::redoAction()
 {
-	if (sizeof(_lastUndo) == 0)
+	if (_redoHistory.size() == 0)
 		return false;
 	else
 
@@ -243,4 +256,56 @@ vector<task> calender::getToday()
 {
 	vector<task> _bufferStorage;
 	return _bufferStorage;
+}
+
+void calender::saveDelete(int taskID)
+{
+	task temp = _storage[taskID];
+	if (_deleteHistory.size() < 3)
+	_deleteHistory.push(temp);
+
+	// Following ensures the stack size remains <= 3
+	else if (_deleteHistory.size() == 3)
+	{
+		stack<task> tempStack;
+		while (_deleteHistory.size() != 1)
+		{
+			tempStack.push(_deleteHistory.top());
+			_deleteHistory.pop();
+		}
+		_deleteHistory.pop();
+		while(_deleteHistory.size() != 2)
+		{
+			_deleteHistory.push(tempStack.top());
+			tempStack.pop();
+		}
+		_deleteHistory.push(temp);
+
+	}
+}
+
+void calender::saveHistory(string command)
+{
+	if (_history.size() < 3)
+		_history.push(command);
+	else if (_history.size() == 3)
+	{
+		stack<string> tempStack;
+		while (_history.size() != 1)
+		{
+			tempStack.push(_history.top());
+			_history.pop();
+		}
+		_history.pop();
+		while(_history.size() != 2)
+		{
+			_history.push(tempStack.top());
+			tempStack.pop();
+		}
+		_history.push(command);
+
+	}
+
+
+
 }
