@@ -172,16 +172,24 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if (command=="UNDO")
     {
         if (eventCalender.undoAction())
-            _result.push_back(UNDO_SUCCESS);
-        else
+	   {
+		  _result.push_back(UNDO_SUCCESS);
+		   taskVector = eventCalender.displayDatabase();
+			   updateGUI(taskVector);
+		}
+        else if (!eventCalender.undoAction())
             _result.push_back(UNDO_FAILURE);
     }
 
     else if (command == "REDO")
     {
         if (eventCalender.redoAction())
-            _result.push_back(REDO_SUCCESS);
-        else
+         {
+			_result.push_back(REDO_SUCCESS);
+			taskVector = eventCalender.displayDatabase();
+		    updateGUI(taskVector);
+		}
+        else if (!eventCalender.redoAction())
             _result.push_back(REDO_FAILURE);
     }
 
