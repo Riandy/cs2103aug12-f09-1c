@@ -32,9 +32,9 @@ Intellisense* Intellisense::intellisense = NULL;
 
 //miscellaneous function
 char toLower(char in){
-  if(in<='Z' && in>='A')
-    return in-('Z'-'z');
-  return in;
+    if(in<='Z' && in>='A')
+        return in-('Z'-'z');
+    return in;
 }
 //end of miscellaneous
 
@@ -335,7 +335,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 
 string Intellisense::getCategory(vector<string>& tokens)
 {
-    string category = "\0";
+    string category = "#";
     for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
     {
         if(it->at(0) == '#' )
@@ -440,44 +440,44 @@ tm Intellisense::getDate(vector<string>& tokens)
 
             if(check !=-1)
             {
-            it--;
-            vector<string>::iterator it_day = it++;
+                it--;
+                vector<string>::iterator it_day = it++;
 
-            if(++it == tokens.end())
-            {                // wenbin's own note, iterator unexplained
+                if(++it == tokens.end())
+                {                // wenbin's own note, iterator unexplained
+                    return date=getTime(tokens,date);
+                }
+                --it;
+                vector<string>::iterator it_year = ++it;
+
+                string day =it_day->c_str();
+                if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+                {
+                    return date=getTime(tokens,date);
+                }
+                string year = it_year->c_str();
+                if(year.size()!=4 || !isAllInt(year))
+                {
+                    return date=getTime(tokens,date);
+                }
+                if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+                {
+
+                    return date=getTime(tokens,date);
+                }
+                int month = check;
+
+
+                it_day=tokens.erase(it_day);
+                it_day=tokens.erase(it_day);
+                it_day=tokens.erase(it_day);
+
+                it=it_day;
+
+                date.tm_mday=atoi(day.c_str());
+                date.tm_mon=month;
+                date.tm_year=atoi(year.c_str());
                 return date=getTime(tokens,date);
-            }
-            --it;
-            vector<string>::iterator it_year = ++it;
-
-            string day =it_day->c_str();
-            if(day.size()>2 || day.size()<=0 || !isAllInt(day))
-            {
-                return date=getTime(tokens,date);
-            }
-            string year = it_year->c_str();
-            if(year.size()!=4 || !isAllInt(year))
-            {
-                return date=getTime(tokens,date);
-            }
-            if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
-            {
-
-                return date=getTime(tokens,date);
-            }
-            int month = check;
-
-
-            it_day=tokens.erase(it_day);
-            it_day=tokens.erase(it_day);
-            it_day=tokens.erase(it_day);
-
-            it=it_day;
-
-            date.tm_mday=atoi(day.c_str());
-            date.tm_mon=month;
-            date.tm_year=atoi(year.c_str());
-            return date=getTime(tokens,date);
 
 
             }
@@ -583,11 +583,13 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
     int ID = getID(tokens);
     if(ID == -1)
     {
-     task.setEventName(getEventName(tokens));
+        task.setEventName(getEventName(tokens));
     }else
     {
         task.setID(ID);
     }
+
+
     setAllStatusFlag(task);
     checkDelReq();
 
@@ -696,6 +698,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 
 void Intellisense::setAllStatusFlag(Action task)
 {
+
     if(task.getEventName() == "" )
         setStatusFlagAt(INAME,false);
     else
@@ -725,10 +728,15 @@ void Intellisense::setAllStatusFlag(Action task)
         setStatusFlagAt(IPRIORITY,true);
 
 
-    if(task.getCategory() == "")
+    if(task.getCategory() == "#")
         setStatusFlagAt(ICATEGORY,false);
     else
         setStatusFlagAt(ICATEGORY,true);
+
+    if(task.getID() == -1)
+        setStatusFlagAt(IID,false);
+    else
+        setStatusFlagAt(IID,true);
 }
 void  Intellisense::getAllStatusFlag(bool *flags)
 {
@@ -766,9 +774,9 @@ void Intellisense::checkAddReq()
 }
 
 void Intellisense::checkDelReq()
-{
+{// need at least an ID to delete
     bool checkReqMet = false;
-    if (statusFlags[INAME])
+    if (statusFlags[IID])
     {
         checkReqMet = true;
     }
@@ -776,7 +784,7 @@ void Intellisense::checkDelReq()
 }
 void Intellisense::checkDspReq()
 {
-     bool dspReqMet = false;
+    bool dspReqMet = false;
 
     if (statusFlags[ICATEGORY] )
     {
