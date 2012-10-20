@@ -394,7 +394,9 @@ tm Intellisense::getDate(vector<string>& tokens)
     date.tm_mon=NULL;
     date.tm_year=NULL;
 
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    vector<string>::iterator it=tokens.begin();
+    while (it!=tokens.end())
     {
         string checkString = it->c_str();
         if(checkString.size()==8)
@@ -492,7 +494,8 @@ tm Intellisense::getDate(vector<string>& tokens)
 
 
 
-
+        if (it!=tokens.end())
+            ++it;//only increment if it is not the last position
     }
     return date=getTime(tokens,date);
 
