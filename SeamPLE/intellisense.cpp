@@ -519,36 +519,32 @@ string Intellisense::getEventName(vector<string>& tokens)
 }
 int Intellisense::getDateType(vector<string>& tokens)
 {
-    int dType = task::DATENORMAL;//default normal if cannot find
-    int erasePos = -1;
-    bool needErase = false;
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();it++)
+    int dType = task::DATENORMAL;//default normal if cant find other date types
+    bool dTypeFound = false;
+    vector<string>::iterator it=tokens.begin();
+    while(it!=tokens.end())
     {
         cout<<"valueee:"<<*it<<endl;
         if( *it == "weekly" )//later do lower case check write a function that compares 2 string without case sensitive
         {//may have to add more checks if weekly is used in event name
             dType = task::DATEWEEKLY;
-            erasePos = it- tokens.begin();
-            needErase = true;
-            //tokens.erase(it);
+            it = tokens.erase(it);
         }
         else if(*it == "fortnightly")//if more than 1 special date type keywords occured we take the higher priority ones
         {
             dType = task::DATEFORTNIGHTLY;
-            erasePos = it- tokens.begin();
-            needErase = true;
+            it = tokens.erase(it);
         }
         else if( *it == "monthly")
         {
             dType = task::DATEMONTHLY;
-            erasePos = it- tokens.begin();
-            needErase = true;
+            it = tokens.erase(it);
         }
-    }
-    //only increment if it is not the last element
-    if (erasePos != -1 && needErase )
-        tokens.erase(tokens.begin()+erasePos);
 
+        if(it!= tokens.end())
+            it++;//incremnt if it is not the last iterator
+
+    }
     return dType;
 
 }
