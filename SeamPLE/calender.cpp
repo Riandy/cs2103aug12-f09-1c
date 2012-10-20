@@ -26,7 +26,7 @@ string calender::convertToDate(tm _date)
 bool calender::addItem(task currentTask)
 {
 	// currentTask.setID(_storage.size());
-	saveHistory("add");
+	saveHistory(ADD);
 	cout<<"add item is called"<<endl;
 	cout<<"storage size after add"<<_storage.size()<<endl;
 	_storage.push_back(currentTask);
@@ -38,7 +38,7 @@ bool calender::addItem(task currentTask)
 
 bool calender::deleteItem(int taskID)
 {
-	saveHistory("del");
+	saveHistory(DELETE);
 	saveDelete(taskID-1);
 	_storage.erase(_storage.begin()+taskID-1);
 	
@@ -76,7 +76,7 @@ bool calender::checkID(int taskID)
 
 bool calender::editTask(task edited)
 {
-
+	saveHistory(EDIT);
 return true;
 }
 
@@ -222,22 +222,25 @@ bool calender::undoAction()
 	else
 	{
 		string lastCommand = _history.top();
-		if (lastCommand == "add")
+		if (lastCommand == ADD)
 		{
+			_redoCommands.push(ADD);
 			int ID = _storage.size()-1;
 
 			_redoHistory.push(_storage[ID]);
 			_storage.erase(_storage.begin()+ID);
 
 		}
-		else if (lastCommand == "del")
+		else if (lastCommand == DELETE)
 		{
+			_redoCommands.push(DELETE);
 			task tempTask = _deleteHistory.top();
 			_storage.push_back(tempTask);
 			_deleteHistory.pop();
 		}
 	}
 		_history.pop();
+		writeFile();
 		return true;
 }
 
@@ -246,8 +249,30 @@ bool calender::redoAction()
 	if (_redoHistory.size() == 0)
 		return false;
 	else
+	{
+		if (_redoCommands.top() == ADD)
+		{
+		task lastUndo = _redoHistory.top();
+		_storage.push_back(lastUndo);
+		saveHistory(ADD);
+		_redoCommands.pop();
+		_redoHistory.pop();
 
-		// SOME CODE HERE
+		}
+		else if (_redoCommands.top() == DELETE)
+		{
+			int taskID = _storage.size();
+			
+			saveDelete(taskID-1);
+			_storage.erase(_storage.begin()+taskID-1);
+	
+			saveHistory(DELETE);
+			_redoCommands.pop();
+			
+		}
+		writeFile();
+
+	}
 	return true;
 }
 

@@ -12,6 +12,11 @@
 
 using namespace std;
 
+
+static string DELETE = "delete";
+static string ADD = "add";
+static string EDIT = "edit";
+
 class calender
 {
 public:
@@ -27,6 +32,7 @@ private:
     stack <task> _editHistory;
     // for redo bro.
     stack<task> _redoHistory;
+	stack<string> _redoCommands;
 
     void saveDelete(int taskID);
     void saveEdit();
