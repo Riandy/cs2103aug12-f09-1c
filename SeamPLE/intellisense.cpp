@@ -16,7 +16,7 @@ const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","
 
 //changed to array
 const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++"};
-const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel" };
+const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel","dsp" };
 const string Intellisense::markCommandArray[] = { "mark", "done"};
 const string Intellisense::displayCommandArray[]= { "display" ,"show"};
 const string Intellisense::exitCommandArray[] = {"exit","quit"};
@@ -517,7 +517,47 @@ string Intellisense::getEventName(vector<string>& tokens)
 
     return ss.str();
 }
+int Intellisense::getDateType(vector<string>& tokens)
+{
+    int dType = task::DATENORMAL;//default normal if cannot find
+    int erasePos = -1;
+    bool needErase = false;
+    vector<string>::iterator endIterator = tokens.end();
+    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();it++)
+    {
+        cout<<"valueee:"<<*it<<endl;
+        if( *it == "weekly" )//later do lower case check write a function that compares 2 string without case sensitive
+        {//may have to add more checks if weekly is used in event name
+            dType = task::DATEWEEKLY;
+            erasePos = it- tokens.begin();
+            needErase = true;
+            //tokens.erase(it);
+        }
+        else if(*it == "fortnightly")//if more than 1 special date type keywords occured we take the higher priority ones
+        {
+            dType = task::DATEFORTNIGHTLY;
+            //it = tokens.erase(it);
+            erasePos = it- tokens.begin();
+            needErase = true;
+        }
+        else if( *it == "monthly")
+        {
+            dType = task::DATEMONTHLY;
+            erasePos = it- tokens.begin();
+            //it = tokens.erase(it);
+            needErase = true;
+        }
 
+
+
+    }
+    //only increment if it is not the last element
+    if (erasePos != -1 && needErase )
+        tokens.erase(tokens.begin()+erasePos);
+
+    return dType;
+
+}
 void Intellisense::itTest(vector<string> tokens)
 {
 
@@ -635,7 +675,10 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
     task.determineDate(getDate(tokens),getDate(tokens));//expand this to quick add date function
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
-    task.setEventName(getEventName(tokens));
+    //get special word detection on weekly monthly fortnightly
+    //this will overwrite any existing value if got clashes so the check in these special functions must be thorough
+    task.setDateType(getDateType(tokens));
+    task.setEventName(getEventName(tokens));//get event name must be the last to retrieve as it gets the remainders
     setAllStatusFlag(task);
     checkAddReq();
     smartAutoFill(task);//auto fill some of the fields that are unentered
@@ -891,6 +934,14 @@ string Intellisense::getParameter()
     else
     {
         _parameter =_parameter + "<font color=red>[ICATEGORY]</font>";
+    }
+    if(statusFlags[IID])
+    {
+        _parameter =_parameter + "<font color=green>[IID]</font>";
+    }
+    else
+    {
+        _parameter =_parameter + "<font color=red>[IID]</font>";
     }
 
 

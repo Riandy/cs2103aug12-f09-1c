@@ -1,5 +1,9 @@
 #include "task.h"
 
+const int  task::DATENORMAL         = 0;
+const int  task::DATEWEEKLY         = 1;
+const int task::DATEFORTNIGHTLY     = 2;
+const int task::DATEMONTHLY         = 3;
 
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
@@ -20,6 +24,7 @@ task::task(void)
     _priority = "LOW";
     _category = "#";
     _id=-1;
+    dateType = DATENORMAL;//normal mode
 }
 
 
@@ -83,6 +88,15 @@ int task::getID()
 void task::setID(int newID)
 {
     _id = newID;
+}
+
+int task::getDateType()
+{
+    return dateType;
+}
+void task::setDateType(int newType)
+{
+    dateType= newType;
 }
 
 string task::convertToDate(tm _date)

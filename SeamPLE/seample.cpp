@@ -23,7 +23,8 @@ void DisplayEvent(Action task)
     cout<<string("Event Name : ")<<task.getEventName()<<endl;
     cout<<string("Category : ")<<task.getCategory()<<endl;
     cout<<string("ID : ")<<task.getID()<<endl;
-    //cout<<string("Req Met : ")<<task.getrequirementsMet()<<endl;
+    cout<<string("Date Type: ")<<task.getDateType()<<endl;
+
     cout<<string("******************")<<endl;
 }
 
@@ -70,6 +71,8 @@ void Seample::init(int argc, char *argv[])
      response=intellisense->check(userInput);
      cout<<"REquirements met:"<<intellisense->getrequirementsMet()<<endl;
      if (runCommand && intellisense->getrequirementsMet())
+      //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
+      //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
      {
           feedback = fireAction();
      }

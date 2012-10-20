@@ -16,16 +16,23 @@ private:
     tm _endDate;
     string _priority;
     string _category;
+    int dateType;
     int _id;
 
 
+
 public:
+
+    const static int DATENORMAL;
+    const static int DATEWEEKLY;
+    const static int DATEFORTNIGHTLY;
+    const static int DATEMONTHLY;
+
     task();
     ~task();
 
     string getEventName();
     void setEventName(string);
-
 
     tm getStartDate();
     void setStartDate( tm);
@@ -42,6 +49,9 @@ public:
 
     int getID();
     void setID(int);
+
+    int getDateType();
+    void setDateType(int );
 
     string convertToDate(tm);
 
