@@ -829,7 +829,7 @@ void Intellisense::checkDspReq()
 {
     bool dspReqMet = false;
 
-    if (statusFlags[ICATEGORY] )
+    /*if (statusFlags[ICATEGORY] )
     {
         dspReqMet = true;
     }
@@ -837,7 +837,8 @@ void Intellisense::checkDspReq()
     {
         dspReqMet = true;
     }
-
+    */
+    //removed the requirements for display command without any parameters
     requirementsMet = dspReqMet;
 
 }
