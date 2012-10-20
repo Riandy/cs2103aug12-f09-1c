@@ -336,7 +336,8 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 string Intellisense::getCategory(vector<string>& tokens)
 {
     string category = "#";
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    vector<string>::iterator it=tokens.begin();
+    while(it!=tokens.end())
     {
         if(it->at(0) == '#' )
         {
@@ -344,6 +345,9 @@ string Intellisense::getCategory(vector<string>& tokens)
             it = tokens.erase(it);
             return category;
         }
+
+        if(it != tokens.end())
+            it++;//only increment if it is not the last position
     }
     return category;
 
