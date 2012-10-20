@@ -67,8 +67,8 @@ void Seample::updateUserInput(string userInput)
 
 QVector <QString> Seample::run(bool runCommand, string _userInput)
 {
-    userInput=_userInput;
-    response=intellisense->check(userInput);
+    userInput = _userInput;
+    response = intellisense->check(userInput);
     cout<<"REquirements met:"<<intellisense->getrequirementsMet()<<endl;
     if (runCommand && intellisense->getrequirementsMet())
         //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
