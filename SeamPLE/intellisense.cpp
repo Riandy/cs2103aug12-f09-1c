@@ -1,6 +1,6 @@
 #include "Intellisense.h"
 
-
+/*
 const string Intellisense::addCommand ="add";
 const string Intellisense::deleteCommand ="delete";
 const string Intellisense::markCommand = "mark";
@@ -11,8 +11,8 @@ const string Intellisense::findCommand = "find";
 const string Intellisense::editCommand = "edit";
 const string Intellisense::undoCommand = "undo";
 const string Intellisense::redoCommand = "redo";
+*/
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
-
 
 //changed to array
 const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++"};
@@ -27,10 +27,17 @@ const string Intellisense::undoCommandArray[] = {"undo","revert"};
 const string Intellisense::redoCommandArray[] = {"redo","undoundo"};
 
 //end of array change
-
-
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
+
+//miscellaneous function
+char toLower(char in){
+  if(in<='Z' && in>='A')
+    return in-('Z'-'z');
+  return in;
+}
+//end of miscellaneous
+
 
 Intellisense* Intellisense::getInstance()
 {
@@ -54,6 +61,7 @@ Intellisense::Intellisense(void)
         statusFlags[i] = true;
     }
     requirementsMet = false;
+
 }
 
 
@@ -121,36 +129,36 @@ Action Intellisense::check(string query)
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
     string commandword=tokens[0];
-    if(checkString(commandword,addCommand))
+    if(checkCommandArray(commandword,addCommandArray, sizeof(addCommandArray)/sizeof(string) ))//the sizeof operator  have to work at this level of abstraction due to auto convertion of array to pointer and arraysize information loss
     {
         return ADD;
-    }else if(checkString(commandword,deleteCommand))
+    }else if(checkCommandArray(commandword,deleteCommandArray,sizeof(deleteCommandArray)/sizeof(string)))
     {
         return DELETE;
-    }else if(checkString(commandword,editCommand))
+    }else if(checkCommandArray(commandword,editCommandArray,sizeof(editCommandArray)/sizeof(string)))
     {
         return EDIT;
-    }else if(checkString(commandword,markCommand))
+    }else if(checkCommandArray(commandword,markCommandArray,sizeof(markCommandArray)/sizeof(string)))
     {
         return MARK;
-    }else if(checkString(commandword,findCommand))
+    }else if(checkCommandArray(commandword,findCommandArray,sizeof(findCommandArray)/sizeof(string)))
     {
         return FIND;
-    }else if(checkString(commandword,sortCommand))
+    }else if(checkCommandArray(commandword,sortCommandArray,sizeof(sortCommandArray)/sizeof(string)))
     {
         return SORT;
-    }else if(checkString(commandword,displayCommand))
+    }else if(checkCommandArray(commandword,displayCommandArray,sizeof(displayCommandArray)/sizeof(string)))
     {
         return DISPLAY;
-    }else if(checkString(commandword,exitCommand))
+    }else if(checkCommandArray(commandword,exitCommandArray,sizeof(exitCommandArray)/sizeof(string)))
     {
         return EXIT;
     }
-    else if(checkString(commandword,undoCommand))
+    else if(checkCommandArray(commandword,undoCommandArray,sizeof(undoCommandArray)/sizeof(string)))
     {
         return UNDO;
     }
-    else if(checkString(commandword,redoCommand))
+    else if(checkCommandArray(commandword,redoCommandArray,sizeof(redoCommandArray)/sizeof(string)))
     {
         return REDO;
     }
@@ -177,8 +185,25 @@ bool Intellisense::checkString(const string& input, const string& command)
     }
     return true;
 }
-
-
+bool Intellisense::checkCommandArray(const string& input, const string command[],int arraySize)
+{
+    bool isCommandFound = false;
+    string inputBuffer;
+    string commandBuffer;
+    //transform (command.begin(), command.end(), command.begin(),toLower);// change the command to all lower case
+    cout<< "size is this :"<<arraySize;
+    inputBuffer = input;
+    transform (inputBuffer.begin(), inputBuffer.end(), inputBuffer.begin(),toLower);//change to lower case for comparison
+    for (int i = 0 ; i < arraySize; i++)
+    {//iterate for each item in command array
+        commandBuffer = command[i];
+        transform( commandBuffer.begin(), commandBuffer.end(), commandBuffer.begin(),toLower);//change to lower case for comparison
+        //cout<<"Checking now"<<commandBuffer<<endl;
+        if(inputBuffer == commandBuffer) // if matches found // need to convert to lower case
+            isCommandFound = true;
+    }
+    return isCommandFound;
+}
 string Intellisense::getfirst_Word(string command)
 {
     return tokenize(command)[0];
@@ -879,3 +904,4 @@ void Intellisense::smartAutoFill(Action &task)
 
     }
 }
+

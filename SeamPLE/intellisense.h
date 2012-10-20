@@ -44,7 +44,7 @@ private:
     static const string redoCommand;
     static const string months[12];
 
-    //    added array support for commands
+//    added array support for commands
 
     const static string addCommandArray[];
     const static string deleteCommandArray[];
@@ -57,8 +57,7 @@ private:
     const static string undoCommandArray[];
     const static string redoCommandArray[];
 
-    //end of added array support for commands
-
+//end of added array support for commands
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
     string _feedback;
@@ -82,6 +81,10 @@ public:
     operation determinOperation(vector<string>& tokens);
     string getfirst_Word(string command);
     bool checkString(const string& input, const string& command);
+
+    bool checkCommandArray(const string& input, const string command[], int arraySize);
+
+
     int checkDateString(string token);
     string removeChar(string s,char chars[]);
     string& trim(string& s , const string& delimiters = " \f\r\t\v");
@@ -127,5 +130,6 @@ public:
     void setParameter(string);
 
 };
+
 
 #endif
