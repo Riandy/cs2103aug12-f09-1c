@@ -190,16 +190,13 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
     bool isCommandFound = false;
     string inputBuffer;
     string commandBuffer;
-    //transform (command.begin(), command.end(), command.begin(),toLower);// change the command to all lower case
-    cout<< "size is this :"<<arraySize;
     inputBuffer = input;
-    transform (inputBuffer.begin(), inputBuffer.end(), inputBuffer.begin(),toLower);//change to lower case for comparison
+    transform (inputBuffer.begin(), inputBuffer.end(), inputBuffer.begin(),toLower);//to lower case for comparison
     for (int i = 0 ; i < arraySize; i++)
     {//iterate for each item in command array
         commandBuffer = command[i];
-        transform( commandBuffer.begin(), commandBuffer.end(), commandBuffer.begin(),toLower);//change to lower case for comparison
-        //cout<<"Checking now"<<commandBuffer<<endl;
-        if(inputBuffer == commandBuffer) // if matches found // need to convert to lower case
+        transform( commandBuffer.begin(), commandBuffer.end(), commandBuffer.begin(),toLower);
+        if(inputBuffer == commandBuffer)
             isCommandFound = true;
     }
     return isCommandFound;
@@ -760,63 +757,78 @@ void Intellisense::setRequirementsMet(bool req)
 
 void Intellisense::checkAddReq()
 {
+    bool addReqMet = false;
     if (statusFlags[INAME])
     {
-        requirementsMet = true;
+        addReqMet = true;
     }
+    requirementsMet = addReqMet;
 }
 
 void Intellisense::checkDelReq()
 {
+    bool checkReqMet = false;
     if (statusFlags[INAME])
     {
-        requirementsMet = true;
+        checkReqMet = true;
     }
+    requirementsMet = checkReqMet;
 }
 void Intellisense::checkDspReq()
 {
+     bool dspReqMet = false;
+
     if (statusFlags[ICATEGORY] )
     {
-        requirementsMet = true;
+        dspReqMet = true;
     }
     if (statusFlags[IDATE] )
     {
-        requirementsMet = true;
+        dspReqMet = true;
     }
+
+    requirementsMet = dspReqMet;
 
 }
 void Intellisense::checkMarkReq()
 {
+    bool markReqMet = false;
     if (statusFlags[INAME])
     {
-        requirementsMet = true;
+        markReqMet = true;
     }
     if (statusFlags[IDATE] )
     {
-        requirementsMet = true;
+        markReqMet = true;
     }
+    requirementsMet = markReqMet;
 }
 void Intellisense::checkFindReq()
 {
+    bool findReqMet = false;
     if (statusFlags[IDATE] )
     {
-        requirementsMet = true;
+        findReqMet = true;
     }
     if (statusFlags[ICATEGORY] )
     {
-        requirementsMet = true;
+        findReqMet = true;
     }
     if (statusFlags[INAME])
     {
-        requirementsMet = true;
+        findReqMet = true;
     }
+    requirementsMet = findReqMet;
+
 }
 void Intellisense::checkEditReq()
 {
+    bool editReqMet = false;
     if (statusFlags[INAME])
     {
-        requirementsMet = true;
+        editReqMet = true;
     }
+    requirementsMet = editReqMet;
 }
 
 string Intellisense::getFeedback()
