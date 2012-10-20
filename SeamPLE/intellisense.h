@@ -32,7 +32,7 @@ private:
     static bool instanceFlag;
     static Intellisense *intellisense;
     Intellisense(void);
-    static const string addCommand;
+   /* static const string addCommand;
     static const string deleteCommand;
     static const string markCommand;
     static const string displayCommand;
@@ -42,6 +42,8 @@ private:
     static const string editCommand;
     static const string undoCommand;
     static const string redoCommand;
+    */
+
     static const string months[12];
 
 //    added array support for commands

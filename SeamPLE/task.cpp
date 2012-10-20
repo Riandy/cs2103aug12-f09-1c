@@ -2,7 +2,8 @@
 
 
 task::task(void)
-{
+{//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
+    //the get category and get functions have to change since they default indicator is set by all the getter functions
     _description="";
     _startDate.tm_year = 0 ;
     _startDate.tm_mon	= 0;
@@ -18,7 +19,7 @@ task::task(void)
     _endDate.tm_sec=0;
     _priority = "LOW";
     _category = "#";
-    _id=0;
+    _id=-1;
 }
 
 

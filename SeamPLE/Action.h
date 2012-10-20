@@ -7,12 +7,13 @@
 using namespace std;
 
 //if we want to extend to more fields we have to add in here
-#define MAXNOOFPARAMETERS 5 // NAME,DATE,PRIORITY,CATEGORY,
-#define INAME 0	//INDEX OF NAME IN THE FLAG ARRAY
-#define IDATE 1
-#define IPRIORITY 2
-#define ICATEGORY 3
-#define IDATEEND 4
+#define MAXNOOFPARAMETERS 6 // NAME,DATE,PRIORITY,CATEGORY,
+#define INAME       0	//INDEX OF NAME IN THE FLAG ARRAY
+#define IDATE       1
+#define IPRIORITY   2
+#define ICATEGORY   3
+#define IDATEEND    4
+#define IID         5
 
 
 class Action
