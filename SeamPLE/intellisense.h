@@ -43,6 +43,22 @@ private:
     static const string undoCommand;
     static const string redoCommand;
     static const string months[12];
+
+    //    added array support for commands
+
+    const static string addCommandArray[];
+    const static string deleteCommandArray[];
+    const static string markCommandArray[];
+    const static string displayCommandArray[];
+    const static string exitCommandArray[];
+    const static string sortCommandArray[];
+    const static string findCommandArray[];
+    const static string editCommandArray[];
+    const static string undoCommandArray[];
+    const static string redoCommandArray[];
+
+    //end of added array support for commands
+
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
     string _feedback;

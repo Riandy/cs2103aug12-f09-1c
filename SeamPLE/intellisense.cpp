@@ -13,6 +13,22 @@ const string Intellisense::undoCommand = "undo";
 const string Intellisense::redoCommand = "redo";
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
+
+//changed to array
+const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++"};
+const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel" };
+const string Intellisense::markCommandArray[] = { "mark", "done"};
+const string Intellisense::displayCommandArray[]= { "display" ,"show"};
+const string Intellisense::exitCommandArray[] = {"exit","quit"};
+const string Intellisense::sortCommandArray[] = {"sort","arrange"};
+const string Intellisense::findCommandArray[] = {"find","search"};
+const string Intellisense::editCommandArray[] = {"edit","change"};
+const string Intellisense::undoCommandArray[] = {"undo","revert"};
+const string Intellisense::redoCommandArray[] = {"redo","undoundo"};
+
+//end of array change
+
+
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
 
