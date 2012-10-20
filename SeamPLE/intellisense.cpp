@@ -522,7 +522,6 @@ int Intellisense::getDateType(vector<string>& tokens)
     int dType = task::DATENORMAL;//default normal if cannot find
     int erasePos = -1;
     bool needErase = false;
-    vector<string>::iterator endIterator = tokens.end();
     for(vector<string>::iterator it=tokens.begin();it!=tokens.end();it++)
     {
         cout<<"valueee:"<<*it<<endl;
@@ -536,7 +535,6 @@ int Intellisense::getDateType(vector<string>& tokens)
         else if(*it == "fortnightly")//if more than 1 special date type keywords occured we take the higher priority ones
         {
             dType = task::DATEFORTNIGHTLY;
-            //it = tokens.erase(it);
             erasePos = it- tokens.begin();
             needErase = true;
         }
@@ -544,12 +542,8 @@ int Intellisense::getDateType(vector<string>& tokens)
         {
             dType = task::DATEMONTHLY;
             erasePos = it- tokens.begin();
-            //it = tokens.erase(it);
             needErase = true;
         }
-
-
-
     }
     //only increment if it is not the last element
     if (erasePos != -1 && needErase )
@@ -838,7 +832,7 @@ void Intellisense::checkDspReq()
         dspReqMet = true;
     }
     */
-    //removed the requirements for display command without any parameters
+    dspReqMet = true;//removed the requirements for display command without any parameters
     requirementsMet = dspReqMet;
 
 }
