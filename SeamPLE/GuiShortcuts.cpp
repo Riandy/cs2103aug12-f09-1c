@@ -1,6 +1,5 @@
 #include "GuiShortcuts.h"
 
-
 const QString GuiShortcuts:: COMMAND_UNDO = "undo";
 const QString GuiShortcuts:: COMMAND_REDO = "redo";
 const QString GuiShortcuts:: COMMAND_ADD = "add ";
@@ -105,6 +104,7 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _clear = new QAction(Gui);
     Gui->addAction(_clear);
     _clear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
+
 }
 
 void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
