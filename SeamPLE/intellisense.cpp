@@ -530,7 +530,6 @@ string Intellisense::getEventName(vector<string>& tokens)
 int Intellisense::getDateType(vector<string>& tokens)
 {
     int dType = task::DATENORMAL;//default normal if cant find other date types
-    bool dTypeFound = false;
     vector<string>::iterator it=tokens.begin();
     while(it!=tokens.end())
     {
@@ -757,10 +756,10 @@ void Intellisense::setAllStatusFlag(Action task)
         setStatusFlagAt(IDATE,true);
 
     bool isDateEndNotSet;
-    isDateNotSet = (task.getEndDate().tm_year == 0	&&
+    isDateEndNotSet = (task.getEndDate().tm_year == 0	&&
                     task.getEndDate().tm_mon	== 0   &&
                     task.getEndDate().tm_mday == 0);
-    if(isDateNotSet)
+    if(isDateEndNotSet)
         setStatusFlagAt(IDATEEND,false);
     else
         setStatusFlagAt(IDATEEND,true);
