@@ -75,9 +75,10 @@ vector<string> scheduler::executeCommand(Action newAction)
                 taskVector = eventCalender.displayDatabase();
                 updateGUI(taskVector);
              }
-             else
+			 // below else statement should be caught by the one further below.
+         /*    else
                  _result.push_back(ERROR_NOT_FOUND);
-
+				 */
         }
         else
         {

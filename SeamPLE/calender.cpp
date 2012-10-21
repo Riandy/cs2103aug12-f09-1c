@@ -255,7 +255,7 @@ bool calender::undoAction()
 
 bool calender::redoAction()
 {
-	if (_redoHistory.size() == 0)
+	if (_redoCommands.size() == 0)
 		return false;
 	else
 	{
