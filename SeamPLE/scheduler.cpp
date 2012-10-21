@@ -31,6 +31,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
     string command=newAction.getCommand();
+    //command="delete";
     taskVector.clear();
     _result.clear();
 
@@ -42,7 +43,8 @@ vector<string> scheduler::executeCommand(Action newAction)
     newTask.setStartDate(newAction.getStartDate());
     newTask.setEndDate(newAction.getEndDate());
     newTask.setID(newAction.getID());
-    // Switch instead of using if cases.
+
+    //newTask.setEventName("eat");
 
     if(command=="ADD")
     {
@@ -53,12 +55,24 @@ vector<string> scheduler::executeCommand(Action newAction)
     }
     else if(command=="DELETE")
     {
-        if(eventCalender.checkID(newTask.getID()))
+        //delete by ID
+        if(newTask.getID()!=-1)
         {
-            eventCalender.deleteItem(newTask.getID());
-            _result.push_back(DELETE_SUCCESS);
-            taskVector = eventCalender.displayDatabase();
-            updateGUI(taskVector);
+            if(eventCalender.checkID(newTask.getID()))
+            {
+                eventCalender.deleteItem(newTask.getID());
+                _result.push_back(DELETE_SUCCESS);
+                taskVector = eventCalender.displayDatabase();
+                updateGUI(taskVector);
+            }
+        }
+        //delete by event name
+        else if(newTask.getEventName()!="-")
+        {
+             eventCalender.deleteItem(newTask.getEventName());
+             _result.push_back(DELETE_SUCCESS);
+             taskVector = eventCalender.displayDatabase();
+             updateGUI(taskVector);
         }
         else
         {
@@ -74,7 +88,6 @@ vector<string> scheduler::executeCommand(Action newAction)
         //case 1: search by category
         if(newTask.getCategory()!="#")
         {
-            cout<<"THIS is called"<<endl;
             taskVector = eventCalender.SearchByCat(newTask.getCategory());
             convertToString(taskVector);
         }
