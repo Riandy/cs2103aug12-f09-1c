@@ -1,6 +1,16 @@
 #include "Intellisense.h"
 
+
+
+
+
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
+
+
+//important date events
+imptDate imptDates[]= {  imptDate("CHRISTMAS","2512"),imptDate("NEWYEAR","0101")};
+int imptDatesSize = 2;
+
 
 //changed to array
 const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++"};
@@ -49,6 +59,7 @@ Intellisense::Intellisense(void)
         statusFlags[i] = true;
     }
     requirementsMet = false;
+
 
 }
 
@@ -377,7 +388,7 @@ string& Intellisense::trim(string& s ,const string& delimiters )
 }
 
 
-tm Intellisense::getDate(vector<string>& tokens)
+tm Intellisense::getImptDate(string _date)
 {
     tm date;
     date.tm_hour=NULL;
@@ -387,11 +398,56 @@ tm Intellisense::getDate(vector<string>& tokens)
     date.tm_mon=NULL;
     date.tm_year=NULL;
 
+    time_t timeNow;
+    struct tm * timeinfo;
+    time (&timeNow);
+    timeinfo = localtime ( &timeNow );
+
+    date.tm_mday=atoi(_date.substr(0,2).c_str());
+    date.tm_mon=atoi(_date.substr(2,2).c_str());
+    date.tm_year=timeinfo->tm_year+1900;
+
+
+return date;
+}
+
+
+tm Intellisense::getDate(vector<string>& tokens)
+{
+    string checkString;
+    tm date;
+    date.tm_hour=NULL;
+    date.tm_min=NULL;
+    date.tm_sec=NULL;
+    date.tm_mday=NULL;
+    date.tm_mon=NULL;
+    date.tm_year=NULL;
+
+    vector<string>::iterator it1=tokens.begin();
+    while (it1!=tokens.end())
+    {
+       checkString = it1->c_str();
+       for(int i =0; i<=imptDatesSize;i++)
+       {
+           if(checkString.compare(imptDates[i].name)==0)
+           {
+
+               return getImptDate(imptDates[i].date);
+           }
+       }
+
+
+
+        if (it1!=tokens.end())
+            ++it1;//only increment if it is not the last position
+
+    }
+
     //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
     vector<string>::iterator it=tokens.begin();
     while (it!=tokens.end())
     {
-        string checkString = it->c_str();
+        checkString = it->c_str();
         if(checkString.size()==8)
         {
             if(isAllInt(checkString))

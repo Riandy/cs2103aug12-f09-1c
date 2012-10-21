@@ -10,6 +10,14 @@
 #include "Action.h"
 using namespace std;
 
+struct imptDate
+{
+    string name;
+    string date;
+    imptDate(string _name,string _date):name(""),date(""){name=_name;date=_date;}
+};
+
+
 enum operation{
     ADD,
     DELETE,
@@ -47,6 +55,8 @@ private:
     const static string undoCommandArray[];
     const static string redoCommandArray[];
 
+
+
     //end of added array support for commands
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
@@ -60,6 +70,7 @@ public:
     vector<string> tokenize(string command);
     string getOperation(vector<string>& tokens);
     tm getDate(vector<string>& tokens);
+    tm getImptDate(string _date);
     string getEventName(vector<string>& tokens);
     int getID(vector<string>& tokens);
     string getCommand(vector<string>& tokens, string _command);
