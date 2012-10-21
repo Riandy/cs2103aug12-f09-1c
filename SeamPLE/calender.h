@@ -13,9 +13,9 @@
 using namespace std;
 
 
-static string DELETE = "delete";
-static string ADDITION = "add";
-static string EDIT = "edit";
+static string _DELETE = "delete";
+static string _ADDITION = "add";
+static string _EDIT = "edit";
 static int NOTFOUND = -1;
 
 class calender
