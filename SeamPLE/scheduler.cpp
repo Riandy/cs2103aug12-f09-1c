@@ -31,6 +31,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
     string command=newAction.getCommand();
+    //command="delete";
     taskVector.clear();
     _result.clear();
 
@@ -42,83 +43,8 @@ vector<string> scheduler::executeCommand(Action newAction)
     newTask.setStartDate(newAction.getStartDate());
     newTask.setEndDate(newAction.getEndDate());
     newTask.setID(newAction.getID());
-    // Switch instead of using if cases.
 
-    /*switch (command){
-
-    case (ADD):
-            {
-                eventCalender.addItem(newTask);
-                _result.push_back(ADD_SUCCESS);
-            }
-
-    case (DELETE):
-            {
-                if(eventCalender.checkID(newTask.getID()))
-                {
-                    eventCalender.deleteItem(newTask.getID());
-                    _result.push_back(DELETE_SUCCESS);
-                }
-                else
-                {
-                    _result.push_back(ERROR_NOT_FOUND);
-                }
-            }
-    case (EDIT):
-            {
-                //not yet implemented
-            }
-
-    case (FIND):
-            {
-                //case 1: search by category
-                if(newTask.getCategory()!="")
-                {
-                    taskVector = eventCalender.SearchByCat(newTask.getCategory());
-                    convertToString(taskVector);
-                }
-                //case 2: search by task
-                else if (newTask.getEventName()!="")
-                {
-                    taskVector = eventCalender.SearchByTask(newTask.getEventName());
-                    convertToString(taskVector);
-
-                }
-                else
-                    generalError();
-            }
-    case (DISPLAY):
-            {
-                taskVector = eventCalender.displayDatabase();
-                convertToString(taskVector);
-            }
-
-    case (UNDO):
-            {
-                if (eventCalender.undoAction())
-                    _result.push_back(UNDO_SUCCESS);
-                else
-                    _result.push_back(UNDO_FAILURE);
-            }
-    case (REDO):
-            {
-                if (eventCalender.redoAction())
-                    _result.push_back(REDO_SUCCESS);
-                else
-                    _result.push_back(REDO_FAILURE);
-            }
-
-    case(TODAY):
-            {
-                taskVector = eventCalender.getToday();
-                convertToString(taskVector);
-            }
-    case default:
-                 generalError();
-
-    }
-    */
-
+    //newTask.setEventName("eat");
 
     if(command=="ADD")
     {
@@ -129,12 +55,24 @@ vector<string> scheduler::executeCommand(Action newAction)
     }
     else if(command=="DELETE")
     {
-        if(eventCalender.checkID(newTask.getID()))
+        //delete by ID
+        if(newTask.getID()!=-1)
         {
-            eventCalender.deleteItem(newTask.getID());
-            _result.push_back(DELETE_SUCCESS);
-            taskVector = eventCalender.displayDatabase();
-            updateGUI(taskVector);
+            if(eventCalender.checkID(newTask.getID()))
+            {
+                eventCalender.deleteItem(newTask.getID());
+                _result.push_back(DELETE_SUCCESS);
+                taskVector = eventCalender.displayDatabase();
+                updateGUI(taskVector);
+            }
+        }
+        //delete by event name
+        else if(newTask.getEventName()!="-")
+        {
+             eventCalender.deleteItem(newTask.getEventName());
+             _result.push_back(DELETE_SUCCESS);
+             taskVector = eventCalender.displayDatabase();
+             updateGUI(taskVector);
         }
         else
         {
@@ -148,7 +86,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if(command=="FIND")
     {
         //case 1: search by category
-        if(newTask.getCategory()!="")
+        if(newTask.getCategory()!="#")
         {
             taskVector = eventCalender.SearchByCat(newTask.getCategory());
             convertToString(taskVector);
@@ -158,7 +96,6 @@ vector<string> scheduler::executeCommand(Action newAction)
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             convertToString(taskVector);
-
         }
         else
             generalError();
