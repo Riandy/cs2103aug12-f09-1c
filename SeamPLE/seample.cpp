@@ -103,7 +103,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
 QVector <QString> Seample::fireAction()
 {
     vector <string> result =_scheduler->executeCommand(response);
-
+cout<<"i am fin here"<<endl;
     return convertQString(result);
 }
 
