@@ -15,7 +15,7 @@ string calender::convertToDate(tm _date)
 {
 	string _result;
 	ostringstream convert;
-	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
 	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
 	_result=convert.str();
 	//cout<<"YAY"<<_result<<endl;
@@ -169,7 +169,7 @@ bool calender::loadFile()
 		getline(readFile,startDate);
 		istringstream iss(startDate);
 		tm _startDate;
-		iss >> _startDate.tm_yday;
+        iss >> _startDate.tm_mday;
 		iss >> temp;
 		iss >> _startDate.tm_mon;
 		iss >> temp;
@@ -181,7 +181,7 @@ bool calender::loadFile()
 		iss >> temp;
 		iss >> _startDate.tm_sec;
 
-		//cout<<_startDate.tm_yday<<" "<<_startDate.tm_sec<<endl;
+        //cout<<_startDate.tm_mday<<" "<<_startDate.tm_sec<<endl;
 		//cout<<description<<endl;
 		//readFile>>startDate;
 		//cout<<"date : "<<_startDate.tm_min<<endl;
@@ -191,7 +191,7 @@ bool calender::loadFile()
 		getline(readFile,endDate);
 		istringstream isss(endDate);
 		tm _endDate;
-		isss >> _endDate.tm_yday;
+        isss >> _endDate.tm_mday;
 		isss >> temp;
 		isss >> _endDate.tm_mon;
 		isss >> temp;
@@ -202,7 +202,7 @@ bool calender::loadFile()
 		isss >> _endDate.tm_min;
 		isss >> temp;
 		isss >> _endDate.tm_sec;
-		//cout<<_endDate.tm_yday<<" "<<_endDate.tm_sec<<endl;
+        //cout<<_endDate.tm_mday<<" "<<_endDate.tm_sec<<endl;
 
 		readFile>>temp;
 		readFile>>temp;
@@ -289,12 +289,41 @@ bool calender::redoAction()
 	return true;
 }
 
-// NOT DONE
-vector<task> calender::getToday() 
+vector<task> calender::SearchByDate(string todayDate)
 {
-	vector<task> _bufferStorage;
-	return _bufferStorage;
+
+    vector<task> _bufferStorage;
+    for (int i = 0; i < int(_storage.size()); i++)
+    {
+        string  bufferDate;
+        tm _date=_storage[i].getStartDate();
+        ostringstream convert;
+        convert<< _date.tm_mday << "-" << _date.tm_mon << "-" << _date.tm_year;
+        bufferDate=convert.str();
+
+        if(todayDate==bufferDate)
+            _bufferStorage.push_back(_storage[i]);
+    }
+    return _bufferStorage;
 }
+
+// NOT DONE
+vector<task> calender::getToday()
+{
+    vector<task> _bufferStorage;
+
+    // get time now in the format dd-mm-yyyy
+    time_t t = time(0);
+    struct tm * now = localtime( & t );
+    ostringstream convert;
+    convert << now->tm_mday << '-' << (now->tm_mon + 1) << '-' << (now->tm_year + 1900);
+    string todayDate=convert.str();
+
+    _bufferStorage=SearchByDate(todayDate);
+
+    return _bufferStorage;
+}
+
 
 void calender::saveDelete(int taskID)
 {
