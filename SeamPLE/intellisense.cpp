@@ -116,11 +116,6 @@ Action Intellisense::check(string query)
 
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
-    if(tokens.size()==0)
-    {
-        return INVALID;
-    }
-
     string commandword=tokens[0];
     if(checkCommandArray(commandword,addCommandArray, sizeof(addCommandArray)/sizeof(string) ))//the sizeof operator  have to work at this level of abstraction due to auto convertion of array to pointer and arraysize information loss
     {
