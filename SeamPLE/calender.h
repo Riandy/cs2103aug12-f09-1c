@@ -45,6 +45,7 @@ public:
 
     bool addItem(task currentTask);
     bool deleteItem(int taskID);
+    bool deleteItem(string eventName);
     bool checkID(int id);
     bool editTask(task edited);
     bool undoAction();

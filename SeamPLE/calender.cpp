@@ -44,6 +44,19 @@ bool calender::deleteItem(int taskID)
 	return true;
 }
 
+bool calender::deleteItem(string eventName)
+{
+    for(int i=0 ; i<_storage.size() ; i++)
+        if(_storage[i].getEventName().find(eventName,0)!=string::npos)
+        {
+            _storage.erase(_storage.begin()+i);
+            saveHistory(_DELETE);
+            saveDelete(i);
+         }
+
+    writeFile();
+    return true;
+}
 
 bool calender::writeFile()
 {
@@ -52,8 +65,9 @@ bool calender::writeFile()
 	for (int i=0;i<int(_storage.size());i++)
 	{
         vector<string> temp=_storage[i].toString();
-        for(int j=0;j <int(temp.size());j++)
+        for(int j=1;j <int(temp.size());j++)
             writeFile<<temp[j]<<endl;
+        writeFile<<endl;
         temp.clear();
     }
 
