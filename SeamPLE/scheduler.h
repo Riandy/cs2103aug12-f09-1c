@@ -11,9 +11,10 @@ static string ADD_SUCCESS = "Your event was added successfully.";
 static string DELETE_SUCCESS = "Your event was deleted successfully";
 static string EDIT_SUCCESS = "Your event was edited successfully";
 static string UNDO_SUCCESS = "Undo operation was successful";
-static string UNDO_FAILURE = "Undo operation was unsuccessful";
+static string UNDO_FAILURE = "There is nothing to undo";
 static string REDO_SUCCESS = "Redo operation was successful";
-static string REDO_FAILURE = "Redo operation was unsuccessful";
+static string REDO_FAILURE = "There is nothing to redo";
+
 
 
 class scheduler

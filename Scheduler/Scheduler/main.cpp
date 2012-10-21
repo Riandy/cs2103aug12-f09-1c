@@ -26,8 +26,7 @@ int main()
 	newAction.setID(4);
 	newAction.setCommand("DELETE");
 	vector<string> result;
-	scheduler test;
-	result=test.executeCommand(newAction);
+
 
 	for(int i=0;i< result.size();i++)
 		cout<<result.at(i)<<endl;

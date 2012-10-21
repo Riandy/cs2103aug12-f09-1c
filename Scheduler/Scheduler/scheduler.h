@@ -1,6 +1,7 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 #include "calender.h"
+#include <map>
 #include <sstream>
 #include "Action.h"
 
@@ -11,33 +12,34 @@ static string ADD_SUCCESS = "Your event was added successfully.";
 static string DELETE_SUCCESS = "Your event was deleted successfully";
 static string EDIT_SUCCESS = "Your event was edited successfully";
 static string UNDO_SUCCESS = "Undo operation was successful";
-static string UNDO_FAILURE = "Undo operation was unsuccessful";
+static string UNDO_FAILURE = "There is nothing to undo";
 static string REDO_SUCCESS = "Redo operation was successful";
-static string REDO_FAILURE = "Redo operation was unsuccessful";
+static string REDO_FAILURE = "There is nothing to redo";
+
 
 
 class scheduler
 {
 private:
-	    static bool instanceFlag;
+    static bool instanceFlag;
     static scheduler *_scheduler;
-		    scheduler();
-	vector<string> _result;
-	vector<task> taskVector;
-	calender eventCalender;
-	void convertToString(vector<task> taskVector);
-	void updateGUI(vector<task> taskVector);
-	void generalError();
-	string convertToDate(tm _date);
+    scheduler();
+    vector<string> _result;
+    vector<task> taskVector;
+    calender eventCalender;
+    void convertToString(vector<task> taskVector);
+    void updateGUI(vector<task> taskVector);
+    void generalError();
+    string convertToDate(tm _date);
 
-	
+
 public:
 
     static scheduler* getInstance();
-	~scheduler();
-	vector<string> executeCommand(Action newaction);
+    ~scheduler();
+    vector<string> executeCommand(Action newaction);
 
-	//pass in action
+    //pass in action
 };
 
 

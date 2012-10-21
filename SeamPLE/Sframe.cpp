@@ -25,7 +25,7 @@ void Sframe::mouseMoveEvent(QMouseEvent *event)
     }
 
     if ((event->pos() - _dragStartCursorPosition).manhattanLength()
-         >= QApplication::startDragDistance())
+            >= QApplication::startDragDistance())
     {
         this->setGeometry(getPosX(event->globalX()),getPosY(event->globalY()),
                           this->width(),this->height());

@@ -26,7 +26,7 @@ string calender::convertToDate(tm _date)
 bool calender::addItem(task currentTask)
 {
 	// currentTask.setID(_storage.size());
-	saveHistory("add");
+	saveHistory(ADDITION);
 	cout<<"add item is called"<<endl;
 	cout<<"storage size after add"<<_storage.size()<<endl;
 	_storage.push_back(currentTask);
@@ -38,7 +38,7 @@ bool calender::addItem(task currentTask)
 
 bool calender::deleteItem(int taskID)
 {
-	saveHistory("del");
+	saveHistory(DELETE);
 	saveDelete(taskID-1);
 	_storage.erase(_storage.begin()+taskID-1);
 	
@@ -76,7 +76,7 @@ bool calender::checkID(int taskID)
 
 bool calender::editTask(task edited)
 {
-
+	saveHistory(EDIT);
 return true;
 }
 
@@ -111,6 +111,19 @@ vector<task> calender::SearchByTask(string searchItem)
 	}
 	return _bufferStorage;
 } // please check the _bufferStorage.size() in the scheduler
+
+int calender::getTaskID(string searchItem)
+{
+	int taskID = NOTFOUND;
+	for (int i=0; i< int(_storage.size()); i++)
+	{
+		if (_storage[i].getEventName() == searchItem)
+			taskID = i;
+	}
+
+	return taskID;
+}
+
 
 
 
@@ -222,22 +235,25 @@ bool calender::undoAction()
 	else
 	{
 		string lastCommand = _history.top();
-		if (lastCommand == "add")
+		if (lastCommand == ADDITION)
 		{
+			_redoCommands.push(ADDITION);
 			int ID = _storage.size()-1;
 
 			_redoHistory.push(_storage[ID]);
 			_storage.erase(_storage.begin()+ID);
 
 		}
-		else if (lastCommand == "del")
+		else if (lastCommand == DELETE)
 		{
+			_redoCommands.push(DELETE);
 			task tempTask = _deleteHistory.top();
 			_storage.push_back(tempTask);
 			_deleteHistory.pop();
 		}
 	}
 		_history.pop();
+		writeFile();
 		return true;
 }
 
@@ -246,8 +262,30 @@ bool calender::redoAction()
 	if (_redoHistory.size() == 0)
 		return false;
 	else
+	{
+		if (_redoCommands.top() == ADDITION)
+		{
+		task lastUndo = _redoHistory.top();
+		_storage.push_back(lastUndo);
+		saveHistory(ADDITION);
+		_redoCommands.pop();
+		_redoHistory.pop();
 
-		// SOME CODE HERE
+		}
+		else if (_redoCommands.top() == DELETE)
+		{
+			int taskID = _storage.size();
+			
+			saveDelete(taskID-1);
+			_storage.erase(_storage.begin()+taskID-1);
+	
+			saveHistory(DELETE);
+			_redoCommands.pop();
+			
+		}
+		writeFile();
+
+	}
 	return true;
 }
 
