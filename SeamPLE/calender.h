@@ -14,8 +14,9 @@ using namespace std;
 
 
 static string DELETE = "delete";
-static string ADD = "add";
+static string ADDITION = "add";
 static string EDIT = "edit";
+static int NOTFOUND = -1;
 
 class calender
 {
@@ -52,6 +53,7 @@ public:
     vector<task> SearchByTask(string searchItem);
     vector<task> displayDatabase();
     vector<task> getToday();
+	int getTaskID(string searchItem);
 
     //implement the convert to date
     string convertToDate(tm _date);
