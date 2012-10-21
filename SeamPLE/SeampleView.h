@@ -1,15 +1,13 @@
 #ifndef SEAMPLEVIEW_H
 #define SEAMPLEVIEW_H
 
-#include <QDesktopWidget>
-#include "GuiShortcuts.h"
-#include "SLineEdit.h"
+#include "CommonView.h"
 
 namespace Ui {
 class SeampleView;
 }
 
-class SeampleView : public QMainWindow
+class SeampleView : public QMainWindow, public CommonView
 {
     Q_OBJECT
 
@@ -22,6 +20,8 @@ public:
     void showFeedbackInputEdit(QString output);
 
     void showFocusInInputEdit (bool focus);
+
+    void showAppropriateColorInputEdit (InputBarFlag color);
 
 signals:
     void relay(QString input);
@@ -63,8 +63,6 @@ private:
     void setSignals();
 
     Ui::SeampleView *ui;
-
-    GuiShortcuts _allShortcuts;
 
 };
 

@@ -80,10 +80,16 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
     {
         feedback.push_back(QString::fromStdString(intellisense->getParameter()));
 
-        //Following line is running the input back to GUI. Needs to be
-        //replaced by feedback string later
-        feedback.push_back(QString::fromStdString(_userInput));
-        //qDebug()<<feedback[1];
+        if (intellisense->getrequirementsMet())
+        {
+            feedback.push_back("1");
+        }
+        else
+        {
+            feedback.push_back("2");
+        }
+
+
         DisplayEvent(response);
 
     }

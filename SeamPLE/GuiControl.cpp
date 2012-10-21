@@ -1,5 +1,6 @@
 #include "GuiControl.h"
 
+
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
         "<font size=3 face=\"MV Boli\" color = \"orange\">"
         "Available Commands: add, delete, mark, unmark, "
@@ -10,6 +11,7 @@ GuiControl::GuiControl()
     setStandardGuiSignals();
     setSeampleGuiSignals();
     _inputProcessor = Seample::getInstance();
+    _inputColorFlag = NONE;
 }
 
 void GuiControl:: showGui()
@@ -44,15 +46,27 @@ void GuiControl::check(QString input)
     {
         bool command = false;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
+
         bool invalidSchedulerReturn = (output.size() < 2);
 
         if (invalidSchedulerReturn)
         {
             output.clear();
             output.push_front("INTELLISENSE IS NOT WORKING");
-            output.push_back(input);
+            _inputColorFlag = NONE;
         }
-
+        else
+        {
+            if ((output[1])[0].isDigit())
+            {
+                _inputColorFlag = (InputBarFlag) (output[1])[0].digitValue();
+            }
+            else
+            {
+                output.push_front("SEAMPLE NOT RETURNING APPROPRIATE COLOR FLAG");
+                _inputColorFlag = NONE;
+            }
+        }
         send(output);
     }
 }
@@ -72,6 +86,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
         int capacity = output.size();
         bool needStandardView = (capacity>2);
+        _inputColorFlag = NONE;
 
         //Only commands to hold this should be find and search for now
         if (needStandardView)
@@ -82,23 +97,21 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             }
             else
             {
-                _standardGui.showFeedbackLabel(output[0]);
+                send(output);
                 _standardGui.showFocusInInputEdit(inputBarHasFocus);
             }
             _standardGui.showTableResults(output.mid(1,capacity - 1));
         }
         else
         {
-            //Push empty line to the start of the vector. This additional portion
-            //is required for send function to output empty line for input line
-            output.push_back("");
-            bool invalidSchedulerReturn = (output.size() == 1);
+            //Scheduler must send results back. If not, we error handle it
+            //to produce an output that informs that no output is returned
+            bool invalidSchedulerReturn = (output.size() == 0);
 
             if (invalidSchedulerReturn)
             {
-                output.push_front("SCHEDULER IS NOT WORKING");
+                output.push_front("SCHEDULER IS NOT RETURNING ANY OUTPUT");
             }
-
             send(output);
         }
     }
@@ -115,6 +128,7 @@ void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHa
         _standardGui.showFeedbackInputEdit(input);
         _standardGui.showFeedbackLabel(inputChecked);
         _standardGui.showFocusInInputEdit(inputBarHasFocus);
+        _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
     }
     else
     {
@@ -123,6 +137,7 @@ void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHa
         _seampleGui.showFeedbackInputEdit(input);
         _seampleGui.showFeedbackLabel(inputChecked);
         _seampleGui.showFocusInInputEdit(inputBarHasFocus);
+        _seampleGui.showAppropriateColorInputEdit(_inputColorFlag);
     }
 }
 
@@ -133,13 +148,17 @@ bool GuiControl::isStandardView()
 
 void GuiControl::emptyResponse()
 {
+    _inputColorFlag = NONE;
+
     if (isStandardView())
     {
         _standardGui.showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
+        _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
     }
     else
     {
         _seampleGui.showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
+        _seampleGui.showAppropriateColorInputEdit(_inputColorFlag);
     }
 }
 
@@ -149,10 +168,12 @@ void GuiControl::send(QVector <QString> feedback)
     if (isStandardView())
     {
         _standardGui.showFeedbackLabel(feedback[0]);
+        _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
     }
     else
     {
-        _seampleGui.showFeedbackLabel(feedback[0]);\
+        _seampleGui.showFeedbackLabel(feedback[0]);
+        _seampleGui.showAppropriateColorInputEdit(_inputColorFlag);
     }
 }
 

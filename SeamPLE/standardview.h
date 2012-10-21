@@ -2,16 +2,14 @@
 #define STANDARDVIEW_H
 
 #include <QVector>
-#include <QDesktopWidget>
 #include <QTableWidgetItem>
-#include "GuiShortcuts.h"
-#include "SLineEdit.h"
+#include "CommonView.h"
 
 namespace Ui {
 class StandardView;
 }
 
-class StandardView : public QMainWindow
+class StandardView : public QMainWindow, public CommonView
 {
     Q_OBJECT
 
@@ -33,6 +31,8 @@ public:
     void showFeedbackInputEdit(QString output);
 
     void showFocusInInputEdit (bool focus);
+
+    void showAppropriateColorInputEdit (InputBarFlag color);
 
     void showTableResults(QVector <QString> output);
 
@@ -83,8 +83,6 @@ private:
     void setSignals();
 
     Ui::StandardView *ui;
-
-    GuiShortcuts _allShortcuts;
 
     TableListNode *_tail;
 
