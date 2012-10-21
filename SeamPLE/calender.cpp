@@ -103,7 +103,7 @@ vector<task> calender::SearchByTask(string searchItem)
 	for (int i = 0; i < int(_storage.size()); i++)
 	{
 		string  bufferString = _storage[i].getEventName();
-		if (bufferString.find(searchItem))
+        if (bufferString.find(searchItem,0)!=string::npos)
 		{
 			_bufferStorage.push_back(_storage[i]);
 			
