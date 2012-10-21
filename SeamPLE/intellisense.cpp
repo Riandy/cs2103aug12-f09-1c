@@ -871,6 +871,10 @@ void Intellisense::checkDelReq()
     {
         checkReqMet = true;
     }
+    if (statusFlags[INAME])
+    {
+        checkReqMet = true;
+    }
     requirementsMet = checkReqMet;
 }
 void Intellisense::checkDspReq()
