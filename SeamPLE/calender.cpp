@@ -47,15 +47,15 @@ bool calender::deleteItem(int taskID)
 bool calender::deleteItem(string eventName)
 {
     for(int i=0 ; i<_storage.size() ; i++)
-        if(_storage[i].getEventName().find(eventName,0)!=string::npos)
+        if(_storage[i].getEventName()==eventName)
         {
-            _storage.erase(_storage.begin()+i);
             saveHistory(_DELETE);
             saveDelete(i);
-         }
-
-    writeFile();
-    return true;
+            _storage.erase(_storage.begin()+i);
+            writeFile();
+            return true;
+        }
+    return false;
 }
 
 bool calender::writeFile()

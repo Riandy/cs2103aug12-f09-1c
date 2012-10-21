@@ -69,10 +69,15 @@ vector<string> scheduler::executeCommand(Action newAction)
         //delete by event name
         else if(newTask.getEventName()!="-")
         {
-             eventCalender.deleteItem(newTask.getEventName());
-             _result.push_back(DELETE_SUCCESS);
-             taskVector = eventCalender.displayDatabase();
-             updateGUI(taskVector);
+             if(eventCalender.deleteItem(newTask.getEventName()))
+             {
+                 _result.push_back(DELETE_SUCCESS);
+                taskVector = eventCalender.displayDatabase();
+                updateGUI(taskVector);
+             }
+             else
+                 _result.push_back(ERROR_NOT_FOUND);
+
         }
         else
         {
