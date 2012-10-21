@@ -26,7 +26,7 @@ string calender::convertToDate(tm _date)
 bool calender::addItem(task currentTask)
 {
 	// currentTask.setID(_storage.size());
-	saveHistory(ADD);
+	saveHistory(ADDITION);
 	cout<<"add item is called"<<endl;
 	cout<<"storage size after add"<<_storage.size()<<endl;
 	_storage.push_back(currentTask);
@@ -235,9 +235,9 @@ bool calender::undoAction()
 	else
 	{
 		string lastCommand = _history.top();
-		if (lastCommand == ADD)
+		if (lastCommand == ADDITION)
 		{
-			_redoCommands.push(ADD);
+			_redoCommands.push(ADDITION);
 			int ID = _storage.size()-1;
 
 			_redoHistory.push(_storage[ID]);
@@ -263,11 +263,11 @@ bool calender::redoAction()
 		return false;
 	else
 	{
-		if (_redoCommands.top() == ADD)
+		if (_redoCommands.top() == ADDITION)
 		{
 		task lastUndo = _redoHistory.top();
 		_storage.push_back(lastUndo);
-		saveHistory(ADD);
+		saveHistory(ADDITION);
 		_redoCommands.pop();
 		_redoHistory.pop();
 

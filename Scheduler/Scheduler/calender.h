@@ -14,7 +14,7 @@ using namespace std;
 
 
 static string DELETE = "delete";
-static string ADD = "add";
+static string ADDITION = "add";
 static string EDIT = "edit";
 static int NOTFOUND = -1;
 
