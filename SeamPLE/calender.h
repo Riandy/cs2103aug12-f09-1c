@@ -51,6 +51,7 @@ public:
     bool redoAction();
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
+    vector<task> SearchByDate(string todayDate);
     vector<task> displayDatabase();
     vector<task> getToday();
 	int getTaskID(string searchItem);
