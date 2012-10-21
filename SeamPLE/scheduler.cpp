@@ -56,7 +56,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if(command=="DELETE")
     {
         //delete by ID
-        if(newTask.getID()!=-1)
+        if(newTask.getID()>0)
         {
             if(eventCalender.checkID(newTask.getID()))
             {
