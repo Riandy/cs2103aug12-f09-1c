@@ -45,12 +45,14 @@ public:
 
     bool addItem(task currentTask);
     bool deleteItem(int taskID);
+    bool deleteItem(string eventName);
     bool checkID(int id);
     bool editTask(task edited);
     bool undoAction();
     bool redoAction();
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
+    vector<task> SearchByDate(string todayDate);
     vector<task> displayDatabase();
     vector<task> getToday();
 	int getTaskID(string searchItem);

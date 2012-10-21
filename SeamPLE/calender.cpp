@@ -3,7 +3,6 @@
 
 calender::calender()
 {
-
 	calender::loadFile();
 }
 
@@ -15,24 +14,23 @@ string calender::convertToDate(tm _date)
 {
 	string _result;
 	ostringstream convert;
-	convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
 	convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
 	_result=convert.str();
-	//cout<<"YAY"<<_result<<endl;
 	return _result;
 }
 
 
 bool calender::addItem(task currentTask)
 {
-	// currentTask.setID(_storage.size());
     saveHistory(_ADDITION);
-	cout<<"add item is called"<<endl;
-	cout<<"storage size after add"<<_storage.size()<<endl;
 	_storage.push_back(currentTask);
-	cout<<"storage size after add"<<_storage.size()<<endl;
-	writeFile();
-	return true;
+
+
+    if(writeFile())
+        return true;
+    else
+        return false;
 }
 
 
@@ -46,6 +44,19 @@ bool calender::deleteItem(int taskID)
 	return true;
 }
 
+bool calender::deleteItem(string eventName)
+{
+    for(int i=0 ; i<_storage.size() ; i++)
+        if(_storage[i].getEventName().find(eventName,0)!=string::npos)
+        {
+            _storage.erase(_storage.begin()+i);
+            saveHistory(_DELETE);
+            saveDelete(i);
+         }
+
+    writeFile();
+    return true;
+}
 
 bool calender::writeFile()
 {
@@ -53,14 +64,12 @@ bool calender::writeFile()
 
 	for (int i=0;i<int(_storage.size());i++)
 	{
-		writeFile<<"Description : "<<_storage[i].getEventName()<<endl;
-		//changed to tm struct
-		writeFile<<"Start_Date : "<<convertToDate(_storage[i].getStartDate())<<endl;
-		writeFile<<"End_Date : "<<convertToDate(_storage[i].getEndDate())<<endl;
-		writeFile<<"Priority : "<<_storage[i].getPriority()<<endl;
-		writeFile<<"Category : "<<_storage[i].getCategory()<<endl<<endl;
-		//cout<<"Test Date : "<<convertToDate(_storage[i].getStartDate())<<endl;
-	}
+        vector<string> temp=_storage[i].toString();
+        for(int j=1;j <int(temp.size());j++)
+            writeFile<<temp[j]<<endl;
+        writeFile<<endl;
+        temp.clear();
+    }
 
 	return true;
 }
@@ -103,14 +112,13 @@ vector<task> calender::SearchByTask(string searchItem)
 	for (int i = 0; i < int(_storage.size()); i++)
 	{
 		string  bufferString = _storage[i].getEventName();
-		if (bufferString.find(searchItem))
+        if (bufferString.find(searchItem,0)!=string::npos)
 		{
-			_bufferStorage.push_back(_storage[i]);
-			
-		}
+			_bufferStorage.push_back(_storage[i]);	
+        }
 	}
 	return _bufferStorage;
-} // please check the _bufferStorage.size() in the scheduler
+}
 
 int calender::getTaskID(string searchItem)
 {
@@ -141,8 +149,6 @@ bool calender::loadFile()
 	//clear all the content of the storage before loading the new one from
 	//storage textfile
 	_storage.clear();
-
-	cout<<"Hello World"<<endl;
 	
 	ifstream readFile("storage.txt");
 	
@@ -161,15 +167,13 @@ bool calender::loadFile()
 		//read the space
 		readFile.get(space);
 		getline(readFile,description);
-		//cout<<description<<endl;
 		
 		readFile>>temp;
-		//cout<<temp;
 		readFile>>temp;
 		getline(readFile,startDate);
 		istringstream iss(startDate);
 		tm _startDate;
-		iss >> _startDate.tm_yday;
+        iss >> _startDate.tm_mday;
 		iss >> temp;
 		iss >> _startDate.tm_mon;
 		iss >> temp;
@@ -181,17 +185,12 @@ bool calender::loadFile()
 		iss >> temp;
 		iss >> _startDate.tm_sec;
 
-		//cout<<_startDate.tm_yday<<" "<<_startDate.tm_sec<<endl;
-		//cout<<description<<endl;
-		//readFile>>startDate;
-		//cout<<"date : "<<_startDate.tm_min<<endl;
 		readFile>>temp;
-		//cout<<temp;
 		readFile>>temp;
 		getline(readFile,endDate);
 		istringstream isss(endDate);
 		tm _endDate;
-		isss >> _endDate.tm_yday;
+        isss >> _endDate.tm_mday;
 		isss >> temp;
 		isss >> _endDate.tm_mon;
 		isss >> temp;
@@ -202,17 +201,14 @@ bool calender::loadFile()
 		isss >> _endDate.tm_min;
 		isss >> temp;
 		isss >> _endDate.tm_sec;
-		//cout<<_endDate.tm_yday<<" "<<_endDate.tm_sec<<endl;
 
 		readFile>>temp;
 		readFile>>temp;
 		readFile>>priority;
-		//cout<<priority<<endl;
 
 		readFile>>temp;
 		readFile>>temp;
 		readFile>>category;
-		//cout<<category<<endl;
 
 		task* newTask= new task;
 		newTask->setID(_storage.size());
@@ -289,12 +285,40 @@ bool calender::redoAction()
 	return true;
 }
 
-// NOT DONE
-vector<task> calender::getToday() 
+vector<task> calender::SearchByDate(string todayDate)
 {
-	vector<task> _bufferStorage;
-	return _bufferStorage;
+
+    vector<task> _bufferStorage;
+    for (int i = 0; i < int(_storage.size()); i++)
+    {
+        string  bufferDate;
+        tm _date=_storage[i].getStartDate();
+        ostringstream convert;
+        convert<< _date.tm_mday << "-" << _date.tm_mon << "-" << _date.tm_year;
+        bufferDate=convert.str();
+
+        if(todayDate==bufferDate)
+            _bufferStorage.push_back(_storage[i]);
+    }
+    return _bufferStorage;
 }
+
+vector<task> calender::getToday()
+{
+    vector<task> _bufferStorage;
+
+    // get time now in the format dd-mm-yyyy
+    time_t t = time(0);
+    struct tm * now = localtime( & t );
+    ostringstream convert;
+    convert << now->tm_mday << '-' << (now->tm_mon + 1) << '-' << (now->tm_year + 1900);
+    string todayDate=convert.str();
+
+    _bufferStorage=SearchByDate(todayDate);
+
+    return _bufferStorage;
+}
+
 
 void calender::saveDelete(int taskID)
 {
