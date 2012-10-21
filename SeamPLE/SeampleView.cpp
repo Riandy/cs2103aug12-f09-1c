@@ -1,8 +1,10 @@
 #include "SeampleView.h"
 #include "ui_SeampleView.h"
 
+#include <QDebug>
+
 SeampleView::SeampleView(QWidget *parent) :
-    QMainWindow(parent, Qt::FramelessWindowHint),
+    QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
     ui(new Ui::SeampleView)
 {
     ui->setupUi(this);
@@ -40,6 +42,38 @@ void SeampleView::showFeedbackInputEdit(QString output)
 void SeampleView:: showFocusInInputEdit (bool focus)
 {
     ui->lineEdit->setFocusInput(focus);
+}
+
+void SeampleView:: showAppropriateColorInputEdit (InputBarFlag color)
+{
+    switch (color)
+    {
+        case LOGICAL:
+            ui->lineEdit->setStyleSheet(STYLESHEET_INPUT_LINE_BORDER_RADIUS+
+                                        STYLESHEET_INPUT_LINE_BORDER_STYLE+
+                                        STYLESHEET_INPUT_LINE_BORDER_WIDTH+
+                                        STYLESHEET_INPUT_LINE_BORDER_COLOR+
+                                        "background-color: rgb(50,205,50);");
+
+            break;
+
+        case UNOPERATIVE:
+            ui->lineEdit->setStyleSheet(STYLESHEET_INPUT_LINE_BORDER_RADIUS+
+                                        STYLESHEET_INPUT_LINE_BORDER_STYLE+
+                                        STYLESHEET_INPUT_LINE_BORDER_WIDTH+
+                                        STYLESHEET_INPUT_LINE_BORDER_COLOR+
+                                        "background-color: rgb(255,99,71);");
+
+            break;
+
+        default:
+            ui->lineEdit->setStyleSheet(STYLESHEET_INPUT_LINE_BORDER_RADIUS+
+                                        STYLESHEET_INPUT_LINE_BORDER_STYLE+
+                                        STYLESHEET_INPUT_LINE_BORDER_WIDTH+
+                                        STYLESHEET_INPUT_LINE_BORDER_COLOR+
+                                        STYLESHEET_INPUT_LINE_BACKGROUND_COLOR);
+            break;
+    }
 }
 
 void SeampleView::recieve(QString input)

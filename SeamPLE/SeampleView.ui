@@ -194,7 +194,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="SLineEdit" name="lineEdit">
+     <widget class="SLineEdit" name="lineEdit" native="true">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -225,7 +225,7 @@
 }
 </string>
       </property>
-      <property name="text">
+      <property name="text" stdset="0">
        <string/>
       </property>
      </widget>
@@ -345,6 +345,13 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SLineEdit</class>
+   <extends>QWidget</extends>
+   <header>slineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Resource.qrc"/>
  </resources>
