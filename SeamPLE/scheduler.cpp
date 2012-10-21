@@ -83,7 +83,6 @@ vector<string> scheduler::executeCommand(Action newAction)
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             convertToString(taskVector);
-
         }
         else
             generalError();
