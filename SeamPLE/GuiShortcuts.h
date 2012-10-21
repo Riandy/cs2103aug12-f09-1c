@@ -48,6 +48,7 @@ public:
     QAction* getClearKey();
 
 private:
+
     QAction* _switchView;
     QAction* _undo;
     QAction* _redo;

@@ -53,7 +53,6 @@ void GuiControl::check(QString input)
             output.push_back(input);
         }
 
-
         send(output);
     }
 }
@@ -83,7 +82,6 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             }
             else
             {
-                _standardGui.showFeedbackInputEdit("");
                 _standardGui.showFeedbackLabel(output[0]);
                 _standardGui.showFocusInInputEdit(inputBarHasFocus);
             }
@@ -154,7 +152,7 @@ void GuiControl::send(QVector <QString> feedback)
     }
     else
     {
-        _seampleGui.showFeedbackLabel(feedback[0]);
+        _seampleGui.showFeedbackLabel(feedback[0]);\
     }
 }
 
