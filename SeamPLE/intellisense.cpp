@@ -1,17 +1,5 @@
 #include "Intellisense.h"
 
-/*
-const string Intellisense::addCommand ="add";
-const string Intellisense::deleteCommand ="delete";
-const string Intellisense::markCommand = "mark";
-const string Intellisense::displayCommand= "display";
-const string Intellisense::exitCommand = "exit";
-const string Intellisense::sortCommand = "sort";
-const string Intellisense::findCommand = "find";
-const string Intellisense::editCommand = "edit";
-const string Intellisense::undoCommand = "undo";
-const string Intellisense::redoCommand = "redo";
-*/
 const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
 //changed to array
@@ -259,7 +247,9 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
     date.tm_hour=0;
     date.tm_min=0;
 
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    vector<string>::iterator it=tokens.begin();
+    while (it!=tokens.end())
     {
         time=it->c_str();
         if(time.size()>=5)
@@ -327,7 +317,8 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 
 
 
-
+        if (it!=tokens.end())
+            ++it;//only increment if it is not the last position
     }
     return date;
 }
@@ -336,7 +327,8 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 string Intellisense::getCategory(vector<string>& tokens)
 {
     string category = "#";
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    vector<string>::iterator it=tokens.begin();
+    while(it!=tokens.end())
     {
         if(it->at(0) == '#' )
         {
@@ -344,6 +336,9 @@ string Intellisense::getCategory(vector<string>& tokens)
             it = tokens.erase(it);
             return category;
         }
+
+        if(it != tokens.end())
+            it++;//only increment if it is not the last position
     }
     return category;
 
@@ -387,7 +382,9 @@ tm Intellisense::getDate(vector<string>& tokens)
     date.tm_mon=NULL;
     date.tm_year=NULL;
 
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+    vector<string>::iterator it=tokens.begin();
+    while (it!=tokens.end())
     {
         string checkString = it->c_str();
         if(checkString.size()==8)
@@ -485,7 +482,8 @@ tm Intellisense::getDate(vector<string>& tokens)
 
 
 
-
+        if (it!=tokens.end())
+            ++it;//only increment if it is not the last position
     }
     return date=getTime(tokens,date);
 
@@ -519,42 +517,31 @@ string Intellisense::getEventName(vector<string>& tokens)
 }
 int Intellisense::getDateType(vector<string>& tokens)
 {
-    int dType = task::DATENORMAL;//default normal if cannot find
-    int erasePos = -1;
-    bool needErase = false;
-    vector<string>::iterator endIterator = tokens.end();
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();it++)
+    int dType = task::DATENORMAL;//default normal if cant find other date types
+    vector<string>::iterator it=tokens.begin();
+    while(it!=tokens.end())
     {
         cout<<"valueee:"<<*it<<endl;
         if( *it == "weekly" )//later do lower case check write a function that compares 2 string without case sensitive
         {//may have to add more checks if weekly is used in event name
             dType = task::DATEWEEKLY;
-            erasePos = it- tokens.begin();
-            needErase = true;
-            //tokens.erase(it);
+            it = tokens.erase(it);
         }
         else if(*it == "fortnightly")//if more than 1 special date type keywords occured we take the higher priority ones
         {
             dType = task::DATEFORTNIGHTLY;
-            //it = tokens.erase(it);
-            erasePos = it- tokens.begin();
-            needErase = true;
+            it = tokens.erase(it);
         }
         else if( *it == "monthly")
         {
             dType = task::DATEMONTHLY;
-            erasePos = it- tokens.begin();
-            //it = tokens.erase(it);
-            needErase = true;
+            it = tokens.erase(it);
         }
 
-
+        if(it!= tokens.end())
+            it++;//incremnt if it is not the last iterator
 
     }
-    //only increment if it is not the last element
-    if (erasePos != -1 && needErase )
-        tokens.erase(tokens.begin()+erasePos);
-
     return dType;
 
 }
@@ -757,10 +744,10 @@ void Intellisense::setAllStatusFlag(Action task)
         setStatusFlagAt(IDATE,true);
 
     bool isDateEndNotSet;
-    isDateNotSet = (task.getEndDate().tm_year == 0	&&
-                    task.getEndDate().tm_mon	== 0   &&
-                    task.getEndDate().tm_mday == 0);
-    if(isDateNotSet)
+    isDateEndNotSet = (task.getEndDate().tm_year == 0	&&
+                       task.getEndDate().tm_mon	== 0   &&
+                       task.getEndDate().tm_mday == 0);
+    if(isDateEndNotSet)
         setStatusFlagAt(IDATEEND,false);
     else
         setStatusFlagAt(IDATEEND,true);
@@ -829,7 +816,7 @@ void Intellisense::checkDspReq()
 {
     bool dspReqMet = false;
 
-    if (statusFlags[ICATEGORY] )
+    /*if (statusFlags[ICATEGORY] )
     {
         dspReqMet = true;
     }
@@ -837,7 +824,8 @@ void Intellisense::checkDspReq()
     {
         dspReqMet = true;
     }
-
+    */
+    dspReqMet = true;//removed the requirements for display command without any parameters
     requirementsMet = dspReqMet;
 
 }
