@@ -10,6 +10,7 @@ GuiControl::GuiControl()
 {
     setStandardGuiSignals();
     setSeampleGuiSignals();
+    setGlobalSignals();
     _inputProcessor = Seample::getInstance();
     _inputColorFlag = NONE;
 }
@@ -26,7 +27,7 @@ void GuiControl:: showGui()
     }
 }
 
-void GuiControl::setStandardView (bool flag)
+void GuiControl::setStandardViewFlag (bool flag)
 {
     _standardViewFlag = flag;
 }
@@ -91,7 +92,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         //Only commands to hold this should be find and search for now
         if (needStandardView)
         {
-            if (!isStandardView())
+            if (!interfaceIsStandardView())
             {
                 changeView("",output[0], inputBarHasFocus);
             }
@@ -119,9 +120,9 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 
 void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHasFocus)
 {
-    setStandardView(!isStandardView());
+    setStandardViewFlag(!interfaceIsStandardView());
 
-    if(isStandardView())
+    if(interfaceIsStandardView())
     {
         _seampleGui.hide();
         _standardGui.show();
@@ -141,16 +142,51 @@ void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHa
     }
 }
 
-bool GuiControl::isStandardView()
+void GuiControl::showHideView()
+{
+    QMainWindow* currentInterface;
+
+    if (interfaceIsStandardView())
+    {
+        currentInterface = &_standardGui;
+    }
+    else
+    {
+        currentInterface = &_seampleGui;
+    }
+
+    if(interfaceIsCurrentlyShown())
+    {
+        currentInterface->hide();
+        setInterfaceShownFlag(false);
+    }
+    else
+    {
+        currentInterface->show();
+        setInterfaceShownFlag(true);
+    }
+}
+
+bool GuiControl::interfaceIsStandardView()
 {
     return _standardViewFlag;
+}
+
+bool GuiControl::interfaceIsCurrentlyShown()
+{
+    return _interfaceShownFlag;
+}
+
+void GuiControl::setInterfaceShownFlag(bool flag)
+{
+    _interfaceShownFlag = flag;
 }
 
 void GuiControl::emptyResponse()
 {
     _inputColorFlag = NONE;
 
-    if (isStandardView())
+    if (interfaceIsStandardView())
     {
         _standardGui.showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
         _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
@@ -165,7 +201,7 @@ void GuiControl::emptyResponse()
 void GuiControl::send(QVector <QString> feedback)
 {
 
-    if (isStandardView())
+    if (interfaceIsStandardView())
     {
         _standardGui.showFeedbackLabel(feedback[0]);
         _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
@@ -210,4 +246,12 @@ void GuiControl::setSeampleGuiSignals()
     //Recieve signal from standardGui to run slot for changing views
     connect(&_seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
+}
+
+void GuiControl:: setGlobalSignals()
+{
+    _allShortcuts.setGlobalShortcuts();
+
+    connect(_allShortcuts.getShowHideViewKey(),SIGNAL(activated()),
+            this,SLOT(showHideView()));
 }

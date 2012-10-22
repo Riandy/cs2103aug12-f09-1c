@@ -14,7 +14,7 @@ public:
 
     void showGui();
 
-    void setStandardView (bool flag);
+    void setStandardViewFlag (bool flag);
 
 
 private slots:
@@ -24,8 +24,14 @@ private slots:
 
     void changeView(QString input, QString inputChecked, bool inputBarHasFocus);
 
+    void showHideView();
+
 private:
-    bool isStandardView();
+    bool interfaceIsStandardView();
+
+    bool interfaceIsCurrentlyShown();
+
+    void setInterfaceShownFlag(bool flag);
 
     void emptyResponse();
 
@@ -35,8 +41,12 @@ private:
 
     void setSeampleGuiSignals();
 
+    void setGlobalSignals();
+
 private:
     bool _standardViewFlag;
+
+    bool _interfaceShownFlag;
 
     InputBarFlag _inputColorFlag;
 
@@ -44,12 +54,15 @@ private:
     //results back to be printed
     Seample *_inputProcessor;
 
+    GuiShortcuts _allShortcuts;
+
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 
     //GUI interfaces ==================
     SeampleView _seampleGui;
     StandardView _standardGui;
     //=================================
+
 
 
 };

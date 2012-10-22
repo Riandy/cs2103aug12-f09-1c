@@ -1,5 +1,7 @@
 #include "GuiShortcuts.h"
 
+#include <QDebug>
+
 const QString GuiShortcuts:: COMMAND_UNDO = "undo";
 const QString GuiShortcuts:: COMMAND_REDO = "redo";
 const QString GuiShortcuts:: COMMAND_ADD = "add ";
@@ -20,6 +22,8 @@ GuiShortcuts::GuiShortcuts()
     _delete = NULL;
     _edit = NULL;
     _clear = NULL;
+
+    _showHideView = NULL;
 }
 
 GuiShortcuts::~GuiShortcuts()
@@ -64,7 +68,12 @@ GuiShortcuts::~GuiShortcuts()
     {
         delete _clear;
     }
+    if (_showHideView != NULL)
+    {
+        delete _showHideView;
+    }
 }
+
 
 
 void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
@@ -104,7 +113,6 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _clear = new QAction(Gui);
     Gui->addAction(_clear);
     _clear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
-
 }
 
 void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
@@ -114,6 +122,20 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
     _changeWorkingTab = new QAction(Gui);
     Gui->addAction(_changeWorkingTab);
     _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
+}
+
+void GuiShortcuts::setGlobalShortcuts()
+{
+    _showHideView = new QxtGlobalShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S),NULL);
+
+    if(_showHideView->isEnabled())
+    {
+        qDebug() <<"SUCCESS";
+    }
+    else
+    {
+        qDebug() <<"FAILURE";
+    }
 }
 
 QAction* GuiShortcuts::getSwitchViewKey()
@@ -164,4 +186,9 @@ QAction* GuiShortcuts::getEditKey()
 QAction* GuiShortcuts::getClearKey()
 {
     return _clear;
+}
+
+QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()
+{
+    return _showHideView;
 }

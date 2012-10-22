@@ -6,9 +6,8 @@
 
 QT       += core gui
 
-TARGET = untitled
+TARGET = SeamPLE
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
     Sframe.cpp \
@@ -48,3 +47,7 @@ RESOURCES += \
     Resource.qrc
 
 OTHER_FILES +=
+
+
+CONFIG  += qxt
+QXT     += core gui
