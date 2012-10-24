@@ -49,5 +49,5 @@ RESOURCES += \
 OTHER_FILES +=
 
 
-CONFIG  += qxt
-QXT     += core gui
+#CONFIG  += qxt
+#QXT     += core gui

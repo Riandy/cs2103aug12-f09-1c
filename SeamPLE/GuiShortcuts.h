@@ -4,7 +4,7 @@
 #include <QAction>
 #include <QMainWindow>
 #include <QString>
-#include <QxtGlobalShortcut>
+//#include <QxtGlobalShortcut>
 #include <QApplication>
 
 class GuiShortcuts
@@ -19,7 +19,7 @@ public:
 
     void setStandardShortcutsTo(QMainWindow* Gui);
 
-    void setGlobalShortcuts();
+    //void setGlobalShortcuts();
 
     QAction* getSwitchViewKey();
 
@@ -41,7 +41,7 @@ public:
 
     QAction* getClearKey();
 
-    QxtGlobalShortcut* getShowHideViewKey();
+    //QxtGlobalShortcut* getShowHideViewKey();
 
 private:
 
@@ -56,7 +56,7 @@ private:
     QAction* _edit;
     QAction* _clear;
 
-    QxtGlobalShortcut * _showHideView;
+    //QxtGlobalShortcut * _showHideView;
 };
 
 #endif // GUISHORTCUTS_H

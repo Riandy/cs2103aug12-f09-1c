@@ -13,7 +13,7 @@ GuiShortcuts::GuiShortcuts()
     _edit = NULL;
     _clear = NULL;
 
-    _showHideView = NULL;
+    //_showHideView = NULL;
 }
 
 GuiShortcuts::~GuiShortcuts()
@@ -58,10 +58,10 @@ GuiShortcuts::~GuiShortcuts()
     {
         delete _clear;
     }
-    if (_showHideView != NULL)
-    {
-        delete _showHideView;
-    }
+//    if (_showHideView != NULL)
+//    {
+//        delete _showHideView;
+//    }
 }
 
 
@@ -114,10 +114,10 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
     _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
 }
 
-void GuiShortcuts::setGlobalShortcuts()
-{
-    _showHideView = new QxtGlobalShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S),NULL);
-}
+//void GuiShortcuts::setGlobalShortcuts()
+//{
+//    _showHideView = new QxtGlobalShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S),NULL);
+//}
 
 QAction* GuiShortcuts::getSwitchViewKey()
 {
@@ -169,7 +169,7 @@ QAction* GuiShortcuts::getClearKey()
     return _clear;
 }
 
-QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()
-{
-    return _showHideView;
-}
+//QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()
+//{
+//    return _showHideView;
+//}
