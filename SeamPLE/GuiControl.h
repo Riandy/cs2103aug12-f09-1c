@@ -45,7 +45,7 @@ private:
 
     void setSeampleGuiSignals();
 
-    void setGlobalSignals();
+    //void setGlobalSignals();
 
 private:
     bool _standardViewFlag;
@@ -58,7 +58,7 @@ private:
     //results back to be printed
     Seample *_inputProcessor;
 
-    GuiShortcuts _allShortcuts;
+    //GuiShortcuts _allShortcuts;
 
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 

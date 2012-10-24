@@ -10,7 +10,7 @@ GuiControl::GuiControl()
 {
     setStandardGuiSignals();
     setSeampleGuiSignals();
-    setGlobalSignals();
+    //setGlobalSignals();
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
@@ -169,6 +169,7 @@ void GuiControl::showHideView()
     else
     {
         currentInterface->show();
+        currentInterface->activateWindow();
         setInterfaceShownFlag(true);
     }
 }
@@ -264,10 +265,10 @@ void GuiControl::setSeampleGuiSignals()
             this,SLOT(changeView(QString, QString, bool)));
 }
 
-void GuiControl:: setGlobalSignals()
-{
-    _allShortcuts.setGlobalShortcuts();
+//void GuiControl:: setGlobalSignals()
+//{
+//    _allShortcuts.setGlobalShortcuts();
 
-    connect(_allShortcuts.getShowHideViewKey(),SIGNAL(activated()),
-            this,SLOT(showHideView()));
-}
+//    connect(_allShortcuts.getShowHideViewKey(),SIGNAL(activated()),
+//            this,SLOT(showHideView()));
+//}
