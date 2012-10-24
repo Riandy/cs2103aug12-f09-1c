@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Sun Oct 21 19:05:47 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Thu Oct 25 01:42:33 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -345,9 +345,6 @@ public:
     void retranslateUi(QWidget *StandardView)
     {
         StandardView->setWindowTitle(QApplication::translate("StandardView", "Form", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        lineEdit->setToolTip(QApplication::translate("StandardView", "Enter your commands here", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
         lineEdit->setProperty("text", QVariant(QString()));
         label_2->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

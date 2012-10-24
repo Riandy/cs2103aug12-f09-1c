@@ -1,6 +1,8 @@
 #ifndef GUICONTROL_H
 #define GUICONTROL_H
 
+#include <QSystemTrayIcon>
+#include <QTimer>
 #include "SeampleView.h"
 #include "StandardView.h"
 #include "seample.h"
@@ -11,6 +13,8 @@ class GuiControl: public QObject
 
 public:
     GuiControl();
+
+    ~GuiControl();
 
     void showGui();
 
@@ -47,6 +51,8 @@ private:
 
     //void setGlobalSignals();
 
+    void createSystemTrayIconIfPossible();
+
 private:
     bool _standardViewFlag;
 
@@ -59,6 +65,8 @@ private:
     Seample *_inputProcessor;
 
     //GuiShortcuts _allShortcuts;
+
+    QSystemTrayIcon* popUp;
 
     const static QString MESSAGE_AVAILABLE_COMMANDS;
 

@@ -76,9 +76,6 @@
        <pointsize>12</pointsize>
       </font>
      </property>
-     <property name="toolTip">
-      <string>Enter your commands here</string>
-     </property>
      <property name="styleSheet">
       <string notr="true">#lineEdit 
 {
