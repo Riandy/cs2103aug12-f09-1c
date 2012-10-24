@@ -1,6 +1,5 @@
 #include "GuiControl.h"
 
-
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
         "<font size=3 face=\"MV Boli\" color = \"orange\">"
         "Available Commands: add, delete, mark, unmark, "
@@ -14,8 +13,17 @@ GuiControl::GuiControl()
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
+    createSystemTrayIconIfPossible();
     //QVector <QString> events = getTodaysEvents();
     //toShow(events);
+}
+
+GuiControl::~GuiControl()
+{
+    if (popUp != NULL)
+    {
+        delete popUp;
+    }
 }
 
 void GuiControl:: showGui()
@@ -272,3 +280,18 @@ void GuiControl::setSeampleGuiSignals()
 //    connect(_allShortcuts.getShowHideViewKey(),SIGNAL(activated()),
 //            this,SLOT(showHideView()));
 //}
+
+void GuiControl:: createSystemTrayIconIfPossible()
+{
+    popUp = NULL;
+    if (QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        popUp = new QSystemTrayIcon();
+        popUp->show();
+    }
+
+    if (popUp != NULL)
+    {
+        popUp->showMessage("SeamPLE","Welcome To Seample!!!",QSystemTrayIcon::Information, 10000);
+    }
+}

@@ -5,7 +5,12 @@
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
-enum InputBarFlag{NONE, LOGICAL, UNOPERATIVE};
+enum InputBarFlag
+{
+    NONE,
+    LOGICAL,
+    UNOPERATIVE
+};
 
 class CommonView
 {
