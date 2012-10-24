@@ -11,6 +11,11 @@ class GuiControl: public QObject
 {
     Q_OBJECT
 
+private:
+    const static QString MESSAGE_AVAILABLE_COMMANDS;
+    const static QString MESSAGE_INTELLISENSE_INVALID_RETURN;
+    const static QString MESSAGE_INVALID_COLOUR_FLAG_RETURN;
+    const static QString MESSAGE_SCHEDULER_INVALID_RETURN;
 public:
     GuiControl();
 
@@ -31,6 +36,8 @@ private slots:
     void showHideView();
 
 private:
+    bool implementInputColorFlagFailure(QCharRef colorFlag);
+
     QVector <QString> getTodaysEvents();
 
     void toShow(QVector <QString> events);
@@ -43,7 +50,11 @@ private:
 
     void emptyResponse();
 
-    void send(QVector <QString> feedback);
+    void send(QString feedback);
+
+    void sendWithInputEditItem (QString input, QString feedback);
+
+    void sendWithInputEditAndFocus (bool inputBarHasFocus, QString input, QString feedback);
 
     void setStandardGuiSignals();
 
@@ -67,8 +78,6 @@ private:
     //GuiShortcuts _allShortcuts;
 
     QSystemTrayIcon* popUp;
-
-    const static QString MESSAGE_AVAILABLE_COMMANDS;
 
     //GUI interfaces ==================
     SeampleView _seampleGui;
