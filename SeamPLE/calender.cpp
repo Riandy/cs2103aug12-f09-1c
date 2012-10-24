@@ -38,8 +38,7 @@ bool calender::deleteItem(int taskID)
 {
     saveHistory(_DELETE);
 	saveDelete(taskID-1);
-	_storage.erase(_storage.begin()+taskID-1);
-	
+	_storage.erase(_storage.begin()+taskID-1);	
 	writeFile();
 	return true;
 }

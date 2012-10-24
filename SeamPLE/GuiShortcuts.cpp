@@ -1,15 +1,5 @@
 #include "GuiShortcuts.h"
 
-#include <QDebug>
-
-const QString GuiShortcuts:: COMMAND_UNDO = "undo";
-const QString GuiShortcuts:: COMMAND_REDO = "redo";
-const QString GuiShortcuts:: COMMAND_ADD = "add ";
-const QString GuiShortcuts:: COMMAND_FIND = "find ";
-const QString GuiShortcuts:: COMMAND_DISPLAY = "display";
-const QString GuiShortcuts:: COMMAND_DELETE = "delete ";
-const QString GuiShortcuts:: COMMAND_EDIT = "edit ";
-
 GuiShortcuts::GuiShortcuts()
 {
     _switchView = NULL;
@@ -127,15 +117,6 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
 void GuiShortcuts::setGlobalShortcuts()
 {
     _showHideView = new QxtGlobalShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S),NULL);
-
-    if(_showHideView->isEnabled())
-    {
-        qDebug() <<"SUCCESS";
-    }
-    else
-    {
-        qDebug() <<"FAILURE";
-    }
 }
 
 QAction* GuiShortcuts::getSwitchViewKey()

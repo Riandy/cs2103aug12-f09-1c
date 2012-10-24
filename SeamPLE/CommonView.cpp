@@ -11,6 +11,14 @@ const QString CommonView::STYLESHEET_INPUT_LINE_BORDER_COLOR =
 const QString CommonView::STYLESHEET_INPUT_LINE_BACKGROUND_COLOR =
         "background-color: rgb(170, 85, 0);";
 
+const QString CommonView:: COMMAND_UNDO = "undo";
+const QString CommonView:: COMMAND_REDO = "redo";
+const QString CommonView:: COMMAND_ADD = "add ";
+const QString CommonView:: COMMAND_FIND = "find ";
+const QString CommonView:: COMMAND_DISPLAY = "display";
+const QString CommonView:: COMMAND_DELETE = "delete ";
+const QString CommonView:: COMMAND_EDIT = "edit ";
+
 CommonView::CommonView()
 {
 

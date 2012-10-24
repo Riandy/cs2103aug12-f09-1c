@@ -103,30 +103,30 @@ void SeampleView::redoTriggered()
 
 void SeampleView::addTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
+    ui->lineEdit->setText(COMMAND_ADD);
     showFocusInInputEdit(true);
 }
 
 void SeampleView::findTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
+    ui->lineEdit->setText(COMMAND_FIND);
     showFocusInInputEdit(true);
 }
 
 void SeampleView::displayTriggered()
 {
-    emit run(GuiShortcuts::COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
+    emit run(COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
 }
 
 void SeampleView::deleteTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
+    ui->lineEdit->setText(COMMAND_DELETE);
     showFocusInInputEdit(true);
 }
 
 void SeampleView::editTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
+    ui->lineEdit->setText(COMMAND_EDIT);
     showFocusInInputEdit(true);
 }
 

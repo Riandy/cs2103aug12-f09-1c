@@ -27,6 +27,10 @@ private slots:
     void showHideView();
 
 private:
+    QVector <QString> getTodaysEvents();
+
+    void toShow(QVector <QString> events);
+
     bool interfaceIsStandardView();
 
     bool interfaceIsCurrentlyShown();

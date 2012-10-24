@@ -36,6 +36,8 @@ public:
 
     void showTableResults(QVector <QString> output);
 
+    void resetTableContents();
+
 signals:
     void relay(QString input);
 
@@ -71,8 +73,6 @@ private slots:
 
 private:
     void addTableContent(TableListNode *curr);
-
-    void resetTableContents();
 
     void changeGeometry();
 
