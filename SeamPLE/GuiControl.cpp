@@ -12,7 +12,10 @@ GuiControl::GuiControl()
     setSeampleGuiSignals();
     setGlobalSignals();
     _inputProcessor = Seample::getInstance();
+    setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
+    //QVector <QString> events = getTodaysEvents();
+    //toShow(events);
 }
 
 void GuiControl:: showGui()
@@ -99,6 +102,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             else
             {
                 send(output);
+                _standardGui.showFeedbackInputEdit("");
                 _standardGui.showFocusInInputEdit(inputBarHasFocus);
             }
             _standardGui.showTableResults(output.mid(1,capacity - 1));
@@ -113,6 +117,8 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             {
                 output.push_front("SCHEDULER IS NOT RETURNING ANY OUTPUT");
             }
+            _standardGui.showFeedbackInputEdit("");
+            _standardGui.resetTableContents();
             send(output);
         }
     }
@@ -165,6 +171,16 @@ void GuiControl::showHideView()
         currentInterface->show();
         setInterfaceShownFlag(true);
     }
+}
+
+QVector <QString> GuiControl::getTodaysEvents()
+{
+    return _inputProcessor->run(true, "TODAY");
+}
+
+void GuiControl::toShow(QVector <QString> events)
+{
+    //implement code here to show events retrieved.
 }
 
 bool GuiControl::interfaceIsStandardView()

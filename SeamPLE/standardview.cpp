@@ -133,6 +133,27 @@ void StandardView::showTableResults(QVector <QString> output)
     }
 }
 
+//Remove all dynamically allocated memory given to table widget
+void StandardView:: resetTableContents()
+{
+    while (_tail != NULL)
+    {
+        if (_tail->next == _tail)
+        {
+            delete _tail;
+            _tail = NULL;
+        }
+        else
+        {
+            TableListNode *curr = _tail->next;
+            _tail->next = curr->next;
+            _tail->next->prev = _tail;
+            delete curr;
+        }
+        ui->tableWidget->removeRow(0);
+    }
+}
+
 void StandardView::recieve(QString input)
 {
     emit relay(input);
@@ -162,30 +183,30 @@ void StandardView::redoTriggered()
 
 void StandardView::addTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_ADD);
+    ui->lineEdit->setText(COMMAND_ADD);
     showFocusInInputEdit(true);
 }
 
 void StandardView::findTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_FIND);
+    ui->lineEdit->setText(COMMAND_FIND);
     showFocusInInputEdit(true);
 }
 
 void StandardView::displayTriggered()
 {
-    emit run(GuiShortcuts::COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
+    emit run(COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::deleteTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_DELETE);
+    ui->lineEdit->setText(COMMAND_DELETE);
     showFocusInInputEdit(true);
 }
 
 void StandardView::editTriggered()
 {
-    ui->lineEdit->setText(GuiShortcuts::COMMAND_EDIT);
+    ui->lineEdit->setText(COMMAND_EDIT);
     showFocusInInputEdit(true);
 }
 
@@ -230,27 +251,6 @@ void StandardView::addTableContent(TableListNode *curr)
         curr->next->prev = curr;
         _tail = curr;
     }
-}
-
-//Remove all dynamically allocated memory given to table widget
-void StandardView:: resetTableContents()
-{
-    while (_tail != NULL)
-    {
-        if (_tail->next == _tail)
-        {
-            delete _tail;
-            _tail = NULL;
-        }
-        else
-        {
-            TableListNode *curr = _tail->next;
-            _tail->next = curr->next;
-            _tail->next->prev = _tail;
-            delete curr;
-        }
-    }
-    ui->tableWidget->clearContents();
 }
 
 void StandardView:: changeGeometry()
