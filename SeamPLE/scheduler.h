@@ -26,16 +26,17 @@ private:
     vector<string> _result;
     vector<task> taskVector;
     calender eventCalender;
-    void convertToString(vector<task> taskVector);
     void updateGUI(vector<task> taskVector);
+    void updateResultFound(int size);
     void generalError();
     string convertToDate(tm _date);
-
+    task processAction(Action newAction);
 
 public:
     static scheduler* getInstance();
     ~scheduler();
     vector<string> executeCommand(Action newaction);
+
 };
 
 
