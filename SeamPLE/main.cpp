@@ -4,9 +4,11 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GuiControl view;
-    view.setStandardViewFlag(false);
-    view.showGui();
+    GuiControl* view = view->getInstance();
+    view->setStandardViewFlag(false);
+    view->showGui();
+    int retValue = a.exec();
+    view->endInstance();
 
-    return a.exec();
+    return retValue;
 }

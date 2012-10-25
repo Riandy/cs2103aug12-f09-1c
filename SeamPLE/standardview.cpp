@@ -1,6 +1,8 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
+StandardView* StandardView::_standardView = NULL;
+
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
         "No Search Results Available";
 
@@ -38,6 +40,25 @@ StandardView::~StandardView()
 {
     resetTableContents();
     delete ui;
+}
+
+StandardView* StandardView:: getInstance()
+{
+    if (!singleInstanceExists())
+    {
+        _standardView = new StandardView();
+    }
+
+    return _standardView;
+}
+
+void StandardView:: endInstance()
+{
+    if (singleInstanceExists())
+    {
+        delete _standardView;
+        _standardView = NULL;
+    }
 }
 
 void StandardView::showFeedbackLabel(QString output)
@@ -229,6 +250,22 @@ void StandardView::clearTriggered()
     showFocusInInputEdit(true);
     showFeedbackInputEdit("");
     emit relay("");
+}
+
+bool StandardView:: singleInstanceExists()
+{
+    bool result;
+
+    if (_standardView == NULL)
+    {
+        result = false;
+    }
+    else
+    {
+        result = true;
+    }
+
+    return result;
 }
 
 //Add a table cell to the linklist for all table cells
