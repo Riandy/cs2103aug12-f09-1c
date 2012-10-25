@@ -5,7 +5,12 @@
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
-enum InputBarFlag{NONE, LOGICAL, UNOPERATIVE};
+enum InputBarFlag
+{
+    NONE,
+    LOGICAL,
+    UNOPERATIVE
+};
 
 class CommonView
 {
@@ -28,12 +33,11 @@ protected:
     const static QString COMMAND_DELETE;
     const static QString COMMAND_EDIT;
 
-public:
-    CommonView();
-
-protected:
     GuiShortcuts _allShortcuts;
 
+
+protected:
+    CommonView();
 };
 
 

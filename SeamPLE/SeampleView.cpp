@@ -1,7 +1,7 @@
 #include "SeampleView.h"
 #include "ui_SeampleView.h"
 
-#include <QDebug>
+SeampleView* SeampleView::_seampleView = NULL;
 
 SeampleView::SeampleView(QWidget *parent) :
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
@@ -25,6 +25,25 @@ SeampleView::SeampleView(QWidget *parent) :
 SeampleView::~SeampleView()
 {
     delete ui;
+}
+
+SeampleView* SeampleView:: getInstance()
+{
+    if (!singleInstanceExists())
+    {
+        _seampleView = new SeampleView();
+    }
+
+    return _seampleView;
+}
+
+void SeampleView:: endInstance()
+{
+    if (singleInstanceExists())
+    {
+        delete _seampleView;
+        _seampleView = NULL;
+    }
 }
 
 //Function to change GUI interface label to contain output string
@@ -135,6 +154,22 @@ void SeampleView::clearTriggered()
     showFocusInInputEdit(true);
     showFeedbackInputEdit("");
     emit relay("");
+}
+
+bool SeampleView:: singleInstanceExists()
+{
+    bool result;
+
+    if (_seampleView == NULL)
+    {
+        result = false;
+    }
+    else
+    {
+        result = true;
+    }
+
+    return result;
 }
 
 void SeampleView:: changeGeometry()

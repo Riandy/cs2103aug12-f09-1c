@@ -21,6 +21,4 @@ const QString CommonView:: COMMAND_EDIT = "edit ";
 
 CommonView::CommonView()
 {
-
-
 }

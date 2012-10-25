@@ -1,32 +1,77 @@
 #include "GuiControl.h"
 
+GuiControl* GuiControl::_guiControl = NULL;
 
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
         "<font size=3 face=\"MV Boli\" color = \"orange\">"
         "Available Commands: add, delete, mark, unmark, "
         "edit and find</font>";
+const QString GuiControl:: MESSAGE_INTELLISENSE_INVALID_RETURN =
+        "INTELLISENSE IS NOT WORKING";
+const QString GuiControl:: MESSAGE_INVALID_COLOUR_FLAG_RETURN =
+        "SEAMPLE NOT RETURNING APPROPRIATE COLOR FLAG";
+const QString GuiControl:: MESSAGE_SCHEDULER_INVALID_RETURN =
+        "SCHEDULER IS NOT RETURNING ANY OUTPUT";
 
 GuiControl::GuiControl()
 {
+    _standardGui = _standardGui->getInstance();
+    _seampleGui = _seampleGui->getInstance();
     setStandardGuiSignals();
     setSeampleGuiSignals();
     //setGlobalSignals();
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
+    createSystemTrayIconIfPossible();
     //QVector <QString> events = getTodaysEvents();
     //toShow(events);
 }
 
-void GuiControl:: showGui()
+GuiControl::~GuiControl()
 {
-    if (_standardViewFlag)
+    if (popUp != NULL)
     {
-        _standardGui.show();
+        delete popUp;
+    }
+    if (_seampleGui != NULL)
+    {
+        _seampleGui->endInstance();
+    }
+    if (_standardGui != NULL)
+    {
+        _standardGui->endInstance();
+    }
+}
+
+GuiControl* GuiControl::getInstance()
+{
+    if (!singleInstanceExists())
+    {
+        _guiControl = new GuiControl();
+    }
+
+    return _guiControl;
+}
+
+void GuiControl::endInstance()
+{
+    if (singleInstanceExists())
+    {
+        delete _guiControl;
+        _guiControl = NULL;
+    }
+}
+
+void GuiControl:: showGui()
+{   
+    if (interfaceIsStandardView())
+    {
+        _standardGui->show();
     }
     else
     {
-        _seampleGui.show();
+        _seampleGui->show();
     }
 }
 
@@ -56,22 +101,17 @@ void GuiControl::check(QString input)
         if (invalidSchedulerReturn)
         {
             output.clear();
-            output.push_front("INTELLISENSE IS NOT WORKING");
+            output.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
             _inputColorFlag = NONE;
         }
         else
         {
-            if ((output[1])[0].isDigit())
+            if (implementInputColorFlagFailure((output[1])[0]))
             {
-                _inputColorFlag = (InputBarFlag) (output[1])[0].digitValue();
-            }
-            else
-            {
-                output.push_front("SEAMPLE NOT RETURNING APPROPRIATE COLOR FLAG");
-                _inputColorFlag = NONE;
+                output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
             }
         }
-        send(output);
+        send(output[0]);
     }
 }
 
@@ -89,7 +129,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         bool command = true;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
         int capacity = output.size();
-        bool needStandardView = (capacity>2);
+        bool needStandardView = (capacity>1);
         _inputColorFlag = NONE;
 
         //Only commands to hold this should be find and search for now
@@ -101,11 +141,9 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             }
             else
             {
-                send(output);
-                _standardGui.showFeedbackInputEdit("");
-                _standardGui.showFocusInInputEdit(inputBarHasFocus);
+                sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
             }
-            _standardGui.showTableResults(output.mid(1,capacity - 1));
+            _standardGui->showTableResults(output.mid(1,capacity - 1));
         }
         else
         {
@@ -115,11 +153,15 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 
             if (invalidSchedulerReturn)
             {
-                output.push_front("SCHEDULER IS NOT RETURNING ANY OUTPUT");
+                output.push_front(MESSAGE_SCHEDULER_INVALID_RETURN);
             }
-            _standardGui.showFeedbackInputEdit("");
-            _standardGui.resetTableContents();
-            send(output);
+
+            if (interfaceIsStandardView())
+            {
+                _standardGui->resetTableContents();
+            }
+
+            sendWithInputEditItem("",output[0]);
         }
     }
 }
@@ -130,21 +172,15 @@ void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHa
 
     if(interfaceIsStandardView())
     {
-        _seampleGui.hide();
-        _standardGui.show();
-        _standardGui.showFeedbackInputEdit(input);
-        _standardGui.showFeedbackLabel(inputChecked);
-        _standardGui.showFocusInInputEdit(inputBarHasFocus);
-        _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
+        _seampleGui->hide();
+        _standardGui->show();
+        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
     }
     else
     {
-        _standardGui.hide();
-        _seampleGui.show();
-        _seampleGui.showFeedbackInputEdit(input);
-        _seampleGui.showFeedbackLabel(inputChecked);
-        _seampleGui.showFocusInInputEdit(inputBarHasFocus);
-        _seampleGui.showAppropriateColorInputEdit(_inputColorFlag);
+        _standardGui->hide();
+        _seampleGui->show();
+        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
     }
 }
 
@@ -154,11 +190,11 @@ void GuiControl::showHideView()
 
     if (interfaceIsStandardView())
     {
-        currentInterface = &_standardGui;
+        currentInterface = _standardGui;
     }
     else
     {
-        currentInterface = &_seampleGui;
+        currentInterface = _seampleGui;
     }
 
     if(interfaceIsCurrentlyShown())
@@ -172,6 +208,40 @@ void GuiControl::showHideView()
         currentInterface->activateWindow();
         setInterfaceShownFlag(true);
     }
+}
+
+bool GuiControl:: singleInstanceExists()
+{
+    bool result;
+
+    if (_guiControl == NULL)
+    {
+        result = false;
+    }
+    else
+    {
+        result = true;
+    }
+
+    return result;
+}
+
+bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag)
+{
+    bool result;
+
+    if (colorFlag.isDigit())
+    {
+        _inputColorFlag = (InputBarFlag) colorFlag.digitValue();
+        result = false;
+    }
+    else
+    {
+        _inputColorFlag = NONE;
+        result = true;
+    }
+
+    return result;
 }
 
 QVector <QString> GuiControl::getTodaysEvents()
@@ -205,28 +275,55 @@ void GuiControl::emptyResponse()
 
     if (interfaceIsStandardView())
     {
-        _standardGui.showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
-        _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
+        _standardGui->showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
+        _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
     }
     else
     {
-        _seampleGui.showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
-        _seampleGui.showAppropriateColorInputEdit(_inputColorFlag);
+        _seampleGui->showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
+        _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
     }
 }
 
-void GuiControl::send(QVector <QString> feedback)
+void GuiControl::send(QString feedback)
 {
-
     if (interfaceIsStandardView())
     {
-        _standardGui.showFeedbackLabel(feedback[0]);
-        _standardGui.showAppropriateColorInputEdit(_inputColorFlag);
+        _standardGui->showFeedbackLabel(feedback);
+        _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
     }
     else
     {
-        _seampleGui.showFeedbackLabel(feedback[0]);
-        _seampleGui.showAppropriateColorInputEdit(_inputColorFlag);
+        _seampleGui->showFeedbackLabel(feedback);
+        _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
+    }
+}
+
+void GuiControl:: sendWithInputEditItem(QString input,QString feedback)
+{
+    send(feedback);
+
+    if (interfaceIsStandardView())
+    {
+        _standardGui->showFeedbackInputEdit(input);
+    }
+    else
+    {
+        _seampleGui->showFeedbackInputEdit(input);
+    }
+}
+
+void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus, QString input, QString feedback)
+{
+    sendWithInputEditItem(input,feedback);
+
+    if (interfaceIsStandardView())
+    {
+        _standardGui->showFocusInInputEdit(inputBarHasFocus);
+    }
+    else
+    {
+        _seampleGui->showFocusInInputEdit(inputBarHasFocus);
     }
 }
 
@@ -234,16 +331,16 @@ void GuiControl::setStandardGuiSignals()
 {
     //Recieve signal from standardGui to run slot for checking
     //intellisense
-    connect(&_standardGui,SIGNAL(relay(QString)),
+    connect(_standardGui,SIGNAL(relay(QString)),
             this,SLOT(check(QString)));
 
     //Recieve signal from standardGui to run slot for checking
     //scheduler
-    connect(&_standardGui,SIGNAL(run(QString, bool)),
+    connect(_standardGui,SIGNAL(run(QString, bool)),
             this,SLOT(passScheduler(QString, bool)));
 
     //Recieve signal from standardGui to run slot for changing views
-    connect(&_standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
+    connect(_standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
 
 }
@@ -252,16 +349,16 @@ void GuiControl::setSeampleGuiSignals()
 {
     //Recieve signal from seampleGui to run slot for checking
     //intellisense
-    connect(&_seampleGui,SIGNAL(relay(QString)),
+    connect(_seampleGui,SIGNAL(relay(QString)),
             this,SLOT(check(QString)));
 
     //Recieve signal from standardGui to run slot for checking
     //scheduler
-    connect(&_seampleGui,SIGNAL(run(QString, bool)),
+    connect(_seampleGui,SIGNAL(run(QString, bool)),
             this,SLOT(passScheduler(QString, bool)));
 
     //Recieve signal from standardGui to run slot for changing views
-    connect(&_seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
+    connect(_seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
 }
 
@@ -272,3 +369,18 @@ void GuiControl::setSeampleGuiSignals()
 //    connect(_allShortcuts.getShowHideViewKey(),SIGNAL(activated()),
 //            this,SLOT(showHideView()));
 //}
+
+void GuiControl:: createSystemTrayIconIfPossible()
+{
+    popUp = NULL;
+    if (QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        popUp = new QSystemTrayIcon();
+        popUp->show();
+    }
+
+    if (popUp != NULL)
+    {
+        popUp->showMessage("SeamPLE","Welcome To Seample!!!",QSystemTrayIcon::Information, 10000);
+    }
+}

@@ -1,6 +1,7 @@
 #ifndef GUICONTROL_H
 #define GUICONTROL_H
 
+#include <QSystemTrayIcon>
 #include "SeampleView.h"
 #include "StandardView.h"
 #include "seample.h"
@@ -9,8 +10,23 @@ class GuiControl: public QObject
 {
     Q_OBJECT
 
-public:
+private:
+    static GuiControl* _guiControl;
+
+    const static QString MESSAGE_AVAILABLE_COMMANDS;
+    const static QString MESSAGE_INTELLISENSE_INVALID_RETURN;
+    const static QString MESSAGE_INVALID_COLOUR_FLAG_RETURN;
+    const static QString MESSAGE_SCHEDULER_INVALID_RETURN;
+
+private:
     GuiControl();
+
+    ~GuiControl();
+
+public:
+    GuiControl* getInstance();
+
+    void endInstance();
 
     void showGui();
 
@@ -27,6 +43,10 @@ private slots:
     void showHideView();
 
 private:
+    bool singleInstanceExists();
+
+    bool implementInputColorFlagFailure(QCharRef colorFlag);
+
     QVector <QString> getTodaysEvents();
 
     void toShow(QVector <QString> events);
@@ -39,13 +59,19 @@ private:
 
     void emptyResponse();
 
-    void send(QVector <QString> feedback);
+    void send(QString feedback);
+
+    void sendWithInputEditItem (QString input, QString feedback);
+
+    void sendWithInputEditAndFocus (bool inputBarHasFocus, QString input, QString feedback);
 
     void setStandardGuiSignals();
 
     void setSeampleGuiSignals();
 
     //void setGlobalSignals();
+
+    void createSystemTrayIconIfPossible();
 
 private:
     bool _standardViewFlag;
@@ -60,11 +86,11 @@ private:
 
     //GuiShortcuts _allShortcuts;
 
-    const static QString MESSAGE_AVAILABLE_COMMANDS;
+    QSystemTrayIcon* popUp;
 
     //GUI interfaces ==================
-    SeampleView _seampleGui;
-    StandardView _standardGui;
+    SeampleView* _seampleGui;
+    StandardView* _standardGui;
     //=================================
 
 

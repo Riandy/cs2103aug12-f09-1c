@@ -12,7 +12,6 @@ GuiShortcuts::GuiShortcuts()
     _delete = NULL;
     _edit = NULL;
     _clear = NULL;
-
     //_showHideView = NULL;
 }
 
