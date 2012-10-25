@@ -44,8 +44,6 @@ vector<string> scheduler::executeCommand(Action newAction)
     newTask.setEndDate(newAction.getEndDate());
     newTask.setID(newAction.getID());
 
-    //newTask.setEventName("eat");
-
     if(command=="ADD")
     {
         eventCalender.addItem(newTask);
@@ -56,33 +54,26 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if(command=="DELETE")
     {
         //delete by ID
-        if(newTask.getID()>0)
+        if(eventCalender.checkID(newTask.getID()))
         {
-            if(eventCalender.checkID(newTask.getID()))
-            {
-                eventCalender.deleteItem(newTask.getID());
-                _result.push_back(DELETE_SUCCESS);
-                taskVector = eventCalender.displayDatabase();
-                updateGUI(taskVector);
-            }
+            eventCalender.deleteItem(newTask.getID());
+            _result.push_back(DELETE_SUCCESS);
+            taskVector = eventCalender.displayDatabase();
+            updateGUI(taskVector);
         }
         //delete by event name
-        else if(newTask.getEventName()!="-")
+        else if(newTask.getEventName()!="-" && eventCalender.deleteItem(newTask.getEventName()))
         {
-             if(eventCalender.deleteItem(newTask.getEventName()))
-             {
-                 _result.push_back(DELETE_SUCCESS);
-                taskVector = eventCalender.displayDatabase();
-                updateGUI(taskVector);
-             }
-			 // below else statement should be caught by the one further below.
-         /*    else
-                 _result.push_back(ERROR_NOT_FOUND);
-				 */
+            _result.push_back(DELETE_SUCCESS);
+            taskVector = eventCalender.displayDatabase();
+            updateGUI(taskVector);
         }
+        //error handling
         else
         {
             _result.push_back(ERROR_NOT_FOUND);
+            taskVector = eventCalender.displayDatabase();
+            updateGUI(taskVector);
         }
     }
     else if(command=="EDIT")
