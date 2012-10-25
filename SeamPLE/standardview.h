@@ -21,10 +21,19 @@ private:
         TableListNode *prev;
         TableListNode *next;
     };
+
+    static StandardView* _standardView;
+
+    const static QString MESSAGE_NO_CURRENT_RESULTS;
     
-public:
+private:
     explicit StandardView(QWidget *parent = 0);
     ~StandardView();
+
+public:
+    StandardView* getInstance();
+
+    void endInstance();
 
     void showFeedbackLabel(QString output);
 
@@ -72,6 +81,8 @@ private slots:
 
 
 private:
+    bool singleInstanceExists();
+
     void addTableContent(TableListNode *curr);
 
     void changeGeometry();
@@ -85,8 +96,6 @@ private:
     Ui::StandardView *ui;
 
     TableListNode *_tail;
-
-    const static QString MESSAGE_NO_CURRENT_RESULTS;
 };
 
 #endif // STANDARDVIEW_H

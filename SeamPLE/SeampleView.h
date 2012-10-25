@@ -12,8 +12,16 @@ class SeampleView : public QMainWindow, public CommonView
     Q_OBJECT
 
 public:
+    static SeampleView* _seampleView;
+
+private:
     explicit SeampleView(QWidget *parent = 0);
-    ~SeampleView();
+    ~SeampleView();    
+
+public:
+    SeampleView* getInstance();
+
+    void endInstance();
 
     void showFeedbackLabel(QString output);
 
@@ -54,6 +62,8 @@ private slots:
     void clearTriggered();
 
 private:
+    bool singleInstanceExists();
+
     void changeGeometry();
 
     int getPosX(int maxX);

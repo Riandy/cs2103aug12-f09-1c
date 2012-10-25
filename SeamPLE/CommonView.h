@@ -33,12 +33,11 @@ protected:
     const static QString COMMAND_DELETE;
     const static QString COMMAND_EDIT;
 
-public:
-    CommonView();
-
-protected:
     GuiShortcuts _allShortcuts;
 
+
+protected:
+    CommonView();
 };
 
 

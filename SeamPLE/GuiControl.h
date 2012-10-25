@@ -2,7 +2,6 @@
 #define GUICONTROL_H
 
 #include <QSystemTrayIcon>
-#include <QTimer>
 #include "SeampleView.h"
 #include "StandardView.h"
 #include "seample.h"
@@ -12,14 +11,22 @@ class GuiControl: public QObject
     Q_OBJECT
 
 private:
+    static GuiControl* _guiControl;
+
     const static QString MESSAGE_AVAILABLE_COMMANDS;
     const static QString MESSAGE_INTELLISENSE_INVALID_RETURN;
     const static QString MESSAGE_INVALID_COLOUR_FLAG_RETURN;
     const static QString MESSAGE_SCHEDULER_INVALID_RETURN;
-public:
+
+private:
     GuiControl();
 
     ~GuiControl();
+
+public:
+    GuiControl* getInstance();
+
+    void endInstance();
 
     void showGui();
 
@@ -36,6 +43,8 @@ private slots:
     void showHideView();
 
 private:
+    bool singleInstanceExists();
+
     bool implementInputColorFlagFailure(QCharRef colorFlag);
 
     QVector <QString> getTodaysEvents();
@@ -80,8 +89,8 @@ private:
     QSystemTrayIcon* popUp;
 
     //GUI interfaces ==================
-    SeampleView _seampleGui;
-    StandardView _standardGui;
+    SeampleView* _seampleGui;
+    StandardView* _standardGui;
     //=================================
 
 

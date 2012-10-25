@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     SeampleView.cpp \
     StandardView.cpp \
     SLineEdit.cpp \
-    CommonView.cpp
+    CommonView.cpp \
+    STimeLabel.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -37,7 +38,8 @@ HEADERS  += \
     SeampleView.h \
     StandardView.h \
     SLineEdit.h \
-    CommonView.h
+    CommonView.h \
+    STimeLabel.h
 
 FORMS    += \
     SeampleView.ui \
