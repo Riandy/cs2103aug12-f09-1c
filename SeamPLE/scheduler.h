@@ -33,12 +33,9 @@ private:
 
 
 public:
-
     static scheduler* getInstance();
     ~scheduler();
     vector<string> executeCommand(Action newaction);
-
-    //pass in action
 };
 
 

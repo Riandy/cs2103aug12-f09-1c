@@ -75,7 +75,8 @@ bool calender::writeFile()
 
 bool calender::checkID(int taskID)
 {
-	if (taskID > int(_storage.size()))
+    cout<<taskID<<endl;
+    if (taskID > int(_storage.size()) || taskID<1)
 		return false;
 	else
 		return true;

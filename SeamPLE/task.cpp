@@ -23,6 +23,7 @@ task::task(void)
     _endDate.tm_sec=0;
     _priority = "LOW";
     _category = "#";
+    _description = "-";
     _id=-1;
     dateType = DATENORMAL;//normal mode
 }
