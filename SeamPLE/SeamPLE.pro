@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     StandardView.cpp \
     SLineEdit.cpp \
     CommonView.cpp \
-    STimeLabel.cpp
+    STimeLabel.cpp \
+    testmain.cpp \
+    UnitTest.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -39,7 +41,9 @@ HEADERS  += \
     StandardView.h \
     SLineEdit.h \
     CommonView.h \
-    STimeLabel.h
+    STimeLabel.h \
+    testmain.h \
+    UnitTest.h
 
 FORMS    += \
     SeampleView.ui \
@@ -53,3 +57,15 @@ OTHER_FILES +=
 
 #CONFIG  += qxt
 #QXT     += core gui
+
+# Uncomment if just unit tests are to be ran.
+# CONFIG += qtestlib
+
+qtestlib {
+    # If qtestlib is in CONFIG, replace application's main.cpp
+    # with unit test main. Also add unit test sources.
+    SOURCES -= main.cpp
+    SOURCES += testmain.cpp \
+               UnitTest.cpp
+    HEADERS += UnitTest.h
+}
