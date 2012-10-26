@@ -57,10 +57,10 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>40</y>
+      <x>70</x>
+      <y>20</y>
       <width>491</width>
-      <height>161</height>
+      <height>181</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -185,7 +185,7 @@
        <x>0</x>
        <y>40</y>
        <width>491</width>
-       <height>121</height>
+       <height>141</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -230,9 +230,9 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>95</y>
+        <y>90</y>
         <width>451</width>
-        <height>16</height>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -254,6 +254,9 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MV Boli'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ffaa00;&quot;&gt;Available Commands: add, delete, mark, unmark, edit and find&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
       <property name="textInteractionFlags">
        <set>Qt::LinksAccessibleByMouse</set>
       </property>
@@ -261,7 +264,7 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>310</x>
         <y>10</y>
         <width>151</width>
         <height>51</height>
