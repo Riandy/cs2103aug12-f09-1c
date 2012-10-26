@@ -79,7 +79,6 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
     else
     {
         feedback.push_back(QString::fromStdString(intellisense->getParameter()));
-
         if (intellisense->getrequirementsMet())
         {
             feedback.push_back("1");
@@ -88,7 +87,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
         {
             feedback.push_back("2");
         }
-
+        feedback.push_back(QString::fromStdString(intellisense->getFeedback()));
 
         DisplayEvent(response);
 

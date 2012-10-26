@@ -13,7 +13,8 @@ void UnitTest::dummyTest1() {
 
 
  void UnitTest::testIntellisense()
- {   Intellisense *intellisense;
+ {
+     Intellisense *intellisense;
      intellisense=Intellisense::getInstance();
 
      Action result = intellisense->check("add lin1");
