@@ -6,7 +6,7 @@ StandardView* StandardView::_standardView = NULL;
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
         "No Search Results Available";
 
-StandardView::StandardView(QWidget *parent) :
+StandardView::StandardView(QWidget *parent):
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
     ui(new Ui::StandardView)
 {

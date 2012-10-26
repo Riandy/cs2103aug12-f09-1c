@@ -1,4 +1,4 @@
-#include <SLineEdit.h>
+#include "SLineEdit.h"
 
 SLineEdit::SLineEdit(QWidget *parent): QLineEdit(parent)
 {
