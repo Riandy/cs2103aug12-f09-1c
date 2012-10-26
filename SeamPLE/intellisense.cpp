@@ -12,7 +12,7 @@ imptDate imptDates[]= {  imptDate("CHRISTMAS","2512"),imptDate("NEWYEAR","0101")
 int imptDatesSize = 2;
 
 
-//changed to array
+//changed to array test
 const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++","-a"};
 const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel","-d" };
 const string Intellisense::markCommandArray[] = { "mark", "done","-m"};
