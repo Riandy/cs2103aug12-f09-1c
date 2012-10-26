@@ -1040,59 +1040,116 @@ void Intellisense::setFeedback(string newFeedback)
 {
     _feedback=newFeedback;
 }
+bool Intellisense::isValidParaForCmd(int cmd,int parameter)
+{//this determines if the parameter is valid to work with the command
+    bool valid=false;
+    if (cmd == ADD)
+    {
+        if (parameter == INAME || parameter ==  IDATE || parameter == IPRIORITY ||
+            parameter == ICATEGORY || parameter == IDATEEND)
+            valid =true;
+    }
+    if (cmd == DELETE)
+    {//delete command only valid with 2 parameter
+        if (parameter == INAME || parameter == IID)
+            valid =true;
+    }
+    if (cmd == DISPLAY)
+    {
+        if (parameter == INAME ||  parameter == ICATEGORY )
+            valid =true;
+    }
+    if (cmd == MARK)
+    {
+        if (parameter == INAME  )
+            valid =true;
+    }
+    if (cmd == FIND)
+    {
+        if (parameter == INAME ||  parameter == ICATEGORY )
+            valid =true;
+    }
+    if (cmd == EDIT)
+    {
+        if (parameter == INAME || parameter ==  IDATE || parameter == IPRIORITY ||
+            parameter == ICATEGORY || parameter == IDATEEND ||  parameter == IID)
+            valid =true;
+    }
 
+    return valid;
+}
 string Intellisense::getParameter()
 {// output the string based on the flags set
-    if(statusFlags[INAME])
+    //refactor into many small functions
+    if(isValidParaForCmd(currentCommand,INAME))//
     {
-        _parameter ="<font color=green>[NAME]</font>";
+        if(statusFlags[INAME])
+        {
+            _parameter ="<font color=green>[EventNAME] </font>";
+        }
+        else
+        {
+            _parameter ="<font color=red>[EventNAME] </font>";
+        }
     }
-    else
+    if(isValidParaForCmd(currentCommand,IDATE))//
     {
-        _parameter ="<font color=red>[NAME]</font>";
-    }
-    if(statusFlags[IDATE])
-    {
-        _parameter =_parameter + "<font color=green>[StartDate]</font>";
-    }
-    else
-    {
-        _parameter =_parameter + "<font color=red>[StartDate]</font>";
-    }
-    if(statusFlags[IDATEEND])
-    {
-        _parameter =_parameter + "<font color=green>[EndDate]</font>";
-    }
-    else
-    {
-        _parameter =_parameter + "<font color=red>[EndDate]</font>";
-    }
-
-    if(statusFlags[IPRIORITY])
-    {
-        _parameter =_parameter + "<font color=green>[IPRIORITY]</font>";
-    }
-    else
-    {
-        _parameter =_parameter + "<font color=red>[IPRIORITY]</font>";
-    }
-    if(statusFlags[ICATEGORY])
-    {
-        _parameter =_parameter + "<font color=green>[ICATEGORY]</font>";
-    }
-    else
-    {
-        _parameter =_parameter + "<font color=red>[ICATEGORY]</font>";
-    }
-    if(statusFlags[IID])
-    {
-        _parameter =_parameter + "<font color=green>[IID]</font>";
-    }
-    else
-    {
-        _parameter =_parameter + "<font color=red>[IID]</font>";
+        if(statusFlags[IDATE])
+        {
+            _parameter =_parameter + "<font color=green>[StartDate] </font>";
+        }
+        else
+        {
+            _parameter =_parameter + "<font color=red>[StartDate] </font>";
+        }
     }
 
+    if(isValidParaForCmd(currentCommand,IDATEEND))//
+    {
+        if(statusFlags[IDATEEND])
+        {
+            _parameter =_parameter + "<font color=green>[EndDate] </font>";
+        }
+        else
+        {
+            _parameter =_parameter + "<font color=red>[EndDate] </font>";
+        }
+    }
+
+    if(isValidParaForCmd(currentCommand,IPRIORITY))//
+    {
+        if(statusFlags[IPRIORITY])
+        {
+            _parameter =_parameter + "<font color=green>[IPRIORITY] </font>";
+        }
+        else
+        {
+            _parameter =_parameter + "<font color=red>[IPRIORITY] </font>";
+        }
+    }
+
+    if(isValidParaForCmd(currentCommand,ICATEGORY))//
+    {
+        if(statusFlags[ICATEGORY])
+        {
+            _parameter =_parameter + "<font color=green>[ICATEGORY] </font>";
+        }
+        else
+        {
+            _parameter =_parameter + "<font color=red>[ICATEGORY] </font>";
+        }
+    }
+    if(isValidParaForCmd(currentCommand,IID))//
+    {
+        if(statusFlags[IID])
+        {
+            _parameter =_parameter + "<font color=green>[IID] </font>";
+        }
+        else
+        {
+            _parameter =_parameter + "<font color=red>[IID] </font>";
+        }
+    }
     //this is for the example feedback string
     _parameter = _parameter + "<br>" + getFeedback();
     return _parameter;

@@ -125,6 +125,7 @@ public:
     void checkFindReq();
     void checkEditReq();
 
+    bool isValidParaForCmd(int,int);
     void smartAutoFill(Action &task);
     string getFeedback();
     void setFeedback(string);
