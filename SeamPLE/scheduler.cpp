@@ -26,23 +26,12 @@ scheduler::~scheduler()
     instanceFlag = false;
 }
 
-
 vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
     string command=newAction.getCommand();
-    //command="delete";
-    taskVector.clear();
-    _result.clear();
-
-    //process the given information to task
-    task newTask;
-    newTask.setEventName(newAction.getEventName());
-    newTask.setCategory(newAction.getCategory());
-    newTask.setPriority(newAction.getPriority());
-    newTask.setStartDate(newAction.getStartDate());
-    newTask.setEndDate(newAction.getEndDate());
-    newTask.setID(newAction.getID());
+    //process and package the action into task
+    task newTask=processAction(newAction);
 
     if(command=="ADD")
     {
@@ -86,21 +75,26 @@ vector<string> scheduler::executeCommand(Action newAction)
         if(newTask.getCategory()!="#")
         {
             taskVector = eventCalender.SearchByCat(newTask.getCategory());
-            convertToString(taskVector);
+            updateResultFound(taskVector.size());
+            updateGUI(taskVector);
         }
         //case 2: search by task
         else if (newTask.getEventName()!="")
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
-            convertToString(taskVector);
+            updateResultFound(taskVector.size());
+            updateGUI(taskVector);
         }
         else
             generalError();
+
     }
     else if (command=="DISPLAY")
     {
+
         taskVector = eventCalender.displayDatabase();
-        convertToString(taskVector);
+        updateResultFound(taskVector.size());
+        updateGUI(taskVector);
     }
 
     else if (command=="UNDO")
@@ -130,7 +124,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if (command == "TODAY") // CHECK THE COMMAND NAME SENT FROM ACTION
     {
         taskVector = eventCalender.getToday();
-        convertToString(taskVector);
+        updateGUI(taskVector);
     }
     else
         generalError();
@@ -139,39 +133,22 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
-void scheduler::convertToString(vector<task> taskVector)
+task scheduler::processAction(Action newAction)
 {
+    taskVector.clear();
+    _result.clear();
 
-    int vectorSize = taskVector.size();
-    string firstPosition;
-    ostringstream tempString;
-    tempString << "You have ";
-    tempString << taskVector.size();
-    tempString << " results found.";
-    firstPosition = tempString.str();
-    _result.push_back(firstPosition);
-    for (int i = 0; i < vectorSize; i++)
+    //process the given information to task
+    task newTask;
+    newTask.setEventName(newAction.getEventName());
+    newTask.setCategory(newAction.getCategory());
+    newTask.setPriority(newAction.getPriority());
+    newTask.setStartDate(newAction.getStartDate());
+    newTask.setEndDate(newAction.getEndDate());
+    newTask.setID(newAction.getID());
 
-    {
-        string _startDate = convertToDate(taskVector[i].getStartDate());
-        string _endDate = convertToDate(taskVector[i].getEndDate());
-
-        //use ostringstream to convert id to string
-        ostringstream convert;
-        convert << taskVector.at(i).getID();
-        string id= convert.str();
-
-        _result.push_back(id);
-        _result.push_back(taskVector.at(i).getEventName());
-        _result.push_back(_startDate);
-        _result.push_back(_endDate);
-        _result.push_back(taskVector.at(i).getPriority());
-        _result.push_back(taskVector.at(i).getCategory());
-
-    }
-
+    return newTask;
 }
-
 
 string scheduler::convertToDate(tm _date)
 {
@@ -196,6 +173,7 @@ void scheduler::updateGUI(vector<task> taskVector)
     for (int i = 0; i < vectorSize; i++)
 
     {
+        //testing
         string _startDate = convertToDate(taskVector[i].getStartDate());
         string _endDate = convertToDate(taskVector[i].getEndDate());
 
@@ -214,4 +192,11 @@ void scheduler::updateGUI(vector<task> taskVector)
     }
 }
 
-
+void scheduler::updateResultFound(int size)
+{
+    ostringstream tempString;
+    tempString << "You have ";
+    tempString << size;
+    tempString << " results found.";
+    _result.push_back(tempString.str());
+}
