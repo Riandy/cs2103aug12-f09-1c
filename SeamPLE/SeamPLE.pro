@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui\
+            testlib
 
 TARGET = SeamPLE
 TEMPLATE = app
@@ -24,7 +25,6 @@ SOURCES += main.cpp\
     SLineEdit.cpp \
     CommonView.cpp \
     STimeLabel.cpp \
-    testmain.cpp \
     UnitTest.cpp
 
 HEADERS  += \
@@ -42,7 +42,6 @@ HEADERS  += \
     SLineEdit.h \
     CommonView.h \
     STimeLabel.h \
-    testmain.h \
     UnitTest.h
 
 FORMS    += \
@@ -58,14 +57,4 @@ OTHER_FILES +=
 #CONFIG  += qxt
 #QXT     += core gui
 
-# Uncomment if just unit tests are to be ran.
-# CONFIG += qtestlib
 
-qtestlib {
-    # If qtestlib is in CONFIG, replace application's main.cpp
-    # with unit test main. Also add unit test sources.
-    SOURCES -= main.cpp
-    SOURCES += testmain.cpp \
-               UnitTest.cpp
-    HEADERS += UnitTest.h
-}
