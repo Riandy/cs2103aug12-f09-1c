@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'StandardView.ui'
+** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Fri Oct 26 12:03:17 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Fri Oct 26 13:12:35 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -21,7 +21,7 @@
 #include <QtGui/QTabWidget>
 #include <QtGui/QTableWidget>
 #include <QtGui/QWidget>
-#include "sframe.h"
+#include <sframe.h>
 #include "slineedit.h"
 
 QT_BEGIN_NAMESPACE
@@ -54,13 +54,13 @@ public:
     {
         if (StandardView->objectName().isEmpty())
             StandardView->setObjectName(QString::fromUtf8("StandardView"));
-        StandardView->resize(895, 593);
+        StandardView->resize(895, 727);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
         StandardView->setWindowIcon(icon);
         frame = new Sframe(StandardView);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(10, 10, 811, 571));
+        frame->setGeometry(QRect(10, 10, 811, 601));
         frame->setStyleSheet(QString::fromUtf8("#frame\n"
 "{\n"
 "	background-image: url(:/bg/scenary.jpg);\n"
@@ -79,7 +79,7 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         frame_2 = new QFrame(frame);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        frame_2->setGeometry(QRect(0, 40, 811, 531));
+        frame_2->setGeometry(QRect(0, 40, 811, 561));
         lineEdit = new SLineEdit(frame_2);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(50, 60, 701, 31));
@@ -113,7 +113,7 @@ public:
 "}"));
         label = new QLabel(frame_2);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(49, 93, 451, 16));
+        label->setGeometry(QRect(49, 93, 701, 41));
         QFont font2;
         font2.setFamily(QString::fromUtf8("MV Boli"));
         font2.setPointSize(9);
@@ -122,10 +122,11 @@ public:
 "{\n"
 "\n"
 "}"));
+        label->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
         tabWidget = new QTabWidget(frame_2);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(40, 130, 731, 381));
+        tabWidget->setGeometry(QRect(40, 150, 731, 381));
         tabWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
         tabWidget->setStyleSheet(QString::fromUtf8("QTabBar::tab:first {\n"
 "background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(255, 111, 111, 255), stop:0.369318 rgba(225, 0, 0, 255), stop:0.636364 rgba(255, 0, 0, 255), stop:0.977273 rgba(255, 95, 95, 255));\n"
