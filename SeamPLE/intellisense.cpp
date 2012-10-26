@@ -13,16 +13,16 @@ int imptDatesSize = 2;
 
 
 //changed to array
-const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++"};
-const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel","dsp" };
-const string Intellisense::markCommandArray[] = { "mark", "done"};
-const string Intellisense::displayCommandArray[]= { "display" ,"show"};
-const string Intellisense::exitCommandArray[] = {"exit","quit"};
-const string Intellisense::sortCommandArray[] = {"sort","arrange"};
-const string Intellisense::findCommandArray[] = {"find","search"};
-const string Intellisense::editCommandArray[] = {"edit","change"};
-const string Intellisense::undoCommandArray[] = {"undo","revert"};
-const string Intellisense::redoCommandArray[] = {"redo","undoundo"};
+const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++","-a"};
+const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel","-d" };
+const string Intellisense::markCommandArray[] = { "mark", "done","-m"};
+const string Intellisense::displayCommandArray[]= { "display" ,"show","-d","dsp"};
+const string Intellisense::exitCommandArray[] = {"exit","quit","-q"};
+const string Intellisense::sortCommandArray[] = {"sort","arrange","-s"};
+const string Intellisense::findCommandArray[] = {"find","search","-f"};
+const string Intellisense::editCommandArray[] = {"edit","change","-e"};
+const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
+const string Intellisense::redoCommandArray[] = {"redo","-r"};
 
 //end of array change
 bool Intellisense::instanceFlag = false;
@@ -653,6 +653,7 @@ vector<string> Intellisense::tokenize(string command)
 
 Action Intellisense::addOperation(vector<string>& tokens)
 {
+    currentCommand = ADD;
     Action task;
     task.setCommand(getCommand(tokens,"ADD"));
     task.determineDate(getDate(tokens),getDate(tokens));
@@ -666,6 +667,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 }
 Action Intellisense::deleteOperation(vector<string>& tokens)
 {
+    currentCommand = DELETE;
     Action task;
     task.setCommand(getCommand(tokens,"DELETE"));
     int ID = getID(tokens);
@@ -685,6 +687,7 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 }
 Action Intellisense::exitOperation(vector<string>& tokens)
 {
+    currentCommand = EXIT;
     Action task;
     task.setCommand(getCommand(tokens,"EXIT"));
 
@@ -693,6 +696,7 @@ Action Intellisense::exitOperation(vector<string>& tokens)
 }
 Action Intellisense::displayOperation(vector<string>& tokens)
 {
+    currentCommand = DISPLAY;
     Action task;
     task.setCommand(getCommand(tokens,"DISPLAY"));
     task.setStartDate(getDate(tokens));
@@ -703,6 +707,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 }
 Action Intellisense::markOperation(vector<string>& tokens)
 {
+    currentCommand = MARK;
     Action task;
     task.setCommand(getCommand(tokens,"MARK"));
     task.setStartDate(getDate(tokens));
@@ -715,6 +720,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
 //Action Intellisense::invalidOperation(vector<string>& tokens)
 Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
+    currentCommand = ADD;
     Action task;
     //task.setCommand(getCommand(tokens,"INVALID"));//remove this as we now treat this as quick add instead
     //start of quick add algo
@@ -739,6 +745,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
 }
 Action Intellisense::undoOperation(vector<string>& tokens)
 {
+    currentCommand = UNDO;
     Action task;
     task.setCommand(getCommand(tokens,"UNDO"));
     setAllStatusFlag(task);
@@ -746,6 +753,7 @@ Action Intellisense::undoOperation(vector<string>& tokens)
 }
 Action Intellisense::redoOperation(vector<string>& tokens)
 {
+    currentCommand = REDO;
     Action task;
     task.setCommand(getCommand(tokens,"REDO"));
     setAllStatusFlag(task);
@@ -754,6 +762,7 @@ Action Intellisense::redoOperation(vector<string>& tokens)
 
 Action Intellisense::sortOperation(vector<string>& tokens)
 {
+    currentCommand = SORT;
     Action task;
     task.setCommand(getCommand(tokens,"SORT"));
 
@@ -761,6 +770,7 @@ Action Intellisense::sortOperation(vector<string>& tokens)
 }
 Action Intellisense::findOperation(vector<string>& tokens)
 {
+    currentCommand = FIND;
     Action task;
     task.setCommand(getCommand(tokens,"FIND"));
     task.setPriority(getPriority(tokens));
@@ -774,6 +784,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
 
 Action Intellisense::editOperation(vector<string>& tokens)
 {
+    currentCommand = EDIT;
     Action task;
     task.setCommand(getCommand(tokens,"EDIT"));
     task.setPriority(getPriority(tokens));
@@ -936,8 +947,93 @@ void Intellisense::checkEditReq()
 }
 
 string Intellisense::getFeedback()
-{
+{//later refactor this into functions
+    if(currentCommand == ADD)
+    {
+        if(getrequirementsMet())
+        {
+                _feedback = "eg. add baby Birthday Preparation 24 Aug #family";
+        }
+        else
+        {
+                _feedback = "eg. Add baby birthday 24 aug";
+        }
+    }
 
+    if(currentCommand == DELETE )
+    {
+        if(getrequirementsMet())
+        {
+                _feedback = "eg. del 3";
+        }
+        else
+        {
+                _feedback = "eg. del 3";
+        }
+    }
+
+    if(currentCommand == EXIT )
+    {
+        _feedback = " Are you sure you want to exit?";
+    }
+
+    if(currentCommand == DISPLAY )
+    {
+        if(getrequirementsMet())
+        {
+                _feedback = "eg. display #ab";
+        }
+        else
+        {
+                _feedback = "eg. display #ab";
+        }
+    }
+
+    if(currentCommand == FIND )
+    {
+        if(getrequirementsMet())
+        {
+                _feedback = "eg. find birthday";
+        }
+        else
+        {
+                _feedback = "eg. find #family";
+        }
+    }
+
+    if(currentCommand == SORT )
+    {
+        if(getrequirementsMet())
+        {
+                _feedback = "eg. sort by date?";
+        }
+        else
+        {
+                _feedback = "eg. sort by date?";
+        }
+    }
+
+    if(currentCommand == REDO )
+    {
+        _feedback = "Press enter to redo your last operation";
+    }
+
+    if(currentCommand == UNDO )
+    {
+        _feedback = "Press enter to undo your last operation";
+    }
+
+    if(currentCommand == MARK )
+    {
+        if(getrequirementsMet())
+        {
+                _feedback = "eg. mark today";
+        }
+        else
+        {
+                _feedback = "eg. mark 3";
+        }
+    }
     return _feedback;
 }
 void Intellisense::setFeedback(string newFeedback)
@@ -997,7 +1093,8 @@ string Intellisense::getParameter()
         _parameter =_parameter + "<font color=red>[IID]</font>";
     }
 
-
+    //this is for the example feedback string
+    _parameter = _parameter + "<br>" + getFeedback();
     return _parameter;
 }
 void Intellisense::setParameter(string newParameter)
