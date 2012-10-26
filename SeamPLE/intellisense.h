@@ -62,6 +62,7 @@ private:
     bool requirementsMet;
     string _feedback;
     string _parameter;
+    int currentCommand;
 
 public:
     static Intellisense* getInstance();
