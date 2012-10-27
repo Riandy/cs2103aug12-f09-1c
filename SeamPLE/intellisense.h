@@ -7,7 +7,10 @@
 #include <vector>
 #include <ctime>
 
+
+
 #include "Action.h"
+
 using namespace std;
 
 struct imptDate
@@ -33,12 +36,15 @@ enum operation{
 };
 
 
+
+
 class Intellisense
 {
 private:
 
     static bool instanceFlag;
     static Intellisense *intellisense;
+
     Intellisense(void);
     static const string months[12];
 

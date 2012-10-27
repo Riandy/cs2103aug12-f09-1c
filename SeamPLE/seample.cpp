@@ -33,6 +33,7 @@ Seample::Seample()
 {
     intellisense=Intellisense::getInstance();
     _scheduler=scheduler::getInstance();
+
 }
 
 Seample::~Seample()
