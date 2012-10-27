@@ -152,6 +152,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             if (interfaceIsStandardView())
             {
                 _standardGui->resetTableContents();
+                _standardGui->showNoTableDisplay();
             }
 
             sendWithInputEditItem("",output[0]);

@@ -47,6 +47,8 @@ public:
 
     void resetTableContents();
 
+    void showNoTableDisplay();
+
 signals:
     void relay(QString input);
 
