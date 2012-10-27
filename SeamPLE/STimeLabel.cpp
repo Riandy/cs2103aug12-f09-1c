@@ -6,6 +6,11 @@ STimeLabel::STimeLabel(QWidget *parent):
     setAutoDateAndTimeDisplay();
 }
 
+STimeLabel::~STimeLabel()
+{
+    delete interval;
+}
+
 void STimeLabel::setAutoDateAndTimeDisplay()
 {
     interval = new QTimer(this);

@@ -27,14 +27,8 @@ StandardView::StandardView(QWidget *parent):
 
     _tail = NULL;
 
-    //Table should always have 2 column. No change is done
-    //to column count in the rest of the code
-    ui->tableWidget->setColumnCount(2);
-    ui->tableWidget->setColumnWidth(0, 40);
-    ui->tableWidget->setColumnWidth(1, 662);
-
-    showNoTableDisplay();
-
+    setTableParam();
+    opacityLvl = 0;
 }
 
 StandardView::~StandardView()
@@ -177,6 +171,42 @@ void StandardView:: showNoTableDisplay()
     ui->label_8->setText(MESSAGE_NO_CURRENT_RESULTS);
 }
 
+void StandardView::show()
+{
+    //Reset interface to original position
+    changeGeometry();
+
+    opacityLvl = 0;
+    setWindowOpacity(NONE);
+    QMainWindow::show();
+    connect(&fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
+    fadeInTimer.start(1);
+}
+
+void StandardView::hide()
+{
+    opacityLvl = 1;
+    setWindowOpacity(LOGICAL);
+    connect(&fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
+    fadeOutTimer.start(1);
+}
+
+bool StandardView::interfaceCurrentlyChanging()
+{
+    bool result;
+
+    if (opacityLvl < LOGICAL && opacityLvl > NONE)
+    {
+        result = true;
+    }
+    else
+    {
+        result = false;
+    }
+
+    return result;
+}
+
 void StandardView::recieve(QString input)
 {
     emit relay(input);
@@ -189,8 +219,6 @@ void StandardView::enterTriggered()
 
 void StandardView::changeViewTriggered()
 {
-    //Reset the coordinates of the current window before view is changed
-    changeGeometry();
     emit toSeampleView(ui->lineEdit->text(),ui->label->text(), ui->lineEdit->getFocusInput());
 }
 
@@ -254,6 +282,35 @@ void StandardView::clearTriggered()
     emit relay("");
 }
 
+void StandardView::fadeInChange()
+{
+    opacityLvl += 0.08;
+
+    if (opacityLvl >= LOGICAL)
+    {
+        opacityLvl = 1;
+        fadeInTimer.stop();
+        disconnect(&fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
+    }
+
+    setWindowOpacity(opacityLvl);
+}
+
+void StandardView::fadeOutChange()
+{
+    opacityLvl -= 0.08;
+
+    if (opacityLvl <= NONE)
+    {
+        opacityLvl = 0;
+        fadeOutTimer.stop();
+        QMainWindow::hide();
+        disconnect(&fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
+    }
+
+    setWindowOpacity(opacityLvl);
+}
+
 bool StandardView:: singleInstanceExists()
 {
     bool result;
@@ -312,6 +369,17 @@ int StandardView:: getPosX(int maxX)
 int StandardView:: getPosY(int maxY)
 {
     return maxY - this->ui->frame->height();
+}
+
+void StandardView::setTableParam()
+{
+    //Table should always have 2 column. No change is done
+    //to column count in the rest of the code
+    ui->tableWidget->setColumnCount(2);
+    ui->tableWidget->setColumnWidth(0, 40);
+    ui->tableWidget->setColumnWidth(1, 662);
+
+    showNoTableDisplay();
 }
 
 void StandardView:: setSignals()

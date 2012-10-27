@@ -11,6 +11,8 @@ class STimeLabel : public QLabel
 public:
     STimeLabel(QWidget *parent);
 
+    ~STimeLabel();
+
 private:
     void setAutoDateAndTimeDisplay();
 

@@ -162,19 +162,22 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 
 void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHasFocus)
 {
-    setStandardViewFlag(!interfaceIsStandardView());
+    if (!(_standardGui->interfaceCurrentlyChanging()))
+    {
+        setStandardViewFlag(!interfaceIsStandardView());
 
-    if(interfaceIsStandardView())
-    {
-        _seampleGui->hide();
-        _standardGui->show();
-        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
-    }
-    else
-    {
-        _standardGui->hide();
-        _seampleGui->show();
-        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+        if(interfaceIsStandardView())
+        {
+            _seampleGui->hide();
+            _standardGui->show();
+            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+        }
+        else
+        {
+            _standardGui->hide();
+            _seampleGui->show();
+            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+        }
     }
 }
 
