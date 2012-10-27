@@ -33,6 +33,8 @@ public:
 
     void setStandardViewFlag (bool flag);
 
+    QSystemTrayIcon* popUp;
+
 
 private slots:
     void check(QString input);
@@ -74,7 +76,9 @@ private:
 
     void createSystemTrayIconIfPossible();
 
+
 private:
+
     bool _standardViewFlag;
 
     bool _interfaceShownFlag;
@@ -89,7 +93,7 @@ private:
 
     //GuiShortcuts _allShortcuts;
 
-    QSystemTrayIcon* popUp;
+
 
     //GUI interfaces ==================
     SeampleView* _seampleGui;
