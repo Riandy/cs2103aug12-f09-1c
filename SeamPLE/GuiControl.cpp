@@ -26,7 +26,7 @@ GuiControl::GuiControl()
     createSystemTrayIconIfPossible();
     //QVector <QString> events = getTodaysEvents();
     //toShow(events);
-
+    timekeep.init(this->popUp);
     timekeep.start();
 }
 
@@ -386,3 +386,5 @@ void GuiControl:: createSystemTrayIconIfPossible()
         popUp->showMessage("SeamPLE","Welcome To Seample!!!",QSystemTrayIcon::Information, 10000);
     }
 }
+
+
