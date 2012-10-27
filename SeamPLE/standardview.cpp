@@ -33,6 +33,7 @@ StandardView::StandardView(QWidget *parent):
     ui->tableWidget->setColumnWidth(0, 40);
     ui->tableWidget->setColumnWidth(1, 662);
 
+    showNoTableDisplay();
 
 }
 
@@ -148,10 +149,6 @@ void StandardView::showTableResults(QVector <QString> output)
     {
         ui->label_8->setText("");
     }
-    else
-    {
-        ui->label_8->setText(MESSAGE_NO_CURRENT_RESULTS);
-    }
 }
 
 //Remove all dynamically allocated memory given to table widget
@@ -173,6 +170,11 @@ void StandardView:: resetTableContents()
         }
         ui->tableWidget->removeRow(0);
     }
+}
+
+void StandardView:: showNoTableDisplay()
+{
+    ui->label_8->setText(MESSAGE_NO_CURRENT_RESULTS);
 }
 
 void StandardView::recieve(QString input)
