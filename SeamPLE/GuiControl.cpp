@@ -26,6 +26,8 @@ GuiControl::GuiControl()
     createSystemTrayIconIfPossible();
     //QVector <QString> events = getTodaysEvents();
     //toShow(events);
+
+    timekeep.start();
 }
 
 GuiControl::~GuiControl()

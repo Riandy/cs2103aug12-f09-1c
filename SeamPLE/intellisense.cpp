@@ -24,6 +24,13 @@ const string Intellisense::editCommandArray[] = {"edit","change","-e"};
 const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
 
+
+
+
+
+
+
+
 //end of array change
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
@@ -62,6 +69,8 @@ Intellisense::Intellisense(void)
 
 
 }
+
+
 
 
 Intellisense::~Intellisense(void)
