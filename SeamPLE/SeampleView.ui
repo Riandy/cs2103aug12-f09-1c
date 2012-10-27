@@ -261,7 +261,7 @@ p, li { white-space: pre-wrap; }
        <set>Qt::LinksAccessibleByMouse</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="STimeLabel" name="label_2">
       <property name="geometry">
        <rect>
         <x>310</x>

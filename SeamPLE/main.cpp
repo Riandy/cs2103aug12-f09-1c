@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    if(true)     // change to true to enable unit testing, false otherwise
+    if(false)     // change to true to enable unit testing, false otherwise
     {
         QApplication app(argc, argv);
 
