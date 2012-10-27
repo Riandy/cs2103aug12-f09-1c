@@ -1,11 +1,11 @@
 #ifndef GUICONTROL_H
 #define GUICONTROL_H
 
-#include <QSystemTrayIcon>
+#include "NotifyView.h"
 #include "SeampleView.h"
 #include "StandardView.h"
 #include "seample.h"
-#include "timekeeper.h"
+//#include "timekeeper.h"
 
 class GuiControl: public QObject
 {
@@ -33,7 +33,6 @@ public:
 
     void setStandardViewFlag (bool flag);
 
-    QSystemTrayIcon* popUp;
 
 
 private slots:
@@ -89,15 +88,14 @@ private:
     //results back to be printed
     Seample *_inputProcessor;
 
-    Timekeeper timekeep;
+    //Timekeeper timekeep;
 
     //GuiShortcuts _allShortcuts;
-
-
 
     //GUI interfaces ==================
     SeampleView* _seampleGui;
     StandardView* _standardGui;
+    NotifyView* _notifyInterface;
     //=================================
 
 

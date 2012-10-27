@@ -19,7 +19,7 @@ QTime TimeGetter:: getTime(QDateTime currDateAndTime)
 void TimeGetter::getStringDateAndTime()
 {
     QDateTime currDateAndTime = QDateTime::currentDateTime();
-    QString dateAndTime = currDateAndTime.toString("dddd dd-MM-yy");
+    QString dateAndTime = currDateAndTime.toString(SET_DATE_FORMAT);
 
     bool currSecondIsEvenNumber = getTime(currDateAndTime).second() % 2 == 0;
     dateAndTime += SET_START_NEXT_SENTENCE;

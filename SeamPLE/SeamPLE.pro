@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     CommonView.cpp \
     STimeLabel.cpp \
     UnitTest.cpp \
-    TimeGetter.cpp
+    TimeGetter.cpp \
+    ##timekeeper.cpp
+    NotifyView.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -44,7 +46,9 @@ HEADERS  += \
     CommonView.h \
     STimeLabel.h \
     UnitTest.h \
-    TimeGetter.h
+    TimeGetter.h \
+    ##timekeeper.h
+    NotifyView.h
 
 FORMS    += \
     SeampleView.ui \

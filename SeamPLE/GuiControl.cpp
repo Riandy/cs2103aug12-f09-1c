@@ -26,24 +26,15 @@ GuiControl::GuiControl()
     createSystemTrayIconIfPossible();
     //QVector <QString> events = getTodaysEvents();
     //toShow(events);
-    timekeep.init(this->popUp);
-    timekeep.start();
+    //timekeep.init(this->popUp);
+    //timekeep.start();
 }
 
 GuiControl::~GuiControl()
 {
-    if (popUp != NULL)
-    {
-        delete popUp;
-    }
-    if (_seampleGui != NULL)
-    {
-        _seampleGui->endInstance();
-    }
-    if (_standardGui != NULL)
-    {
-        _standardGui->endInstance();
-    }
+    _seampleGui->endInstance();
+    _standardGui->endInstance();
+    _notifyInterface->endInstance();
 }
 
 GuiControl* GuiControl::getInstance()
@@ -374,16 +365,10 @@ void GuiControl::setSeampleGuiSignals()
 
 void GuiControl:: createSystemTrayIconIfPossible()
 {
-    popUp = NULL;
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
-        popUp = new QSystemTrayIcon();
-        popUp->show();
-    }
-
-    if (popUp != NULL)
-    {
-        popUp->showMessage("SeamPLE","Welcome To Seample!!!",QSystemTrayIcon::Information, 10000);
+        _notifyInterface = _notifyInterface->getInstance();
+        _notifyInterface->showMessage("SeamPLE", "(>^.^)> MEOW <(^.^<)", QSystemTrayIcon::Information);
     }
 }
 
