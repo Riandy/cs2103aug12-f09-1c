@@ -1,5 +1,7 @@
 #include "TimeGetter.h"
 
+TimeGetter* TimeGetter:: _timeGetter = NULL;
+
 const QString TimeGetter:: SET_DATE_FORMAT =
         "dddd dd-MM-yy";
 const QString TimeGetter:: SET_TIME_FORMAT_TICK =
@@ -11,31 +13,83 @@ const QString TimeGetter:: SET_START_NEXT_SENTENCE =
 const QString TimeGetter:: SET_END_NEXT_SENTENCE =
         "</br>";
 
+const QString TimeGetter:: SET_DATE_FONT_FORMAT_AND_TAG =
+        "<font size=2 face=\"Arial\" color = #0B0B3B>";
+const QString TimeGetter:: SET_END_FONT_TAG =
+        "</font>";
+const QString TimeGetter:: SET_TIME_FONT_FORMAT_AND_TAG =
+        "<font size=3 face=\"Cambria\" color = #0B0B3B>";
+
+TimeGetter::TimeGetter()
+{
+
+}
+
+TimeGetter::~TimeGetter()
+{
+
+}
+
 QTime TimeGetter:: getTime(QDateTime currDateAndTime)
 {
     return currDateAndTime.time();
 }
 
-void TimeGetter::getStringDateAndTime()
+bool TimeGetter::singleInstanceExist()
 {
-    QDateTime currDateAndTime = QDateTime::currentDateTime();
-    QString dateAndTime = currDateAndTime.toString(SET_DATE_FORMAT);
+    bool result;
 
-    bool currSecondIsEvenNumber = getTime(currDateAndTime).second() % 2 == 0;
-    dateAndTime += SET_START_NEXT_SENTENCE;
-
-    if (currSecondIsEvenNumber)
+    if (_timeGetter == NULL)
     {
-        dateAndTime += currDateAndTime.toString(SET_TIME_FORMAT_TICK);
+        result = false;
     }
     else
     {
-        dateAndTime += currDateAndTime.toString(SET_TIME_FORMAT_TICKLESS);
+        result = true;
     }
 
-    dateAndTime += SET_END_NEXT_SENTENCE;
-
-    emit relayStringDateAndTime(dateAndTime);
+    return result;
 }
 
+TimeGetter* TimeGetter::getInstance()
+{
+    if (!singleInstanceExist())
+    {
+        _timeGetter = new TimeGetter();
+    }
+
+    return _timeGetter;
+}
+
+void TimeGetter:: endInstance()
+{
+    if (singleInstanceExist())
+    {
+        delete _timeGetter;
+        _timeGetter = NULL;
+    }
+}
+
+void TimeGetter::getStringDateAndTime()
+{
+    QDateTime currDateAndTime = QDateTime::currentDateTime();
+    QString date = currDateAndTime.toString(SET_DATE_FORMAT);
+    date = SET_DATE_FONT_FORMAT_AND_TAG + date + SET_END_FONT_TAG;
+
+    bool currSecondIsEvenNumber = getTime(currDateAndTime).second() % 2 == 0;
+
+    QString time;
+    if (currSecondIsEvenNumber)
+    {
+        time = currDateAndTime.toString(SET_TIME_FORMAT_TICK);
+    }
+    else
+    {
+        time = currDateAndTime.toString(SET_TIME_FORMAT_TICKLESS);
+    }
+
+    time = SET_TIME_FONT_FORMAT_AND_TAG + time + SET_END_FONT_TAG;
+
+    emit relayStringDateAndTime(date+SET_START_NEXT_SENTENCE+time+SET_END_NEXT_SENTENCE);
+}
 

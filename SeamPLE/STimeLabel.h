@@ -17,9 +17,9 @@ private:
     void setAutoDateAndTimeDisplay();
 
 private:
-    QTimer* interval;
+    QTimer* _interval;
 
-    TimeGetter dateAndTime;
+    TimeGetter* _dateAndTime;
 
 
 };
