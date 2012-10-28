@@ -135,7 +135,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 
 string scheduler::getEventBasedOnTime(int hour, int min)
 {
-    string feedbackMessage;
+    std::stringstream feedbackMessage;
     tm eventStart;
 
     vector<task> taskV=eventCalender.getToday();
@@ -147,13 +147,14 @@ string scheduler::getEventBasedOnTime(int hour, int min)
         {
             if(min==eventStart.tm_min)
             {
-                feedbackMessage=feedbackMessage + it->getEventName() + "\n";
+                feedbackMessage<<it->getEventName()<<"\n";
+
             }
         }
 
     }
 
-    return "EVENT!!";
+    return feedbackMessage.str();
 }
 
 task scheduler::processAction(Action newAction)
