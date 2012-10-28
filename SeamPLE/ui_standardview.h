@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'StandardView.ui'
+** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Sat Oct 27 15:54:42 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Sun Oct 28 15:38:25 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -21,8 +21,9 @@
 #include <QtGui/QTabWidget>
 #include <QtGui/QTableWidget>
 #include <QtGui/QWidget>
-#include <sframe.h>
+#include "sframe.h"
 #include "slineedit.h"
+#include "stimelabel.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -33,7 +34,7 @@ public:
     QFrame *line;
     QFrame *frame_2;
     SLineEdit *lineEdit;
-    QLabel *label_2;
+    STimeLabel *label_2;
     QLabel *label;
     QTabWidget *tabWidget;
     QWidget *tab;
@@ -98,7 +99,7 @@ public:
 "	background-color: rgb(170, 85, 0);\n"
 "}\n"
 ""));
-        label_2 = new QLabel(frame_2);
+        label_2 = new STimeLabel(frame_2);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(330, 4, 151, 50));
         QFont font1;
@@ -252,7 +253,7 @@ public:
         frame_4->setFrameShadow(QFrame::Raised);
         label_8 = new QLabel(tab_2);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(170, 130, 391, 81));
+        label_8->setGeometry(QRect(290, 160, 181, 31));
         tabWidget->addTab(tab_2, QString());
         frame_4->raise();
         label_5->raise();
@@ -337,7 +338,7 @@ public:
         retranslateUi(StandardView);
         QObject::connect(pushButton, SIGNAL(clicked()), StandardView, SLOT(close()));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(StandardView);
@@ -347,12 +348,11 @@ public:
     {
         StandardView->setWindowTitle(QApplication::translate("StandardView", "Form", 0, QApplication::UnicodeUTF8));
         lineEdit->setProperty("text", QVariant(QString()));
-        label_2->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        label_2->setProperty("text", QVariant(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'AR JULIAN'; font-size:16pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MV BOLI'; font-size:10pt; font-weight:400;\">Sunday 30-09-12</span></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MV BOLI'; font-size:14pt;\">16:40</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'AR JULIAN'; font-size:16pt; font-weight:600;\"></p></body></html>", 0, QApplication::UnicodeUTF8)));
         label->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

@@ -261,11 +261,11 @@ p, li { white-space: pre-wrap; }
        <set>Qt::LinksAccessibleByMouse</set>
       </property>
      </widget>
-     <widget class="STimeLabel" name="label_2">
+     <widget class="STimeLabel" name="label_2" native="true">
       <property name="geometry">
        <rect>
         <x>310</x>
-        <y>10</y>
+        <y>4</y>
         <width>151</width>
         <height>51</height>
        </rect>
@@ -281,16 +281,14 @@ p, li { white-space: pre-wrap; }
       <property name="styleSheet">
        <string notr="true">#label_2
 {
-	;
 }</string>
       </property>
-      <property name="text">
+      <property name="text" stdset="0">
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'AR JULIAN'; font-size:16pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MV BOLI'; font-size:10pt; font-weight:400;&quot;&gt;Sunday 30-09-12&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MV BOLI'; font-size:14pt;&quot;&gt;16:40&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'AR JULIAN'; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>
@@ -350,6 +348,11 @@ p, li { white-space: pre-wrap; }
    <class>SLineEdit</class>
    <extends>QWidget</extends>
    <header>slineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>STimeLabel</class>
+   <extends>QWidget</extends>
+   <header>stimelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
