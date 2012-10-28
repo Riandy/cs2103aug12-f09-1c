@@ -133,6 +133,29 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
+string scheduler::getEventBasedOnTime(int hour, int min)
+{
+    string feedbackMessage;
+    tm eventStart;
+
+    vector<task> taskV=eventCalender.getToday();
+    for(vector<task>::iterator it = taskV.begin(); it!= taskV.end();++it)
+    {
+
+        eventStart= it->getStartDate();
+        if(hour==eventStart.tm_hour)
+        {
+            if(min==eventStart.tm_min)
+            {
+                feedbackMessage=feedbackMessage + it->getEventName() + "\n";
+            }
+        }
+
+    }
+
+    return "EVENT!!";
+}
+
 task scheduler::processAction(Action newAction)
 {
     taskVector.clear();

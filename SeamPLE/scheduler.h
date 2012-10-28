@@ -1,6 +1,7 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 #include "calender.h"
+#include <ctime>
 #include <sstream>
 #include "Action.h"
 
@@ -20,7 +21,7 @@ static string REDO_FAILURE = "There is nothing to redo";
 class scheduler
 {
 private:
-    static bool instanceFlag;
+
     static scheduler *_scheduler;
     scheduler();
     vector<string> _result;
@@ -32,10 +33,13 @@ private:
     string convertToDate(tm _date);
     task processAction(Action newAction);
 
+
 public:
+    static bool instanceFlag;
     static scheduler* getInstance();
     ~scheduler();
     vector<string> executeCommand(Action newaction);
+    string getEventBasedOnTime(int hour, int min);
 
 };
 
