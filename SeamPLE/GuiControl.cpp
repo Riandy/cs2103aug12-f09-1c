@@ -24,10 +24,7 @@ GuiControl::GuiControl()
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
     createSystemTrayIconIfPossible();
-
-
-    //timekeep.init(this->popUp);
-    //timekeep.start();
+    _timeControl.start();
 }
 
 GuiControl::~GuiControl()

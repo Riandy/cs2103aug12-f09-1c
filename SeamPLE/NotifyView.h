@@ -8,8 +8,8 @@ class NotifyView : public QObject
     Q_OBJECT
 
 private:
-    static NotifyView* notificationInterface;
-    QSystemTrayIcon* popUp;
+    static NotifyView* _notificationInterface;
+    QSystemTrayIcon* _popUp;
 
 private:
     NotifyView();

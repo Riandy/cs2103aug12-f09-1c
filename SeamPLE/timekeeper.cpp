@@ -3,42 +3,36 @@
 Timekeeper::Timekeeper()
 {
     _scheduler=scheduler::getInstance();
+    _popUp = _popUp->getInstance();
 
 }
 
-void Timekeeper::init(QSystemTrayIcon *_popUp)
+Timekeeper::~Timekeeper()
 {
-      popUp=_popUp;
+    _popUp->endInstance();
 }
 
 void Timekeeper::displayToTrayIcon(string message)
 {
-    if(message.empty())
-    {return;}
+    bool hasMessage = !(message.empty());
 
-    if (popUp != NULL)
+    if (_popUp != NULL && hasMessage)
     {
-        popUp->showMessage("SeamPLE",message.c_str(),QSystemTrayIcon::Information, 100000);
+        _popUp->showMessage("SeamPLE",message.c_str(),QSystemTrayIcon::Information);
     }
 }
 
 void Timekeeper::run()
 {
-    char buffer [80];
-
     while(true)
     {
-
         time_t t = time(0);
         struct tm * now = localtime( & t );
         if(_scheduler->instanceFlag)
         {
            displayToTrayIcon(_scheduler->getEventBasedOnTime(now->tm_hour,now->tm_min));
-
         }
-
         sleep(60000);
-
     }
 }
 
