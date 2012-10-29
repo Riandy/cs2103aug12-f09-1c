@@ -87,13 +87,37 @@ vector<string> scheduler::executeCommand(Action newAction)
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             if (taskVector.size() == 0) //if no match found
-                 _result.push_back(ERROR_NOT_FOUND);//is this correct?
+              {
+                //_result.push_back(ERROR_NOT_FOUND);//is this correct? which message is more appropriate in this case
+                                                    //and what else do u usually do?like the updategui and so on
+               }                                     //are there any message that u pass thru _results?
             else
             {//do the editing here
+                //since we assume match exactly only 1 match since we renamed automatically when adding
+                //so the results will be at position 0 isit?
+                //taskVector.at(0)
+
+                //Refactor this huge edit chunk as u like by implementing functions within scheduler
+                //since i wouldnt want to dabble too much in this class.
+                //general logic is as follows . If detect not empty => edit that field
+                if( difftime( mktime(&(taskVector[0].getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)// if it is not empty date
+                    taskVector[0].setStartDate(newTask.getStartDate());
+
+                if( difftime( mktime(&(taskVector[0].getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)// if it is not empty date
+                    taskVector[0].setEndDate(newTask.getEndDate());
+
+                if(taskVector[0].getPriority() != "LOW" )
+                     taskVector[0].setPriority(newTask.getPriority());
+
+                if(taskVector[0].getCategory() != "#" )
+                     taskVector[0].setCategory(newTask.getCategory());
+
+                //right now assume ID IS FIXED and unchanged
+                //end of parts that require serious refactoring
 
             }
         }
-        else
+        else//if not empty
             generalError();
 
     }
