@@ -2,7 +2,7 @@
 #include "GuiControl.h"
 #include "UnitTest.h"
 
-
+#include "timekeeper.h"
 
 
 int main(int argc, char *argv[])
@@ -14,21 +14,23 @@ int main(int argc, char *argv[])
         int retval(0);
 
         retval += QTest::qExec(&UnitTest(), argc, argv);
-                // Add more test like above here
+        // Add more test like above here
 
-       return (retval ? 1 : 0);
+        return (retval ? 1 : 0);
     }
     else
     {
-    QApplication a(argc, argv);
-    GuiControl* view = view->getInstance();
-    view->setStandardViewFlag(false);
-    view->showGui();
-    int retValue = a.exec();
-    view->endInstance();
+        QApplication a(argc, argv);
+        GuiControl* view = view->getInstance();
+        view->setStandardViewFlag(false);
+        view->showGui();
+        int retValue = a.exec();
+        view->endInstance();
 
-    return retValue;
+        return retValue;
     }
+
+
 }
 
 

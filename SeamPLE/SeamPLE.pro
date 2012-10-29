@@ -27,8 +27,9 @@ SOURCES += main.cpp\
     STimeLabel.cpp \
     UnitTest.cpp \
     TimeGetter.cpp \
-    ##timekeeper.cpp
-    NotifyView.cpp
+    NotifyView.cpp \
+    timekeeper.cpp \
+    ErrorLogger.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -47,8 +48,9 @@ HEADERS  += \
     STimeLabel.h \
     UnitTest.h \
     TimeGetter.h \
-    ##timekeeper.h
-    NotifyView.h
+    NotifyView.h \
+    ErrorLogger.h \
+    timekeeper.h
 
 FORMS    += \
     SeampleView.ui \

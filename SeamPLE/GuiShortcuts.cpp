@@ -73,11 +73,11 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
 
     _undo = new QAction(Gui);
     Gui->addAction(_undo);
-    _undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    _undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
 
     _redo = new QAction(Gui);
     Gui->addAction(_redo);
-    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
 
     _add = new QAction(Gui);
     Gui->addAction(_add);

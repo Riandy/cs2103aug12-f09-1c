@@ -1,24 +1,24 @@
 #include "NotifyView.h"
 
-NotifyView* NotifyView::notificationInterface = NULL;
+NotifyView* NotifyView::_notificationInterface = NULL;
 
 NotifyView::NotifyView()
 {
-    popUp = new QSystemTrayIcon();
-    popUp->setIcon(QIcon(QPixmap(":/bg/pin icon.gif")));
-    popUp->show();
+    _popUp = new QSystemTrayIcon();
+    _popUp->setIcon(QIcon(QPixmap(":/bg/pin icon.gif")));
+    _popUp->show();
 }
 
 NotifyView::~NotifyView()
 {
-    delete popUp;
+    delete _popUp;
 }
 
 bool NotifyView::singleInstanceExists()
 {
     bool result;
 
-    if (notificationInterface == NULL)
+    if (_notificationInterface == NULL)
     {
         result = false;
     }
@@ -34,18 +34,18 @@ NotifyView* NotifyView::getInstance()
 {
     if (!singleInstanceExists())
     {
-        notificationInterface = new NotifyView();
+        _notificationInterface = new NotifyView();
     }
 
-    return notificationInterface;
+    return _notificationInterface;
 }
 
 void NotifyView::endInstance()
 {
     if (singleInstanceExists())
     {
-        delete notificationInterface;
-        notificationInterface = NULL;
+        delete _notificationInterface;
+        _notificationInterface = NULL;
     }
 }
 
@@ -53,6 +53,6 @@ void NotifyView::showMessage(QString title, QString message, QSystemTrayIcon::Me
 {
     if (singleInstanceExists())
     {
-        popUp->showMessage(title, message, icon, 10000);
+        _popUp->showMessage(title, message, icon, 10000);
     }
 }

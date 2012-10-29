@@ -229,12 +229,12 @@ void StandardView::changeViewTriggered()
 
 void StandardView::undoTriggered()
 {
-    //emit run(GuiShortcuts::COMMAND_UNDO, ui->lineEdit->getFocusInput());
+    emit run(COMMAND_UNDO, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::redoTriggered()
 {
-    //emit run(GuiShortcuts::COMMAND_REDO, ui->lineEdit->getFocusInput());
+    emit run(COMMAND_REDO, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::addTriggered()

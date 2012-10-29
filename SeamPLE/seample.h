@@ -32,6 +32,8 @@ private:
     //to QVector of QString
     QVector <QString> convertQString (vector <string> buffer);
 
+    void setShortCutRequirementsMet(string);
+
 public:
     static Seample* getInstance();
     ~Seample();

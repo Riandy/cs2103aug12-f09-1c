@@ -112,12 +112,12 @@ void SeampleView::changeViewTriggered()
 
 void SeampleView::undoTriggered()
 {
-    //emit run(GuiShortcuts::COMMAND_UNDO, ui->lineEdit->getFocusInput());
+    emit run(COMMAND_UNDO, ui->lineEdit->getFocusInput());
 }
 
 void SeampleView::redoTriggered()
 {
-    //emit run(GuiShortcuts::COMMAND_REDO, ui->lineEdit->getFocusInput());
+    emit run(COMMAND_REDO, ui->lineEdit->getFocusInput());
 }
 
 void SeampleView::addTriggered()

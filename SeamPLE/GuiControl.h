@@ -5,7 +5,7 @@
 #include "SeampleView.h"
 #include "StandardView.h"
 #include "seample.h"
-//#include "timekeeper.h"
+#include "timekeeper.h"
 
 class GuiControl: public QObject
 {
@@ -88,7 +88,7 @@ private:
     //results back to be printed
     Seample *_inputProcessor;
 
-    //Timekeeper timekeep;
+    Timekeeper _timeControl;
 
     //GuiShortcuts _allShortcuts;
 

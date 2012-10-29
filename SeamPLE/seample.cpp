@@ -70,6 +70,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
 {
     userInput = _userInput;
     response = intellisense->check(userInput);
+    setShortCutRequirementsMet(_userInput);
     cout<<"Requirements met:"<<intellisense->getrequirementsMet()<<endl;
     if (runCommand && intellisense->getrequirementsMet())
         //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
@@ -132,4 +133,12 @@ QVector <QString> Seample::convertQString(vector <string> input)
     }
 
     return converted;
+}
+
+void Seample::setShortCutRequirementsMet(string command)
+{
+    if (command == "undo" || command == "redo" || command == "display")
+    {
+        intellisense->setRequirementsMet(true);
+    }
 }
