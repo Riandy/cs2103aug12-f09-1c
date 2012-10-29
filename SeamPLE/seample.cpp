@@ -88,7 +88,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
         {
             feedback.push_back("2");
         }
-        feedback.push_back(QString::fromStdString(intellisense->getFeedback()));
+
 
         DisplayEvent(response);
 
