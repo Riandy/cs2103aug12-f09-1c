@@ -127,13 +127,9 @@ vector<task> calender::SearchByPartialTask(string searchItem)
     for (int i = 0; i < int(_storage.size()); i++)
     {
         string  bufferString = _storage[i].getEventName();
-        string compareString;
         if(bufferString.length() >= searchItem.length()-1)//defensive programming
         {
-            compareString = (bufferString.substr(0, searchlength));
-            cout <<"COMparing " <<compareString<<" with "<< searchItemBuffer<<endl;
-            cout <<"COMparing length" <<compareString.length()<<" with "<< searchItemBuffer.length()<<endl;
-            cout <<"Result match:"<<(compareString == searchItemBuffer)<<endl;
+            string compareString = (bufferString.substr(0, searchItem.length()-1));
             if(compareString == searchItemBuffer) //match exactly
                     _bufferStorage.push_back(_storage[i]);
         }
