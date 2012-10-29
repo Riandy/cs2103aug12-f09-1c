@@ -19,9 +19,10 @@ public:
     static void sleep(unsigned long msecs);
     void displayToTrayIcon(string message);
 
-protected:
-
+protected slots:
     void run();
+
+protected:
     void showtime(string input);
 
 private:

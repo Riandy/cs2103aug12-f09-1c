@@ -32,7 +32,7 @@ void Timekeeper::run()
         {
            displayToTrayIcon(_scheduler->getEventBasedOnTime(now->tm_hour,now->tm_min));
         }
-        sleep(60000);
+        sleep(6000);
     }
 }
 
