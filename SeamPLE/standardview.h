@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QTableWidgetItem>
+#include <QTimer>
 #include "CommonView.h"
 
 namespace Ui {
@@ -47,6 +48,16 @@ public:
 
     void resetTableContents();
 
+    void showNoTableDisplay();
+
+    void showTodayEvents();
+
+    void show();
+
+    void hide();
+
+    bool interfaceCurrentlyChanging();
+
 signals:
     void relay(QString input);
 
@@ -79,8 +90,11 @@ private slots:
 
     void clearTriggered();
 
+    void fadeInChange();
 
-private:
+    void fadeOutChange();
+
+private:    
     bool singleInstanceExists();
 
     void addTableContent(TableListNode *curr);
@@ -91,7 +105,16 @@ private:
 
     int getPosY(int maxY);
 
+    void setTableParam();
+
     void setSignals();
+
+private:
+    double opacityLvl;
+
+    QTimer fadeInTimer;
+
+    QTimer fadeOutTimer;
 
     Ui::StandardView *ui;
 
