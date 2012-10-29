@@ -83,20 +83,32 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
     }
     else
     {
-
-            feedback.push_back(QString::fromStdString(intellisense->getParameter()));
-            if (intellisense->getrequirementsMet())
+            if( (response.getCommand()) != "EDIT" )//crude way to do it since i have no idea the format of display
             {
-                feedback.push_back("1");
-            }
-            else
-            {
-                feedback.push_back("2");
+                feedback.push_back(QString::fromStdString(intellisense->getParameter()));
+                if (intellisense->getrequirementsMet())
+                {
+                    feedback.push_back("1");
+                }
+                else
+                {
+                    feedback.push_back("2");
+                }
             }
             //added adhoc edit code
             if( (response.getCommand()) == "EDIT" )
             {
+                cout<<"running la"<<endl;
                 feedback += fireAction(); //append the results at the end
+                //crap
+                cout<<endl<<endl;
+                for(int t=0; t<feedback.size();t++)
+                cout<<(feedback.at(t)).toStdString()<<endl;
+                      //end crap
+            }
+            else
+            {
+                cout<<"This didnt RUN!!!!!"<<endl;
             }
 
             //end of adhoc edit code
@@ -115,7 +127,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
 QVector <QString> Seample::fireAction()
 {
     vector <string> result =_scheduler->executeCommand(response);
-cout<<"i am fin here"<<endl;
+//cout<<"i am fin here"<<endl;
     return convertQString(result);
 }
 
