@@ -1,22 +1,25 @@
-//#include "STimeLabel.h"
+#include "STimeLabel.h"
 
-//STimeLabel::STimeLabel(QWidget *parent, Qt::WindowFlags f):
-//    QLabel(parent, f)
-//{
-//    interval = new QTimer(this);
-//    connect(interval, SIGNAL(timeout()), this, SLOT(showTime()));
-//    interval->start(1000);
+STimeLabel::STimeLabel(QWidget *parent):
+    QLabel(parent)
+{
+    setAutoDateAndTimeDisplay();
+    this->setAlignment(Qt::AlignCenter);
+}
 
-//    showTime();
-//}
+STimeLabel::~STimeLabel()
+{
+    delete _interval;
+    _dateAndTime->endInstance();
+}
 
-//void STimeLabel::showTime()
-//{
-//    QDateTime currDateAndTime = QDateTime::currentDateTime();
-
-//    //QString = currDateAndTime.toString()
-//    //QString text = time.toString("hh:mm");
-//    //if ((time.second() % 2) == 0)
-//        //text[2] = ' ';
-//    //display(text);
-//}
+void STimeLabel::setAutoDateAndTimeDisplay()
+{
+    _dateAndTime = _dateAndTime->getInstance();
+    _interval = new QTimer(this);
+    _interval->singleShot(1,_dateAndTime, SLOT(getStringDateAndTime()));
+    connect(_interval, SIGNAL(timeout()), _dateAndTime, SLOT(getStringDateAndTime()));
+    connect(_dateAndTime, SIGNAL(relayStringDateAndTime(QString)), this, SLOT(setText(QString)));
+    _interval->setSingleShot(false);
+    _interval->start(1000);
+}

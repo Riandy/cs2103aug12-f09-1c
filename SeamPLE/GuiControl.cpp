@@ -24,26 +24,17 @@ GuiControl::GuiControl()
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
     createSystemTrayIconIfPossible();
-    //QVector <QString> events = getTodaysEvents();
-    //toShow(events);
-    timekeep.init(this->popUp);
-    timekeep.start();
+
+
+    //timekeep.init(this->popUp);
+    //timekeep.start();
 }
 
 GuiControl::~GuiControl()
 {
-    if (popUp != NULL)
-    {
-        delete popUp;
-    }
-    if (_seampleGui != NULL)
-    {
-        _seampleGui->endInstance();
-    }
-    if (_standardGui != NULL)
-    {
-        _standardGui->endInstance();
-    }
+    _seampleGui->endInstance();
+    _standardGui->endInstance();
+    _notifyInterface->endInstance();
 }
 
 GuiControl* GuiControl::getInstance()
@@ -161,6 +152,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             if (interfaceIsStandardView())
             {
                 _standardGui->resetTableContents();
+                _standardGui->showNoTableDisplay();
             }
 
             sendWithInputEditItem("",output[0]);
@@ -170,19 +162,22 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 
 void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHasFocus)
 {
-    setStandardViewFlag(!interfaceIsStandardView());
+    if (!(_standardGui->interfaceCurrentlyChanging()))
+    {
+        setStandardViewFlag(!interfaceIsStandardView());
 
-    if(interfaceIsStandardView())
-    {
-        _seampleGui->hide();
-        _standardGui->show();
-        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
-    }
-    else
-    {
-        _standardGui->hide();
-        _seampleGui->show();
-        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+        if(interfaceIsStandardView())
+        {
+            _seampleGui->hide();
+            _standardGui->show();
+            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+        }
+        else
+        {
+            _standardGui->hide();
+            _seampleGui->show();
+            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+        }
     }
 }
 
@@ -374,16 +369,10 @@ void GuiControl::setSeampleGuiSignals()
 
 void GuiControl:: createSystemTrayIconIfPossible()
 {
-    popUp = NULL;
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
-        popUp = new QSystemTrayIcon();
-        popUp->show();
-    }
-
-    if (popUp != NULL)
-    {
-        popUp->showMessage("SeamPLE","Welcome To Seample!!!",QSystemTrayIcon::Information, 10000);
+        _notifyInterface = _notifyInterface->getInstance();
+        _notifyInterface->showMessage("SeamPLE", "(>^.^)> MEOW <(^.^<)", QSystemTrayIcon::Information);
     }
 }
 
