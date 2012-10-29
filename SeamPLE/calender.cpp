@@ -119,7 +119,23 @@ vector<task> calender::SearchByTask(string searchItem)
 	}
 	return _bufferStorage;
 }
+//start of ad hoc edit code
+vector<task> calender::SearchByPartialTask(string searchItem)
+{
 
+    vector<task> _bufferStorage;
+    for (int i = 0; i < int(_storage.size()); i++)
+    {
+        string  bufferString = _storage[i].getEventName();
+        //str.find(str2)
+        if (bufferString.find(searchItem)!=string::npos)
+        {
+            _bufferStorage.push_back(_storage[i]);
+        }
+    }
+    return _bufferStorage;
+}
+//end of ad hoc edit code
 int calender::getTaskID(string searchItem)
 {
 	int taskID = NOTFOUND;
