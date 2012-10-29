@@ -76,22 +76,34 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
         //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
         //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
     {
+        //added adhoc edit code
+        if( (response.getCommand()) == "EDIT" )
+            response.setCommand("EDITENTER") ;
+        //end of adhoc edit code
         feedback = fireAction();
     }
     else
     {
-        feedback.push_back(QString::fromStdString(intellisense->getParameter()));
-        if (intellisense->getrequirementsMet())
-        {
-            feedback.push_back("1");
-        }
-        else
-        {
-            feedback.push_back("2");
-        }
-        feedback.push_back(QString::fromStdString(intellisense->getFeedback()));
 
-        DisplayEvent(response);
+            feedback.push_back(QString::fromStdString(intellisense->getParameter()));
+            if (intellisense->getrequirementsMet())
+            {
+                feedback.push_back("1");
+            }
+            else
+            {
+                feedback.push_back("2");
+            }
+            //added adhoc edit code
+            if( (response.getCommand()) == "EDIT" )
+            {
+                feedback += fireAction(); //append the results at the end
+            }
+
+            //end of adhoc edit code
+
+
+        DisplayEvent(response);//for debugging info only
 
     }
 

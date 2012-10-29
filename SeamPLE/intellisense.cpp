@@ -1129,11 +1129,11 @@ string Intellisense::getParameter()
     {
         if(statusFlags[IPRIORITY])
         {
-            _parameter =_parameter + "<font color=green>[IPRIORITY] </font>";
+            _parameter =_parameter + "<font color=green>[PRIORITY] </font>";
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[IPRIORITY] </font>";
+            _parameter =_parameter + "<font color=red>[PRIORITY] </font>";
         }
     }
 
@@ -1141,22 +1141,22 @@ string Intellisense::getParameter()
     {
         if(statusFlags[ICATEGORY])
         {
-            _parameter =_parameter + "<font color=green>[ICATEGORY] </font>";
+            _parameter =_parameter + "<font color=green>[CATEGORY] </font>";
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[ICATEGORY] </font>";
+            _parameter =_parameter + "<font color=red>[CATEGORY] </font>";
         }
     }
     if(isValidParaForCmd(currentCommand,IID))//
     {
         if(statusFlags[IID])
         {
-            _parameter =_parameter + "<font color=green>[IID] </font>";
+            _parameter =_parameter + "<font color=green>[ID] </font>";
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[IID] </font>";
+            _parameter =_parameter + "<font color=red>[ID] </font>";
         }
     }
     //this is for the example feedback string

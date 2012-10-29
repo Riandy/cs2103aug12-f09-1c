@@ -119,7 +119,29 @@ vector<task> calender::SearchByTask(string searchItem)
 	}
 	return _bufferStorage;
 }
-
+//start of ad hoc edit code
+vector<task> calender::SearchByPartialTask(string searchItem)
+{
+    int searchlength = searchItem.length()-1;
+    string searchItemBuffer = searchItem.substr(0,searchItem.length()-1);//remove the null charcter at the end of string
+    vector<task> _bufferStorage;
+    for (int i = 0; i < int(_storage.size()); i++)
+    {
+        string  bufferString = _storage[i].getEventName();
+        string compareString;
+        if(bufferString.length() >= searchlength)//defensive programming
+        {
+            compareString = (bufferString.substr(0, searchlength));
+            cout <<"COMparing " <<compareString<<" with "<< searchItemBuffer<<endl;
+            cout <<"COMparing length" <<compareString.length()<<" with "<< searchItemBuffer.length()<<endl;
+            cout <<"Result match:"<<(compareString == searchItemBuffer)<<endl;
+            if(compareString == searchItemBuffer) //match exactly
+                    _bufferStorage.push_back(_storage[i]);
+        }
+    }
+    return _bufferStorage;
+}
+//end of ad hoc edit code
 int calender::getTaskID(string searchItem)
 {
 	int taskID = NOTFOUND;

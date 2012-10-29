@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'standardview.ui'
+** Form generated from reading UI file 'StandardView.ui'
 **
-** Created: Sun Oct 28 15:38:25 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Tue 30. Oct 01:22:39 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -338,7 +338,7 @@ public:
         retranslateUi(StandardView);
         QObject::connect(pushButton, SIGNAL(clicked()), StandardView, SLOT(close()));
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(StandardView);
