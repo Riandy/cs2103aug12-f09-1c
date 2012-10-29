@@ -24,8 +24,8 @@ GuiControl::GuiControl()
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
     createSystemTrayIconIfPossible();
-    //QVector <QString> events = getTodaysEvents();
-    //toShow(events);
+
+
     //timekeep.init(this->popUp);
     //timekeep.start();
 }
