@@ -65,19 +65,39 @@ vector<string> scheduler::executeCommand(Action newAction)
             updateGUI(taskVector);
         }
     }
+//start of adhoc edit--------------------------------------------------------------------------------------------------------
     else if(command=="EDIT")
     {
         //not yet implemented
-        //start of adhoc edit
+
         if (newTask.getEventName()!="")
-        {//this suppose to return related task so those that does not match exactly also appear
-               // cout<<"WHY Dpesmt this work??"<<endl;
+        {
+                cout<<"Edit execution with normal keypress"<<endl;
                 taskVector = eventCalender.SearchByPartialTask(newTask.getEventName());
                 updateResultFound(taskVector.size());
                 updateGUI(taskVector);
         }
-        //end of adhoc edit
+        else
+            generalError();
+
     }
+    else if(command=="EDITENTER")
+    {
+        if (newTask.getEventName()!="")
+        {
+            taskVector = eventCalender.SearchByTask(newTask.getEventName());
+            if (taskVector.size() == 0) //if no match found
+                 _result.push_back(ERROR_NOT_FOUND);//is this correct?
+            else
+            {//do the editing here
+
+            }
+        }
+        else
+            generalError();
+
+    }
+//end of adhoc edit--------------------------------------------------------------------------------------------------------
     else if(command=="FIND")
     {
         //case 1: search by category
