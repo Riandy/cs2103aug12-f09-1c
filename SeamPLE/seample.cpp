@@ -85,7 +85,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
     else
     {
             if( (response.getCommand()) != "EDIT" )//crude way to do it since i have no idea the format of display
-            {
+            {// have to make this work with the below part together with teh table
                 feedback.push_back(QString::fromStdString(intellisense->getParameter()));
                 if (intellisense->getrequirementsMet())
                 {
