@@ -50,6 +50,8 @@ public:
 
     void showNoTableDisplay();
 
+    void showTodayEvents();
+
     void show();
 
     void hide();

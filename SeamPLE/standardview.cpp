@@ -171,6 +171,11 @@ void StandardView:: showNoTableDisplay()
     ui->label_8->setText(MESSAGE_NO_CURRENT_RESULTS);
 }
 
+//void StandardView:: showTodayEvents(QString events)
+//{
+
+//}
+
 void StandardView::show()
 {
     //Reset interface to original position
