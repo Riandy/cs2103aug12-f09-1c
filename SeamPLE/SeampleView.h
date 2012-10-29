@@ -1,0 +1,79 @@
+#ifndef SEAMPLEVIEW_H
+#define SEAMPLEVIEW_H
+
+#include "CommonView.h"
+
+namespace Ui {
+class SeampleView;
+}
+
+class SeampleView : public QMainWindow, public CommonView
+{
+    Q_OBJECT
+
+public:
+    static SeampleView* _seampleView;
+
+private:
+    explicit SeampleView(QWidget *parent = 0);
+    ~SeampleView();    
+
+public:
+    SeampleView* getInstance();
+
+    void endInstance();
+
+    void showFeedbackLabel(QString output);
+
+    void showFeedbackInputEdit(QString output);
+
+    void showFocusInInputEdit (bool focus);
+
+    void showAppropriateColorInputEdit (InputBarFlag color);
+
+signals:
+    void relay(QString input);
+
+    void run(QString input, bool focus);
+
+    void toStandardView(QString input, QString inputChecked, bool focus);
+
+private slots:
+    void recieve(QString input);
+
+    void enterTriggered();
+
+    void changeViewTriggered();
+
+    void undoTriggered();
+
+    void redoTriggered();
+
+    void addTriggered();
+
+    void findTriggered();
+
+    void displayTriggered();
+
+    void deleteTriggered();
+
+    void editTriggered();
+
+    void clearTriggered();
+
+private:
+    bool singleInstanceExists();
+
+    void changeGeometry();
+
+    int getPosX(int maxX);
+
+    int getPosY(int maxY);
+
+    void setSignals();
+
+    Ui::SeampleView *ui;
+
+};
+
+#endif // SEAMPLEVIEW_H
