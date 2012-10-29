@@ -32,7 +32,8 @@ enum operation{
     EDIT,
     INVALID,
     UNDO,
-    REDO
+    REDO,
+    EDITENTER
 };
 
 

@@ -68,6 +68,15 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if(command=="EDIT")
     {
         //not yet implemented
+        //start of adhoc edit
+        if (newTask.getEventName()!="")
+        {//this suppose to return related task so those that does not match exactly also appear
+                cout<<"WHY Dpesmt this work??"<<endl;
+                taskVector = eventCalender.SearchByPartialTask(newTask.getEventName());
+                updateResultFound(taskVector.size());
+                updateGUI(taskVector);
+        }
+        //end of adhoc edit
     }
     else if(command=="FIND")
     {
