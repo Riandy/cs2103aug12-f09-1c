@@ -48,6 +48,7 @@ void Timekeeper::run()
         if(_scheduler->instanceFlag)
         {
            tenMinutesLater(Hour,Min,now->tm_hour,now->tm_min);
+
            displayToTrayIcon(_scheduler->getEventBasedOnTime(Hour,Min));
         }
         }

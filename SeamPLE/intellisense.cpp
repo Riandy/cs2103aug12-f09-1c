@@ -783,6 +783,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
     Action task;
     task.setCommand(getCommand(tokens,"FIND"));
     task.setPriority(getPriority(tokens));
+    task.setCategory(getCategory(tokens));
     task.setStartDate(getDate(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
@@ -797,7 +798,9 @@ Action Intellisense::editOperation(vector<string>& tokens)
     Action task;
     task.setCommand(getCommand(tokens,"EDIT"));
     task.setPriority(getPriority(tokens));
+    task.setCategory(getCategory(tokens));
     task.setStartDate(getDate(tokens));
+    task.setDateType(getDateType(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkEditReq();

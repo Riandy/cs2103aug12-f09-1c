@@ -71,11 +71,11 @@ vector<string> scheduler::executeCommand(Action newAction)
             updateGUI(taskVector);
         }
     }
-//start of adhoc edit--------------------------------------------------------------------------------------------------------
-    else if(command=="EDIT")
-    {
-        //not yet implemented
 
+
+	else if(command=="EDIT")
+    {
+		// Edit Key press function to partially update GUI
         if (newTask.getEventName()!="")
         {
                 cout<<"Edit execution with normal keypress"<<endl;
@@ -85,49 +85,35 @@ vector<string> scheduler::executeCommand(Action newAction)
         }
         else
             generalError();
-
-    }
+	    }
     else if(command=="EDITENTER")
     {
+		// actual edit
         if (newTask.getEventName()!="")
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             if (taskVector.size() == 0) //if no match found
-              {
-                //_result.push_back(ERROR_NOT_FOUND);//is this correct? which message is more appropriate in this case
-                                                    //and what else do u usually do?like the updategui and so on
-               }                                     //are there any message that u pass thru _results?
-            else
-            {//do the editing here
-                //since we assume match exactly only 1 match since we renamed automatically when adding
-                //so the results will be at position 0 isit?
-                //taskVector.at(0)
+			{
+               _result.push_back(ERROR_NOT_FOUND);
+			}
+			else
+            {
+                 if(eventCalender.editTask(newTask))
+                   {
 
-                //Refactor this huge edit chunk as u like by implementing functions within scheduler
-                //since i wouldnt want to dabble too much in this class.
-                //general logic is as follows . If detect not empty => edit that field
-                if( difftime( mktime(&(taskVector[0].getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)// if it is not empty date
-                    taskVector[0].setStartDate(newTask.getStartDate());
+                  taskVector = eventCalender.displayDatabase();
+                  updateGUI(taskVector);
+                  }
 
-                if( difftime( mktime(&(taskVector[0].getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)// if it is not empty date
-                    taskVector[0].setEndDate(newTask.getEndDate());
 
-                if(taskVector[0].getPriority() != "LOW" )
-                     taskVector[0].setPriority(newTask.getPriority());
-
-                if(taskVector[0].getCategory() != "#" )
-                     taskVector[0].setCategory(newTask.getCategory());
-
-                //right now assume ID IS FIXED and unchanged
-                //end of parts that require serious refactoring
 
             }
         }
-        else//if not empty
+        else
             generalError();
 
     }
-//end of adhoc edit--------------------------------------------------------------------------------------------------------
+
     else if(command=="FIND")
     {
         //case 1: search by category
@@ -180,7 +166,7 @@ vector<string> scheduler::executeCommand(Action newAction)
             _result.push_back(REDO_FAILURE);
     }
 
-    else if (command == "TODAY") // CHECK THE COMMAND NAME SENT FROM ACTION
+    else if (command == "TODAY") 
     {
         taskVector = eventCalender.getToday();
         updateGUI(taskVector);
@@ -328,7 +314,7 @@ task scheduler::processAction(Action newAction)
     taskVector.clear();
     _result.clear();
 
-    //process the given information to task
+ 
     task newTask;
     newTask.setEventName(newAction.getEventName());
     newTask.setCategory(newAction.getCategory());
@@ -344,7 +330,7 @@ string scheduler::convertToDate(tm _date)
 {
     string _result;
     ostringstream convert;
-    convert<< _date.tm_yday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
     convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
     _result=convert.str();
     return _result;
@@ -367,11 +353,10 @@ void scheduler::updateGUI(vector<task> taskVector)
         string _startDate = convertToDate(taskVector[i].getStartDate());
         string _endDate = convertToDate(taskVector[i].getEndDate());
 
-        //use ostringstream to convert id to string
         ostringstream convert;
-        convert << taskVector.at(i).getID();
+       // convert << taskVector.at(i).getID(); // commented out as it pass incorrect id to gui
+        convert << i;//i added this as a temporary replacement for the id above,remove this when u updated ur code
         string id= convert.str();
-
         _result.push_back(id);
         _result.push_back(taskVector.at(i).getEventName());
         _result.push_back(_startDate);
