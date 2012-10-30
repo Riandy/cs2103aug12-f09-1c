@@ -192,6 +192,112 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
+int scheduler::daysMonth(int year, int month)
+{
+    int numberOfDays;
+    if (month == 4 || month == 6 || month == 9 || month == 11)
+      {numberOfDays = 30;}
+    else if (month == 2)
+    { bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+      if (isLeapYear)
+       { numberOfDays = 29;}
+      else
+       { numberOfDays = 28;}
+    }
+    else
+     { numberOfDays = 31;}
+
+    return numberOfDays;
+
+}
+
+void scheduler::updateWeeklyTask(tm &_date)
+{
+    int numberOfDays=daysMonth(_date.tm_year,_date.tm_mon);
+    _date.tm_mday+=7;
+    int difference = _date.tm_mday - numberOfDays;
+    if((difference)>0)
+{
+    _date.tm_mon+=1;
+    _date.tm_mday-=numberOfDays;
+
+}
+}
+
+void scheduler::updateFornightlyTask(tm &_date)
+{
+    int numberOfDays=daysMonth(_date.tm_year,_date.tm_mon);
+    _date.tm_mday+=14;
+    int difference = _date.tm_mday - numberOfDays;
+    if((difference)>0)
+{
+    _date.tm_mon+=1;
+    _date.tm_mday-=numberOfDays;
+
+}
+}
+
+void scheduler::updateMonthlyTask(tm &_date)
+{
+    _date.tm_mon += 1;
+    if(_date.tm_mon >12)
+    {
+        _date.tm_year += 1;
+        _date.tm_mon -= 12;
+    }
+
+}
+
+void scheduler::updateTask(task &_task)
+{
+    cout<<"**********start Date  before ********"<<endl;
+    cout<<"year : "<<_task.getStartDate().tm_year<<endl;
+    cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
+    cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
+    cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
+    cout<<"min : "<<_task.getStartDate().tm_min<<endl;
+    cout<<"dateType :"<<_task.getDateType()<<endl;
+
+    Action clone;                 //wenbin: this is illegal, i will do it properly in due time
+    clone.setCommand("DELETE");
+    clone.setEventName(_task.getEventName());
+    executeCommand(clone);
+    int dateType= _task.getDateType();
+    if(dateType == 0) //defensive coding/handling
+    {
+        return;
+    }
+    tm startdate=_task.getStartDate();
+    switch(dateType)
+    {
+    case 1:
+        updateWeeklyTask(startdate);
+        break;
+    case 2:
+        updateFornightlyTask(startdate);
+        break;
+    case 3:
+        updateMonthlyTask(startdate);
+        break;
+    default:break;
+    }
+    _task.setStartDate(startdate);
+    cout<<"**********start Date  after ********"<<endl;
+    cout<<"year : "<<_task.getStartDate().tm_year<<endl;
+    cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
+    cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
+    cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
+    cout<<"min : "<<_task.getStartDate().tm_min<<endl;
+    cout<<"dateType :"<<_task.getDateType()<<endl;
+
+    Action _clone;
+    task duplicate=_task;
+    _clone.setTask(duplicate);
+    _clone.setCommand("ADD");
+    executeCommand(_clone);
+
+}
+
 string scheduler::getEventBasedOnTime(int hour, int min)
 {
     std::stringstream feedbackMessage;
@@ -207,6 +313,7 @@ string scheduler::getEventBasedOnTime(int hour, int min)
             if(min==eventStart.tm_min)
             {
                 feedbackMessage<<it->getEventName()<<"\n";
+                updateTask(*it);
 
             }
         }

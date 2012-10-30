@@ -2,8 +2,8 @@
 
 const int  task::DATENORMAL         = 0;
 const int  task::DATEWEEKLY         = 1;
-const int task::DATEFORTNIGHTLY     = 2;
-const int task::DATEMONTHLY         = 3;
+const int  task::DATEFORTNIGHTLY     = 2;
+const int  task::DATEMONTHLY         = 3;
 
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked

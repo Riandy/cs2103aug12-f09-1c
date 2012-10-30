@@ -5,6 +5,7 @@
 #include <sstream>
 #include "Action.h"
 
+
 // Ensure that this error is synchronous with the errors sent from Intellisense.
 static string ERROR_NOT_FOUND = "Error - The item does not exist.";
 static string ERROR_INTELLISENSE_CHECK = "Error - The system failed to process your request. Please try again";
@@ -33,6 +34,11 @@ private:
     void generalError();
     string convertToDate(tm _date);
     task processAction(Action newAction);
+    void updateTask(task &_task);
+    void updateWeeklyTask(tm &_date);
+    void updateFornightlyTask(tm &_date);
+    void updateMonthlyTask(tm &_date);
+    int daysMonth(int year, int month);
 
 
 public:

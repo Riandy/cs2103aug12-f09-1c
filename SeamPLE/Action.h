@@ -26,6 +26,9 @@ public:
     Action(void);
     ~Action(void);
 
+    task getTask();
+    void setTask(task);
+
     string getCommand();
     void setCommand(string);
 

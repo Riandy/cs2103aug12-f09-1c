@@ -14,6 +14,15 @@ Action::~Action(void)
 }
 
 
+task Action::getTask()
+{
+    return _task;
+}
+
+void Action::setTask(task T)
+{
+    _task=T;
+}
 
 string Action::getEventName()
 {
