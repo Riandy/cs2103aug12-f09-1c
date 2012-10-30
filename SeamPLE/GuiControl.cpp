@@ -138,7 +138,14 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         int capacity = output.size();
         bool needStandardView = (capacity>1);
         _inputColorFlag = NONE;
-
+        //craptesting to b deleted
+        cout<<"CRAP MASTER"<<endl;
+        for(int o=0; o<output.size();o++)
+        {
+            cout<<output[o].toStdString()<<endl;
+        }
+        cout<<"TABLE BELOW LA"<<endl;
+        //craptesting to b deleted
         //Only commands to hold this should be find and search for now
         if (needStandardView)
         {
