@@ -154,6 +154,20 @@ vector<task> calender::SearchByTask(string searchItem)
 	return _bufferStorage;
 }
 //start of ad hoc edit code
+task* calender::PointerSearchByTask(string searchItem)// only return first match
+{// refactor this as u like to remove the dependency on pointer,because right now ,all the searches only return by value
+ // so i need a way to change the value of the search results in order to edit the values
+       task *match = NULL;
+       for (int i = 0; i < int(_storage.size()); i++)
+       {
+           string  bufferString = _storage[i].getEventName();
+           if (bufferString.find(searchItem,0)!=string::npos)
+           {
+               match = &(_storage[i]);//get address of that location
+           }//this part can add defensive programming and assertion,exception handling if detected more than 1 exact match
+       }
+       return match;
+}
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
     string searchItemBuffer = searchItem.substr(0,searchItem.length()-1);//remove the null charcter at the end of string
