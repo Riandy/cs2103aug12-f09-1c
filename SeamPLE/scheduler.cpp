@@ -71,7 +71,7 @@ vector<string> scheduler::executeCommand(Action newAction)
             updateGUI(taskVector);
         }
     }
-//start of adhoc edit--------------------------------------------------------------------------------------------------------
+
 
 	else if(command=="EDIT")
     {
@@ -93,36 +93,24 @@ vector<string> scheduler::executeCommand(Action newAction)
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             if (taskVector.size() == 0) //if no match found
-			    {
-                _result.push_back(ERROR_NOT_FOUND);
-				}
+			{
+               _result.push_back(ERROR_NOT_FOUND);
+			}
 			else
             {
 			  if(eventCalender.editTask(taskVector[0], newTask))
-				  _result.push_back(EDIT_SUCCESS);
-			    taskVector = eventCalender.displayDatabase();
-			      updateGUI(taskVector);
-				// HAVE TO PUSH THIS INTO CALENDER CLASS, SO THAT WE CAN DO REDO AND UNDO FOR EDIT.
-               /*
-			   if( difftime( mktime(&(taskVector[0].getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
-                    taskVector[0].setStartDate(newTask.getStartDate());
-
-                if( difftime( mktime(&(taskVector[0].getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)
-                    taskVector[0].setEndDate(newTask.getEndDate());
-
-                if(taskVector[0].getPriority() != "LOW" )
-                     taskVector[0].setPriority(newTask.getPriority());
-
-                if(taskVector[0].getCategory() != "#" )
-                     taskVector[0].setCategory(newTask.getCategory());
-				 */
-            }
+			 {
+				_result.push_back(EDIT_SUCCESS);
+				taskVector = eventCalender.displayDatabase();
+				updateGUI(taskVector);
+			  }
+			}
         }
         else
             generalError();
 
     }
-//end of adhoc edit--------------------------------------------------------------------------------------------------------
+
     else if(command=="FIND")
     {
         //case 1: search by category
@@ -175,7 +163,7 @@ vector<string> scheduler::executeCommand(Action newAction)
             _result.push_back(REDO_FAILURE);
     }
 
-    else if (command == "TODAY") // CHECK THE COMMAND NAME SENT FROM ACTION
+    else if (command == "TODAY") 
     {
         taskVector = eventCalender.getToday();
         updateGUI(taskVector);
@@ -216,7 +204,7 @@ task scheduler::processAction(Action newAction)
     taskVector.clear();
     _result.clear();
 
-    //process the given information to task
+ 
     task newTask;
     newTask.setEventName(newAction.getEventName());
     newTask.setCategory(newAction.getCategory());
@@ -255,7 +243,6 @@ void scheduler::updateGUI(vector<task> taskVector)
         string _startDate = convertToDate(taskVector[i].getStartDate());
         string _endDate = convertToDate(taskVector[i].getEndDate());
 
-        //use ostringstream to convert id to string
         ostringstream convert;
         convert << taskVector.at(i).getID();
         string id= convert.str();
