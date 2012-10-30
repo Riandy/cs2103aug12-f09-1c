@@ -98,12 +98,16 @@ vector<string> scheduler::executeCommand(Action newAction)
 			}
 			else
             {
-              if(eventCalender.editTask(newTask))
-			 {
-				_result.push_back(EDIT_SUCCESS);
-              taskVector = eventCalender.displayDatabase();
-              updateGUI(taskVector);
-			}
+                 if(eventCalender.editTask(newTask))
+                   {
+
+                  taskVector = eventCalender.displayDatabase();
+                  updateGUI(taskVector);
+                  }
+
+
+
+            }
         }
         else
             generalError();

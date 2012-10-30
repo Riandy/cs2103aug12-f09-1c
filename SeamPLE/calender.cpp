@@ -119,9 +119,12 @@ bool calender::checkID(int taskID)
 
 bool calender::editTask( task _edited)
 {
+    task* taskMatch = pointerSearchByTask( _edited.getEventName());
+    task _original = *taskMatch;
     saveHistory(_EDIT);
+    saveOriginalEdits(_original);
+    saveNewEdits(_edited);
 
-        task* taskMatch = pointerSearchByTask( _edited.getEventName());
      if (taskMatch == NULL)// no match found
          return false;
       else
