@@ -72,10 +72,10 @@ vector<string> scheduler::executeCommand(Action newAction)
         }
     }
 //start of adhoc edit--------------------------------------------------------------------------------------------------------
-    else if(command=="EDIT")
-    {
-        //not yet implemented
 
+	else if(command=="EDIT")
+    {
+		// Edit Key press function to partially update GUI
         if (newTask.getEventName()!="")
         {
                 cout<<"Edit execution with normal keypress"<<endl;
@@ -85,31 +85,29 @@ vector<string> scheduler::executeCommand(Action newAction)
         }
         else
             generalError();
-
-    }
+	    }
     else if(command=="EDITENTER")
     {
+		// actual edit
         if (newTask.getEventName()!="")
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             if (taskVector.size() == 0) //if no match found
-              {
-                //_result.push_back(ERROR_NOT_FOUND);//is this correct? which message is more appropriate in this case
-                                                    //and what else do u usually do?like the updategui and so on
-               }                                     //are there any message that u pass thru _results?
-            else
-            {//do the editing here
-                //since we assume match exactly only 1 match since we renamed automatically when adding
-                //so the results will be at position 0 isit?
-                //taskVector.at(0)
-
-                //Refactor this huge edit chunk as u like by implementing functions within scheduler
-                //since i wouldnt want to dabble too much in this class.
-                //general logic is as follows . If detect not empty => edit that field
-                if( difftime( mktime(&(taskVector[0].getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)// if it is not empty date
+			    {
+                _result.push_back(ERROR_NOT_FOUND);
+				}
+			else
+            {
+			  if(eventCalender.editTask(taskVector[0], newTask))
+				  _result.push_back(EDIT_SUCCESS);
+			    taskVector = eventCalender.displayDatabase();
+			      updateGUI(taskVector);
+				// HAVE TO PUSH THIS INTO CALENDER CLASS, SO THAT WE CAN DO REDO AND UNDO FOR EDIT.
+               /*
+			   if( difftime( mktime(&(taskVector[0].getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
                     taskVector[0].setStartDate(newTask.getStartDate());
 
-                if( difftime( mktime(&(taskVector[0].getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)// if it is not empty date
+                if( difftime( mktime(&(taskVector[0].getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)
                     taskVector[0].setEndDate(newTask.getEndDate());
 
                 if(taskVector[0].getPriority() != "LOW" )
@@ -117,13 +115,10 @@ vector<string> scheduler::executeCommand(Action newAction)
 
                 if(taskVector[0].getCategory() != "#" )
                      taskVector[0].setCategory(newTask.getCategory());
-
-                //right now assume ID IS FIXED and unchanged
-                //end of parts that require serious refactoring
-
+				 */
             }
         }
-        else//if not empty
+        else
             generalError();
 
     }
