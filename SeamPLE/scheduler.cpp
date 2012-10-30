@@ -33,13 +33,19 @@ vector<string> scheduler::executeCommand(Action newAction)
     //process and package the action into task
     task newTask=processAction(newAction);
 
+
     if(command=="ADD")
     {
-        eventCalender.addItem(newTask);
-        _result.push_back(ADD_SUCCESS);
-        taskVector = eventCalender.displayDatabase();
-        updateGUI(taskVector);
-    }
+       if( eventCalender.addItem(newTask))
+	   {
+			_result.push_back(ADD_SUCCESS);
+			taskVector = eventCalender.displayDatabase();
+			updateGUI(taskVector);
+	   }
+	   else
+			_result.push_back(ADD_FAILURE);
+	}
+
     else if(command=="DELETE")
     {
         //delete by ID
