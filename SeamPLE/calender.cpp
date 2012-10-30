@@ -120,6 +120,13 @@ bool calender::checkID(int taskID)
 bool calender::editTask(task _original, task _edited)
 {
     saveHistory(_EDIT);
+	saveOriginalEdits(_original);
+	saveNewEdits(_edited);
+
+
+	// Riandy, do you think it is possible to refactor the below code? I can only think of
+	// removing function calls in function calls, eg this(that(those())).
+
 		   if( difftime( mktime(&(_edited.getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
                     _original.setStartDate(_edited.getStartDate());
 
@@ -166,7 +173,7 @@ vector<task> calender::SearchByTask(string searchItem)
 	}
 	return _bufferStorage;
 }
-//start of ad hoc edit code
+
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
     string searchItemBuffer = searchItem.substr(0,searchItem.length()-1);//remove the null charcter at the end of string
@@ -209,9 +216,7 @@ vector<task> calender::displayDatabase()
 
 bool calender::loadFile()
 {
-	//@Riandy
-	//clear all the content of the storage before loading the new one from
-	//storage textfile
+
 	_storage.clear();
 	
 	ifstream readFile("storage.txt");
@@ -225,10 +230,8 @@ bool calender::loadFile()
 	while(readFile>>temp)
 	{
 	
-	
-		//read the semicolon
+
 		readFile>>temp;
-		//read the space
 		readFile.get(space);
 		getline(readFile,description);
 		
@@ -287,7 +290,7 @@ bool calender::loadFile()
 	return true;
 }
 
-// Allow 3 undo, allow one redo. 
+
 bool calender::undoAction()
 { 
 	if (_history.size() == 0)
@@ -311,6 +314,19 @@ bool calender::undoAction()
 			_storage.push_back(tempTask);
 			_deleteHistory.pop();
 		}
+		else if (lastCommand == _EDIT)
+		{
+			_redoCommands.push(_EDIT);
+			task tempTask = _newEdits.top();
+			int position = findVectorPosition(tempTask);
+			if (position != NOTFOUND) // defensive programming
+			{
+			_storage[position] = _originalEdits.top();
+			swapTops(tempTask);
+			}
+			else if (position == NOTFOUND)
+				return false;
+		}
 	}
 		_history.pop();
 		writeFile();
@@ -327,26 +343,58 @@ bool calender::redoAction()
 		{
 		task lastUndo = _redoHistory.top();
 		_storage.push_back(lastUndo);
-        saveHistory(_ADDITION);
-		_redoCommands.pop();
+        saveHistory(_ADDITION);		
 		_redoHistory.pop();
 
 		}
         else if (_redoCommands.top() == _DELETE)
 		{
 			int taskID = _storage.size();
-			
 			saveDelete(taskID-1);
 			_storage.erase(_storage.begin()+taskID-1);
-	
             saveHistory(_DELETE);
-			_redoCommands.pop();
-			
+		
 		}
+		else if (_redoCommands.top() == _EDIT)
+		{
+			task tempTask = _newEdits.top();
+			int position = findVectorPosition(tempTask);
+			if (position != NOTFOUND) // defensive programming
+			{
+			_storage[position] = _originalEdits.top();
+			swapTops(tempTask);
+			saveHistory(_EDIT);
+			}
+			else if (position == NOTFOUND)
+				return false;
+		}
+		_redoCommands.pop();
 		writeFile();
 
 	}
 	return true;
+}
+
+void calender::swapTops(task bufferTask)
+{
+	_newEdits.pop();
+	_newEdits.push(_originalEdits.top());
+	_originalEdits.pop();
+	_originalEdits.push(bufferTask);
+
+}
+int calender::findVectorPosition(task _thisTask)
+{
+	int position = 1;
+	for (int i = 0; i < _storage.size(); i++)
+	{
+		if (_thisTask.getEventName() == _storage[position].getEventName())
+			return position;
+		else
+			position++;
+	}
+
+	return NOTFOUND; //DEFENSIVE PROGRAMMING
 }
 
 vector<task> calender::SearchByDate(string todayDate)
@@ -390,7 +438,6 @@ void calender::saveDelete(int taskID)
 	if (_deleteHistory.size() < 3)
 	_deleteHistory.push(temp);
 
-	// Following ensures the stack size remains <= 3
 	else if (_deleteHistory.size() == 3)
 	{
 		stack<task> tempStack;
@@ -432,6 +479,50 @@ void calender::saveHistory(string command)
 
 	}
 
+}
 
 
+void calender::saveOriginalEdits(task _oldTask)
+{
+	if (_originalEdits.size() < 3)
+		_originalEdits.push(_oldTask);
+	else if (_originalEdits.size() == 3)
+	{
+		stack<task> tempStack;
+		while (_originalEdits.size() != 1)
+		{
+			tempStack.push(_originalEdits.top());
+			_originalEdits.pop();
+		}
+		_originalEdits.pop();
+		while(_originalEdits.size() != 2)
+		{
+			_originalEdits.push(tempStack.top());
+			tempStack.pop();
+		}
+		_originalEdits.push(_oldTask);
+	}
+
+}
+
+void calender::saveNewEdits(task _newTask)
+{
+		if (_newEdits.size() < 3)
+		_originalEdits.push(_newTask);
+	else if (_newEdits.size() == 3)
+	{
+		stack<task> tempStack;
+		while (_newEdits.size() != 1)
+		{
+			tempStack.push(_newEdits.top());
+			_newEdits.pop();
+		}
+		_newEdits.pop();
+		while(_newEdits.size() != 2)
+		{
+			_newEdits.push(tempStack.top());
+			tempStack.pop();
+		}
+		_newEdits.push(_newTask);
+	}
 }
