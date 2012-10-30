@@ -230,7 +230,7 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 
 int Intellisense::getID(vector<string>& tokens)
 {
-    if(tokens.size()==0 || isAllInt(tokens.front())== false)
+    if(tokens.size()==0 || isAllInt(tokens.front())== false || tokens.size()>2)
     {
         return -1;
     }
