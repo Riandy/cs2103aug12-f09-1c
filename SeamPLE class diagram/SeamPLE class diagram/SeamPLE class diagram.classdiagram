@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="51678f84-76bb-485f-ae5d-2de8a36d94a7" name="UMLClassDiagram1" linkedPackageId="d3a7ce82-cc88-440b-96a3-cc360495fd0d" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="f6024462-5191-48ce-bf59-ddbc599b0314">
+      <elementDefinition Id="549e5247-97aa-4f8d-8a89-f1d6f2eb41fe" />
+      <body>S_Date,E_Date format: DDMMYYYY
+</body>
+    </comment>
+    <comment Id="d859bebe-a26a-4b17-ae68-01847e228d6b">
+      <elementDefinition Id="16ab641f-e96b-4513-8c4c-f02d49b3e8a1" />
+      <body>enum Command
+{  Add,
+    Delete,
+};</body>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d592c84b-21ff-4625-a403-8ae4472d987e" name="Event" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8418ddc4-fa13-4c6c-9ba3-e4d7deba9daa" />
+        <ownedAttributesInternal>
+          <property Id="2703a94c-73ad-4cfc-be0a-dfe30d44a095" name="String Name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="2b0c843d-5a1d-42d4-976d-5756b2de5dd3" />
+          </property>
+          <property Id="b4fd8564-049d-4b33-abb1-f65ce9396657" name="int S_Date" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="8bcdf15a-cd92-49af-996e-0a040b0f0341" />
+          </property>
+          <property Id="b6db13ef-bf57-4b2c-b94d-57c484ecd2ba" name="int E_Date" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="344ae740-b0fc-4b6c-854a-4377ea7571e0" />
+          </property>
+          <property Id="1438a416-9863-4cab-bc88-db3ab528124c" name="bool Priority" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="340a0e73-13c3-40bf-b49d-ac9dc71ba0d8" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="5dcb5506-dfd0-47e3-88ed-4fd9196c2443" name="Action" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c22e9788-d969-43e8-b326-3ad749ef2011" />
+        <ownedAttributesInternal>
+          <property Id="98664348-5984-45ff-9a02-26fe11931447" name="Event _event" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="1e1dd5d1-c7cd-4844-8056-84ca677bc4f6" />
+          </property>
+          <property Id="72720645-c40a-4e51-a87d-8bc0e1b461e4" name="Enum Command" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="714fa195-fcda-4409-a598-7b4b743bd1f1" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="312c0c85-0d51-4149-a417-9ab582c4ca30" name="Scheduler" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a422c26d-b282-461e-991d-be1ddca5e40e" />
+        <ownedAttributesInternal>
+          <property Id="c5740e95-4956-4682-b796-fab14f391e68" name="Action _action" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="9a99613c-2f6b-4a4b-af47-456555997c61" />
+          </property>
+          <property Id="65a2f175-ffef-494a-acf6-fed34fb9e30b" name="Vector&lt;Events&gt; memoryBuffer" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="418eb518-7f30-4502-974e-95ae2a99d1a7" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="7aea89e1-43f6-457a-a7ca-fa6140ffc3e2" name="bool Execute" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="196a400e-c30e-4a21-94c6-eec6172fb886" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ed5ccfe7-6c66-4d52-a020-81b64ea3b451" name="Event _event" direction="In" isUnique="false">
+                  <elementDefinition Id="a4c52077-c427-4537-985b-a6a97684872e" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="1767bdba-e0af-4b16-80c8-c587bebffa7b" name="bool Delete" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f4daf330-0d09-4765-bc3e-e95220e43da5" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="187bead9-c0e4-473f-8ad5-46aa407be736" name="string eventName" direction="In" isUnique="false">
+                  <elementDefinition Id="f2dac158-3181-4e68-8b9a-ced14da12ee8" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="5764ac75-7336-4bbe-b64f-7879b70600a2" name="bool Add" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d64c743e-b4ea-4b54-b236-750cdbb132f2" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5e9ee6af-fe6b-4f16-b7a0-f7bfb4018df1" name="string EventName" direction="In" isUnique="false">
+                  <elementDefinition Id="a07c3a9b-62a6-4949-9832-977fa3fa8e12" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="70a765cd-8765-4590-aed6-be54be4c63a1" name="int S_Date" direction="In" isUnique="false">
+                  <elementDefinition Id="536bc40a-baad-4656-8a62-06a02c0cdcbb" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="99a3d2c3-3921-4d70-ba2f-9d5dbfff8af3" name="int E_Date" direction="In" isUnique="false">
+                  <elementDefinition Id="2d08590c-ac26-4ae6-a63b-e3e5f1ff8ef8" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="415e8a02-414a-4e5f-96e1-f780a0985296" name="GUI" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3af6bcf4-e6f9-4fde-a9f3-55099a9b8527" />
+        <ownedAttributesInternal>
+          <property Id="5e2fee28-88b5-423a-9ad5-5e585e98fe4a" name="string userInput" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="84230d42-b385-4fa3-a438-08c8ba7805a5" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="3109b6f1-b014-4b0b-b188-1f038065d157" name="void InputSuggestion" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f20610dd-a32a-4f89-8b44-400c9ee9f2d1" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8eb0825a-f175-46b2-bca5-3ae234fb71de" name="string suggested" direction="In" isUnique="false">
+                  <elementDefinition Id="e173e8f7-87e4-4938-824c-2ee36dcfc37a" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="34a492d9-f4c7-4310-8af1-3b21dea04c4d" name="SeamPLE Main" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c8c8c46c-6a52-4b2d-b94d-c77edb7fd405" />
+        <ownedAttributesInternal>
+          <property Id="db22a58d-e76e-4270-83df-2e672670bb9f" name="Action _action" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="280d52c8-977e-492f-9d18-bbafdfb1bc88" />
+          </property>
+          <property Id="9436872f-6e28-4fc0-84d5-4952f294d42e" name="Scheduler _scheduler" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="de57c713-0a36-4ff4-9273-897ba1737d3b" />
+          </property>
+          <property Id="6cb48bde-1e53-4895-b14b-6cf57f14d02e" name="Intellisense _intelllisense" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="01a254f6-09ca-4c04-86bb-1a11c204b539" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="af447306-61f8-412c-b0f7-4d70cbae4a4d" name="Intellisense" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8fe4d25b-e651-4161-877e-d675cf961b22" />
+        <ownedOperationsInternal>
+          <operation Id="069f4be9-1ade-4153-9f67-9167932cbce0" name="string Check" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d1467ad1-08bf-4477-9a1e-b6438fc93206" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="148c52d0-3f43-47d5-91d9-7858af7d0caa" name="string userInput" direction="In" isUnique="false">
+                  <elementDefinition Id="f0dee3fc-f717-4b02-b583-1fccc1cecf67" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="d3a7ce82-cc88-440b-96a3-cc360495fd0d" name="SeamPLE class diagram">
+    <elementDefinition Id="003f7aa5-4e27-4ae1-bcec-cf9d2060ce38" />
+    <profileInstances>
+      <packageHasProfileInstances Id="14d05ebc-b8ef-42e0-8679-67c6660d1eea">
+        <profileInstance Id="383b1edc-23ec-47f7-8c99-5e50d28db4c6" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="3b03dd5b-fb9a-42b3-84ed-08c3753db510">
+        <profileInstance Id="6cd09b7b-3a82-453e-b43f-dcf1d71b1035" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>
