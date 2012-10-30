@@ -35,28 +35,35 @@ bool calender::addItem(task currentTask)
         return false;
 }
 
-string calender::ensureUniqueName(string _name)
-{
-	if (!checkNameExists(_name))
-		return _name;
-	else 
-	{
-		int collisionNumber = 1;
-		ostringstream tempString;
-		while (checkNameExists(_name))
-		{
-			tempString.clear();
-			tempString<<_name;
-			tempString<<"[";
-			tempString<<collisionNumber;
-			tempString<<"]";
-			_name = tempString.str();
-			collisionNumber++;
-		}
-		return _name;
-	}
 
-}
+string calender::ensureUniqueName(string _name)
+ {
+    if (!checkNameExists(_name))
+        return _name;
+    else
+    {
+        int collisionNumber = 1;
+        string _originalName = _name;
+
+        while (checkNameExists(_name))
+        {
+            ostringstream tempString;
+
+            tempString.str("");
+            tempString.clear();
+            tempString<<_originalName;
+            tempString<<"[";
+            tempString<<collisionNumber;
+            tempString<<"]";
+            _name = tempString.str();
+            collisionNumber++;
+        }
+
+        return _name;
+    }
+
+ }
+
 
 bool calender::checkNameExists(string _name) 
 {
