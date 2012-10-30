@@ -49,7 +49,7 @@ public:
     bool deleteItem(int taskID);
     bool deleteItem(string eventName);
     bool checkID(int id);
-    bool editTask(task edited);
+    bool editTask(task _original, task _edited);
     bool undoAction();
     bool redoAction();
     vector<task> SearchByCat(string searchItem);
