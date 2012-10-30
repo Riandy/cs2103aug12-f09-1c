@@ -247,9 +247,9 @@ void scheduler::updateGUI(vector<task> taskVector)
         string _endDate = convertToDate(taskVector[i].getEndDate());
 
         ostringstream convert;
-        convert << taskVector.at(i).getID();
+       // convert << taskVector.at(i).getID(); // commented out as it pass incorrect id to gui
+        convert << i;//i added this as a temporary replacement for the id above,remove this when u updated ur code
         string id= convert.str();
-
         _result.push_back(id);
         _result.push_back(taskVector.at(i).getEventName());
         _result.push_back(_startDate);

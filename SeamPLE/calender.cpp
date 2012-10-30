@@ -188,10 +188,11 @@ task* calender::pointerSearchByTask(string searchItem)// only return first match
            string  bufferString = _storage[i].getEventName();
            if (bufferString.find(searchItem,0)!=string::npos)
            {
-               match = &(_storage[i]);//get address of that location
+                   return&(_storage[i]);
            }//this part can add defensive programming and assertion,exception handling if detected more than 1 exact match
        }
        return match;
+
 }
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
