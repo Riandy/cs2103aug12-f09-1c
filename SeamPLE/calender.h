@@ -60,6 +60,11 @@ public:
     vector<task> getToday();
 	int getTaskID(string searchItem);
 
+    //added for adhoc edit function
+    task *PointerSearchByTask(string searchItem);// only return first match
+    //end of adhoc edit function
+
+
     //implement the convert to date
     string convertToDate(tm _date);
 
