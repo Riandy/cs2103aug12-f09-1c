@@ -117,9 +117,22 @@ bool calender::checkID(int taskID)
 }
 
 
-bool calender::editTask(task edited)
+bool calender::editTask(task _original, task _edited)
 {
     saveHistory(_EDIT);
+		   if( difftime( mktime(&(_edited.getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
+                    _original.setStartDate(_edited.getStartDate());
+
+           if( difftime( mktime(&(_edited.getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)
+                   _original.setEndDate(_edited.getEndDate());
+
+            if(_edited.getPriority() != "LOW" )
+                     _original.setPriority(_edited.getPriority());
+
+            if(_edited.getCategory() != "#" )
+                    _original.setCategory(_edited.getCategory());
+
+
 return true;
 }
 
