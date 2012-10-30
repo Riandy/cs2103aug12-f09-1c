@@ -98,24 +98,10 @@ vector<string> scheduler::executeCommand(Action newAction)
 				}
 			else
             {
-			  if(eventCalender.editTask(taskVector[0], newTask))
+              if(eventCalender.editTask(newTask))
 				  _result.push_back(EDIT_SUCCESS);
-			    taskVector = eventCalender.displayDatabase();
-			      updateGUI(taskVector);
-				// HAVE TO PUSH THIS INTO CALENDER CLASS, SO THAT WE CAN DO REDO AND UNDO FOR EDIT.
-               /*
-			   if( difftime( mktime(&(taskVector[0].getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
-                    taskVector[0].setStartDate(newTask.getStartDate());
-
-                if( difftime( mktime(&(taskVector[0].getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)
-                    taskVector[0].setEndDate(newTask.getEndDate());
-
-                if(taskVector[0].getPriority() != "LOW" )
-                     taskVector[0].setPriority(newTask.getPriority());
-
-                if(taskVector[0].getCategory() != "#" )
-                     taskVector[0].setCategory(newTask.getCategory());
-				 */
+              taskVector = eventCalender.displayDatabase();
+              updateGUI(taskVector);
             }
         }
         else

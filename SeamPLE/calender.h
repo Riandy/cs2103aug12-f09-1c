@@ -49,12 +49,13 @@ public:
     bool deleteItem(int taskID);
     bool deleteItem(string eventName);
     bool checkID(int id);
-    bool editTask(task _original, task _edited);
+    bool editTask(task _edited);
     bool undoAction();
     bool redoAction();
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
     vector<task> SearchByPartialTask(string searchItem);
+    task* pointerSearchByTask(string searchItem);
     vector<task> SearchByDate(string todayDate);
     vector<task> displayDatabase();
     vector<task> getToday();

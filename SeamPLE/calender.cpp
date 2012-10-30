@@ -117,23 +117,29 @@ bool calender::checkID(int taskID)
 }
 
 
-bool calender::editTask(task _original, task _edited)
+bool calender::editTask( task _edited)
 {
     saveHistory(_EDIT);
+
+        task* taskMatch = pointerSearchByTask( _edited.getEventName());
+     if (taskMatch == NULL)// no match found
+         return false;
+      else
+      {
 		   if( difftime( mktime(&(_edited.getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
-                    _original.setStartDate(_edited.getStartDate());
+                    taskMatch->setStartDate(_edited.getStartDate());
 
            if( difftime( mktime(&(_edited.getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)
-                   _original.setEndDate(_edited.getEndDate());
+                   taskMatch->setEndDate(_edited.getEndDate());
 
             if(_edited.getPriority() != "LOW" )
-                     _original.setPriority(_edited.getPriority());
+                     taskMatch->setPriority(_edited.getPriority());
 
             if(_edited.getCategory() != "#" )
-                    _original.setCategory(_edited.getCategory());
+                    taskMatch->setCategory(_edited.getCategory());
 
-
-return true;
+    }
+    return true;
 }
 
 vector<task> calender::SearchByCat(string searchItem)
@@ -167,6 +173,21 @@ vector<task> calender::SearchByTask(string searchItem)
 	return _bufferStorage;
 }
 //start of ad hoc edit code
+
+task* calender::pointerSearchByTask(string searchItem)// only return first match
+{// refactor this as u like to remove the dependency on pointer,because right now ,all the searches only return by value
+ // so i need a way to change the value of the search results in order to edit the values
+       task *match = NULL;
+       for (int i = 0; i < int(_storage.size()); i++)
+       {
+           string  bufferString = _storage[i].getEventName();
+           if (bufferString.find(searchItem,0)!=string::npos)
+           {
+               match = &(_storage[i]);//get address of that location
+           }//this part can add defensive programming and assertion,exception handling if detected more than 1 exact match
+       }
+       return match;
+}
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
     string searchItemBuffer = searchItem.substr(0,searchItem.length()-1);//remove the null charcter at the end of string
