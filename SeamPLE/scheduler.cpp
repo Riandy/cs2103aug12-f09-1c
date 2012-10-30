@@ -100,9 +100,9 @@ vector<string> scheduler::executeCommand(Action newAction)
             {
                  if(eventCalender.editTask(newTask))
                    {
-
-                  taskVector = eventCalender.displayDatabase();
-                  updateGUI(taskVector);
+                    taskVector = eventCalender.displayDatabase();
+                   _result.push_back(EDIT_SUCCESS);
+                    updateGUI(taskVector);
                   }
 
 
