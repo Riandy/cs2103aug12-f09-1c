@@ -24,13 +24,47 @@ string calender::convertToDate(tm _date)
 bool calender::addItem(task currentTask)
 {
     saveHistory(_ADDITION);
+	string _currentName = currentTask.getEventName();
+	string _uniqueName = ensureUniqueName(_currentName);
+	currentTask.setEventName(_uniqueName);
 	_storage.push_back(currentTask);
-
-
     if(writeFile())
         return true;
     else
         return false;
+}
+
+string calender::ensureUniqueName(string _name)
+{
+	if (!checkNameExists(_name))
+		return _name;
+	else 
+	{
+		int collisionNumber = 1;
+		ostringstream tempString;
+		while (checkNameExists(_name))
+		{
+			tempString.clear();
+			tempString<<_name;
+			tempString<<"[";
+			tempString<<collisionNumber;
+			tempString<<"]";
+			_name = tempString.str();
+			collisionNumber++;
+		}
+		return _name;
+	}
+
+}
+
+bool calender::checkNameExists(string _name) 
+{
+	for (int i = 0; i < _storage.size(); i++)
+	{
+		if (_name == _storage[i].getEventName())
+			return true;
+	}
+	return false;
 }
 
 

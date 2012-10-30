@@ -26,18 +26,20 @@ private:
 
 
     vector<task> _storage;
-    bool writeFile();
-    bool loadFile();
+
     stack<string> _history;
     stack <task> _deleteHistory;
     stack <task> _editHistory;
-    // for redo bro.
     stack<task> _redoHistory;
 	stack<string> _redoCommands;
-
+	bool checkNameExists(string _name);
     void saveDelete(int taskID);
+	string ensureUniqueName(string _name);
     void saveEdit();
     void saveHistory(string command);
+	bool writeFile();
+    bool loadFile();
+
 public:
 
     calender();
