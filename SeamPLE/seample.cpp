@@ -93,26 +93,26 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
                 }
                 else
                 {
-                    feedback.push_back("2");
+                    feedback.push_back("2");//red
                 }
             }
-            //added adhoc edit code
+//----------------------------------startof adhoc edit code------------------------------------------------------------------
             if( (response.getCommand()) == "EDIT" )
             {
                 cout<<"running la"<<endl;
                 feedback += fireAction(); //append the results at the end
-                //crap
-                cout<<endl<<endl;
-                for(int t=0; t<feedback.size();t++)
-                cout<<(feedback.at(t)).toStdString()<<endl;
-                      //end crap
+
             }
             else
             {
                 cout<<"This didnt RUN!!!!!"<<endl;
             }
-
-            //end of adhoc edit code
+            //crap
+            cout<<endl<<endl;
+            for(int t=0; t<feedback.size();t++)
+            cout<<(feedback.at(t)).toStdString()<<endl;
+                  //end crap
+//--------------------end of adhoc edit code------------------------------------------------------------------
 
 
         DisplayEvent(response);//for debugging info only

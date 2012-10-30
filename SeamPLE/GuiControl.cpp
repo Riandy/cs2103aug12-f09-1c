@@ -86,7 +86,7 @@ void GuiControl::check(QString input)
         bool command = false;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
 
-        bool invalidSchedulerReturn = (output.size() < 2);
+        bool invalidSchedulerReturn = (output.size() < 2);//upgrade this check if possible
 
         if (invalidSchedulerReturn)
         {
@@ -101,14 +101,22 @@ void GuiControl::check(QString input)
                 {
                     output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
                 }
-                //added start of ad hoc edit code
-                if(1)//if is edit, no idea how to detect at this level no way i think
+//----------------------------------startof adhoc edit code------------------------------------------------------------------
+                if(output.size() > 2)//if is edit,
+                    //no idea how to detect at this level no way i think
+                    //unless a flag is used, right now the since ouput[0] is the parameter and the feedback message
+                    //output[1]  is the color flag for the text box
+                    //output[2 and onwards] should be the table results. is this case so i did the check above
+                    //this check should be improved upon to cover this
                 {
+                    if (!interfaceIsStandardView())
+                    {
+                        changeView(input,output[0], true);
+                    }
                     int capacity = output.size();
-                    bool needStandardView = (capacity>1);
-                     _standardGui->showTableResults(output.mid(1,capacity - 1));
+                    _standardGui->showTableResults(output.mid(1,capacity - 1));
                 }
-                //end of AD hoc edit code
+//----------------------------------end of adhoc edit code------------------------------------------------------------------
         }
         send(output[0]);
     }
@@ -130,7 +138,14 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         int capacity = output.size();
         bool needStandardView = (capacity>1);
         _inputColorFlag = NONE;
-
+        //craptesting to b deleted
+        cout<<"CRAP MASTER"<<endl;
+        for(int o=0; o<output.size();o++)
+        {
+            cout<<output[o].toStdString()<<endl;
+        }
+        cout<<"TABLE BELOW LA"<<endl;
+        //craptesting to b deleted
         //Only commands to hold this should be find and search for now
         if (needStandardView)
         {

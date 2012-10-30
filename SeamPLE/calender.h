@@ -29,17 +29,20 @@ private:
 
     stack<string> _history;
     stack <task> _deleteHistory;
-    stack <task> _editHistory;
+    stack <task> _originalEdits;
+	stack <task> _newEdits;
     stack<task> _redoHistory;
 	stack<string> _redoCommands;
 	bool checkNameExists(string _name);
     void saveDelete(int taskID);
 	string ensureUniqueName(string _name);
-    void saveEdit();
     void saveHistory(string command);
 	bool writeFile();
     bool loadFile();
-
+	void saveOriginalEdits(task _oldtask);
+	void saveNewEdits(task _newtask);
+	int findVectorPosition(task _thisTask);
+	void swapTops(task bufferTask);
 public:
 
     calender();
@@ -49,12 +52,13 @@ public:
     bool deleteItem(int taskID);
     bool deleteItem(string eventName);
     bool checkID(int id);
-    bool editTask(task edited);
+    bool editTask(task _edited);
     bool undoAction();
     bool redoAction();
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
     vector<task> SearchByPartialTask(string searchItem);
+    task* pointerSearchByTask(string searchItem);
     vector<task> SearchByDate(string todayDate);
     vector<task> displayDatabase();
     vector<task> getToday();
