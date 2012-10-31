@@ -72,6 +72,39 @@ private:
     const static string WEEKLY;
     const static string MONTHLY;
     const static string FORTNIGHTLY;
+
+    const static string ADDFEEDBACK_1;
+    const static string ADDFEEDBACK_2;
+    const static string EDITFEEDBACK_1;
+    const static string EDITFEEDBACK_2;
+    const static string DELFEEDBACK_1;
+    const static string DELFEEDBACK_2;
+    const static string EXITFEEDBACK_1;
+    const static string DISPLAYFEEDBACK_1;
+    const static string DISPLAYFEEDBACK_2;
+    const static string FINDFEEDBACK_1;
+    const static string FINDFEEDBACK_2;
+    const static string SORTFEEDBACK_1;
+    const static string SORTFEEDBACK_2;
+    const static string REDOFEEDBACK_1;
+    const static string UNDOFEEDBACK_1;
+    const static string MARKFEEDBACK_1;
+    const static string MARKFEEDBACK_2;
+
+    const static string GREENEVENTTEXT;
+    const static string GREENSTARTDATETEXT;
+    const static string GREENENDDATETEXT;
+    const static string GREENPRIORITYTEXT;
+    const static string GREENCATEGORYTEXT;
+    const static string GREENIDTEXT;
+
+    const static string REDEVENTTEXT;
+    const static string REDSTARTDATETEXT;
+    const static string REDENDDATETEXT;
+    const static string REDPRIORITYTEXT;
+    const static string REDCATEGORYTEXT;
+    const static string REDIDTEXT;
+    const static char CATEGORYRECOGNISER;
         //end of added array support for commands
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
@@ -139,6 +172,21 @@ public:
     void checkEditReq();
     void checkExitReq();
     void initFlags();
+
+
+
+    string getAddFeedBack();
+    string getEditFeedBack();
+    string getDeleteFeedBack();
+    string getExitFeedBack();
+    string getDisplayFeedBack();
+    string getFindFeedBack();
+    string getSortFeedBack();
+    string getRedoFeedBack();
+    string getUndoFeedBack();
+    string getMarkFeedBack();
+
+
 
     bool isValidParaForCmd(int,int);
     void smartAutoFill(Action &task);
