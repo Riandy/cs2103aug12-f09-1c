@@ -32,9 +32,9 @@ vector<string> scheduler::executeCommand(Action newAction)
     string command=newAction.getCommand();
     ASSERT(command!="","Command is NULL");
     /*defensive coding*/
-    //convert everything to upper case
+    //convert command to upper case to ensure that it is not case sensitive
     transform(command.begin(), command.end(),command.begin(), ::toupper);
-
+    command="TODAY";
     //process and package the action into task
     task newTask=processAction(newAction);
 
@@ -105,9 +105,6 @@ vector<string> scheduler::executeCommand(Action newAction)
                    _result.push_back(EDIT_SUCCESS);
                     updateGUI(taskVector);
                   }
-
-
-
             }
         }
         else
@@ -346,7 +343,6 @@ void scheduler::generalError()
 void scheduler::updateGUI(vector<task> taskVector)
 {
     int vectorSize = taskVector.size();
-
     for (int i = 0; i < vectorSize; i++)
 
     {
@@ -366,6 +362,7 @@ void scheduler::updateGUI(vector<task> taskVector)
         _result.push_back(taskVector.at(i).getCategory());
 
     }
+        cout<<"Size of vector :"<<_result.size()<<endl;
 }
 
 void scheduler::updateResultFound(int size)
