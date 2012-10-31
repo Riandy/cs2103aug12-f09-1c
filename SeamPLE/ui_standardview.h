@@ -1,7 +1,7 @@
 /********************************************************************************
-** Form generated from reading UI file 'StandardView.ui'
+** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Tue 30. Oct 01:22:39 2012
+** Created: Thu Nov 1 00:22:45 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -18,10 +18,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
-#include <QtGui/QTabWidget>
-#include <QtGui/QTableWidget>
 #include <QtGui/QWidget>
-#include "sframe.h"
 #include "slineedit.h"
 #include "stimelabel.h"
 
@@ -30,22 +27,37 @@ QT_BEGIN_NAMESPACE
 class Ui_StandardView
 {
 public:
-    Sframe *frame;
+    QFrame *frame;
     QFrame *line;
     QFrame *frame_2;
     SLineEdit *lineEdit;
     STimeLabel *label_2;
     QLabel *label;
-    QTabWidget *tabWidget;
-    QWidget *tab;
     QFrame *frame_3;
-    QLabel *label_7;
-    QWidget *tab_2;
     QLabel *label_5;
     QLabel *label_6;
-    QTableWidget *tableWidget;
     QFrame *frame_4;
+    QLabel *label_7;
+    QLabel *label_10;
+    QLabel *label_14;
+    QLabel *label_11;
+    QLabel *label_26;
+    QLabel *label_17;
+    QLabel *label_19;
+    QLabel *label_21;
+    QLabel *label_20;
+    QLabel *label_22;
+    QLabel *label_23;
     QLabel *label_8;
+    QLabel *label_24;
+    QLabel *label_18;
+    QLabel *label_16;
+    QLabel *label_9;
+    QLabel *label_13;
+    QLabel *label_12;
+    QLabel *label_15;
+    QLabel *label_25;
+    QLabel *label_27;
     QLabel *label_4;
     QLabel *label_3;
     QPushButton *pushButton_2;
@@ -59,9 +71,9 @@ public:
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
         StandardView->setWindowIcon(icon);
-        frame = new Sframe(StandardView);
+        frame = new QFrame(StandardView);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(10, 10, 811, 601));
+        frame->setGeometry(QRect(10, 10, 811, 641));
         frame->setStyleSheet(QString::fromUtf8("#frame\n"
 "{\n"
 "	background-image: url(:/bg/scenary.jpg);\n"
@@ -80,7 +92,7 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         frame_2 = new QFrame(frame);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        frame_2->setGeometry(QRect(0, 40, 811, 561));
+        frame_2->setGeometry(QRect(0, 40, 811, 601));
         lineEdit = new SLineEdit(frame_2);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(50, 60, 701, 31));
@@ -125,141 +137,192 @@ public:
 "}"));
         label->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-        tabWidget = new QTabWidget(frame_2);
-        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(40, 150, 731, 381));
-        tabWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
-        tabWidget->setStyleSheet(QString::fromUtf8("QTabBar::tab:first {\n"
-"background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(255, 111, 111, 255), stop:0.369318 rgba(225, 0, 0, 255), stop:0.636364 rgba(255, 0, 0, 255), stop:0.977273 rgba(255, 95, 95, 255));\n"
-"\n"
-"border: 4px; \n"
-"border-color: rgb(152, 0, 0);\n"
-"border-style:outset;  \n"
-"border-top-left-radius: 30px;\n"
-"border-top-right-radius: 10px;\n"
-"min-width: 364px;\n"
-"min-height: 30px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:first:selected, QTabBar::tab:first:hover {\n"
-"	background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(255, 104, 104, 255), stop:0.369318 rgba(225, 22, 22, 255), stop:0.636364 rgba(255, 23, 23, 255), stop:0.977273 rgba(255, 99, 99, 255));\n"
-"}\n"
-"\n"
-"QTabBar::tab:last {\n"
-"	\n"
-"	background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(109, 191, 64, 255), stop:0.369318 rgba(15, 155, 13, 255), stop:0.636364 rgba(12, 151, 22, 255), stop:0.977273 rgba(104, 192, 57, 255))"
-                        ";\n"
-"border: 4px; \n"
-"border-color:  rgb(0, 85, 0);\n"
-"border-style:outset;  \n"
-"border-top-left-radius: 30px;\n"
-"border-top-right-radius: 10px;\n"
-"min-width: 364px;\n"
-"min-height: 30px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:last:selected, QTabBar::tab:last:hover {\n"
-"	background-color: qlineargradient(spread:pad, x1:0.528, y1:1, x2:0.534091, y2:0, stop:0 rgba(132, 191, 100, 255), stop:0.369318 rgba(32, 155, 30, 255), stop:0.636364 rgba(34, 151, 42, 255), stop:0.977273 rgba(137, 192, 107, 255));\n"
-"}\n"
-"\n"
-"QTabBar::tab:!selected {\n"
-"margin-top: 10px; /* make non-selected tabs look smaller */\n"
-"}\n"
-"QTabBar::tab:first:selected {\n"
-"margin-left: 0px; \n"
-"margin-right: -15px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:last:selected {\n"
-"margin-left: -15px; \n"
-"margin-right: 0px;\n"
-"}\n"
-"\n"
-"QTabBar::tab:only-one {\n"
-"margin: 0; /* if there is only one tab, we don't want overlapping margins */\n"
-"}"));
-        tabWidget->setIconSize(QSize(16, 17));
-        tabWidget->setUsesScrollButtons(false);
-        tabWidget->setDocumentMode(true);
-        tab = new QWidget();
-        tab->setObjectName(QString::fromUtf8("tab"));
-        frame_3 = new QFrame(tab);
+        frame_3 = new QFrame(frame_2);
         frame_3->setObjectName(QString::fromUtf8("frame_3"));
-        frame_3->setGeometry(QRect(0, 0, 728, 331));
+        frame_3->setGeometry(QRect(40, 140, 731, 421));
         frame_3->setStyleSheet(QString::fromUtf8("#frame_3\n"
 "{\n"
-"	background-color: rgb(255, 170, 0);\n"
-"	 border-style: ridge;\n"
-"     border-width: 4px;\n"
-"     border-color:  rgb(255, 0, 0);\n"
+"	\n"
+"	background-image: url(:/bg/Background.gif);\n"
+"\n"
+"\n"
 "}"));
         frame_3->setFrameShape(QFrame::StyledPanel);
         frame_3->setFrameShadow(QFrame::Raised);
-        label_7 = new QLabel(frame_3);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
-        label_7->setGeometry(QRect(190, 120, 391, 81));
-        tabWidget->addTab(tab, QString());
-        tab_2 = new QWidget();
-        tab_2->setObjectName(QString::fromUtf8("tab_2"));
-        label_5 = new QLabel(tab_2);
+        label_5 = new QLabel(frame_3);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(5, 1, 41, 21));
+        label_5->setGeometry(QRect(230, 17, 231, 42));
         QFont font3;
-        font3.setFamily(QString::fromUtf8("Palatino Linotype"));
-        font3.setPointSize(12);
+        font3.setFamily(QString::fromUtf8("Levenim MT"));
         label_5->setFont(font3);
-        label_6 = new QLabel(tab_2);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(319, 1, 111, 21));
-        QFont font4;
-        font4.setFamily(QString::fromUtf8("Palatino Linotype"));
-        font4.setPointSize(14);
-        label_6->setFont(font4);
-        tableWidget = new QTableWidget(tab_2);
-        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(3, 30, 721, 297));
-        tableWidget->setStyleSheet(QString::fromUtf8("#tableWidget\n"
+        label_5->setStyleSheet(QString::fromUtf8("#label_5\n"
 "{\n"
 "	\n"
-"	\n"
-"	background-color: rgb(222, 255, 190);\n"
+"	background-image: url(:/bg/Results Slip.gif);\n"
+"\n"
 "\n"
 "}"));
-        tableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-        tableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        tableWidget->setProperty("showDropIndicator", QVariant(false));
-        tableWidget->setDragDropOverwriteMode(false);
-        tableWidget->setSelectionMode(QAbstractItemView::NoSelection);
-        tableWidget->setCornerButtonEnabled(false);
-        tableWidget->setRowCount(0);
-        tableWidget->setColumnCount(0);
-        tableWidget->horizontalHeader()->setVisible(false);
-        tableWidget->horizontalHeader()->setDefaultSectionSize(350);
-        tableWidget->horizontalHeader()->setMinimumSectionSize(50);
-        tableWidget->verticalHeader()->setVisible(false);
-        tableWidget->verticalHeader()->setDefaultSectionSize(25);
-        frame_4 = new QFrame(tab_2);
+        label_6 = new QLabel(frame_3);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setGeometry(QRect(30, 17, 61, 42));
+        QFont font4;
+        font4.setFamily(QString::fromUtf8("Levenim MT"));
+        font4.setPointSize(16);
+        label_6->setFont(font4);
+        label_6->setStyleSheet(QString::fromUtf8("#label_6\n"
+"{\n"
+"	background-image: url(:/bg/SN Slip.gif);\n"
+"\n"
+"\n"
+"}"));
+        frame_4 = new QFrame(frame_3);
         frame_4->setObjectName(QString::fromUtf8("frame_4"));
-        frame_4->setGeometry(QRect(0, 0, 728, 331));
+        frame_4->setGeometry(QRect(28, 73, 681, 271));
         frame_4->setStyleSheet(QString::fromUtf8("#frame_4\n"
 "{\n"
-"	background-color: rgb(170, 255, 127);\n"
-"	 border-style: ridge;\n"
-"     border-width: 4px;\n"
-"     border-color: rgb(170, 170, 0);\n"
+"	\n"
+"	background-image: url(:/bg/Note layout.gif);\n"
 "}"));
         frame_4->setFrameShape(QFrame::StyledPanel);
         frame_4->setFrameShadow(QFrame::Raised);
-        label_8 = new QLabel(tab_2);
+        label_7 = new QLabel(frame_4);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setGeometry(QRect(59, 0, 601, 29));
+        label_7->setStyleSheet(QString::fromUtf8(""));
+        label_10 = new QLabel(frame_4);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setGeometry(QRect(59, 79, 601, 29));
+        label_10->setStyleSheet(QString::fromUtf8(""));
+        label_14 = new QLabel(frame_4);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+        label_14->setGeometry(QRect(59, 187, 601, 29));
+        label_14->setStyleSheet(QString::fromUtf8(""));
+        label_11 = new QLabel(frame_4);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setGeometry(QRect(59, 106, 601, 29));
+        label_11->setStyleSheet(QString::fromUtf8(""));
+        label_26 = new QLabel(frame_4);
+        label_26->setObjectName(QString::fromUtf8("label_26"));
+        label_26->setGeometry(QRect(-1, 241, 48, 29));
+        label_26->setStyleSheet(QString::fromUtf8(""));
+        label_26->setAlignment(Qt::AlignCenter);
+        label_17 = new QLabel(frame_4);
+        label_17->setObjectName(QString::fromUtf8("label_17"));
+        label_17->setGeometry(QRect(0, 0, 48, 29));
+        label_17->setStyleSheet(QString::fromUtf8(""));
+        label_17->setAlignment(Qt::AlignCenter);
+        label_19 = new QLabel(frame_4);
+        label_19->setObjectName(QString::fromUtf8("label_19"));
+        label_19->setGeometry(QRect(0, 53, 48, 29));
+        label_19->setStyleSheet(QString::fromUtf8(""));
+        label_19->setAlignment(Qt::AlignCenter);
+        label_21 = new QLabel(frame_4);
+        label_21->setObjectName(QString::fromUtf8("label_21"));
+        label_21->setGeometry(QRect(0, 106, 48, 29));
+        label_21->setStyleSheet(QString::fromUtf8(""));
+        label_21->setAlignment(Qt::AlignCenter);
+        label_20 = new QLabel(frame_4);
+        label_20->setObjectName(QString::fromUtf8("label_20"));
+        label_20->setGeometry(QRect(0, 79, 48, 29));
+        label_20->setStyleSheet(QString::fromUtf8(""));
+        label_20->setAlignment(Qt::AlignCenter);
+        label_22 = new QLabel(frame_4);
+        label_22->setObjectName(QString::fromUtf8("label_22"));
+        label_22->setGeometry(QRect(0, 133, 48, 29));
+        label_22->setStyleSheet(QString::fromUtf8(""));
+        label_22->setAlignment(Qt::AlignCenter);
+        label_23 = new QLabel(frame_4);
+        label_23->setObjectName(QString::fromUtf8("label_23"));
+        label_23->setGeometry(QRect(0, 160, 48, 29));
+        label_23->setStyleSheet(QString::fromUtf8(""));
+        label_23->setAlignment(Qt::AlignCenter);
+        label_8 = new QLabel(frame_4);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(290, 160, 181, 31));
-        tabWidget->addTab(tab_2, QString());
-        frame_4->raise();
-        label_5->raise();
-        label_6->raise();
-        tableWidget->raise();
+        label_8->setGeometry(QRect(59, 27, 601, 29));
+        label_8->setStyleSheet(QString::fromUtf8(""));
+        label_24 = new QLabel(frame_4);
+        label_24->setObjectName(QString::fromUtf8("label_24"));
+        label_24->setGeometry(QRect(0, 187, 48, 29));
+        label_24->setStyleSheet(QString::fromUtf8(""));
+        label_24->setAlignment(Qt::AlignCenter);
+        label_18 = new QLabel(frame_4);
+        label_18->setObjectName(QString::fromUtf8("label_18"));
+        label_18->setGeometry(QRect(0, 27, 48, 29));
+        label_18->setStyleSheet(QString::fromUtf8(""));
+        label_18->setAlignment(Qt::AlignCenter);
+        label_16 = new QLabel(frame_4);
+        label_16->setObjectName(QString::fromUtf8("label_16"));
+        label_16->setGeometry(QRect(59, 241, 601, 29));
+        label_16->setStyleSheet(QString::fromUtf8(""));
+        label_9 = new QLabel(frame_4);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setGeometry(QRect(59, 53, 601, 29));
+        label_9->setStyleSheet(QString::fromUtf8(""));
+        label_13 = new QLabel(frame_4);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+        label_13->setGeometry(QRect(59, 160, 601, 29));
+        label_13->setStyleSheet(QString::fromUtf8(""));
+        label_12 = new QLabel(frame_4);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(59, 133, 601, 29));
+        label_12->setStyleSheet(QString::fromUtf8(""));
+        label_15 = new QLabel(frame_4);
+        label_15->setObjectName(QString::fromUtf8("label_15"));
+        label_15->setGeometry(QRect(59, 214, 601, 29));
+        label_15->setStyleSheet(QString::fromUtf8(""));
+        label_25 = new QLabel(frame_4);
+        label_25->setObjectName(QString::fromUtf8("label_25"));
+        label_25->setGeometry(QRect(0, 214, 48, 29));
+        label_25->setStyleSheet(QString::fromUtf8(""));
+        label_25->setAlignment(Qt::AlignCenter);
+        label_7->raise();
+        label_10->raise();
+        label_14->raise();
+        label_11->raise();
+        label_26->raise();
+        label_17->raise();
+        label_19->raise();
+        label_21->raise();
+        label_20->raise();
+        label_22->raise();
+        label_23->raise();
         label_8->raise();
+        label_24->raise();
+        label_18->raise();
+        label_16->raise();
+        label_9->raise();
+        label_13->raise();
+        label_12->raise();
+        label_15->raise();
+        label_25->raise();
+        label_7->raise();
+        label_10->raise();
+        label_14->raise();
+        label_11->raise();
+        label_26->raise();
+        label_17->raise();
+        label_19->raise();
+        label_21->raise();
+        label_20->raise();
+        label_22->raise();
+        label_23->raise();
+        label_8->raise();
+        label_24->raise();
+        label_18->raise();
+        label_16->raise();
+        label_9->raise();
+        label_13->raise();
+        label_12->raise();
+        label_15->raise();
+        label_25->raise();
+        label_27 = new QLabel(frame_3);
+        label_27->setObjectName(QString::fromUtf8("label_27"));
+        label_27->setGeometry(QRect(540, 20, 171, 42));
+        label_27->setStyleSheet(QString::fromUtf8("#label_27\n"
+"{\n"
+"	background-image: url(:/bg/Torn for num.gif);\n"
+"}"));
+        label_27->setAlignment(Qt::AlignCenter);
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(-10, -4, 821, 51));
@@ -338,9 +401,6 @@ public:
         retranslateUi(StandardView);
         QObject::connect(pushButton, SIGNAL(clicked()), StandardView, SLOT(close()));
 
-        tabWidget->setCurrentIndex(0);
-
-
         QMetaObject::connectSlotsByName(StandardView);
     } // setupUi
 
@@ -358,29 +418,37 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MV Boli'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffaa00;\">Available Commands: add, delete, mark, unmark, edit and find</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        label_7->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600; color:#555500;\">Our greatest glory is not in never falling,</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600; color:#555500;\"> but in getting up every time we do.</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("StandardView", "Event for the day", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Palatino Linotype'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt; font-weight:600; color:#aa0000;\">S/N</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"</style></head><body style=\" font-family:'Levenim MT'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:16pt; font-weight:600; color:#aa0000;\">RESULTS</span></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_6->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Palatino Linotype'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#aa0000;\">RESULTS</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        label_8->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("StandardView", "Command Results", 0, QApplication::UnicodeUTF8));
+"</style></head><body style=\" font-family:'Levenim MT'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#aa0000;\">S/N</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QString());
+        label_10->setText(QString());
+        label_14->setText(QString());
+        label_11->setText(QString());
+        label_26->setText(QString());
+        label_17->setText(QString());
+        label_19->setText(QString());
+        label_21->setText(QString());
+        label_20->setText(QString());
+        label_22->setText(QString());
+        label_23->setText(QString());
+        label_8->setText(QString());
+        label_24->setText(QString());
+        label_18->setText(QString());
+        label_16->setText(QString());
+        label_9->setText(QString());
+        label_13->setText(QString());
+        label_12->setText(QString());
+        label_15->setText(QString());
+        label_25->setText(QString());
+        label_27->setText(QString());
         label_4->setText(QString());
         label_3->setText(QString());
         pushButton_2->setText(QString());

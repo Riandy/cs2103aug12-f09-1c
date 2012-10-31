@@ -101,14 +101,13 @@ void GuiControl::check(QString input)
                 {
                     output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
                 }
-                //added start of ad hoc edit code
-                if(1)//if is edit, no idea how to detect at this level no way i think
-                {
-                    int capacity = output.size();
-                    bool needStandardView = (capacity>1);
-                     _standardGui->showTableResults(output.mid(1,capacity - 1));
-                }
-                //end of AD hoc edit code
+//                //added start of ad hoc edit code
+//                if(1)//if is edit, no idea how to detect at this level no way i think
+//                {
+//                    int capacity = output.size();
+//                     _standardGui->showTableResults(output.mid(1,capacity - 1));
+//                }
+//                //end of AD hoc edit code
         }
         send(output[0]);
     }
@@ -158,7 +157,6 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             if (interfaceIsStandardView())
             {
                 _standardGui->resetTableContents();
-                _standardGui->showNoTableDisplay();
             }
 
             sendWithInputEditItem("",output[0]);

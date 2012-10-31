@@ -12,5 +12,12 @@
         <file>calendar.gif</file>
         <file>testtitle.gif</file>
         <file>pin icon.gif</file>
+        <file>Background.gif</file>
+        <file>Results Slip.gif</file>
+        <file>SN Slip.gif</file>
+        <file>list.gif</file>
+        <file>List num.gif</file>
+        <file>Torn for num.gif</file>
+        <file>Note layout.gif</file>
     </qresource>
 </RCC>

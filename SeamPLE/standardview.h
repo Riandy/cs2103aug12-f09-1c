@@ -15,14 +15,6 @@ class StandardView : public QMainWindow, public CommonView
     Q_OBJECT
 
 private:
-    //New struct for holding the table contents
-    struct TableListNode{
-        QTableWidgetItem index;
-        QTableWidgetItem content;
-        TableListNode *prev;
-        TableListNode *next;
-    };
-
     static StandardView* _standardView;
 
     const static QString MESSAGE_NO_CURRENT_RESULTS;
@@ -47,8 +39,6 @@ public:
     void showTableResults(QVector <QString> output);
 
     void resetTableContents();
-
-    void showNoTableDisplay();
 
     void showTodayEvents();
 
@@ -86,26 +76,24 @@ private slots:
 
     void editTriggered();
 
-    void changeWorkingTabTriggered();
-
     void clearTriggered();
 
     void fadeInChange();
 
     void fadeOutChange();
 
-private:    
-    bool singleInstanceExists();
+private:
+    void setTableEventId(int index, QString id);
 
-    void addTableContent(TableListNode *curr);
+    void setTableEventName(int index, QString name);
+
+    bool singleInstanceExists();
 
     void changeGeometry();
 
     int getPosX(int maxX);
 
     int getPosY(int maxY);
-
-    void setTableParam();
 
     void setSignals();
 
@@ -118,7 +106,9 @@ private:
 
     Ui::StandardView *ui;
 
-    TableListNode *_tail;
+//    int _tableCellStart;
+
+//    int _tableCellEnd;
 };
 
 #endif // STANDARDVIEW_H

@@ -17,8 +17,6 @@ public:
 
     void setShortcutsTo(QMainWindow* Gui);
 
-    void setStandardShortcutsTo(QMainWindow* Gui);
-
     //void setGlobalShortcuts();
 
     QAction* getSwitchViewKey();
@@ -26,8 +24,6 @@ public:
     QAction* getUndoKey();
 
     QAction* getRedoKey();
-
-    QAction* getChangeWorkingTabKey();
 
     QAction* getAddKey();
 
@@ -48,7 +44,6 @@ private:
     QAction* _switchView;
     QAction* _undo;
     QAction* _redo;
-    QAction* _changeWorkingTab;
     QAction* _add;
     QAction* _find;
     QAction* _display;

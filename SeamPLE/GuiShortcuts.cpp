@@ -5,7 +5,6 @@ GuiShortcuts::GuiShortcuts()
     _switchView = NULL;
     _undo = NULL;
     _redo = NULL;
-    _changeWorkingTab = NULL;
     _add = NULL;
     _find = NULL;
     _display = NULL;
@@ -28,10 +27,6 @@ GuiShortcuts::~GuiShortcuts()
     if (_redo != NULL)
     {
         delete _redo;
-    }
-    if (_changeWorkingTab != NULL)
-    {
-        delete _changeWorkingTab;
     }
     if (_add != NULL)
     {
@@ -104,14 +99,6 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _clear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
 }
 
-void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
-{
-    setShortcutsTo(Gui);
-
-    _changeWorkingTab = new QAction(Gui);
-    Gui->addAction(_changeWorkingTab);
-    _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
-}
 
 //void GuiShortcuts::setGlobalShortcuts()
 //{
@@ -131,11 +118,6 @@ QAction* GuiShortcuts::getUndoKey()
 QAction* GuiShortcuts::getRedoKey()
 {
     return _redo;
-}
-
-QAction* GuiShortcuts::getChangeWorkingTabKey()
-{
-    return _changeWorkingTab;
 }
 
 QAction* GuiShortcuts::getAddKey()

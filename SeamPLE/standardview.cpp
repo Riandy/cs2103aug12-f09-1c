@@ -18,17 +18,12 @@ StandardView::StandardView(QWidget *parent):
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    _allShortcuts.setStandardShortcutsTo(this);
+    _allShortcuts.setShortcutsTo(this);
     setSignals();
 
     //Prevent change view push button from snatching focus
     //from input line
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
-
-    _tail = NULL;
-
-    setTableParam();
-    opacityLvl = 0;
 }
 
 StandardView::~StandardView()
@@ -109,66 +104,39 @@ void StandardView::showTableResults(QVector <QString> output)
     //with the current content
     resetTableContents();
 
-//    ui->tabWidget->setCurrentIndex(1);
-//    int rowAmount = output.size();
-//    ui->tableWidget->setRowCount(rowAmount);
-
-//    for (int i = 0; i < rowAmount ; i++)
+//    _tableCellStart = 0;
+//    _tableCellEnd = output.size()/6;
+//    for (int i = _tableCellStart; i < _tableCellEnd && (i-_tableCellStart) < 10; i++)
 //    {
-//        TableListNode *cell = new TableListNode;
-//        cell->index.setText(QString("[%1]").arg(i+1));
-//        cell->index.setTextAlignment(Qt::AlignCenter);
-//        cell->content.setText(output[i]);
-//        ui->tableWidget->setItem(i,0,&(cell->index));
-//        ui->tableWidget->setItem(i,1,&(cell->content));
-//        addTableContent(cell);
+//        setTableEventId(i,output[(i*6)]);
+//        setTableEventName(i, output[(i*6)+1]);
 //    }
 
-    ui->tabWidget->setCurrentIndex(1);
-    int rowAmount = output.size()/6;
-    ui->tableWidget->setRowCount(rowAmount);
-
-    for (int i = 0; i < rowAmount ; i++)
-    {
-        TableListNode *cell = new TableListNode;
-        cell->index.setText(QString("[%1]").arg(i+1));
-        cell->index.setTextAlignment(Qt::AlignCenter);
-        cell->content.setText(output[1+(i*6)]);
-        ui->tableWidget->setItem(i,0,&(cell->index));
-        ui->tableWidget->setItem(i,1,&(cell->content));
-        addTableContent(cell);
-    }
-
-    if (rowAmount > 0)
-    {
-        ui->label_8->setText("");
-    }
 }
 
 //Remove all dynamically allocated memory given to table widget
 void StandardView:: resetTableContents()
 {
-    while (_tail != NULL)
-    {
-        if (_tail->next == _tail)
-        {
-            delete _tail;
-            _tail = NULL;
-        }
-        else
-        {
-            TableListNode *curr = _tail->next;
-            _tail->next = curr->next;
-            _tail->next->prev = _tail;
-            delete curr;
-        }
-        ui->tableWidget->removeRow(0);
-    }
-}
-
-void StandardView:: showNoTableDisplay()
-{
-    ui->label_8->setText(MESSAGE_NO_CURRENT_RESULTS);
+    ui->label_7->setText("");
+    ui->label_8->setText("");
+    ui->label_9->setText("");
+    ui->label_10->setText("");
+    ui->label_11->setText("");
+    ui->label_12->setText("");
+    ui->label_13->setText("");
+    ui->label_14->setText("");
+    ui->label_15->setText("");
+    ui->label_16->setText("");
+    ui->label_17->setText("");
+    ui->label_18->setText("");
+    ui->label_19->setText("");
+    ui->label_20->setText("");
+    ui->label_21->setText("");
+    ui->label_22->setText("");
+    ui->label_23->setText("");
+    ui->label_24->setText("");
+    ui->label_25->setText("");
+    ui->label_26->setText("");
 }
 
 //void StandardView:: showTodayEvents(QString events)
@@ -266,20 +234,6 @@ void StandardView::editTriggered()
     showFocusInInputEdit(true);
 }
 
-void StandardView::changeWorkingTabTriggered()
-{
-    bool atFirstTab = ui->tabWidget->currentIndex() == 0;
-
-    if (atFirstTab)
-    {
-        ui->tabWidget->setCurrentIndex(1);
-    }
-    else
-    {
-        ui->tabWidget->setCurrentIndex(0);
-    }
-}
-
 void StandardView::clearTriggered()
 {
     showFocusInInputEdit(true);
@@ -316,6 +270,108 @@ void StandardView::fadeOutChange()
     setWindowOpacity(opacityLvl);
 }
 
+void StandardView:: setTableEventId(int index, QString id)
+{
+    int reformatIndex = index%10;
+
+    switch (reformatIndex)
+    {
+        case 0:
+            ui->label_17->setText(id);
+            break;
+
+        case 1:
+            ui->label_18->setText(id);
+            break;
+
+        case 2:
+            ui->label_19->setText(id);
+            break;
+
+        case 3:
+            ui->label_20->setText(id);
+            break;
+
+        case 4:
+            ui->label_21->setText(id);
+            break;
+
+        case 5:
+            ui->label_22->setText(id);
+            break;
+
+        case 6:
+            ui->label_23->setText(id);
+            break;
+
+        case 7:
+            ui->label_24->setText(id);
+            break;
+
+        case 8:
+            ui->label_25->setText(id);
+            break;
+
+        case 9:
+            ui->label_26->setText(id);
+            break;
+
+        default:
+            break;
+    }
+}
+
+void StandardView:: setTableEventName(int index, QString name)
+{
+    int reformatIndex = index%10;
+
+    switch (reformatIndex)
+    {
+        case 0:
+            ui->label_7->setText(name);
+            break;
+
+        case 1:
+            ui->label_8->setText(name);
+            break;
+
+        case 2:
+            ui->label_9->setText(name);
+            break;
+
+        case 3:
+            ui->label_10->setText(name);
+            break;
+
+        case 4:
+            ui->label_11->setText(name);
+            break;
+
+        case 5:
+            ui->label_12->setText(name);
+            break;
+
+        case 6:
+            ui->label_13->setText(name);
+            break;
+
+        case 7:
+            ui->label_14->setText(name);
+            break;
+
+        case 8:
+            ui->label_15->setText(name);
+            break;
+
+        case 9:
+            ui->label_16->setText(name);
+            break;
+
+        default:
+            break;
+    }
+}
+
 bool StandardView:: singleInstanceExists()
 {
     bool result;
@@ -330,28 +386,6 @@ bool StandardView:: singleInstanceExists()
     }
 
     return result;
-}
-
-//Add a table cell to the linklist for all table cells
-void StandardView::addTableContent(TableListNode *curr)
-{
-    //For the first element in linklist, we must ensure that it
-    //links back to itself
-    if (_tail == NULL)
-    {
-        _tail = curr;
-        _tail->next = _tail;
-        _tail->prev = _tail;
-    }
-    //Subsequent elements are placed as the last cell of the link list
-    else
-    {
-        curr->next = _tail->next;
-        curr->prev = _tail;
-        _tail->next = curr;
-        curr->next->prev = curr;
-        _tail = curr;
-    }
 }
 
 void StandardView:: changeGeometry()
@@ -374,17 +408,6 @@ int StandardView:: getPosX(int maxX)
 int StandardView:: getPosY(int maxY)
 {
     return maxY - this->ui->frame->height();
-}
-
-void StandardView::setTableParam()
-{
-    //Table should always have 2 column. No change is done
-    //to column count in the rest of the code
-    ui->tableWidget->setColumnCount(2);
-    ui->tableWidget->setColumnWidth(0, 40);
-    ui->tableWidget->setColumnWidth(1, 662);
-
-    showNoTableDisplay();
 }
 
 void StandardView:: setSignals()
@@ -421,9 +444,6 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getEditKey(),SIGNAL(triggered()),
             this,SLOT(editTriggered()));
-
-    connect(_allShortcuts.getChangeWorkingTabKey(),SIGNAL(triggered()),
-            this,SLOT(changeWorkingTabTriggered()));
 
     connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
             this,SLOT(clearTriggered()));
