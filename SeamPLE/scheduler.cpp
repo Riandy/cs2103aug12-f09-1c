@@ -30,9 +30,14 @@ vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
     string command=newAction.getCommand();
+    command="add";
+    ASSERT(command!="","Command is NULL");
+    /*defensive coding*/
+    //convert everything to upper case
+    transform(command.begin(), command.end(),command.begin(), ::toupper);
+
     //process and package the action into task
     task newTask=processAction(newAction);
-
 
     if(command=="ADD")
     {
