@@ -624,10 +624,20 @@ int Intellisense::checkDateString(string token)
 string Intellisense::getEventName(vector<string>& tokens)
 {
     stringstream ss;
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
-    {
-        ss<<it->c_str()<<string(" ");
-    }
+   // for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+   // {
+    vector<string>::iterator it=tokens.begin();
+     while (it!=tokens.end())
+     {
+        ss<<it->c_str();
+        ++it;
+        if (it!=tokens.end())
+        {
+            ss<<string(" ");
+           //only increment if it is not the last position
+        }
+     }
+   // }
 
     return ss.str();
 }
