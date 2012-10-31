@@ -34,8 +34,48 @@ const string Intellisense::WEEKLY = "weekly";
 const string Intellisense::MONTHLY = "monthly";
 const string Intellisense::FORTNIGHTLY = "fortnightly";
 
+const string Intellisense::ADDFEEDBACK_1 = "eg. add baby Birthday Preparation 24 Aug #family";
+const string Intellisense::ADDFEEDBACK_2 = "eg. Add baby birthday 24 aug";
+const string Intellisense::EDITFEEDBACK_1 = "eg. edit homework #HIGH";
+const string Intellisense::EDITFEEDBACK_2= "eg. edit homework #HIGH";
+const string Intellisense::DELFEEDBACK_1= "eg. del 3";
+const string Intellisense::DELFEEDBACK_2= "eg. del 3";
+const string Intellisense::EXITFEEDBACK_1= " Are you sure you want to exit?";
+const string Intellisense::DISPLAYFEEDBACK_1= "eg. display #category";
+const string Intellisense::DISPLAYFEEDBACK_2= "eg. display #category";
+const string Intellisense::FINDFEEDBACK_1= "eg. find birthday";
+const string Intellisense::FINDFEEDBACK_2="eg. find birthday";
+const string Intellisense::SORTFEEDBACK_1="eg. The Events Will be Sorted By Date";
+const string Intellisense::SORTFEEDBACK_2="eg. The Events Will be Sorted By Date";
+const string Intellisense::REDOFEEDBACK_1="Press enter to redo your last operation";
+const string Intellisense::UNDOFEEDBACK_1="Press enter to undo your last operation";
+const string Intellisense::MARKFEEDBACK_1="eg. mark today";
+const string Intellisense::MARKFEEDBACK_2="eg. mark today";
 
-//end of array change
+const  string Intellisense::GREENEVENTTEXT = "<font color=green>[EventNAME] </font>";
+const  string Intellisense::REDEVENTTEXT  = "<font color=red>[EventNAME] </font>";
+
+const  string Intellisense::GREENSTARTDATETEXT = "<font color=green>[StartDate] </font>" ;
+const  string Intellisense::REDSTARTDATETEXT = "<font color=red>[StartDate] </font>";
+
+const  string Intellisense::GREENENDDATETEXT = "<font color=green>[EndDate] </font>";
+const  string Intellisense::REDENDDATETEXT = "<font color=red>[EndDate] </font>";
+
+const  string Intellisense::GREENPRIORITYTEXT = "<font color=green>[PRIORITY] </font>";
+const  string Intellisense::REDPRIORITYTEXT = "<font color=red>[PRIORITY] </font>";
+
+
+const  string Intellisense::GREENCATEGORYTEXT = "<font color=green>[CATEGORY] </font>";
+const  string Intellisense::REDCATEGORYTEXT = "<font color=red>[CATEGORY] </font>";
+
+const  string Intellisense::GREENIDTEXT = "<font color=green>[ID] </font>";
+const  string Intellisense::REDIDTEXT = "<font color=red>[ID] </font>";
+
+const char Intellisense::CATEGORYRECOGNISER = '#' ;
+
+
+
+
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
 
@@ -360,7 +400,7 @@ string Intellisense::getCategory(vector<string>& tokens)
     vector<string>::iterator it=tokens.begin();
     while(it!=tokens.end())
     {
-        if(it->at(0) == '#' )
+        if(it->at(0) == CATEGORYRECOGNISER)
         {
             category = it->substr(1,it->size()-1);
             it = tokens.erase(it);
@@ -613,7 +653,7 @@ int Intellisense::getDateType(vector<string>& tokens)
         }
 
         if(it!= tokens.end())
-            it++;//incremnt if it is not the last iterator
+            it++;//increment if it is not the last iterator
 
     }
     return dType;
@@ -955,109 +995,161 @@ void Intellisense::checkEditReq()
     }
     requirementsMet = editReqMet;
 }
+string Intellisense::getAddFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = ADDFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback = ADDFEEDBACK_2 ;
+    }
+    return feedback;
+}
+string Intellisense::getEditFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = EDITFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback = EDITFEEDBACK_2 ;
+    }
+    return feedback;
+}
+string Intellisense::getDeleteFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = DELFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback = DELFEEDBACK_2;
+    }
+    return feedback;
+}
+string Intellisense::getExitFeedBack()
+{
+    string feedback;
+    feedback = EXITFEEDBACK_1;
+    return feedback;
+}
+string Intellisense::getDisplayFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+        feedback = DISPLAYFEEDBACK_1;
+    }
+    else
+    {
+        feedback = DISPLAYFEEDBACK_2;
+    }
+    return feedback;
+}
 
+string Intellisense::getFindFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+        feedback = FINDFEEDBACK_1;
+    }
+    else
+    {
+        feedback = FINDFEEDBACK_2;
+    }
+    return feedback;
+}
+string Intellisense::getSortFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+        feedback = SORTFEEDBACK_1;
+    }
+    else
+    {
+        feedback = SORTFEEDBACK_2;
+    }
+    return feedback;
+}
+string Intellisense::getRedoFeedBack()
+{
+    string feedback;
+    feedback = REDOFEEDBACK_1 ;
+    return feedback;
+}
+string Intellisense::getUndoFeedBack()
+{
+    string feedback;
+    feedback = UNDOFEEDBACK_1 ;
+    return feedback;
+}
+string Intellisense::getMarkFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = MARKFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback =MARKFEEDBACK_2 ;
+    }
+    return feedback;
+}
 string Intellisense::getFeedback()
 {//later refactor this into functions
-    cout<<"CURRENT COMMAND is add"<<endl;
     if(currentCommand == ADD)
     {
-           // cout<<"CURRENT COMMAND is add"<<endl;
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. add baby Birthday Preparation 24 Aug #family";
-        }
-        else
-        {
-                _feedback = "eg. Add baby birthday 24 aug";
-        }
+        _feedback = getAddFeedBack();
+    }
+    else if(currentCommand == EDIT)
+    {
+        _feedback = getEditFeedBack();
+    }
+    else if(currentCommand == DELETE )
+    {
+        _feedback = getDeleteFeedBack();
+    }
+    else if(currentCommand == EXIT )
+    {
+        _feedback = getExitFeedBack();
+    }
+    else if(currentCommand == DISPLAY )
+    {
+        _feedback = getDisplayFeedBack();
+    }
+    else if(currentCommand == FIND )
+    {
+        _feedback = getFindFeedBack();
+    }
+    else if(currentCommand == SORT )
+    {
+        _feedback = getSortFeedBack();
+    }
+    else if(currentCommand == REDO )
+    {
+        _feedback = getRedoFeedBack();
     }
 
-    if(currentCommand == EDIT)
+    else if(currentCommand == UNDO )
     {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. edit homework #HIGH";
-        }
-        else
-        {
-                _feedback = "eg. edit homework #HIGH";
-        }
-    }
-    if(currentCommand == DELETE )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. del 3";
-        }
-        else
-        {
-                _feedback = "eg. del 3";
-        }
+        _feedback = getUndoFeedBack();
     }
 
-    if(currentCommand == EXIT )
+    else if(currentCommand == MARK )
     {
-           // cout<<"CURRENT COMMAND is exit"<<endl;
-        _feedback = " Are you sure you want to exit?";
+        _feedback = getMarkFeedBack();
     }
 
-    if(currentCommand == DISPLAY )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. display #ab";
-        }
-        else
-        {
-                _feedback = "eg. display #ab";
-        }
-    }
-
-    if(currentCommand == FIND )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. find birthday";
-        }
-        else
-        {
-                _feedback = "eg. find #family";
-        }
-    }
-
-    if(currentCommand == SORT )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. The Events Will be Sorted By Date";
-        }
-        else
-        {
-                _feedback = "eg. The Events Will be Sorted By Date";
-        }
-    }
-
-    if(currentCommand == REDO )
-    {
-        _feedback = "Press enter to redo your last operation";
-    }
-
-    if(currentCommand == UNDO )
-    {
-        _feedback = "Press enter to undo your last operation";
-    }
-
-    if(currentCommand == MARK )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. mark today";
-        }
-        else
-        {
-                _feedback = "eg. mark 3";
-        }
-    }
     return _feedback;
 }
 void Intellisense::setFeedback(string newFeedback)
@@ -1117,22 +1209,22 @@ string Intellisense::getParameter()
     {
         if(statusFlags[INAME])
         {
-            _parameter ="<font color=green>[EventNAME] </font>";
+            _parameter =_parameter + GREENEVENTTEXT ;
         }
         else
         {
-            _parameter ="<font color=red>[EventNAME] </font>";
+            _parameter =_parameter + REDEVENTTEXT ;
         }
     }
     if(isValidParaForCmd(currentCommand,IDATE))//
     {
         if(statusFlags[IDATE])
         {
-            _parameter =_parameter + "<font color=green>[StartDate] </font>";
+            _parameter =_parameter + GREENSTARTDATETEXT ;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[StartDate] </font>";
+            _parameter =_parameter + REDSTARTDATETEXT ;
         }
     }
 
@@ -1140,11 +1232,11 @@ string Intellisense::getParameter()
     {
         if(statusFlags[IDATEEND])
         {
-            _parameter =_parameter + "<font color=green>[EndDate] </font>";
+            _parameter =_parameter + GREENENDDATETEXT;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[EndDate] </font>";
+            _parameter =_parameter + REDENDDATETEXT;
         }
     }
 
@@ -1152,11 +1244,11 @@ string Intellisense::getParameter()
     {
         if(statusFlags[IPRIORITY])
         {
-            _parameter =_parameter + "<font color=green>[PRIORITY] </font>";
+            _parameter =_parameter + GREENPRIORITYTEXT ;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[PRIORITY] </font>";
+            _parameter =_parameter + REDPRIORITYTEXT ;
         }
     }
 
@@ -1164,22 +1256,22 @@ string Intellisense::getParameter()
     {
         if(statusFlags[ICATEGORY])
         {
-            _parameter =_parameter + "<font color=green>[CATEGORY] </font>";
+            _parameter =_parameter + GREENCATEGORYTEXT;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[CATEGORY] </font>";
+            _parameter =_parameter + REDCATEGORYTEXT ;
         }
     }
     if(isValidParaForCmd(currentCommand,IID))//
     {
         if(statusFlags[IID])
         {
-            _parameter =_parameter + "<font color=green>[ID] </font>";
+            _parameter =_parameter + GREENIDTEXT ;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[ID] </font>";
+            _parameter =_parameter + REDIDTEXT ;
         }
     }
     //this is for the example feedback string
@@ -1193,7 +1285,8 @@ void Intellisense::setParameter(string newParameter)
 
 void Intellisense::smartAutoFill(Action &task)
 {
-    bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0 && task.getStartDate().tm_mday ==0);
+    bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0
+                             && task.getStartDate().tm_mday ==0);
     if (isDateNotentered)
     {//we auto fill in todays day if date is unentered
         //
