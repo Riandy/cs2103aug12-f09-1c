@@ -7,10 +7,9 @@
 
 int main(int argc, char *argv[])
 {
-    if(false)     // change to true to enable unit testing, false otherwise
+    if(1)     // change to true to enable unit testing, false otherwise
     {
-        QApplication app(argc, argv);
-
+        QApplication app1(argc, argv);
         int retval(0);
 
         retval += QTest::qExec(&UnitTest(), argc, argv);

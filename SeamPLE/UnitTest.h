@@ -12,7 +12,36 @@ private slots:
     void dummyTest();
     void dummyTest1();
     void testIntellisense();
-    //void testIntellisense2();
+
+    void testIntellisenseAdd();
+    void testIntellisenseAdd2();
+    void testIntellisenseAdd3();
+    void testIntellisenseAdd4();
+    void testIntellisenseAdd5();
+
+    void testIntellisenseDel();
+    void testIntellisenseDel2();
+   //void testIntellisenseDEL3();
+
+    void testIntellisenseEdit();
+    void testIntellisenseEdit2();
+    void testIntellisenseExit();
+
+    void testIntellisenseDisplay();
+
+    void testIntellisenseMark();
+
+    void testIntellisenseQuickAdd();
+
+    void testIntellisenseSort();
+
+    void testIntellisenseFind();
+
+    void testIntellisenseUndo();
+
+    void testIntellisenseRedo();
+
+
 
 };
 
