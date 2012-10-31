@@ -3,8 +3,23 @@
 #include "calender.h"
 #include <ctime>
 #include <sstream>
+#include <assert.h>
+#include <algorithm>
 #include "Action.h"
 
+//custom defined assert function to allow message feedback to the user.
+#ifndef NDEBUG
+#   define ASSERT(condition, message) \
+    do { \
+        if (! (condition)) { \
+            std::cerr << "Assertion \"" #condition "\" failed in " << __FILE__ \
+                      << " line " << __LINE__ << ": " << message << std::endl; \
+            std::exit(EXIT_FAILURE); \
+        } \
+    } while (false)
+#else
+#   define ASSERT(condition, message) do { } while (false)
+#endif
 
 // Ensure that this error is synchronous with the errors sent from Intellisense.
 static string ERROR_NOT_FOUND = "Error - The item does not exist.";
