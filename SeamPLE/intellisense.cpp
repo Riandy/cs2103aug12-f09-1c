@@ -24,11 +24,15 @@ const string Intellisense::editCommandArray[] = {"edit","change","-e"};
 const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
 
-
-
-
-
-
+const string Intellisense::EMPTYCATEGORY = "#";
+const string Intellisense::EMPTYEVENT = "";
+const string Intellisense::EMPTYPRIORITY = "LOW";
+const int    Intellisense::EMPTYID = -1;
+const string Intellisense::HIGHPRIORITY  = "HIGH";
+const string Intellisense::HIGHPRIORITY_L = "high";
+const string Intellisense::WEEKLY = "weekly";
+const string Intellisense::MONTHLY = "monthly";
+const string Intellisense::FORTNIGHTLY = "fortnightly";
 
 
 //end of array change
@@ -61,22 +65,22 @@ Intellisense* Intellisense::getInstance()
 
 Intellisense::Intellisense(void)
 {
+    initFlags();
+}
+void Intellisense::initFlags()
+{
     for(int i=0; i<MAXNOOFPARAMETERS; i++)
     {
         statusFlags[i] = true;
     }
     requirementsMet = false;
-
-
 }
-
 
 
 
 Intellisense::~Intellisense(void)
 {
     instanceFlag=false;
-
 }
 
 Action Intellisense::check(string query)
@@ -114,7 +118,6 @@ Action Intellisense::check(string query)
         task=exitOperation(buffer);
         break;
     case INVALID:
-        //task=invalidOperation(buffer);
         task=quickAddOperation(buffer);
         break;
     case UNDO:
@@ -198,17 +201,20 @@ bool Intellisense::checkString(const string& input, const string& command)
     }
     return true;
 }
+string Intellisense::toLowerString(string input)
+{
+     transform(input.begin(), input.end(), input.begin(),toLower);
+     return input;
+}
 bool Intellisense::checkCommandArray(const string& input, const string command[],int arraySize)
 {
     bool isCommandFound = false;
     string inputBuffer;
     string commandBuffer;
-    inputBuffer = input;
-    transform (inputBuffer.begin(), inputBuffer.end(), inputBuffer.begin(),toLower);//to lower case for comparison
+    inputBuffer = toLowerString(input);
     for (int i = 0 ; i < arraySize; i++)
-    {//iterate for each item in command array
-        commandBuffer = command[i];
-        transform( commandBuffer.begin(), commandBuffer.end(), commandBuffer.begin(),toLower);
+    {
+        commandBuffer = toLowerString(command[i]);
         if(inputBuffer == commandBuffer)
             isCommandFound = true;
     }
@@ -251,16 +257,16 @@ string Intellisense::getPriority(vector<string>& tokens)
 
 
 
-        if((checkHeadString.compare(string("HIGH"))==0)|| checkHeadString.compare(string("high"))==0)
+        if((checkHeadString.compare(HIGHPRIORITY)==0)|| checkHeadString.compare(HIGHPRIORITY_L)==0)
         {
             tokens.erase(tokens.begin());
-            return string("HIGH");
+            return HIGHPRIORITY;
         }
 
-        if((checkTailString.compare(string("HIGH"))==0)|| checkTailString.compare(string("high"))==0)
+        if((checkTailString.compare(HIGHPRIORITY)==0)|| checkTailString.compare(HIGHPRIORITY_L)==0)
         {
             tokens.pop_back();
-            return string("HIGH");
+            return HIGHPRIORITY;
         }
     }
     return string("LOW");
@@ -272,7 +278,6 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
     date.tm_hour=0;
     date.tm_min=0;
 
-    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
     vector<string>::iterator it=tokens.begin();
     while (it!=tokens.end())
     {
@@ -351,7 +356,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 
 string Intellisense::getCategory(vector<string>& tokens)
 {
-    string category = "#";
+    string category = EMPTYCATEGORY;
     vector<string>::iterator it=tokens.begin();
     while(it!=tokens.end())
     {
@@ -452,7 +457,6 @@ tm Intellisense::getDate(vector<string>& tokens)
 
     }
 
-    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
     vector<string>::iterator it=tokens.begin();
     while (it!=tokens.end())
     {
@@ -591,18 +595,18 @@ int Intellisense::getDateType(vector<string>& tokens)
     vector<string>::iterator it=tokens.begin();
     while(it!=tokens.end())
     {
-        cout<<"valueee:"<<*it<<endl;
-        if( *it == "weekly" )//later do lower case check write a function that compares 2 string without case sensitive
+        string lowerString = toLowerString(*it);
+        if( lowerString == WEEKLY )
         {//may have to add more checks if weekly is used in event name
             dType = task::DATEWEEKLY;
             it = tokens.erase(it);
         }
-        else if(*it == "fortnightly")//if more than 1 special date type keywords occured we take the higher priority ones
+        else if(lowerString == FORTNIGHTLY)
         {
             dType = task::DATEFORTNIGHTLY;
             it = tokens.erase(it);
         }
-        else if( *it == "monthly")
+        else if( lowerString == MONTHLY)
         {
             dType = task::DATEMONTHLY;
             it = tokens.erase(it);
@@ -699,7 +703,8 @@ Action Intellisense::exitOperation(vector<string>& tokens)
     currentCommand = EXIT;
     Action task;
     task.setCommand(getCommand(tokens,"EXIT"));
-
+    setAllStatusFlag(task);
+    checkExitReq();
     return task;
 
 }
@@ -726,30 +731,19 @@ Action Intellisense::markOperation(vector<string>& tokens)
 
     return task;
 }
-//Action Intellisense::invalidOperation(vector<string>& tokens)
 Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
     Action task;
-    //task.setCommand(getCommand(tokens,"INVALID"));//remove this as we now treat this as quick add instead
-    //start of quick add algo
-    //this is where we perform the quick add algorithm
     task.setCommand("ADD");// we assume add if no command word is found
-    task.determineDate(getDate(tokens),getDate(tokens));//expand this to quick add date function
+    task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
-    //get special word detection on weekly monthly fortnightly
-    //this will overwrite any existing value if got clashes so the check in these special functions must be thorough
     task.setDateType(getDateType(tokens));
-    task.setEventName(getEventName(tokens));//get event name must be the last to retrieve as it gets the remainders
+    task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkAddReq();
     smartAutoFill(task);//auto fill some of the fields that are unentered
-    return task;
-    //the end of quick add
-    setAllStatusFlag(task);
-
-
     return task;
 }
 Action Intellisense::undoOperation(vector<string>& tokens)
@@ -774,7 +768,7 @@ Action Intellisense::sortOperation(vector<string>& tokens)
     currentCommand = SORT;
     Action task;
     task.setCommand(getCommand(tokens,"SORT"));
-
+    setAllStatusFlag(task);
     return task;
 }
 Action Intellisense::findOperation(vector<string>& tokens)
@@ -813,7 +807,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 void Intellisense::setAllStatusFlag(Action task)
 {
 
-    if(task.getEventName() == "" )
+    if(task.getEventName() == EMPTYEVENT )
         setStatusFlagAt(INAME,false);
     else
         setStatusFlagAt(INAME,true);
@@ -836,18 +830,18 @@ void Intellisense::setAllStatusFlag(Action task)
     else
         setStatusFlagAt(IDATEEND,true);
 
-    if(task.getPriority() == "LOW" )
+    if(task.getPriority() == EMPTYPRIORITY )
         setStatusFlagAt(IPRIORITY,false);
     else
         setStatusFlagAt(IPRIORITY,true);
 
 
-    if(task.getCategory() == "#")
+    if(task.getCategory() == EMPTYCATEGORY)
         setStatusFlagAt(ICATEGORY,false);
     else
         setStatusFlagAt(ICATEGORY,true);
 
-    if(task.getID() == -1)
+    if(task.getID() == EMPTYID)
         setStatusFlagAt(IID,false);
     else
         setStatusFlagAt(IID,true);
@@ -886,7 +880,11 @@ void Intellisense::checkAddReq()
     }
     requirementsMet = addReqMet;
 }
-
+void Intellisense::checkExitReq()
+{
+    bool exitReq = true;//no condition to quit
+    requirementsMet = exitReq;
+}
 void Intellisense::checkDelReq()
 {// need at least an ID to delete
     bool checkReqMet = false;
@@ -960,8 +958,10 @@ void Intellisense::checkEditReq()
 
 string Intellisense::getFeedback()
 {//later refactor this into functions
+    cout<<"CURRENT COMMAND is add"<<endl;
     if(currentCommand == ADD)
     {
+           // cout<<"CURRENT COMMAND is add"<<endl;
         if(getrequirementsMet())
         {
                 _feedback = "eg. add baby Birthday Preparation 24 Aug #family";
@@ -972,6 +972,17 @@ string Intellisense::getFeedback()
         }
     }
 
+    if(currentCommand == EDIT)
+    {
+        if(getrequirementsMet())
+        {
+                _feedback = "eg. edit homework #HIGH";
+        }
+        else
+        {
+                _feedback = "eg. edit homework #HIGH";
+        }
+    }
     if(currentCommand == DELETE )
     {
         if(getrequirementsMet())
@@ -986,6 +997,7 @@ string Intellisense::getFeedback()
 
     if(currentCommand == EXIT )
     {
+           // cout<<"CURRENT COMMAND is exit"<<endl;
         _feedback = " Are you sure you want to exit?";
     }
 
@@ -1017,11 +1029,11 @@ string Intellisense::getFeedback()
     {
         if(getrequirementsMet())
         {
-                _feedback = "eg. sort by date?";
+                _feedback = "eg. The Events Will be Sorted By Date";
         }
         else
         {
-                _feedback = "eg. sort by date?";
+                _feedback = "eg. The Events Will be Sorted By Date";
         }
     }
 
@@ -1087,12 +1099,20 @@ bool Intellisense::isValidParaForCmd(int cmd,int parameter)
             parameter == ICATEGORY || parameter == IDATEEND ||  parameter == IID)
             valid =true;
     }
-
+    if (cmd == EXIT)
+    {
+            valid =false;
+    }
+    if (cmd == SORT)
+    {
+            valid =false;
+    }
     return valid;
 }
 string Intellisense::getParameter()
 {// output the string based on the flags set
     //refactor into many small functions
+    _parameter ="";//erase first
     if(isValidParaForCmd(currentCommand,INAME))//
     {
         if(statusFlags[INAME])
