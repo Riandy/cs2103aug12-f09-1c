@@ -36,7 +36,7 @@ void UnitTest::testIntellisenseAdd()
     string commandword = result.getCommand();
     string eventName = result.getEventName();
     QCOMPARE(commandword ,string("ADD"));
-    QCOMPARE(eventName, string("birthday "));
+    QCOMPARE(eventName, string("birthday"));
 }
 void UnitTest::testIntellisenseAdd2()
 {
@@ -49,7 +49,7 @@ void UnitTest::testIntellisenseAdd2()
     string priority = result.getPriority();
 
     QCOMPARE(commandword ,string("ADD"));
-    QCOMPARE(eventName, string("soccer match "));
+    QCOMPARE(eventName, string("soccer match"));
     QCOMPARE(priority, string("HIGH"));
 }
 void UnitTest::testIntellisenseAdd3()
@@ -63,7 +63,7 @@ void UnitTest::testIntellisenseAdd3()
     string category = result.getCategory();
 
     QCOMPARE(commandword ,string("ADD"));
-    QCOMPARE(eventName, string("soccer match "));
+    QCOMPARE(eventName, string("soccer match"));
     QCOMPARE(category, string("SPORTS"));
 }
 void UnitTest::testIntellisenseAdd4()
@@ -92,7 +92,7 @@ void UnitTest::testIntellisenseDel()
     int dateType = result.getDateType();
 
     QCOMPARE(commandword ,string("DELETE"));
-    QCOMPARE(eventName, string("birthday "));//got space at the end
+    QCOMPARE(eventName, string("birthday"));//got space at the end
 
 }
 void UnitTest::testIntellisenseDel2()
@@ -145,7 +145,7 @@ void UnitTest::testIntellisenseEdit2()
     string commandword = result.getCommand();
     string category = result.getCategory();
     QCOMPARE(commandword,string("EDIT"));
-    QCOMPARE(eventName,string("birthday "));
+    QCOMPARE(eventName,string("birthday"));
     QCOMPARE(category,string("celebration"));
 }
 
@@ -194,7 +194,7 @@ void UnitTest::testIntellisenseQuickAdd()
 
 
     QCOMPARE(commandword,string("ADD"));
-    QCOMPARE(eventName, string("Happy Aniversary Jenny "));
+    QCOMPARE(eventName, string("Happy Aniversary Jenny"));
     QCOMPARE(category, string("family"));
     QCOMPARE( dateType, task::DATENORMAL );
 }
