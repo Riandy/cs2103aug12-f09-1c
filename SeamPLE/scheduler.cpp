@@ -76,16 +76,13 @@ vector<string> scheduler::executeCommand(Action newAction)
 	else if(command=="EDIT")
     {
 		// Edit Key press function to partially update GUI
-        if (newTask.getEventName()!="")
-        {
+        //if (newTask.getEventName()!="")
                 cout<<"Edit execution with normal keypress"<<endl;
                 taskVector = eventCalender.SearchByPartialTask(newTask.getEventName());
                 updateResultFound(taskVector.size());
                 updateGUI(taskVector);
-        }
-        else
-            generalError();
-	    }
+
+    }
     else if(command=="EDITENTER")
     {
 		// actual edit

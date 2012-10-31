@@ -86,7 +86,7 @@ void GuiControl::check(QString input)
         bool command = false;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
 
-        bool invalidSchedulerReturn = (output.size() < 2);//upgrade this check if possible
+        bool invalidSchedulerReturn = (output.size() < 2);//@weiyuan from wenren :upgrade this check if possible
 
         if (invalidSchedulerReturn)
         {

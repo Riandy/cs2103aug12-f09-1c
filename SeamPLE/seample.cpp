@@ -101,6 +101,11 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
             {
                 cout<<"running la"<<endl;
                 feedback += fireAction(); //append the results at the end
+                if(feedback.size()<2)
+                {
+                    feedback.push_back("1");//push empty line to bypass the crude check GuiControl::check(QString input)
+                    feedback.push_back("1");
+                }
 
             }
             else
