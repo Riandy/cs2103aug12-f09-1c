@@ -11,6 +11,8 @@ GuiShortcuts::GuiShortcuts()
     _delete = NULL;
     _edit = NULL;
     _clear = NULL;
+    _left = NULL;
+    _right = NULL;
     //_showHideView = NULL;
 }
 
@@ -51,6 +53,14 @@ GuiShortcuts::~GuiShortcuts()
     if (_clear != NULL)
     {
         delete _clear;
+    }
+    if (_left != NULL)
+    {
+        delete _left;
+    }
+    if (_right != NULL)
+    {
+        delete _right;
     }
 //    if (_showHideView != NULL)
 //    {
@@ -99,6 +109,18 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _clear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
 }
 
+void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
+{
+    setShortcutsTo(Gui);
+
+    _left = new QAction(Gui);
+    Gui->addAction(_left);
+    _left->setShortcut(QKeySequence(Qt::Key_PageUp));
+
+    _right = new QAction(Gui);
+    Gui->addAction(_right);
+    _right->setShortcut(QKeySequence(Qt::Key_PageDown));
+}
 
 //void GuiShortcuts::setGlobalShortcuts()
 //{
@@ -148,6 +170,16 @@ QAction* GuiShortcuts::getEditKey()
 QAction* GuiShortcuts::getClearKey()
 {
     return _clear;
+}
+
+QAction* GuiShortcuts::getLeftKey()
+{
+    return _left;
+}
+
+QAction* GuiShortcuts::getRightKey()
+{
+    return _right;
 }
 
 //QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()

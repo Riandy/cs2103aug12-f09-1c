@@ -17,6 +17,8 @@ public:
 
     void setShortcutsTo(QMainWindow* Gui);
 
+    void setStandardShortcutsTo(QMainWindow* Gui);
+
     //void setGlobalShortcuts();
 
     QAction* getSwitchViewKey();
@@ -37,6 +39,10 @@ public:
 
     QAction* getClearKey();
 
+    QAction* getLeftKey();
+
+    QAction* getRightKey();
+
     //QxtGlobalShortcut* getShowHideViewKey();
 
 private:
@@ -50,6 +56,8 @@ private:
     QAction* _delete;
     QAction* _edit;
     QAction* _clear;
+    QAction* _left;
+    QAction* _right;
 
     //QxtGlobalShortcut * _showHideView;
 };

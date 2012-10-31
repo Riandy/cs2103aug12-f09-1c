@@ -1,5 +1,6 @@
 #include "GuiControl.h"
 
+
 GuiControl* GuiControl::_guiControl = NULL;
 
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
@@ -141,7 +142,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             {
                 sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
             }
-            _standardGui->showTableResults(output.mid(1,capacity - 1));
+            _standardGui->instantiateTable(output.mid(1,capacity - 1));
         }
         else
         {

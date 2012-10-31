@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Thu Nov 1 00:22:45 2012
+** Created: Thu Nov 1 01:51:59 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -151,7 +151,7 @@ public:
         frame_3->setFrameShadow(QFrame::Raised);
         label_5 = new QLabel(frame_3);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(230, 17, 231, 42));
+        label_5->setGeometry(QRect(247, 27, 231, 42));
         QFont font3;
         font3.setFamily(QString::fromUtf8("Levenim MT"));
         label_5->setFont(font3);
@@ -164,7 +164,7 @@ public:
 "}"));
         label_6 = new QLabel(frame_3);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(30, 17, 61, 42));
+        label_6->setGeometry(QRect(24, 27, 61, 42));
         QFont font4;
         font4.setFamily(QString::fromUtf8("Levenim MT"));
         font4.setPointSize(16);
@@ -177,7 +177,7 @@ public:
 "}"));
         frame_4 = new QFrame(frame_3);
         frame_4->setObjectName(QString::fromUtf8("frame_4"));
-        frame_4->setGeometry(QRect(28, 73, 681, 271));
+        frame_4->setGeometry(QRect(27, 80, 681, 271));
         frame_4->setStyleSheet(QString::fromUtf8("#frame_4\n"
 "{\n"
 "	\n"
@@ -275,49 +275,9 @@ public:
         label_25->setGeometry(QRect(0, 214, 48, 29));
         label_25->setStyleSheet(QString::fromUtf8(""));
         label_25->setAlignment(Qt::AlignCenter);
-        label_7->raise();
-        label_10->raise();
-        label_14->raise();
-        label_11->raise();
-        label_26->raise();
-        label_17->raise();
-        label_19->raise();
-        label_21->raise();
-        label_20->raise();
-        label_22->raise();
-        label_23->raise();
-        label_8->raise();
-        label_24->raise();
-        label_18->raise();
-        label_16->raise();
-        label_9->raise();
-        label_13->raise();
-        label_12->raise();
-        label_15->raise();
-        label_25->raise();
-        label_7->raise();
-        label_10->raise();
-        label_14->raise();
-        label_11->raise();
-        label_26->raise();
-        label_17->raise();
-        label_19->raise();
-        label_21->raise();
-        label_20->raise();
-        label_22->raise();
-        label_23->raise();
-        label_8->raise();
-        label_24->raise();
-        label_18->raise();
-        label_16->raise();
-        label_9->raise();
-        label_13->raise();
-        label_12->raise();
-        label_15->raise();
-        label_25->raise();
         label_27 = new QLabel(frame_3);
         label_27->setObjectName(QString::fromUtf8("label_27"));
-        label_27->setGeometry(QRect(540, 20, 171, 42));
+        label_27->setGeometry(QRect(281, 359, 171, 42));
         label_27->setStyleSheet(QString::fromUtf8("#label_27\n"
 "{\n"
 "	background-image: url(:/bg/Torn for num.gif);\n"
