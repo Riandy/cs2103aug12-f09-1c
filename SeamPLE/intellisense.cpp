@@ -1,5 +1,5 @@
 #include "Intellisense.h"
-
+#include "ndebug.h"
 
 
 
@@ -125,7 +125,7 @@ Intellisense::~Intellisense(void)
 Action Intellisense::check(string query)
 {
     Action task;
-
+    ASSERT(query.size()<query.max_size(),"query size exceed max string size");
     trim(query);
 
     vector<string> buffer = tokenize(query);
@@ -178,6 +178,7 @@ Action Intellisense::check(string query)
 
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
+    ASSERT(tokens.size()<= MAXNOOFPARAMETERS,"Too many tokens extracted.");
     if(tokens.size()==0)
     {
         return INVALID;
@@ -247,6 +248,8 @@ string Intellisense::toLowerString(string input)
 }
 bool Intellisense::checkCommandArray(const string& input, const string command[],int arraySize)
 {
+    ASSERT(arraySize!= 0,"Available command cannot be 0.");
+    ASSERT(command!= NULL,"null command array pointer in check command");
     bool isCommandFound = false;
     string inputBuffer;
     string commandBuffer;
@@ -887,6 +890,7 @@ void Intellisense::setAllStatusFlag(Action task)
 }
 void  Intellisense::getAllStatusFlag(bool *flags)
 {
+    ASSERT(flags!=NULL,"flags pointer cannot be NULL");
     for (int i=0;i<MAXNOOFPARAMETERS;i++)
     {
         flags[i] = statusFlags[i];;
@@ -895,10 +899,12 @@ void  Intellisense::getAllStatusFlag(bool *flags)
 
 bool Intellisense::getStatusFlagAt(int index)
 {
+    ASSERT(index>=0,"flag index canot be less than 0");
     return statusFlags[index];
 }
 void Intellisense::setStatusFlagAt(int index,bool flag)
 {
+    ASSERT(index>=0,"flag index canot be less than 0");
     statusFlags[index] = flag;
 }
 bool Intellisense::getrequirementsMet()
@@ -1157,6 +1163,8 @@ void Intellisense::setFeedback(string newFeedback)
 }
 bool Intellisense::isValidParaForCmd(int cmd,int parameter)
 {//this determines if the parameter is valid to work with the command
+    ASSERT(cmd>=0,"COMMAND CODE CANNOT BE LESS THAN ZERO");
+    ASSERT(cmd>=0,"PARAMETER CANNOT BE LESS ZERO");
     bool valid=false;
     if (cmd == ADD)
     {
@@ -1284,6 +1292,7 @@ void Intellisense::setParameter(string newParameter)
 
 void Intellisense::smartAutoFill(Action &task)
 {
+    ASSERT(&task!=NULL,"ACTION OBJECT CANNOT BE reference to null");
     bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0
                              && task.getStartDate().tm_mday ==0);
     if (isDateNotentered)
