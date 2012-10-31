@@ -62,9 +62,17 @@ private:
     const static string undoCommandArray[];
     const static string redoCommandArray[];
 
+    const static string EMPTYCATEGORY;
+    const static string EMPTYEVENT;
+    const static string EMPTYPRIORITY;
+    const static int    EMPTYID;
 
-
-    //end of added array support for commands
+    const static string HIGHPRIORITY;
+    const static string HIGHPRIORITY_L;
+    const static string WEEKLY;
+    const static string MONTHLY;
+    const static string FORTNIGHTLY;
+        //end of added array support for commands
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
     string _feedback;
@@ -100,14 +108,12 @@ public:
     string& trim(string& s , const string& delimiters = " \f\r\t\v");
     string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
     string& trim_left_inplace( string& s,  const string& delimiters=" \f\r\t\v");
-
-
+    string toLowerString(string);
     Action addOperation(vector<string>& tokens);
     Action deleteOperation(vector<string>& tokens);
     Action exitOperation(vector<string>& tokens);
     Action displayOperation(vector<string>& tokens);
     Action markOperation(vector<string>& tokens);
-    //Action invalidOperation(vector<string>& tokens);
     Action quickAddOperation(vector<string>& tokens);
     Action sortOperation(vector<string>& tokens);
     Action findOperation(vector<string>& tokens);
@@ -124,13 +130,15 @@ public:
     bool getrequirementsMet();
     void setRequirementsMet(bool);
 
-    //These functions below governs the validity  of whether the command can be processed by the main
-    void checkAddReq();//check whether parameters supplied met the minimum requirement for command to be valid
+    //check whether parameters supplied met the minimum requirement for command to be valid
+    void checkAddReq();
     void checkDelReq();
     void checkDspReq();
     void checkMarkReq();
     void checkFindReq();
     void checkEditReq();
+    void checkExitReq();
+    void initFlags();
 
     bool isValidParaForCmd(int,int);
     void smartAutoFill(Action &task);
