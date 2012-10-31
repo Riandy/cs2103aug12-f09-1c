@@ -30,7 +30,6 @@ vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
     string command=newAction.getCommand();
-    command="add";
     ASSERT(command!="","Command is NULL");
     /*defensive coding*/
     //convert everything to upper case
