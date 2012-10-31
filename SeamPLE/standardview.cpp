@@ -18,17 +18,20 @@ StandardView::StandardView(QWidget *parent):
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    _allShortcuts.setShortcutsTo(this);
+    _allShortcuts.setStandardShortcutsTo(this);
     setSignals();
 
     //Prevent change view push button from snatching focus
     //from input line
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
+
+    resetTableContents();
+    _tableItems.currentIndex = 0;
+    _tableItems.endIndex = 0;
 }
 
 StandardView::~StandardView()
 {
-    resetTableContents();
     delete ui;
 }
 
@@ -98,20 +101,13 @@ void StandardView:: showAppropriateColorInputEdit (InputBarFlag color)
     }
 }
 
-void StandardView::showTableResults(QVector <QString> output)
+void StandardView:: instantiateTable(QVector <QString> output)
 {
-    //Make sure all contents for last showing is removed and replaced
-    //with the current content
-    resetTableContents();
+    _tableItems.output = output;
+    _tableItems.currentIndex = 0;
+    _tableItems.endIndex = output.size()/6;
 
-//    _tableCellStart = 0;
-//    _tableCellEnd = output.size()/6;
-//    for (int i = _tableCellStart; i < _tableCellEnd && (i-_tableCellStart) < 10; i++)
-//    {
-//        setTableEventId(i,output[(i*6)]);
-//        setTableEventName(i, output[(i*6)+1]);
-//    }
-
+    showTableResults();
 }
 
 //Remove all dynamically allocated memory given to table widget
@@ -149,26 +145,26 @@ void StandardView::show()
     //Reset interface to original position
     changeGeometry();
 
-    opacityLvl = 0;
+    _opacityLvl = 0;
     setWindowOpacity(NONE);
     QMainWindow::show();
-    connect(&fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
-    fadeInTimer.start(1);
+    connect(&_fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
+    _fadeInTimer.start(1);
 }
 
 void StandardView::hide()
 {
-    opacityLvl = 1;
+    _opacityLvl = 1;
     setWindowOpacity(LOGICAL);
-    connect(&fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
-    fadeOutTimer.start(1);
+    connect(&_fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
+    _fadeOutTimer.start(1);
 }
 
 bool StandardView::interfaceCurrentlyChanging()
 {
     bool result;
 
-    if (opacityLvl < LOGICAL && opacityLvl > NONE)
+    if (_opacityLvl > 0.001 && _opacityLvl < LOGICAL)
     {
         result = true;
     }
@@ -243,34 +239,96 @@ void StandardView::clearTriggered()
 
 void StandardView::fadeInChange()
 {
-    opacityLvl += 0.08;
+    _opacityLvl += 0.08;
 
-    if (opacityLvl >= LOGICAL)
+    if (_opacityLvl >= LOGICAL)
     {
-        opacityLvl = 1;
-        fadeInTimer.stop();
-        disconnect(&fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
+        _opacityLvl = 1;
+        _fadeInTimer.stop();
+        disconnect(&_fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
     }
 
-    setWindowOpacity(opacityLvl);
+    setWindowOpacity(_opacityLvl);
 }
 
 void StandardView::fadeOutChange()
 {
-    opacityLvl -= 0.08;
+    _opacityLvl -= 0.08;
 
-    if (opacityLvl <= NONE)
+    if (_opacityLvl <= NONE)
     {
-        opacityLvl = 0;
-        fadeOutTimer.stop();
+        _opacityLvl = 0;
+        _fadeOutTimer.stop();
         QMainWindow::hide();
-        disconnect(&fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
+        disconnect(&_fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
     }
 
-    setWindowOpacity(opacityLvl);
+    setWindowOpacity(_opacityLvl);
 }
 
-void StandardView:: setTableEventId(int index, QString id)
+void StandardView::pageUpTriggered()
+{
+    bool currInputNotAtFrontDisplay = (_tableItems.currentIndex >= 10);
+
+    if (!tableIsEmpty() && currInputNotAtFrontDisplay)
+    {
+        _tableItems.currentIndex -= 10;
+        showTableResults();
+    }
+}
+
+void StandardView::pageDownTriggered()
+{
+    bool currInputNotAtLastDisplay =
+            (_tableItems.endIndex - _tableItems.endIndex%10 !=
+             _tableItems.currentIndex -_tableItems.currentIndex%10);
+    if (!tableIsEmpty()&& currInputNotAtLastDisplay)
+    {
+        _tableItems.currentIndex += 10;
+        showTableResults();
+    }
+}
+
+void StandardView::showTableResults()
+{
+    //Make sure all contents for last showing is removed and replaced
+    //with the current content
+    resetTableContents();
+
+    if (tableIsEmpty())
+    {
+        informNoDisplayResults();
+    }
+    else
+    {
+        int i = _tableItems.currentIndex;
+        bool stillInResultsRange = (i < _tableItems.endIndex);
+        bool stillInTableRange = (i-_tableItems.currentIndex < 10);
+
+        while (stillInResultsRange && stillInTableRange)
+        {
+            showTableEventId(i%10,_tableItems.output[(i*6)]);
+            showTableEventName(i%10, _tableItems.output[(i*6)+1]);
+
+            i++;
+            stillInResultsRange = (i < _tableItems.endIndex);
+            stillInTableRange = (i-_tableItems.currentIndex < 10);
+        }
+
+        //Reduce i as it will increment for one extra time in instantiating the bool conditions
+        i--;
+
+        ui->label_27->setText(" Showing "
+                              +QString::number(_tableItems.currentIndex+1)
+                              +" to "
+                              +QString::number(i+1)
+                              +" of "
+                              +QString::number(_tableItems.endIndex+1)
+                              +" results ");
+    }
+}
+
+void StandardView:: showTableEventId(int index, QString id)
 {
     int reformatIndex = index%10;
 
@@ -321,7 +379,7 @@ void StandardView:: setTableEventId(int index, QString id)
     }
 }
 
-void StandardView:: setTableEventName(int index, QString name)
+void StandardView:: showTableEventName(int index, QString name)
 {
     int reformatIndex = index%10;
 
@@ -370,6 +428,11 @@ void StandardView:: setTableEventName(int index, QString name)
         default:
             break;
     }
+}
+
+void StandardView:: informNoDisplayResults()
+{
+    ui->label_27->setText(MESSAGE_NO_CURRENT_RESULTS);
 }
 
 bool StandardView:: singleInstanceExists()
@@ -447,4 +510,15 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
             this,SLOT(clearTriggered()));
+
+    connect(_allShortcuts.getLeftKey(),SIGNAL(triggered()),
+            this,SLOT(pageUpTriggered()));
+
+    connect(_allShortcuts.getRightKey(),SIGNAL(triggered()),
+            this,SLOT(pageDownTriggered()));
+}
+
+bool StandardView::tableIsEmpty()
+{
+    return (_tableItems.output.size() == 0);
 }

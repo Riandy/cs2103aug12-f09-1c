@@ -15,6 +15,14 @@ class StandardView : public QMainWindow, public CommonView
     Q_OBJECT
 
 private:
+    struct table
+    {
+        QVector <QString> output;
+        int currentIndex;
+        int endIndex;
+    };
+
+private:
     static StandardView* _standardView;
 
     const static QString MESSAGE_NO_CURRENT_RESULTS;
@@ -36,7 +44,7 @@ public:
 
     void showAppropriateColorInputEdit (InputBarFlag color);
 
-    void showTableResults(QVector <QString> output);
+    void instantiateTable(QVector <QString> output);
 
     void resetTableContents();
 
@@ -82,10 +90,18 @@ private slots:
 
     void fadeOutChange();
 
-private:
-    void setTableEventId(int index, QString id);
+    void pageUpTriggered();
 
-    void setTableEventName(int index, QString name);
+    void pageDownTriggered();
+
+private:
+    void showTableResults();
+
+    void showTableEventId(int index, QString id);
+
+    void showTableEventName(int index, QString name);
+
+    void informNoDisplayResults();
 
     bool singleInstanceExists();
 
@@ -97,18 +113,18 @@ private:
 
     void setSignals();
 
+    bool tableIsEmpty();
+
 private:
-    double opacityLvl;
+    table _tableItems;
 
-    QTimer fadeInTimer;
+    double _opacityLvl;
 
-    QTimer fadeOutTimer;
+    QTimer _fadeInTimer;
+
+    QTimer _fadeOutTimer;
 
     Ui::StandardView *ui;
-
-//    int _tableCellStart;
-
-//    int _tableCellEnd;
 };
 
 #endif // STANDARDVIEW_H
