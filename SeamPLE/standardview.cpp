@@ -7,6 +7,8 @@ StandardView* StandardView::_standardView = NULL;
 
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
         "No Search Results Available";
+const QString StandardView::MESSAGE_VIEW_TYPE_WRONG =
+        "View type in StandardView is not given a valid input";
 
 StandardView::StandardView(QWidget *parent):
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
@@ -31,10 +33,13 @@ StandardView::StandardView(QWidget *parent):
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
     setStartView();
+
+    _faulty = _faulty->getInstance();
 }
 
 StandardView::~StandardView()
 {
+    _faulty->endInstance();
     delete ui;
 }
 
@@ -108,7 +113,7 @@ void StandardView:: showAppropriateColorInputEdit (InputBarFlag color) throw (st
     }
 }
 
-void StandardView:: instantiateTable(QVector <QString> output)
+void StandardView:: instantiateTable(QVector <QString> output) throw (string)
 {
     //Defensive coding: output must be a factor of 6
     if(output.size() % 6 == 0)
@@ -116,6 +121,10 @@ void StandardView:: instantiateTable(QVector <QString> output)
         _tableItems.output = output;
         _tableItems.currentIndex = 0;
         _tableItems.endIndex = ((output.size()-1)/6);
+    }
+    else
+    {
+        throw MESSAGE_ERROR_INCOMPLETE_RESULTS;
     }
     showTableResults();
 }
@@ -298,13 +307,20 @@ void StandardView::pageDownTriggered()
 
 void StandardView::changeDisplayTriggered()
 {
-    if (_currentType == RESULTS_TABLE || _currentType == HELP_VIEW)
+    try
     {
-        showViewWithType(TODAY_EVENTS);
+        if (_currentType == RESULTS_TABLE || _currentType == HELP_VIEW)
+        {
+            showViewWithType(TODAY_EVENTS);
+        }
+        else
+        {
+            showViewWithType(RESULTS_TABLE);
+        }
     }
-    else
+    catch (string error)
     {
-        showViewWithType(RESULTS_TABLE);
+         _faulty->report(error);
     }
 }
 
@@ -362,7 +378,7 @@ void StandardView::showTodayEvents()
 
 }
 
-void StandardView::showViewWithType(viewType type)
+void StandardView::showViewWithType(viewType type) throw (string)
 {
     switch (type)
     {
@@ -381,6 +397,7 @@ void StandardView::showViewWithType(viewType type)
                     break;
 
                 default:
+                    throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
                     break;
             }
             showTodayView();
@@ -389,18 +406,19 @@ void StandardView::showViewWithType(viewType type)
         case RESULTS_TABLE:
             switch (_currentType)
             {
-                    case TODAY_EVENTS:
-                        hideTodayView();
-                        break;
+                case TODAY_EVENTS:
+                    hideTodayView();
+                    break;
 
-                    case RESULTS_TABLE:
-                        break;
+                case RESULTS_TABLE:
+                    break;
 
-                    case HELP_VIEW:
-                        hideHelp();
-                        break;
+                case HELP_VIEW:
+                    hideHelp();
+                    break;
 
                 default:
+                    throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
                     break;
             }
             showTable();
@@ -421,12 +439,14 @@ void StandardView::showViewWithType(viewType type)
                         break;
 
                     default:
+                        throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
                         break;
             }
             showHelp();
             break;
 
         default:
+            throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
             break;
     }
     _currentType = type;
