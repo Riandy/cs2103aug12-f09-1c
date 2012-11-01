@@ -203,14 +203,15 @@ task* calender::pointerSearchByTask(string searchItem)// only return first match
 }
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
-    string searchItemBuffer = searchItem.substr(0,searchItem.length()-1);//remove the null charcter at the end of string
+    string searchItemBuffer = searchItem.substr(0,searchItem.length()/*-1*/);//remove the null charcter at the end of string
     vector<task> _bufferStorage;
     for (int i = 0; i < int(_storage.size()); i++)
     {
         string  bufferString = _storage[i].getEventName();
-        if(bufferString.length() >= searchItem.length()-1)//defensive programming
+        if(bufferString.length() >= searchItem.length()/*-1*/)//defensive programming
         {
-            string compareString = (bufferString.substr(0, searchItem.length()-1));
+            string compareString = (bufferString.substr(0, searchItem.length()/*-1*/));
+            //cout<<"zzz"<<compareString<<"zzz"<<searchItemBuffer<<"zz"<<endl;
             if(compareString == searchItemBuffer) //match exactly
                     _bufferStorage.push_back(_storage[i]);
         }
