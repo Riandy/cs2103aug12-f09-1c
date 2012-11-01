@@ -106,6 +106,10 @@ Intellisense::Intellisense(void)
 {
     initFlags();
 
+    logger->getInstance();
+
+
+
 
 }
 void Intellisense::initFlags()
@@ -122,6 +126,7 @@ void Intellisense::initFlags()
 Intellisense::~Intellisense(void)
 {
     instanceFlag=false;
+    logger->endInstance();
 }
 
 Action Intellisense::check(string query)
@@ -168,6 +173,8 @@ Action Intellisense::check(string query)
         task=redoOperation(buffer);
         break;
     default:
+        logger->report("Unexpected command received" + determinOperation(buffer));    //logging the unexpected command
+        ASSERT(false,"Command is not recognised");
         break;
     }
 

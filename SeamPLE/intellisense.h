@@ -117,6 +117,8 @@ private:
 
 public:
     static Intellisense* getInstance();
+
+
     ~Intellisense(void);
     Action check(string query);
     string getOperation(vector<string>& tokens);
@@ -153,7 +155,7 @@ public:
 
 private:
     vector<string> tokenize(string command);
-
+    ErrorLogger *logger;
     bool isAllInt(const string& s );
     void itTest(vector<string> tokens);
     operation determinOperation(vector<string>& tokens);
