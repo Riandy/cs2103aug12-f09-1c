@@ -757,7 +757,6 @@ p, li { white-space: pre-wrap; }
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-
      </widget>
      <widget class="QLabel" name="label_27">
       <property name="geometry">

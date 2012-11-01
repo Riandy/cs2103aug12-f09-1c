@@ -43,6 +43,12 @@ public:
 
     QAction* getPageDownKey();
 
+    QAction* getChangeDisplayKey();
+
+    QAction* getArrowUpKey();
+
+    QAction* getArrowDownKey();
+
     //QxtGlobalShortcut* getShowHideViewKey();
 
 private:
@@ -58,6 +64,9 @@ private:
     QAction* _clear;
     QAction* _pageUp;
     QAction* _pageDown;
+    QAction* _changeDisplay;
+    QAction* _arrowUp;
+    QAction* _arrowDown;
 
     //QxtGlobalShortcut * _showHideView;
 };

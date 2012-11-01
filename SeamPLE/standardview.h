@@ -54,16 +54,6 @@ public:
 
     bool interfaceCurrentlyChanging();
 
-    void showTable();
-
-    void hideTable();
-
-    void showTodayEvents();
-
-    void hideTodayEvents();
-
-    void showTodayOrTable();
-
 signals:
     void relay(QString input);
 
@@ -102,7 +92,21 @@ private slots:
 
     void pageDownTriggered();
 
+    void changeDisplayTriggered();
+
 private:
+    void showTable();
+
+    void hideTable();
+
+    void showTodayView();
+
+    void hideTodayView();
+
+    void showTodayOrTable();
+
+    void showTodayEvents();
+
     void showTableResults();
 
     void showTableEventId(int index, QString id);
@@ -124,7 +128,7 @@ private:
     bool tableIsEmpty();
 
 private:
-    bool isTableView;
+    bool _isTableView;
 
     table _tableItems;
 

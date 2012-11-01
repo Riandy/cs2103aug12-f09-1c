@@ -30,7 +30,7 @@ StandardView::StandardView(QWidget *parent):
     resetTableContents();
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
-    isTableView = true;
+    _isTableView = true;
     showTodayOrTable();
 }
 
@@ -180,46 +180,6 @@ bool StandardView::interfaceCurrentlyChanging()
     return result;
 }
 
-void StandardView::showTable()
-{
-    ui->frame_4->show();
-    ui->label_5->show();
-    ui->label_6->show();
-    ui->label_27->show();
-}
-
-void StandardView::hideTable()
-{
-    ui->frame_4->hide();
-    ui->label_5->hide();
-    ui->label_6->hide();
-    ui->label_27->hide();
-}
-
-void StandardView::showTodayEvents()
-{
-    ui->frame_5->show();
-}
-
-void StandardView::hideTodayEvents()
-{
-    ui->frame_5->hide();
-}
-
-void StandardView::showTodayOrTable()
-{
-    if (isTableView)
-    {
-        hideTodayEvents();
-        showTable();
-    }
-    else
-    {
-        hideTable();
-        showTodayEvents();
-    }
-}
-
 void StandardView::recieve(QString input)
 {
     emit relay(input);
@@ -333,11 +293,68 @@ void StandardView::pageDownTriggered()
     }
 }
 
+void StandardView::changeDisplayTriggered()
+{
+    _isTableView = !_isTableView;
+    showTodayOrTable();
+}
+
+void StandardView::showTable()
+{
+    ui->frame_4->show();
+    ui->label_5->show();
+    ui->label_6->show();
+    ui->label_27->show();
+}
+
+void StandardView::hideTable()
+{
+    ui->frame_4->hide();
+    ui->label_5->hide();
+    ui->label_6->hide();
+    ui->label_27->hide();
+}
+
+void StandardView::showTodayView()
+{
+    ui->frame_5->show();
+}
+
+void StandardView::hideTodayView()
+{
+    ui->frame_5->hide();
+}
+
+void StandardView::showTodayEvents()
+{
+
+}
+
+void StandardView::showTodayOrTable()
+{
+    if (_isTableView)
+    {
+        hideTodayView();
+        showTable();
+    }
+    else
+    {
+        hideTable();
+        showTodayView();
+    }
+}
+
 void StandardView::showTableResults()
 {
     //Make sure all contents for last showing is removed and replaced
     //with the current content
     resetTableContents();
+
+    if (!_isTableView)
+    {
+        _isTableView = true;
+        showTodayOrTable();
+    }
 
     if (tableIsEmpty())
     {
@@ -561,6 +578,9 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getPageDownKey(),SIGNAL(triggered()),
             this,SLOT(pageDownTriggered()));
+
+    connect(_allShortcuts.getChangeDisplayKey(),SIGNAL(triggered()),
+            this,SLOT(changeDisplayTriggered()));
 }
 
 bool StandardView::tableIsEmpty()
