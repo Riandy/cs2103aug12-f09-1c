@@ -105,6 +105,8 @@ Intellisense* Intellisense::getInstance()
 Intellisense::Intellisense(void)
 {
     initFlags();
+
+
 }
 void Intellisense::initFlags()
 {
@@ -178,10 +180,10 @@ Action Intellisense::check(string query)
 
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
-    ASSERT(tokens.size()<= MAXNOOFPARAMETERS,"Too many tokens extracted.");
+
     if(tokens.size()==0)
     {
-        return INVALID;
+        return INVALID;    //Defensive coding: prevents empty input to pass through
     }
 
     string commandword=tokens[0];
