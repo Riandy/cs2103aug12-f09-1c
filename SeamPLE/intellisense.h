@@ -7,6 +7,7 @@
 #include <vector>
 #include <ctime>
 #include "ndebug.h"
+#include "ErrorLogger.h"
 
 
 #include "Action.h"
@@ -45,6 +46,8 @@ private:
 
     static bool instanceFlag;
     static Intellisense *intellisense;
+
+
 
     Intellisense(void);
     static const string months[12];
