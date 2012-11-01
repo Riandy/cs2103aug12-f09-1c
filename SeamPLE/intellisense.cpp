@@ -19,7 +19,7 @@ const string Intellisense::displayCommandArray[]= { "display" ,"show","-d","dsp"
 const string Intellisense::exitCommandArray[] = {"exit","quit","-q"};
 const string Intellisense::sortCommandArray[] = {"sort","arrange","-s"};
 const string Intellisense::findCommandArray[] = {"find","search","-f"};
-const string Intellisense::editCommandArray[] = {"edit","change","-e"};
+const string Intellisense::editCommandArray[] = {"edit","change","-e","defer","reschedule","change"};
 const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
 
@@ -105,6 +105,8 @@ Intellisense* Intellisense::getInstance()
 Intellisense::Intellisense(void)
 {
     initFlags();
+
+
 }
 void Intellisense::initFlags()
 {
@@ -178,10 +180,10 @@ Action Intellisense::check(string query)
 
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
-    ASSERT(tokens.size()<= MAXNOOFPARAMETERS,"Too many tokens extracted.");
+
     if(tokens.size()==0)
     {
-        return INVALID;
+        return INVALID;    //Defensive coding: prevents empty input to pass through
     }
 
     string commandword=tokens[0];
