@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/bg">
+        <file>2nd_testtitle.gif</file>
+        <file>brown.jpg</file>
+        <file>enlarge.gif</file>
+        <file>exit.gif</file>
+        <file>inapplogo.png</file>
+        <file>invis.gif</file>
+        <file>scenary.jpg</file>
+        <file>small.gif</file>
+        <file>toSmall.gif</file>
+        <file>calendar.gif</file>
+        <file>testtitle.gif</file>
+        <file>pin icon.gif</file>
+    </qresource>
+</RCC>
