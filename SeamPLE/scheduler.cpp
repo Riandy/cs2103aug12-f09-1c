@@ -34,7 +34,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     /*defensive coding*/
     //convert command to upper case to ensure that it is not case sensitive
     transform(command.begin(), command.end(),command.begin(), ::toupper);
-    command="TODAY";
+    //command="TODAY";
     //process and package the action into task
     task newTask=processAction(newAction);
 
