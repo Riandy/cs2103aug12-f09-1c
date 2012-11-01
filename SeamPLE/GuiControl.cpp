@@ -101,17 +101,17 @@ void GuiControl::check(QString input)
         else
         {
 
-                if (implementInputColorFlagFailure((output[1])[0]))
-                {
-                    output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
-                }
-//                //added start of ad hoc edit code
-//                if(1)//if is edit, no idea how to detect at this level no way i think
-//                {
-//                    int capacity = output.size();
-//                     _standardGui->showTableResults(output.mid(1,capacity - 1));
-//                }
-//                //end of AD hoc edit code
+            if (implementInputColorFlagFailure((output[1])[0]))
+            {
+                output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
+            }
+            //                //added start of ad hoc edit code
+            //                if(1)//if is edit, no idea how to detect at this level no way i think
+            //                {
+            //                    int capacity = output.size();
+            //                     _standardGui->showTableResults(output.mid(1,capacity - 1));
+            //                }
+            //                //end of AD hoc edit code
         }
         send(output[0]);
     }

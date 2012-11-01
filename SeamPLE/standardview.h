@@ -15,6 +15,13 @@ class StandardView : public QMainWindow, public CommonView
     Q_OBJECT
 
 private:
+    enum viewType
+    {
+        TODAY_EVENTS,
+        RESULTS_TABLE,
+        HELP_VIEW
+    };
+
     struct table
     {
         QVector <QString> output;
@@ -97,15 +104,21 @@ private slots:
     void helpTriggered();
 
 private:
+    void setStartView();
+
     void showTable();
 
     void hideTable();
+
+    void showHelp();
+
+    void hideHelp();
 
     void showTodayView();
 
     void hideTodayView();
 
-    void showTodayOrTable();
+    void showViewWithType(viewType type);
 
     void showTodayEvents();
 
@@ -130,7 +143,7 @@ private:
     bool tableIsEmpty();
 
 private:
-    bool _isTableView;
+    viewType _currentType;
 
     table _tableItems;
 

@@ -30,8 +30,7 @@ StandardView::StandardView(QWidget *parent):
     resetTableContents();
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
-    _isTableView = false;
-    showTodayOrTable();
+    setStartView();
 }
 
 StandardView::~StandardView()
@@ -297,13 +296,27 @@ void StandardView::pageDownTriggered()
 
 void StandardView::changeDisplayTriggered()
 {
-    _isTableView = !_isTableView;
-    showTodayOrTable();
+    if (_currentType == RESULTS_TABLE || _currentType == HELP_VIEW)
+    {
+        showViewWithType(TODAY_EVENTS);
+    }
+    else
+    {
+        showViewWithType(RESULTS_TABLE);
+    }
 }
 
 void StandardView::helpTriggered()
 {
+    showViewWithType(HELP_VIEW);
+}
 
+void StandardView::setStartView()
+{
+    _currentType = TODAY_EVENTS;
+
+    hideTable();
+    hideHelp();
 }
 
 void StandardView::showTable()
@@ -322,6 +335,17 @@ void StandardView::hideTable()
     ui->label_27->hide();
 }
 
+void StandardView::showHelp()
+{
+    ui->frame_13->show();
+    qDebug() << "I AM HERE";
+}
+
+void StandardView::hideHelp()
+{
+    ui->frame_13->hide();
+}
+
 void StandardView::showTodayView()
 {
     ui->frame_5->show();
@@ -337,18 +361,74 @@ void StandardView::showTodayEvents()
 
 }
 
-void StandardView::showTodayOrTable()
+void StandardView::showViewWithType(viewType type)
 {
-    if (_isTableView)
+    switch (type)
     {
-        hideTodayView();
-        showTable();
+        case TODAY_EVENTS:
+            switch (_currentType)
+            {
+                case TODAY_EVENTS:
+                    break;
+
+                case RESULTS_TABLE:
+                    hideTable();
+                    break;
+
+                case HELP_VIEW:
+                    hideHelp();
+                    break;
+
+                default:
+                    break;
+            }
+            showTodayView();
+            break;
+
+        case RESULTS_TABLE:
+            switch (_currentType)
+            {
+                    case TODAY_EVENTS:
+                        hideTodayView();
+                        break;
+
+                    case RESULTS_TABLE:
+                        break;
+
+                    case HELP_VIEW:
+                        hideHelp();
+                        break;
+
+                default:
+                    break;
+            }
+            showTable();
+            break;
+
+        case HELP_VIEW:
+            switch (_currentType)
+            {
+                    case TODAY_EVENTS:
+                        hideTodayView();
+                        break;
+
+                    case RESULTS_TABLE:
+                        hideTable();
+                        break;
+
+                    case HELP_VIEW:
+                        break;
+
+                    default:
+                        break;
+            }
+            showHelp();
+            break;
+
+        default:
+            break;
     }
-    else
-    {
-        hideTable();
-        showTodayView();
-    }
+    _currentType = type;
 }
 
 void StandardView::showTableResults()
@@ -356,11 +436,11 @@ void StandardView::showTableResults()
     //Make sure all contents for last showing is removed and replaced
     //with the current content
     resetTableContents();
+    bool isNotTableView = (_currentType != RESULTS_TABLE);
 
-    if (!_isTableView)
+    if (isNotTableView)
     {
-        _isTableView = true;
-        showTodayOrTable();
+        showViewWithType(RESULTS_TABLE);
     }
 
     if (tableIsEmpty())
@@ -590,7 +670,7 @@ void StandardView:: setSignals()
             this,SLOT(changeDisplayTriggered()));
 
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
-            this,SLOT(addTriggered()));
+            this,SLOT(helpTriggered()));
 }
 
 bool StandardView::tableIsEmpty()

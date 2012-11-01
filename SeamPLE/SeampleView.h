@@ -38,6 +38,8 @@ signals:
 
     void toStandardView(QString input, QString inputChecked, bool focus);
 
+    void getHelpView();
+
 private slots:
     void recieve(QString input);
 
@@ -60,6 +62,8 @@ private slots:
     void editTriggered();
 
     void clearTriggered();
+
+    //void helpTriggered();
 
 private:
     bool singleInstanceExists();
