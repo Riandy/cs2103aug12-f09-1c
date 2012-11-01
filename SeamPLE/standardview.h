@@ -15,14 +15,21 @@ class StandardView : public QMainWindow, public CommonView
     Q_OBJECT
 
 private:
-    //New struct for holding the table contents
-    struct TableListNode{
-        QTableWidgetItem index;
-        QTableWidgetItem content;
-        TableListNode *prev;
-        TableListNode *next;
+    enum viewType
+    {
+        TODAY_EVENTS,
+        RESULTS_TABLE,
+        HELP_VIEW
     };
 
+    struct table
+    {
+        QVector <QString> output;
+        int currentIndex;
+        int endIndex;
+    };
+
+private:
     static StandardView* _standardView;
 
     const static QString MESSAGE_NO_CURRENT_RESULTS;
@@ -42,15 +49,11 @@ public:
 
     void showFocusInInputEdit (bool focus);
 
-    void showAppropriateColorInputEdit (InputBarFlag color);
+    void showAppropriateColorInputEdit (InputBarFlag color) throw (string);
 
-    void showTableResults(QVector <QString> output);
+    void instantiateTable(QVector <QString> output);
 
     void resetTableContents();
-
-    void showNoTableDisplay();
-
-    void showTodayEvents();
 
     void show();
 
@@ -86,18 +89,48 @@ private slots:
 
     void editTriggered();
 
-    void changeWorkingTabTriggered();
-
     void clearTriggered();
 
     void fadeInChange();
 
     void fadeOutChange();
 
-private:    
-    bool singleInstanceExists();
+    void pageUpTriggered();
 
-    void addTableContent(TableListNode *curr);
+    void pageDownTriggered();
+
+    void changeDisplayTriggered();
+
+    void helpTriggered();
+
+private:
+    void setStartView();
+
+    void showTable();
+
+    void hideTable();
+
+    void showHelp();
+
+    void hideHelp();
+
+    void showTodayView();
+
+    void hideTodayView();
+
+    void showViewWithType(viewType type);
+
+    void showTodayEvents();
+
+    void showTableResults();
+
+    void showTableEventId(int index, QString id);
+
+    void showTableEventName(int index, QString name);
+
+    void informNoDisplayResults();
+
+    bool singleInstanceExists();
 
     void changeGeometry();
 
@@ -105,20 +138,22 @@ private:
 
     int getPosY(int maxY);
 
-    void setTableParam();
-
     void setSignals();
 
+    bool tableIsEmpty();
+
 private:
-    double opacityLvl;
+    viewType _currentType;
 
-    QTimer fadeInTimer;
+    table _tableItems;
 
-    QTimer fadeOutTimer;
+    double _opacityLvl;
+
+    QTimer _fadeInTimer;
+
+    QTimer _fadeOutTimer;
 
     Ui::StandardView *ui;
-
-    TableListNode *_tail;
 };
 
 #endif // STANDARDVIEW_H

@@ -7,6 +7,7 @@ NotifyView::NotifyView()
     _popUp = new QSystemTrayIcon();
     _popUp->setIcon(QIcon(QPixmap(":/bg/pin icon.gif")));
     _popUp->show();
+    _popUp->setToolTip("SeamPLE");
 }
 
 NotifyView::~NotifyView()

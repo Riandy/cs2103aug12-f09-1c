@@ -20,10 +20,8 @@ public:
     void displayToTrayIcon(string message);
     void tenMinutesLater(int &Hour, int &Min, int _hour, int _min);
 
-protected slots:
-    void run();
-
 protected:
+    void run();
     void showtime(string input);
 
 private:
