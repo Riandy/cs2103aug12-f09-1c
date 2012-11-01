@@ -12,20 +12,8 @@ void UnitTest::dummyTest1() {
 }
 
 
-void UnitTest::testIntellisense()
-{
-    /*    Intellisense *intellisense;
-     intellisense=Intellisense::getInstance();
 
-     Action result = intellisense->check("add line");
-
-     string commandword = result.getCommand();
-     string eventName = result.getEventName();
-
-     QCOMPARE(QString( commandword.c_str()),QString("ADD"));
-     QCOMPARE(QString( eventName.c_str()), QString("line"));
-*/
-}
+#pragma region Intellisense UnitTesting
 
 void UnitTest::testIntellisenseAdd()
 {//basic add
@@ -68,12 +56,36 @@ void UnitTest::testIntellisenseAdd3()
 }
 void UnitTest::testIntellisenseAdd4()
 {
-    /*reserved for time testing*/
+    Intellisense *intellisense;
+    intellisense=Intellisense::getInstance();
+    Action result = intellisense->check("add record 9 news 09102012 9am");
+
+    string eventName = result.getEventName();
+    tm date = result.getStartDate();
+
+    QCOMPARE( eventName, string ("record 9 news"));
+    QCOMPARE( date.tm_year, int(2012));
+    QCOMPARE( date.tm_mday, int(9));
+    QCOMPARE( date.tm_mon,  int(10));
+    QCOMPARE( date.tm_min,  int(0));
+    QCOMPARE( date.tm_hour, int(9));
 }
 
 void UnitTest::testIntellisenseAdd5()
 {
-    /*reserved for time testing*/
+    Intellisense *intellisense;
+    intellisense=Intellisense::getInstance();
+    Action result = intellisense->check("add record 9 news 09/10/2012 9pm");
+
+    string eventName = result.getEventName();
+    tm date = result.getStartDate();
+
+    QCOMPARE( eventName, string ("record 9 news"));
+    QCOMPARE( date.tm_year, int(2012));
+    QCOMPARE( date.tm_mday, int(9));
+    QCOMPARE( date.tm_mon,  int(10));
+    QCOMPARE( date.tm_min,  int(0));
+    QCOMPARE( date.tm_hour, int(21));
 }
 
 
@@ -95,6 +107,7 @@ void UnitTest::testIntellisenseDel()
     QCOMPARE(eventName, string("birthday"));//got space at the end
 
 }
+
 void UnitTest::testIntellisenseDel2()
 {//test delete by id
     Intellisense *intellisense;
@@ -110,20 +123,24 @@ void UnitTest::testIntellisenseDel2()
 
 }
 
-/* void UnitTest::testIntellisenseDEL3()
- {//invalid del
+void UnitTest::testIntellisenseDEL3()
+ {
       Intellisense *intellisense;
       intellisense=Intellisense::getInstance();
 
       Action result = intellisense->check("del #asd");
 
       string commandword = result.getCommand();
+      string eventName = result.getEventName();
+      string category  = result.getCategory();
       int id = result.getID();
 
       QCOMPARE(commandword ,string("DELETE"));
-      QCOMPARE(id, 2);
-// this got minor bug due to ur algo interpreting if not id is eventname
-}*/
+      QCOMPARE(id, -1);
+      QCOMPARE(eventName, string("#asd"));
+      QCOMPARE( category , string("#"));
+
+}
 
 void UnitTest::testIntellisenseEdit()
 {
@@ -198,6 +215,29 @@ void UnitTest::testIntellisenseQuickAdd()
     QCOMPARE(category, string("family"));
     QCOMPARE( dateType, task::DATENORMAL );
 }
+
+void UnitTest::testIntellisenseQuickAdd2()
+{
+    Intellisense *intellisense;
+    intellisense=Intellisense::getInstance();
+
+    Action result = intellisense->check("yoga lesson 29/02/2013 8am weekly");
+
+    string commandword = result.getCommand();
+    int dateType = result.getDateType();
+    tm datecheck = result.getStartDate();
+    string eventName = result.getEventName();
+
+    QCOMPARE(commandword, string("ADD"));
+    QCOMPARE(eventName , string("yoga lesson"));
+    QCOMPARE(dateType, task::DATEWEEKLY);
+    QCOMPARE(datecheck.tm_hour , int(8));
+    QCOMPARE(datecheck.tm_min , int(0));
+    QCOMPARE(datecheck.tm_mon, int (2));
+
+
+}
+
 void UnitTest::testIntellisenseSort()
 {
     Intellisense *intellisense;
@@ -242,6 +282,6 @@ void UnitTest::testIntellisenseRedo()
     QCOMPARE(commandword,string("REDO"));
 }
 
-
+#pragma endregion Intellisense UnitTesting
 
 
