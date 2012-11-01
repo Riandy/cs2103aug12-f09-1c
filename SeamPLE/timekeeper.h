@@ -18,6 +18,7 @@ public:
     //void init(QSystemTrayIcon* _popUp);
     static void sleep(unsigned long msecs);
     void displayToTrayIcon(string message);
+    void tenMinutesLater(int &Hour, int &Min, int _hour, int _min);
 
 protected:
     void run();

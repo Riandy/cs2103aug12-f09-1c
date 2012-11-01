@@ -85,7 +85,7 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
     else
     {
             if( (response.getCommand()) != "EDIT" )//crude way to do it since i have no idea the format of display
-            {
+            {// have to make this work with the below part together with teh table
                 feedback.push_back(QString::fromStdString(intellisense->getParameter()));
                 if (intellisense->getrequirementsMet())
                 {
@@ -93,26 +93,31 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
                 }
                 else
                 {
-                    feedback.push_back("2");
+                    feedback.push_back("2");//red
                 }
             }
-            //added adhoc edit code
+//----------------------------------startof adhoc edit code------------------------------------------------------------------
             if( (response.getCommand()) == "EDIT" )
             {
                 cout<<"running la"<<endl;
                 feedback += fireAction(); //append the results at the end
-                //crap
-                cout<<endl<<endl;
-                for(int t=0; t<feedback.size();t++)
-                cout<<(feedback.at(t)).toStdString()<<endl;
-                      //end crap
+                if(feedback.size()<2)
+                {
+                    feedback.push_back("1");//push empty line to bypass the crude check GuiControl::check(QString input)
+                    feedback.push_back("1");
+                }
+
             }
             else
             {
                 cout<<"This didnt RUN!!!!!"<<endl;
             }
-
-            //end of adhoc edit code
+            //crap
+            cout<<endl<<endl;
+            for(int t=0; t<feedback.size();t++)
+            cout<<(feedback.at(t)).toStdString()<<endl;
+                  //end crap
+//--------------------end of adhoc edit code------------------------------------------------------------------
 
 
         DisplayEvent(response);//for debugging info only
