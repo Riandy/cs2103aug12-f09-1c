@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "ndebug.h"
 #include "Action.h"
+#include "ErrorLogger.h"
 
 // Ensure that this error is synchronous with the errors sent from Intellisense.
 static string ERROR_NOT_FOUND = "Error - The item does not exist.";
@@ -20,11 +21,10 @@ static string REDO_SUCCESS = "Redo operation was successful";
 static string REDO_FAILURE = "There is nothing to redo";
 static string GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
 
-
 class scheduler
 {
 private:
-
+    ErrorLogger* _faulty;
     static scheduler *_scheduler;
     scheduler();
     vector<string> _result;

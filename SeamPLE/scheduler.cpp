@@ -19,11 +19,13 @@ scheduler* scheduler::getInstance()
 
 scheduler::scheduler()
 {
+    _faulty = _faulty->getInstance();
 }
 
 scheduler::~scheduler()
 {
     instanceFlag = false;
+    _faulty->endInstance();
 }
 
 vector<string> scheduler::executeCommand(Action newAction)
@@ -46,12 +48,16 @@ vector<string> scheduler::executeCommand(Action newAction)
          taskVector = eventCalender.displayDatabase();
          updateGUI(taskVector);
 	   }
-	   else
-            printMessage(ADD_FAILURE);
+       else{
+           _faulty->report("Scheduler class: Add command FAIL");
+           printMessage(ADD_FAILURE);
+       }
     }
     else if(command=="DELETE")
     {
         //delete by ID
+        //ASSERT((newTask.getID()==NULL && newTask.getEventName()=="#"),"No parameter passed in to the delete function");
+
         if(eventCalender.checkID(newTask.getID()))
         {
             eventCalender.deleteItem(newTask.getID());
@@ -128,8 +134,10 @@ vector<string> scheduler::executeCommand(Action newAction)
             updateGUI(taskVector);
         }
         else
+        {
             printMessage(ERROR_INTELLISENSE_CHECK);
-
+            _faulty->report("Scheduler:: Find function fail to find the result");
+        }
     }
     else if (command=="DISPLAY")
     {
@@ -296,7 +304,6 @@ string scheduler::getEventBasedOnTime(int hour, int min)
             {
                 feedbackMessage<<it->getEventName()<<"\n";
                 updateTask(*it);
-
             }
         }
 
@@ -345,8 +352,8 @@ void scheduler::updateGUI(vector<task> taskVector)
         string _endDate = convertToDate(taskVector[i].getEndDate());
 
         ostringstream convert;
-       // convert << taskVector.at(i).getID(); // commented out as it pass incorrect id to gui
-        convert << i;//i added this as a temporary replacement for the id above,remove this when u updated ur code
+        //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
+        convert << i+1;//i added this as a temporary replacement for the id above,remove this when u updated ur code
         string id= convert.str();
         _result.push_back(id);
         _result.push_back(taskVector.at(i).getEventName());
@@ -355,6 +362,7 @@ void scheduler::updateGUI(vector<task> taskVector)
         _result.push_back(taskVector.at(i).getPriority());
         _result.push_back(taskVector.at(i).getCategory());
     }
+    //decision to either view in standard or simple view
     if (vectorSize!=0)
         _result.push_back(GUI_DISPLAY_TABLE);
 }

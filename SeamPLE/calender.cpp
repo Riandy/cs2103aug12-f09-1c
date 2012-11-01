@@ -4,10 +4,12 @@
 calender::calender()
 {
     calender::loadFile();
+    _faulty = _faulty->getInstance();
 }
 
 calender::~calender()
 {
+    _faulty->endInstance();
 }
 
 string calender::convertToDate(tm _date)
@@ -24,6 +26,7 @@ string calender::convertToDate(tm _date)
 
 bool calender::addItem(task currentTask)
 {
+    //ASSERT(currentTask.getEventName()=="","Fail to add, task doesn't contain event name");
     saveHistory(_ADDITION);
     string _currentName = currentTask.getEventName();
     string _uniqueName = ensureUniqueName(_currentName);
@@ -32,7 +35,10 @@ bool calender::addItem(task currentTask)
     if(writeFile())
         return true;
     else
+    {
+        _faulty->report("cannot write to file");
         return false;
+    }
 }
 
 

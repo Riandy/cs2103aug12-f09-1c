@@ -9,7 +9,8 @@
 #include <sstream>
 #include "task.h"
 #include <stack>
-
+#include "ndebug.h"
+#include "ErrorLogger.h"
 using namespace std;
 
 
@@ -26,7 +27,7 @@ private:
 
 
     vector<task> _storage;
-
+    ErrorLogger* _faulty;
     stack<string> _history;
     stack <task> _deleteHistory;
     stack <task> _originalEdits;
