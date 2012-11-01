@@ -100,6 +100,8 @@ void StandardView:: showAppropriateColorInputEdit (InputBarFlag color) throw (st
                                     STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                     STYLESHEET_INPUT_LINE_BORDER_COLOR+
                                     STYLESHEET_INPUT_LINE_BACKGROUND_COLOR);
+            break;
+
         default:
             throw(MESSAGE_ERROR_INVALID_COLOUR);
             break;
@@ -338,7 +340,6 @@ void StandardView::hideTable()
 void StandardView::showHelp()
 {
     ui->frame_13->show();
-    qDebug() << "I AM HERE";
 }
 
 void StandardView::hideHelp()
@@ -675,8 +676,5 @@ void StandardView:: setSignals()
 
 bool StandardView::tableIsEmpty()
 {
-    qDebug() << _tableItems.output.size();
-    qDebug() << _tableItems.endIndex;
-    qDebug() << _tableItems.currentIndex;
     return (_tableItems.output.size() == 0);
 }
