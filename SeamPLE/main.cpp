@@ -4,7 +4,6 @@
 
 #include "timekeeper.h"
 
-
 int main(int argc, char *argv[])
 {
     if(false)     // change to true to enable unit testing, false otherwise

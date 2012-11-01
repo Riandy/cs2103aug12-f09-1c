@@ -98,6 +98,9 @@ private:
     NotifyView* _notifyInterface;
     //=================================
 
+    //Error Logger ====================
+    ErrorLogger* _faulty;
+    //=================================
 
 
 };

@@ -30,7 +30,7 @@ StandardView::StandardView(QWidget *parent):
     resetTableContents();
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
-    _isTableView = true;
+    _isTableView = false;
     showTodayOrTable();
 }
 
@@ -73,7 +73,7 @@ void StandardView:: showFocusInInputEdit (bool focus)
     ui->lineEdit->setFocusInput(focus);
 }
 
-void StandardView:: showAppropriateColorInputEdit (InputBarFlag color)
+void StandardView:: showAppropriateColorInputEdit (InputBarFlag color) throw (string)
 {
     switch (color)
     {
@@ -95,12 +95,14 @@ void StandardView:: showAppropriateColorInputEdit (InputBarFlag color)
 
             break;
 
-        default:
+        case NONE:
             ui->lineEdit->setStyleSheet(STYLESHEET_INPUT_LINE_BORDER_RADIUS+
                                     STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                     STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                     STYLESHEET_INPUT_LINE_BORDER_COLOR+
                                     STYLESHEET_INPUT_LINE_BACKGROUND_COLOR);
+        default:
+            throw(MESSAGE_ERROR_INVALID_COLOUR);
             break;
     }
 }
@@ -297,6 +299,11 @@ void StandardView::changeDisplayTriggered()
 {
     _isTableView = !_isTableView;
     showTodayOrTable();
+}
+
+void StandardView::helpTriggered()
+{
+
 }
 
 void StandardView::showTable()
@@ -581,6 +588,9 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getChangeDisplayKey(),SIGNAL(triggered()),
             this,SLOT(changeDisplayTriggered()));
+
+    connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
+            this,SLOT(addTriggered()));
 }
 
 bool StandardView::tableIsEmpty()
