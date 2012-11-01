@@ -34,7 +34,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     /*defensive coding*/
     //convert command to upper case to ensure that it is not case sensitive
     transform(command.begin(), command.end(),command.begin(), ::toupper);
-    command="TODAY";
+    // command="TODAY";
     //process and package the action into task
     task newTask=processAction(newAction);
 
@@ -42,12 +42,12 @@ vector<string> scheduler::executeCommand(Action newAction)
     {
        if( eventCalender.addItem(newTask))
 	   {
-			_result.push_back(ADD_SUCCESS);
-			taskVector = eventCalender.displayDatabase();
-			updateGUI(taskVector);
+         printMessage(ADD_SUCCESS);
+         taskVector = eventCalender.displayDatabase();
+         updateGUI(taskVector);
 	   }
 	   else
-			_result.push_back(ADD_FAILURE);
+            printMessage(ADD_FAILURE);
 	}
 
     else if(command=="DELETE")
@@ -56,21 +56,21 @@ vector<string> scheduler::executeCommand(Action newAction)
         if(eventCalender.checkID(newTask.getID()))
         {
             eventCalender.deleteItem(newTask.getID());
-            _result.push_back(DELETE_SUCCESS);
+           printMessage(DELETE_SUCCESS);
             taskVector = eventCalender.displayDatabase();
             updateGUI(taskVector);
         }
         //delete by event name
         else if(newTask.getEventName()!="-" && eventCalender.deleteItem(newTask.getEventName()))
         {
-            _result.push_back(DELETE_SUCCESS);
+            printMessage(DELETE_SUCCESS);
             taskVector = eventCalender.displayDatabase();
             updateGUI(taskVector);
         }
         //error handling
         else
         {
-            _result.push_back(ERROR_NOT_FOUND);
+            printMessage(ERROR_NOT_FOUND);
             taskVector = eventCalender.displayDatabase();
             updateGUI(taskVector);
         }
@@ -95,20 +95,20 @@ vector<string> scheduler::executeCommand(Action newAction)
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             if (taskVector.size() == 0) //if no match found
 			{
-               _result.push_back(ERROR_NOT_FOUND);
+                printMessage(ERROR_NOT_FOUND);
 			}
 			else
             {
                  if(eventCalender.editTask(newTask))
                    {
                     taskVector = eventCalender.displayDatabase();
-                   _result.push_back(EDIT_SUCCESS);
+                    printMessage(EDIT_SUCCESS);
                     updateGUI(taskVector);
                   }
             }
         }
         else
-            generalError();
+            printMessage(ERROR_INTELLISENSE_CHECK);
 
     }
 
@@ -129,7 +129,7 @@ vector<string> scheduler::executeCommand(Action newAction)
             updateGUI(taskVector);
         }
         else
-            generalError();
+            printMessage(ERROR_INTELLISENSE_CHECK);
 
     }
     else if (command=="DISPLAY")
@@ -144,24 +144,24 @@ vector<string> scheduler::executeCommand(Action newAction)
     {
         if (eventCalender.undoAction())
 	   {
-		  _result.push_back(UNDO_SUCCESS);
+          printMessage(UNDO_SUCCESS);
 		   taskVector = eventCalender.displayDatabase();
 			   updateGUI(taskVector);
 		}
         else if (!eventCalender.undoAction())
-            _result.push_back(UNDO_FAILURE);
+           printMessage(UNDO_FAILURE);
     }
 
     else if (command == "REDO")
     {
         if (eventCalender.redoAction())
          {
-			_result.push_back(REDO_SUCCESS);
+             printMessage(REDO_SUCCESS);
 			taskVector = eventCalender.displayDatabase();
 		    updateGUI(taskVector);
 		}
         else if (!eventCalender.redoAction())
-            _result.push_back(REDO_FAILURE);
+             printMessage(REDO_FAILURE);
     }
 
     else if (command == "TODAY") 
@@ -170,7 +170,7 @@ vector<string> scheduler::executeCommand(Action newAction)
         updateGUI(taskVector);
     }
     else
-        generalError();
+        printMessage(ERROR_INTELLISENSE_CHECK);
 
 
     return _result;
@@ -334,10 +334,6 @@ string scheduler::convertToDate(tm _date)
     return _result;
 }
 
-void scheduler::generalError()
-{
-    _result.push_back(ERROR_INTELLISENSE_CHECK);
-}
 
 
 void scheduler::updateGUI(vector<task> taskVector)
@@ -372,4 +368,30 @@ void scheduler::updateResultFound(int size)
     tempString << size;
     tempString << " results found.";
     _result.push_back(tempString.str());
+}
+
+void scheduler::printMessage(string _messageType)
+{
+    if (_messageType == "ERROR_NOT_FOUND")
+        _result.push_back(ERROR_NOT_FOUND);
+    else if (_messageType == "ERROR_INTELLISENSE_CHECK")
+        _result.push_back(ERROR_INTELLISENSE_CHECK);
+    else if (_messageType == "ADD_SUCCESS")
+        _result.push_back(ADD_SUCCESS);
+    else if (_messageType == "ADD_FAILURE")
+        _result.push_back(ADD_FAILURE);
+    else if (_messageType == "DELETE_SUCCESS")
+        _result.push_back(DELETE_SUCCESS);
+    else if (_messageType == "EDIT_SUCCESS")
+        _result.push_back(EDIT_SUCCESS);
+    else if (_messageType == "UNDO_SUCCESS")
+        _result.push_back(UNDO_SUCCESS);
+    else if (_messageType == "UNDO_FAILURE")
+        _result.push_back(UNDO_FAILURE);
+    else if (_messageType == "REDO_SUCCESS")
+        _result.push_back(REDO_SUCCESS);
+    else if (_messageType == "REDO_FAILURE")
+        _result.push_back(REDO_FAILURE);
+    else
+        _result.push_back(ERROR_INTELLISENSE_CHECK);
 }
