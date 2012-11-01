@@ -173,7 +173,7 @@ Action Intellisense::check(string query)
         task=redoOperation(buffer);
         break;
     default:
-        logger->report("Unexpected command received" + determinOperation(buffer));    //logging the unexpected command
+        logger->report("@Intellisense -> Unexpected command received" + determinOperation(buffer));    //logging the unexpected command
         ASSERT(false,"Command is not recognised");
         break;
     }
@@ -263,13 +263,24 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
     string inputBuffer;
     string commandBuffer;
     inputBuffer = toLowerString(input);
+    try
+    {
     for (int i = 0 ; i < arraySize; i++)
     {
         commandBuffer = toLowerString(command[i]);
         if(inputBuffer == commandBuffer)
             isCommandFound = true;
     }
-    return isCommandFound;
+
+     return isCommandFound;
+    }
+    catch(exception& e)
+    {
+        logger->report("@Intelliense -> exception caught:" + string(e.what()));
+        return false;
+    }
+
+
 }
 string Intellisense::getfirst_Word(string command)
 {
@@ -852,9 +863,9 @@ Action Intellisense::editOperation(vector<string>& tokens)
     currentCommand = EDIT;
     Action task;
     task.setCommand(getCommand(tokens,"EDIT"));
-    task.setPriority(getPriority(tokens));
+    task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
-    task.setStartDate(getDate(tokens));
+    task.setPriority(getPriority(tokens));
     task.setDateType(getDateType(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
