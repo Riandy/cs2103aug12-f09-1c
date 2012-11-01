@@ -130,7 +130,6 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         int capacity = output.size();
         bool needStandardView = (capacity>1);
         _inputColorFlag = NONE;
-
         if (needStandardView)
         {
             if (!interfaceIsStandardView())
