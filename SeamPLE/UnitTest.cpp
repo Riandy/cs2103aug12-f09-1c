@@ -88,9 +88,6 @@ void UnitTest::testIntellisenseAdd5()
     QCOMPARE( date.tm_hour, int(21));
 }
 
-
-
-
 void UnitTest::testIntellisenseDel()
 {
     Intellisense *intellisense;

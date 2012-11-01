@@ -63,6 +63,9 @@ public:
     vector<task> displayDatabase();
     vector<task> getToday();
 	int getTaskID(string searchItem);
+    vector<task> SortByEvent();
+    vector<task> SortByDeadline();
+    vector<task> SortByCategory();
 
     //implement the convert to date
     string convertToDate(tm _date);
