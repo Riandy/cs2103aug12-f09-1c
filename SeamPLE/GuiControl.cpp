@@ -1,5 +1,5 @@
 #include "GuiControl.h"
-
+#include <QDebug>
 
 GuiControl* GuiControl::_guiControl = NULL;
 
@@ -131,7 +131,6 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         bool needStandardView = (capacity>1);
         _inputColorFlag = NONE;
 
-        //Only commands to hold this should be find and search for now
         if (needStandardView)
         {
             if (!interfaceIsStandardView())
@@ -159,7 +158,6 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             {
                 _standardGui->resetTableContents();
             }
-
             sendWithInputEditItem("",output[0]);
         }
     }

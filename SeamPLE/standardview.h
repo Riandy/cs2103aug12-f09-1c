@@ -48,13 +48,21 @@ public:
 
     void resetTableContents();
 
-    void showTodayEvents();
-
     void show();
 
     void hide();
 
     bool interfaceCurrentlyChanging();
+
+    void showTable();
+
+    void hideTable();
+
+    void showTodayEvents();
+
+    void hideTodayEvents();
+
+    void showTodayOrTable();
 
 signals:
     void relay(QString input);
@@ -116,6 +124,8 @@ private:
     bool tableIsEmpty();
 
 private:
+    bool isTableView;
+
     table _tableItems;
 
     double _opacityLvl;
