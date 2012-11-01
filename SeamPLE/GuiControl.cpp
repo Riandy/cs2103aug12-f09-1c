@@ -14,6 +14,7 @@ const QString GuiControl:: MESSAGE_INVALID_COLOUR_FLAG_RETURN =
 const QString GuiControl:: MESSAGE_SCHEDULER_INVALID_RETURN =
         "SCHEDULER IS NOT RETURNING ANY OUTPUT";
 
+
 GuiControl::GuiControl()
 {
     _standardGui = _standardGui->getInstance();
@@ -21,6 +22,7 @@ GuiControl::GuiControl()
     setStandardGuiSignals();
     setSeampleGuiSignals();
     //setGlobalSignals();
+    _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
@@ -33,6 +35,7 @@ GuiControl::~GuiControl()
     _seampleGui->endInstance();
     _standardGui->endInstance();
     _notifyInterface->endInstance();
+    _faulty->endInstance();
 }
 
 GuiControl* GuiControl::getInstance()
@@ -286,15 +289,22 @@ void GuiControl::emptyResponse()
 
 void GuiControl::send(QString feedback)
 {
-    if (interfaceIsStandardView())
+    try
     {
-        _standardGui->showFeedbackLabel(feedback);
-        _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
+        if (interfaceIsStandardView())
+        {
+            _standardGui->showFeedbackLabel(feedback);
+            _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
+        }
+        else
+        {
+            _seampleGui->showFeedbackLabel(feedback);
+            _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
+        }
     }
-    else
+    catch (string error)
     {
-        _seampleGui->showFeedbackLabel(feedback);
-        _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
+        _faulty->report(error);
     }
 }
 

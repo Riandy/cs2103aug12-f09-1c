@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Thu Nov 1 04:06:13 2012
+** Created: Thu Nov 1 11:29:21 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -191,7 +191,7 @@ public:
 "	\n"
 "	background-image: url(:/bg/Note layout.gif);\n"
 "}"));
-        frame_4->setFrameShape(QFrame::StyledPanel);
+        frame_4->setFrameShape(QFrame::Panel);
         frame_4->setFrameShadow(QFrame::Raised);
         label_7 = new QLabel(frame_4);
         label_7->setObjectName(QString::fromUtf8("label_7"));
@@ -348,7 +348,7 @@ public:
         frame_6->setFrameShadow(QFrame::Raised);
         frame_7 = new QFrame(frame_5);
         frame_7->setObjectName(QString::fromUtf8("frame_7"));
-        frame_7->setGeometry(QRect(382, 230, 161, 168));
+        frame_7->setGeometry(QRect(380, 210, 161, 168));
         frame_7->setStyleSheet(QString::fromUtf8("background-image: url(:/bg/Note_2.gif);"));
         frame_7->setFrameShape(QFrame::StyledPanel);
         frame_7->setFrameShadow(QFrame::Raised);
@@ -366,7 +366,7 @@ public:
         frame_10->setFrameShadow(QFrame::Raised);
         frame_9 = new QFrame(frame_5);
         frame_9->setObjectName(QString::fromUtf8("frame_9"));
-        frame_9->setGeometry(QRect(200, 80, 180, 245));
+        frame_9->setGeometry(QRect(190, 110, 180, 245));
         frame_9->setStyleSheet(QString::fromUtf8("background-image: url(:/bg/Note_3.gif);"));
         frame_9->setFrameShape(QFrame::StyledPanel);
         frame_9->setFrameShadow(QFrame::Raised);

@@ -29,7 +29,7 @@ public:
 
     void showFocusInInputEdit (bool focus);
 
-    void showAppropriateColorInputEdit (InputBarFlag color);
+    void showAppropriateColorInputEdit (InputBarFlag color) throw (string);
 
 signals:
     void relay(QString input);

@@ -2,6 +2,7 @@
 #define COMMONVIEW_H
 
 #include <QDesktopWidget>
+#include "ErrorLogger.h"
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
@@ -32,6 +33,11 @@ protected:
     const static QString COMMAND_DISPLAY;
     const static QString COMMAND_DELETE;
     const static QString COMMAND_EDIT;
+
+
+    //Following will contain strings corresponding to error reports of both user interfaces
+    const static string MESSAGE_ERROR_INVALID_COLOUR;
+    const static string MESSAGE_ERROR_SINGLETON_INSTANTIATE;
 
     GuiShortcuts _allShortcuts;
 

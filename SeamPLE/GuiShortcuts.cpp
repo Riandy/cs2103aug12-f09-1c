@@ -14,9 +14,7 @@ GuiShortcuts::GuiShortcuts()
     _pageUp = NULL;
     _pageDown = NULL;
     _changeDisplay = NULL;
-    _arrowUp = NULL;
-    _arrowDown = NULL;
-
+    _help = NULL;
     //_showHideView = NULL;
 }
 
@@ -70,13 +68,9 @@ GuiShortcuts::~GuiShortcuts()
     {
         delete _changeDisplay;
     }
-    if (_arrowUp != NULL)
+    if (_help != NULL)
     {
-        delete _arrowUp;
-    }
-    if (_arrowDown != NULL)
-    {
-        delete _arrowDown;
+        delete _help;
     }
 //    if (_showHideView != NULL)
 //    {
@@ -123,6 +117,10 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _clear = new QAction(Gui);
     Gui->addAction(_clear);
     _clear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
+
+    _help = new QAction(Gui);
+    Gui->addAction(_help);
+    _help->setShortcut(QKeySequence(Qt::Key_F1));
 }
 
 void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
@@ -207,15 +205,11 @@ QAction* GuiShortcuts::getChangeDisplayKey()
     return _changeDisplay;
 }
 
-QAction* GuiShortcuts::getArrowUpKey()
+QAction* GuiShortcuts::getHelpKey()
 {
-    return _arrowUp;
+    return _help;
 }
 
-QAction* GuiShortcuts::getArrowDownKey()
-{
-    return _arrowDown;
-}
 //QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()
 //{
 //    return _showHideView;

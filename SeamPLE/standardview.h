@@ -42,7 +42,7 @@ public:
 
     void showFocusInInputEdit (bool focus);
 
-    void showAppropriateColorInputEdit (InputBarFlag color);
+    void showAppropriateColorInputEdit (InputBarFlag color) throw (string);
 
     void instantiateTable(QVector <QString> output);
 
@@ -93,6 +93,8 @@ private slots:
     void pageDownTriggered();
 
     void changeDisplayTriggered();
+
+    void helpTriggered();
 
 private:
     void showTable();
