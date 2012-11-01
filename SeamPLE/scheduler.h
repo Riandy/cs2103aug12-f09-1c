@@ -46,7 +46,6 @@ private:
     calender eventCalender;
     void updateGUI(vector<task> taskVector);
     void updateResultFound(int size);
-    void generalError();
     string convertToDate(tm _date);
     task processAction(Action newAction);
     void updateTask(task &_task);
@@ -54,6 +53,7 @@ private:
     void updateFornightlyTask(tm &_date);
     void updateMonthlyTask(tm &_date);
     int daysMonth(int year, int month);
+    void printMessage(string _messageType);
 
 
 public:
