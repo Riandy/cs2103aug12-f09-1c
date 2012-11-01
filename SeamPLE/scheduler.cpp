@@ -48,15 +48,15 @@ vector<string> scheduler::executeCommand(Action newAction)
 	   }
 	   else
             printMessage(ADD_FAILURE);
-	}
-
+    cout<<"FIRST LINE OF THE VECTOR 1 :"<<_result.at(0)<<endl;
+    }
     else if(command=="DELETE")
     {
         //delete by ID
         if(eventCalender.checkID(newTask.getID()))
         {
             eventCalender.deleteItem(newTask.getID());
-           printMessage(DELETE_SUCCESS);
+            printMessage(DELETE_SUCCESS);
             taskVector = eventCalender.displayDatabase();
             updateGUI(taskVector);
         }
@@ -172,7 +172,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     else
         printMessage(ERROR_INTELLISENSE_CHECK);
 
-
+    cout<<"FIRST LINE OF THE VECTOR :"<<_result.at(0)<<endl;
     return _result;
 }
 
@@ -358,7 +358,7 @@ void scheduler::updateGUI(vector<task> taskVector)
         _result.push_back(taskVector.at(i).getCategory());
 
     }
-        cout<<"Size of vector :"<<_result.size()<<endl;
+
 }
 
 void scheduler::updateResultFound(int size)
@@ -372,13 +372,14 @@ void scheduler::updateResultFound(int size)
 
 void scheduler::printMessage(string _messageType)
 {
-    if (_messageType == "ERROR_NOT_FOUND")
+// no need to do this, redundant (by Riandy)
+/*    if (_messageType == "ERROR_NOT_FOUND")
         _result.push_back(ERROR_NOT_FOUND);
     else if (_messageType == "ERROR_INTELLISENSE_CHECK")
         _result.push_back(ERROR_INTELLISENSE_CHECK);
     else if (_messageType == "ADD_SUCCESS")
         _result.push_back(ADD_SUCCESS);
-    else if (_messageType == "ADD_FAILURE")
+    else if (_messageType =="ADD_FAILURE")
         _result.push_back(ADD_FAILURE);
     else if (_messageType == "DELETE_SUCCESS")
         _result.push_back(DELETE_SUCCESS);
@@ -394,4 +395,6 @@ void scheduler::printMessage(string _messageType)
         _result.push_back(REDO_FAILURE);
     else
         _result.push_back(ERROR_INTELLISENSE_CHECK);
+*/
+    _result.push_back(_messageType);
 }
