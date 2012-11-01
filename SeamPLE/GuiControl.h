@@ -18,6 +18,7 @@ private:
     const static QString MESSAGE_INTELLISENSE_INVALID_RETURN;
     const static QString MESSAGE_INVALID_COLOUR_FLAG_RETURN;
     const static QString MESSAGE_SCHEDULER_INVALID_RETURN;
+    const static QString MESSAGE_CANNOT_CREATE_SYSTEM_TRAY;
     const static QString MESSAGE_GUI_DISPLAY;
 
 private:
@@ -45,11 +46,13 @@ private slots:
 
     void showHideView();
 
+    void showHelpView();
+
 private:
 
     bool singleInstanceExists();
 
-    bool implementInputColorFlagFailure(QCharRef colorFlag);
+    bool implementInputColorFlagFailure(QCharRef colorFlag) throw (string);
 
     QVector <QString> getTodaysEvents();
 
@@ -75,7 +78,7 @@ private:
 
     //void setGlobalSignals();
 
-    void createSystemTrayIconIfPossible();
+    void createSystemTrayIconIfPossible() throw (string);
 
 
 private:
