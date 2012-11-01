@@ -13,6 +13,9 @@ const QString GuiControl:: MESSAGE_INVALID_COLOUR_FLAG_RETURN =
         "SEAMPLE NOT RETURNING APPROPRIATE COLOR FLAG";
 const QString GuiControl:: MESSAGE_SCHEDULER_INVALID_RETURN =
         "SCHEDULER IS NOT RETURNING ANY OUTPUT";
+const QString GuiControl:: MESSAGE_GUI_DISPLAY =
+        "%123TABLE_SEAMPLE_&987";
+
 
 
 GuiControl::GuiControl()
@@ -89,7 +92,6 @@ void GuiControl::check(QString input)
     {
         bool command = false;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
-
         bool invalidSchedulerReturn = (output.size() < 2);
 
         if (invalidSchedulerReturn)
@@ -100,18 +102,24 @@ void GuiControl::check(QString input)
         }
         else
         {
+            //Minus 2 because last string holds the colour flag
+            bool needStandardView =
+                    (output[output.size()-2] == (MESSAGE_GUI_DISPLAY));
 
-            if (implementInputColorFlagFailure((output[1])[0]))
+            if (implementInputColorFlagFailure((output[output.size()-1])[0]))
             {
                 output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
             }
-            //                //added start of ad hoc edit code
-            //                if(1)//if is edit, no idea how to detect at this level no way i think
-            //                {
-            //                    int capacity = output.size();
-            //                     _standardGui->showTableResults(output.mid(1,capacity - 1));
-            //                }
-            //                //end of AD hoc edit code
+
+            if (needStandardView)
+            {
+                if (!interfaceIsStandardView())
+                {
+                    changeView(input,"",true);
+                }
+                qDebug() <<output;
+                _standardGui->instantiateTable(output.mid(1,output.size() - 3));
+            }
         }
         send(output[0]);
     }
@@ -131,8 +139,10 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         bool command = true;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
         int capacity = output.size();
-        bool needStandardView = (capacity>1);
+        bool needStandardView =
+                (output[output.size()-1] == (MESSAGE_GUI_DISPLAY));
         _inputColorFlag = NONE;
+
         if (needStandardView)
         {
             if (!interfaceIsStandardView())
@@ -143,7 +153,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             {
                 sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
             }
-            _standardGui->instantiateTable(output.mid(1,capacity - 1));
+            _standardGui->instantiateTable(output.mid(1,capacity - 2));
         }
         else
         {

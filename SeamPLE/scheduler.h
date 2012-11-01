@@ -32,7 +32,7 @@ static string UNDO_SUCCESS = "Undo operation was successful";
 static string UNDO_FAILURE = "There is nothing to undo";
 static string REDO_SUCCESS = "Redo operation was successful";
 static string REDO_FAILURE = "There is nothing to redo";
-
+static string GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
 
 
 class scheduler

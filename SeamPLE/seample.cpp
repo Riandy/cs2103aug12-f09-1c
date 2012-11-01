@@ -96,16 +96,30 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
                     feedback.push_back("2");//red
                 }
             }
+
 //----------------------------------startof adhoc edit code------------------------------------------------------------------
             if( (response.getCommand()) == "EDIT" )
             {
                 cout<<"running la"<<endl;
                 feedback += fireAction(); //append the results at the end
-                if(feedback.size()<2)
+
+                //WEIYUAN: Copied and paste here so that colour flag is still there
+                intellisense->getParameter();
+                if (intellisense->getrequirementsMet())
                 {
-                    feedback.push_back("1");//push empty line to bypass the crude check GuiControl::check(QString input)
                     feedback.push_back("1");
                 }
+                else
+                {
+                    feedback.push_back("2");//red
+                }
+                //Copy and paste end
+
+//                if(feedback.size()<2)
+//                {
+//                    //feedback.push_back("1");//push empty line to bypass the crude check GuiControl::check(QString input)
+//                    feedback.push_back("1");
+//                }
 
             }
             else

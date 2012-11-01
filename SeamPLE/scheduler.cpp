@@ -356,9 +356,9 @@ void scheduler::updateGUI(vector<task> taskVector)
         _result.push_back(_endDate);
         _result.push_back(taskVector.at(i).getPriority());
         _result.push_back(taskVector.at(i).getCategory());
-
     }
-
+    if (vectorSize!=0)
+        _result.push_back(GUI_DISPLAY_TABLE);
 }
 
 void scheduler::updateResultFound(int size)
