@@ -29,7 +29,7 @@ public:
 
     void showFocusInInputEdit (bool focus);
 
-    void showAppropriateColorInputEdit (InputBarFlag color);
+    void showAppropriateColorInputEdit (InputBarFlag color) throw (string);
 
 signals:
     void relay(QString input);
@@ -37,6 +37,8 @@ signals:
     void run(QString input, bool focus);
 
     void toStandardView(QString input, QString inputChecked, bool focus);
+
+    void getHelpView();
 
 private slots:
     void recieve(QString input);
@@ -60,6 +62,8 @@ private slots:
     void editTriggered();
 
     void clearTriggered();
+
+    //void helpTriggered();
 
 private:
     bool singleInstanceExists();

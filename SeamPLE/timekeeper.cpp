@@ -1,4 +1,5 @@
 #include "timekeeper.h"
+#include <QDebug>
 
 Timekeeper::Timekeeper()
 {

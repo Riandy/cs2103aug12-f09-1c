@@ -27,8 +27,6 @@ public:
 
     QAction* getRedoKey();
 
-    QAction* getChangeWorkingTabKey();
-
     QAction* getAddKey();
 
     QAction* getFindKey();
@@ -41,6 +39,13 @@ public:
 
     QAction* getClearKey();
 
+    QAction* getPageUpKey();
+
+    QAction* getPageDownKey();
+
+    QAction* getChangeDisplayKey();
+
+    QAction* getHelpKey();
     //QxtGlobalShortcut* getShowHideViewKey();
 
 private:
@@ -48,13 +53,16 @@ private:
     QAction* _switchView;
     QAction* _undo;
     QAction* _redo;
-    QAction* _changeWorkingTab;
     QAction* _add;
     QAction* _find;
     QAction* _display;
     QAction* _delete;
     QAction* _edit;
     QAction* _clear;
+    QAction* _pageUp;
+    QAction* _pageDown;
+    QAction* _changeDisplay;
+    QAction* _help;
 
     //QxtGlobalShortcut * _showHideView;
 };

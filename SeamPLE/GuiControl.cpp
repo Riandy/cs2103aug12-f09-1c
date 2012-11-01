@@ -1,4 +1,5 @@
 #include "GuiControl.h"
+#include <QDebug>
 
 GuiControl* GuiControl::_guiControl = NULL;
 
@@ -12,6 +13,10 @@ const QString GuiControl:: MESSAGE_INVALID_COLOUR_FLAG_RETURN =
         "SEAMPLE NOT RETURNING APPROPRIATE COLOR FLAG";
 const QString GuiControl:: MESSAGE_SCHEDULER_INVALID_RETURN =
         "SCHEDULER IS NOT RETURNING ANY OUTPUT";
+const QString GuiControl:: MESSAGE_GUI_DISPLAY =
+        "%123TABLE_SEAMPLE_&987";
+
+
 
 GuiControl::GuiControl()
 {
@@ -20,6 +25,7 @@ GuiControl::GuiControl()
     setStandardGuiSignals();
     setSeampleGuiSignals();
     //setGlobalSignals();
+    _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
@@ -32,6 +38,7 @@ GuiControl::~GuiControl()
     _seampleGui->endInstance();
     _standardGui->endInstance();
     _notifyInterface->endInstance();
+    _faulty->endInstance();
 }
 
 GuiControl* GuiControl::getInstance()
@@ -85,8 +92,7 @@ void GuiControl::check(QString input)
     {
         bool command = false;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
-
-        bool invalidSchedulerReturn = (output.size() < 2);//@weiyuan from wenren :upgrade this check if possible
+        bool invalidSchedulerReturn = (output.size() < 2);
 
         if (invalidSchedulerReturn)
         {
@@ -96,27 +102,24 @@ void GuiControl::check(QString input)
         }
         else
         {
+            //Minus 2 because last string holds the colour flag
+            bool needStandardView =
+                    (output[output.size()-2] == (MESSAGE_GUI_DISPLAY));
 
-                if (implementInputColorFlagFailure((output[1])[0]))
+            if (implementInputColorFlagFailure((output[output.size()-1])[0]))
+            {
+                output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
+            }
+
+            if (needStandardView)
+            {
+                if (!interfaceIsStandardView())
                 {
-                    output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
+                    changeView(input,"",true);
                 }
-//----------------------------------startof adhoc edit code------------------------------------------------------------------
-                if(output.size() > 2)//if is edit,
-                    //no idea how to detect at this level no way i think
-                    //unless a flag is used, right now the since ouput[0] is the parameter and the feedback message
-                    //output[1]  is the color flag for the text box
-                    //output[2 and onwards] should be the table results. is this case so i did the check above
-                    //this check should be improved upon to cover this
-                {
-                    if (!interfaceIsStandardView())
-                    {
-                        changeView(input,output[0], true);
-                    }
-                    int capacity = output.size();
-                    _standardGui->showTableResults(output.mid(1,capacity - 1));
-                }
-//----------------------------------end of adhoc edit code------------------------------------------------------------------
+                qDebug() <<output;
+                _standardGui->instantiateTable(output.mid(1,output.size() - 3));
+            }
         }
         send(output[0]);
     }
@@ -136,17 +139,10 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         bool command = true;
         QVector <QString> output = _inputProcessor->run(command,input.toStdString());
         int capacity = output.size();
-        bool needStandardView = (capacity>1);
+        bool needStandardView =
+                (output[output.size()-1] == (MESSAGE_GUI_DISPLAY));
         _inputColorFlag = NONE;
-        //craptesting to b deleted
-        cout<<"CRAP MASTER"<<endl;
-        for(int o=0; o<output.size();o++)
-        {
-            cout<<output[o].toStdString()<<endl;
-        }
-        cout<<"TABLE BELOW LA"<<endl;
-        //craptesting to b deleted
-        //Only commands to hold this should be find and search for now
+
         if (needStandardView)
         {
             if (!interfaceIsStandardView())
@@ -157,7 +153,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             {
                 sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
             }
-            _standardGui->showTableResults(output.mid(1,capacity - 1));
+            _standardGui->instantiateTable(output.mid(1,capacity - 2));
         }
         else
         {
@@ -173,9 +169,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             if (interfaceIsStandardView())
             {
                 _standardGui->resetTableContents();
-                _standardGui->showNoTableDisplay();
             }
-
             sendWithInputEditItem("",output[0]);
         }
     }
@@ -305,15 +299,22 @@ void GuiControl::emptyResponse()
 
 void GuiControl::send(QString feedback)
 {
-    if (interfaceIsStandardView())
+    try
     {
-        _standardGui->showFeedbackLabel(feedback);
-        _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
+        if (interfaceIsStandardView())
+        {
+            _standardGui->showFeedbackLabel(feedback);
+            _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
+        }
+        else
+        {
+            _seampleGui->showFeedbackLabel(feedback);
+            _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
+        }
     }
-    else
+    catch (string error)
     {
-        _seampleGui->showFeedbackLabel(feedback);
-        _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
+        _faulty->report(error);
     }
 }
 

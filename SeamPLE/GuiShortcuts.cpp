@@ -5,13 +5,16 @@ GuiShortcuts::GuiShortcuts()
     _switchView = NULL;
     _undo = NULL;
     _redo = NULL;
-    _changeWorkingTab = NULL;
     _add = NULL;
     _find = NULL;
     _display = NULL;
     _delete = NULL;
     _edit = NULL;
     _clear = NULL;
+    _pageUp = NULL;
+    _pageDown = NULL;
+    _changeDisplay = NULL;
+    _help = NULL;
     //_showHideView = NULL;
 }
 
@@ -28,10 +31,6 @@ GuiShortcuts::~GuiShortcuts()
     if (_redo != NULL)
     {
         delete _redo;
-    }
-    if (_changeWorkingTab != NULL)
-    {
-        delete _changeWorkingTab;
     }
     if (_add != NULL)
     {
@@ -56,6 +55,22 @@ GuiShortcuts::~GuiShortcuts()
     if (_clear != NULL)
     {
         delete _clear;
+    }
+    if (_pageUp != NULL)
+    {
+        delete _pageUp;
+    }
+    if (_pageDown != NULL)
+    {
+        delete _pageDown;
+    }
+    if (_changeDisplay != NULL)
+    {
+        delete _changeDisplay;
+    }
+    if (_help != NULL)
+    {
+        delete _help;
     }
 //    if (_showHideView != NULL)
 //    {
@@ -102,15 +117,27 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _clear = new QAction(Gui);
     Gui->addAction(_clear);
     _clear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
+
+    _help = new QAction(Gui);
+    Gui->addAction(_help);
+    _help->setShortcut(QKeySequence(Qt::Key_F1));
 }
 
-void GuiShortcuts::setStandardShortcutsTo(QMainWindow *Gui)
+void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
 {
     setShortcutsTo(Gui);
 
-    _changeWorkingTab = new QAction(Gui);
-    Gui->addAction(_changeWorkingTab);
-    _changeWorkingTab->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
+    _pageUp = new QAction(Gui);
+    Gui->addAction(_pageUp);
+    _pageUp->setShortcut(QKeySequence(Qt::Key_PageUp));
+
+    _pageDown = new QAction(Gui);
+    Gui->addAction(_pageDown);
+    _pageDown->setShortcut(QKeySequence(Qt::Key_PageDown));
+
+    _changeDisplay = new QAction(Gui);
+    Gui->addAction(_changeDisplay);
+    _changeDisplay->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
 }
 
 //void GuiShortcuts::setGlobalShortcuts()
@@ -131,11 +158,6 @@ QAction* GuiShortcuts::getUndoKey()
 QAction* GuiShortcuts::getRedoKey()
 {
     return _redo;
-}
-
-QAction* GuiShortcuts::getChangeWorkingTabKey()
-{
-    return _changeWorkingTab;
 }
 
 QAction* GuiShortcuts::getAddKey()
@@ -166,6 +188,26 @@ QAction* GuiShortcuts::getEditKey()
 QAction* GuiShortcuts::getClearKey()
 {
     return _clear;
+}
+
+QAction* GuiShortcuts::getPageUpKey()
+{
+    return _pageUp;
+}
+
+QAction* GuiShortcuts::getPageDownKey()
+{
+    return _pageDown;
+}
+
+QAction* GuiShortcuts::getChangeDisplayKey()
+{
+    return _changeDisplay;
+}
+
+QAction* GuiShortcuts::getHelpKey()
+{
+    return _help;
 }
 
 //QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()

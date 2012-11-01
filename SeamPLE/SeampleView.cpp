@@ -63,7 +63,7 @@ void SeampleView:: showFocusInInputEdit (bool focus)
     ui->lineEdit->setFocusInput(focus);
 }
 
-void SeampleView:: showAppropriateColorInputEdit (InputBarFlag color)
+void SeampleView:: showAppropriateColorInputEdit (InputBarFlag color) throw (string)
 {
     switch (color)
     {
@@ -85,12 +85,16 @@ void SeampleView:: showAppropriateColorInputEdit (InputBarFlag color)
 
             break;
 
-        default:
+        case NONE:
             ui->lineEdit->setStyleSheet(STYLESHEET_INPUT_LINE_BORDER_RADIUS+
                                         STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                         STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                         STYLESHEET_INPUT_LINE_BORDER_COLOR+
                                         STYLESHEET_INPUT_LINE_BACKGROUND_COLOR);
+            break;
+
+        default:
+            throw (MESSAGE_ERROR_INVALID_COLOUR);
             break;
     }
 }

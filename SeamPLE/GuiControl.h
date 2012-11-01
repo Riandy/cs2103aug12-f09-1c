@@ -18,6 +18,7 @@ private:
     const static QString MESSAGE_INTELLISENSE_INVALID_RETURN;
     const static QString MESSAGE_INVALID_COLOUR_FLAG_RETURN;
     const static QString MESSAGE_SCHEDULER_INVALID_RETURN;
+    const static QString MESSAGE_GUI_DISPLAY;
 
 private:
     GuiControl();
@@ -45,6 +46,7 @@ private slots:
     void showHideView();
 
 private:
+
     bool singleInstanceExists();
 
     bool implementInputColorFlagFailure(QCharRef colorFlag);
@@ -98,6 +100,9 @@ private:
     NotifyView* _notifyInterface;
     //=================================
 
+    //Error Logger ====================
+    ErrorLogger* _faulty;
+    //=================================
 
 
 };
