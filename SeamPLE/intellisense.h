@@ -7,6 +7,7 @@
 #include <vector>
 #include <ctime>
 #include "ndebug.h"
+#include "ErrorLogger.h"
 
 
 #include "Action.h"
@@ -45,6 +46,8 @@ private:
 
     static bool instanceFlag;
     static Intellisense *intellisense;
+
+
 
     Intellisense(void);
     static const string months[12];
@@ -116,7 +119,6 @@ public:
     static Intellisense* getInstance();
     ~Intellisense(void);
     Action check(string query);
-    vector<string> tokenize(string command);
     string getOperation(vector<string>& tokens);
     tm getDate(vector<string>& tokens);
     tm getImptDate(string _date);
@@ -127,15 +129,37 @@ public:
     string getPriority(vector<string>& tokens);
     int getDateType(vector<string>& tokens);
     tm getTime(vector<string>& tokens, tm date);
+    string getAddFeedBack();
+    string getEditFeedBack();
+    string getDeleteFeedBack();
+    string getExitFeedBack();
+    string getDisplayFeedBack();
+    string getFindFeedBack();
+    string getSortFeedBack();
+    string getRedoFeedBack();
+    string getUndoFeedBack();
+    string getMarkFeedBack();
+    string getFeedback();
+    void setFeedback(string);
+
+    string getParameter();
+    void setParameter(string);
+
+
+    bool getrequirementsMet();
+    void setRequirementsMet(bool);
+
+
+
+private:
+    vector<string> tokenize(string command);
+
     bool isAllInt(const string& s );
     void itTest(vector<string> tokens);
     operation determinOperation(vector<string>& tokens);
     string getfirst_Word(string command);
     bool checkString(const string& input, const string& command);
-
     bool checkCommandArray(const string& input, const string command[], int arraySize);
-
-
     int checkDateString(string token);
     string removeChar(string s,char chars[]);
     string& trim(string& s , const string& delimiters = " \f\r\t\v");
@@ -160,9 +184,6 @@ public:
     void setAllStatusFlag(Action task); //this is based on the task that is passed in
     void getAllStatusFlag(bool *);//change the actual flag array passed in
 
-    bool getrequirementsMet();
-    void setRequirementsMet(bool);
-
     //check whether parameters supplied met the minimum requirement for command to be valid
     void checkAddReq();
     void checkDelReq();
@@ -175,26 +196,12 @@ public:
 
 
 
-    string getAddFeedBack();
-    string getEditFeedBack();
-    string getDeleteFeedBack();
-    string getExitFeedBack();
-    string getDisplayFeedBack();
-    string getFindFeedBack();
-    string getSortFeedBack();
-    string getRedoFeedBack();
-    string getUndoFeedBack();
-    string getMarkFeedBack();
 
 
 
     bool isValidParaForCmd(int,int);
     void smartAutoFill(Action &task);
-    string getFeedback();
-    void setFeedback(string);
 
-    string getParameter();
-    void setParameter(string);
 
 };
 
