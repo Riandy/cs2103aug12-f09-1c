@@ -11,8 +11,8 @@ class UnitTest: public QObject
 private slots:
     void dummyTest();
     void dummyTest1();
-    void testIntellisense();
 
+#pragma region Intellisense UnitTesting
     void testIntellisenseAdd();
     void testIntellisenseAdd2();
     void testIntellisenseAdd3();
@@ -21,7 +21,7 @@ private slots:
 
     void testIntellisenseDel();
     void testIntellisenseDel2();
-   //void testIntellisenseDEL3();
+    void testIntellisenseDEL3();
 
     void testIntellisenseEdit();
     void testIntellisenseEdit2();
@@ -32,6 +32,7 @@ private slots:
     void testIntellisenseMark();
 
     void testIntellisenseQuickAdd();
+    void testIntellisenseQuickAdd2();
 
     void testIntellisenseSort();
 
@@ -40,7 +41,7 @@ private slots:
     void testIntellisenseUndo();
 
     void testIntellisenseRedo();
-
+#pragma endregion Intellisense UnitTesting
 
 
 };
