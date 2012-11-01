@@ -1,6 +1,5 @@
 #include "Intellisense.h"
-
-
+#include "ndebug.h"
 
 
 
@@ -20,18 +19,62 @@ const string Intellisense::displayCommandArray[]= { "display" ,"show","-d","dsp"
 const string Intellisense::exitCommandArray[] = {"exit","quit","-q"};
 const string Intellisense::sortCommandArray[] = {"sort","arrange","-s"};
 const string Intellisense::findCommandArray[] = {"find","search","-f"};
-const string Intellisense::editCommandArray[] = {"edit","change","-e"};
+const string Intellisense::editCommandArray[] = {"edit","change","-e","defer","reschedule","change"};
 const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
 
+const string Intellisense::EMPTYCATEGORY = "#";
+const string Intellisense::EMPTYEVENT = "";
+const string Intellisense::EMPTYPRIORITY = "LOW";
+const int    Intellisense::EMPTYID = -1;
+const string Intellisense::HIGHPRIORITY  = "HIGH";
+const string Intellisense::HIGHPRIORITY_L = "high";
+const string Intellisense::WEEKLY = "weekly";
+const string Intellisense::MONTHLY = "monthly";
+const string Intellisense::FORTNIGHTLY = "fortnightly";
+
+const string Intellisense::ADDFEEDBACK_1 = "eg. add baby Birthday Preparation 24 Aug #family";
+const string Intellisense::ADDFEEDBACK_2 = "eg. Add baby birthday 24 aug";
+const string Intellisense::EDITFEEDBACK_1 = "eg. edit homework #HIGH";
+const string Intellisense::EDITFEEDBACK_2= "eg. edit homework #HIGH";
+const string Intellisense::DELFEEDBACK_1= "eg. del 3";
+const string Intellisense::DELFEEDBACK_2= "eg. del 3";
+const string Intellisense::EXITFEEDBACK_1= " Are you sure you want to exit?";
+const string Intellisense::DISPLAYFEEDBACK_1= "eg. display #category";
+const string Intellisense::DISPLAYFEEDBACK_2= "eg. display #category";
+const string Intellisense::FINDFEEDBACK_1= "eg. find birthday";
+const string Intellisense::FINDFEEDBACK_2="eg. find birthday";
+const string Intellisense::SORTFEEDBACK_1="eg. The Events Will be Sorted By Date";
+const string Intellisense::SORTFEEDBACK_2="eg. The Events Will be Sorted By Date";
+const string Intellisense::REDOFEEDBACK_1="Press enter to redo your last operation";
+const string Intellisense::UNDOFEEDBACK_1="Press enter to undo your last operation";
+const string Intellisense::MARKFEEDBACK_1="eg. mark today";
+const string Intellisense::MARKFEEDBACK_2="eg. mark today";
+
+const  string Intellisense::GREENEVENTTEXT = "<font color=green>[EventNAME] </font>";
+const  string Intellisense::REDEVENTTEXT  = "<font color=red>[EventNAME] </font>";
+
+const  string Intellisense::GREENSTARTDATETEXT = "<font color=green>[StartDate] </font>" ;
+const  string Intellisense::REDSTARTDATETEXT = "<font color=red>[StartDate] </font>";
+
+const  string Intellisense::GREENENDDATETEXT = "<font color=green>[EndDate] </font>";
+const  string Intellisense::REDENDDATETEXT = "<font color=red>[EndDate] </font>";
+
+const  string Intellisense::GREENPRIORITYTEXT = "<font color=green>[PRIORITY] </font>";
+const  string Intellisense::REDPRIORITYTEXT = "<font color=red>[PRIORITY] </font>";
+
+
+const  string Intellisense::GREENCATEGORYTEXT = "<font color=green>[CATEGORY] </font>";
+const  string Intellisense::REDCATEGORYTEXT = "<font color=red>[CATEGORY] </font>";
+
+const  string Intellisense::GREENIDTEXT = "<font color=green>[ID] </font>";
+const  string Intellisense::REDIDTEXT = "<font color=red>[ID] </font>";
+
+const char Intellisense::CATEGORYRECOGNISER = '#' ;
 
 
 
 
-
-
-
-//end of array change
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
 
@@ -61,28 +104,35 @@ Intellisense* Intellisense::getInstance()
 
 Intellisense::Intellisense(void)
 {
+    initFlags();
+
+    logger->getInstance();
+
+
+
+
+}
+void Intellisense::initFlags()
+{
     for(int i=0; i<MAXNOOFPARAMETERS; i++)
     {
         statusFlags[i] = true;
     }
     requirementsMet = false;
-
-
 }
-
 
 
 
 Intellisense::~Intellisense(void)
 {
     instanceFlag=false;
-
+    logger->endInstance();
 }
 
 Action Intellisense::check(string query)
 {
     Action task;
-
+    ASSERT(query.size()<query.max_size(),"query size exceed max string size");
     trim(query);
 
     vector<string> buffer = tokenize(query);
@@ -114,7 +164,6 @@ Action Intellisense::check(string query)
         task=exitOperation(buffer);
         break;
     case INVALID:
-        //task=invalidOperation(buffer);
         task=quickAddOperation(buffer);
         break;
     case UNDO:
@@ -124,6 +173,8 @@ Action Intellisense::check(string query)
         task=redoOperation(buffer);
         break;
     default:
+        logger->report("@Intellisense -> Unexpected command received" + determinOperation(buffer));    //logging the unexpected command
+        ASSERT(false,"Command is not recognised");
         break;
     }
 
@@ -136,9 +187,10 @@ Action Intellisense::check(string query)
 
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
+
     if(tokens.size()==0)
     {
-        return INVALID;
+        return INVALID;    //Defensive coding: prevents empty input to pass through
     }
 
     string commandword=tokens[0];
@@ -198,21 +250,37 @@ bool Intellisense::checkString(const string& input, const string& command)
     }
     return true;
 }
+string Intellisense::toLowerString(string input)
+{
+     transform(input.begin(), input.end(), input.begin(),toLower);
+     return input;
+}
 bool Intellisense::checkCommandArray(const string& input, const string command[],int arraySize)
 {
+    ASSERT(arraySize!= 0,"Available command cannot be 0.");
+    ASSERT(command!= NULL,"null command array pointer in check command");
     bool isCommandFound = false;
     string inputBuffer;
     string commandBuffer;
-    inputBuffer = input;
-    transform (inputBuffer.begin(), inputBuffer.end(), inputBuffer.begin(),toLower);//to lower case for comparison
+    inputBuffer = toLowerString(input);
+    try
+    {
     for (int i = 0 ; i < arraySize; i++)
-    {//iterate for each item in command array
-        commandBuffer = command[i];
-        transform( commandBuffer.begin(), commandBuffer.end(), commandBuffer.begin(),toLower);
+    {
+        commandBuffer = toLowerString(command[i]);
         if(inputBuffer == commandBuffer)
             isCommandFound = true;
     }
-    return isCommandFound;
+
+     return isCommandFound;
+    }
+    catch(exception& e)
+    {
+        logger->report("@Intelliense -> exception caught:" + string(e.what()));
+        return false;
+    }
+
+
 }
 string Intellisense::getfirst_Word(string command)
 {
@@ -230,7 +298,7 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 
 int Intellisense::getID(vector<string>& tokens)
 {
-    if(tokens.size()==0 || isAllInt(tokens.front())== false)
+    if(tokens.size()==0 || isAllInt(tokens.front())== false || tokens.size()>2)
     {
         return -1;
     }
@@ -251,16 +319,16 @@ string Intellisense::getPriority(vector<string>& tokens)
 
 
 
-        if((checkHeadString.compare(string("HIGH"))==0)|| checkHeadString.compare(string("high"))==0)
+        if((checkHeadString.compare(HIGHPRIORITY)==0)|| checkHeadString.compare(HIGHPRIORITY_L)==0)
         {
             tokens.erase(tokens.begin());
-            return string("HIGH");
+            return HIGHPRIORITY;
         }
 
-        if((checkTailString.compare(string("HIGH"))==0)|| checkTailString.compare(string("high"))==0)
+        if((checkTailString.compare(HIGHPRIORITY)==0)|| checkTailString.compare(HIGHPRIORITY_L)==0)
         {
             tokens.pop_back();
-            return string("HIGH");
+            return HIGHPRIORITY;
         }
     }
     return string("LOW");
@@ -272,7 +340,6 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
     date.tm_hour=0;
     date.tm_min=0;
 
-    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
     vector<string>::iterator it=tokens.begin();
     while (it!=tokens.end())
     {
@@ -351,11 +418,11 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
 
 string Intellisense::getCategory(vector<string>& tokens)
 {
-    string category = "#";
+    string category = EMPTYCATEGORY;
     vector<string>::iterator it=tokens.begin();
     while(it!=tokens.end())
     {
-        if(it->at(0) == '#' )
+        if(it->at(0) == CATEGORYRECOGNISER)
         {
             category = it->substr(1,it->size()-1);
             it = tokens.erase(it);
@@ -452,7 +519,6 @@ tm Intellisense::getDate(vector<string>& tokens)
 
     }
 
-    //for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
     vector<string>::iterator it=tokens.begin();
     while (it!=tokens.end())
     {
@@ -578,10 +644,20 @@ int Intellisense::checkDateString(string token)
 string Intellisense::getEventName(vector<string>& tokens)
 {
     stringstream ss;
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
-    {
-        ss<<it->c_str()<<string(" ");
-    }
+   // for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
+   // {
+    vector<string>::iterator it=tokens.begin();
+     while (it!=tokens.end())
+     {
+        ss<<it->c_str();
+        ++it;
+        if (it!=tokens.end())
+        {
+            ss<<string(" ");
+           //only increment if it is not the last position
+        }
+     }
+   // }
 
     return ss.str();
 }
@@ -591,25 +667,25 @@ int Intellisense::getDateType(vector<string>& tokens)
     vector<string>::iterator it=tokens.begin();
     while(it!=tokens.end())
     {
-        cout<<"valueee:"<<*it<<endl;
-        if( *it == "weekly" )//later do lower case check write a function that compares 2 string without case sensitive
+        string lowerString = toLowerString(*it);
+        if( lowerString == WEEKLY )
         {//may have to add more checks if weekly is used in event name
             dType = task::DATEWEEKLY;
             it = tokens.erase(it);
         }
-        else if(*it == "fortnightly")//if more than 1 special date type keywords occured we take the higher priority ones
+        else if(lowerString == FORTNIGHTLY)
         {
             dType = task::DATEFORTNIGHTLY;
             it = tokens.erase(it);
         }
-        else if( *it == "monthly")
+        else if( lowerString == MONTHLY)
         {
             dType = task::DATEMONTHLY;
             it = tokens.erase(it);
         }
 
         if(it!= tokens.end())
-            it++;//incremnt if it is not the last iterator
+            it++;//increment if it is not the last iterator
 
     }
     return dType;
@@ -699,7 +775,8 @@ Action Intellisense::exitOperation(vector<string>& tokens)
     currentCommand = EXIT;
     Action task;
     task.setCommand(getCommand(tokens,"EXIT"));
-
+    setAllStatusFlag(task);
+    checkExitReq();
     return task;
 
 }
@@ -726,30 +803,19 @@ Action Intellisense::markOperation(vector<string>& tokens)
 
     return task;
 }
-//Action Intellisense::invalidOperation(vector<string>& tokens)
 Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
     Action task;
-    //task.setCommand(getCommand(tokens,"INVALID"));//remove this as we now treat this as quick add instead
-    //start of quick add algo
-    //this is where we perform the quick add algorithm
     task.setCommand("ADD");// we assume add if no command word is found
-    task.determineDate(getDate(tokens),getDate(tokens));//expand this to quick add date function
+    task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
-    //get special word detection on weekly monthly fortnightly
-    //this will overwrite any existing value if got clashes so the check in these special functions must be thorough
     task.setDateType(getDateType(tokens));
-    task.setEventName(getEventName(tokens));//get event name must be the last to retrieve as it gets the remainders
+    task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkAddReq();
     smartAutoFill(task);//auto fill some of the fields that are unentered
-    return task;
-    //the end of quick add
-    setAllStatusFlag(task);
-
-
     return task;
 }
 Action Intellisense::undoOperation(vector<string>& tokens)
@@ -774,7 +840,7 @@ Action Intellisense::sortOperation(vector<string>& tokens)
     currentCommand = SORT;
     Action task;
     task.setCommand(getCommand(tokens,"SORT"));
-
+    setAllStatusFlag(task);
     return task;
 }
 Action Intellisense::findOperation(vector<string>& tokens)
@@ -783,6 +849,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
     Action task;
     task.setCommand(getCommand(tokens,"FIND"));
     task.setPriority(getPriority(tokens));
+    task.setCategory(getCategory(tokens));
     task.setStartDate(getDate(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
@@ -797,7 +864,9 @@ Action Intellisense::editOperation(vector<string>& tokens)
     Action task;
     task.setCommand(getCommand(tokens,"EDIT"));
     task.setPriority(getPriority(tokens));
+    task.setCategory(getCategory(tokens));
     task.setStartDate(getDate(tokens));
+    task.setDateType(getDateType(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkEditReq();
@@ -810,7 +879,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 void Intellisense::setAllStatusFlag(Action task)
 {
 
-    if(task.getEventName() == "" )
+    if(task.getEventName() == EMPTYEVENT )
         setStatusFlagAt(INAME,false);
     else
         setStatusFlagAt(INAME,true);
@@ -833,24 +902,25 @@ void Intellisense::setAllStatusFlag(Action task)
     else
         setStatusFlagAt(IDATEEND,true);
 
-    if(task.getPriority() == "LOW" )
+    if(task.getPriority() == EMPTYPRIORITY )
         setStatusFlagAt(IPRIORITY,false);
     else
         setStatusFlagAt(IPRIORITY,true);
 
 
-    if(task.getCategory() == "#")
+    if(task.getCategory() == EMPTYCATEGORY)
         setStatusFlagAt(ICATEGORY,false);
     else
         setStatusFlagAt(ICATEGORY,true);
 
-    if(task.getID() == -1)
+    if(task.getID() == EMPTYID)
         setStatusFlagAt(IID,false);
     else
         setStatusFlagAt(IID,true);
 }
 void  Intellisense::getAllStatusFlag(bool *flags)
 {
+    ASSERT(flags!=NULL,"flags pointer cannot be NULL");
     for (int i=0;i<MAXNOOFPARAMETERS;i++)
     {
         flags[i] = statusFlags[i];;
@@ -859,10 +929,12 @@ void  Intellisense::getAllStatusFlag(bool *flags)
 
 bool Intellisense::getStatusFlagAt(int index)
 {
+    ASSERT(index>=0,"flag index canot be less than 0");
     return statusFlags[index];
 }
 void Intellisense::setStatusFlagAt(int index,bool flag)
 {
+    ASSERT(index>=0,"flag index canot be less than 0");
     statusFlags[index] = flag;
 }
 bool Intellisense::getrequirementsMet()
@@ -883,7 +955,11 @@ void Intellisense::checkAddReq()
     }
     requirementsMet = addReqMet;
 }
-
+void Intellisense::checkExitReq()
+{
+    bool exitReq = true;//no condition to quit
+    requirementsMet = exitReq;
+}
 void Intellisense::checkDelReq()
 {// need at least an ID to delete
     bool checkReqMet = false;
@@ -954,95 +1030,161 @@ void Intellisense::checkEditReq()
     }
     requirementsMet = editReqMet;
 }
+string Intellisense::getAddFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = ADDFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback = ADDFEEDBACK_2 ;
+    }
+    return feedback;
+}
+string Intellisense::getEditFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = EDITFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback = EDITFEEDBACK_2 ;
+    }
+    return feedback;
+}
+string Intellisense::getDeleteFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = DELFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback = DELFEEDBACK_2;
+    }
+    return feedback;
+}
+string Intellisense::getExitFeedBack()
+{
+    string feedback;
+    feedback = EXITFEEDBACK_1;
+    return feedback;
+}
+string Intellisense::getDisplayFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+        feedback = DISPLAYFEEDBACK_1;
+    }
+    else
+    {
+        feedback = DISPLAYFEEDBACK_2;
+    }
+    return feedback;
+}
 
+string Intellisense::getFindFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+        feedback = FINDFEEDBACK_1;
+    }
+    else
+    {
+        feedback = FINDFEEDBACK_2;
+    }
+    return feedback;
+}
+string Intellisense::getSortFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+        feedback = SORTFEEDBACK_1;
+    }
+    else
+    {
+        feedback = SORTFEEDBACK_2;
+    }
+    return feedback;
+}
+string Intellisense::getRedoFeedBack()
+{
+    string feedback;
+    feedback = REDOFEEDBACK_1 ;
+    return feedback;
+}
+string Intellisense::getUndoFeedBack()
+{
+    string feedback;
+    feedback = UNDOFEEDBACK_1 ;
+    return feedback;
+}
+string Intellisense::getMarkFeedBack()
+{
+    string feedback;
+    if(getrequirementsMet())
+    {
+            feedback = MARKFEEDBACK_1 ;
+    }
+    else
+    {
+            feedback =MARKFEEDBACK_2 ;
+    }
+    return feedback;
+}
 string Intellisense::getFeedback()
 {//later refactor this into functions
     if(currentCommand == ADD)
     {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. add baby Birthday Preparation 24 Aug #family";
-        }
-        else
-        {
-                _feedback = "eg. Add baby birthday 24 aug";
-        }
+        _feedback = getAddFeedBack();
+    }
+    else if(currentCommand == EDIT)
+    {
+        _feedback = getEditFeedBack();
+    }
+    else if(currentCommand == DELETE )
+    {
+        _feedback = getDeleteFeedBack();
+    }
+    else if(currentCommand == EXIT )
+    {
+        _feedback = getExitFeedBack();
+    }
+    else if(currentCommand == DISPLAY )
+    {
+        _feedback = getDisplayFeedBack();
+    }
+    else if(currentCommand == FIND )
+    {
+        _feedback = getFindFeedBack();
+    }
+    else if(currentCommand == SORT )
+    {
+        _feedback = getSortFeedBack();
+    }
+    else if(currentCommand == REDO )
+    {
+        _feedback = getRedoFeedBack();
     }
 
-    if(currentCommand == DELETE )
+    else if(currentCommand == UNDO )
     {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. del 3";
-        }
-        else
-        {
-                _feedback = "eg. del 3";
-        }
+        _feedback = getUndoFeedBack();
     }
 
-    if(currentCommand == EXIT )
+    else if(currentCommand == MARK )
     {
-        _feedback = " Are you sure you want to exit?";
+        _feedback = getMarkFeedBack();
     }
 
-    if(currentCommand == DISPLAY )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. display #ab";
-        }
-        else
-        {
-                _feedback = "eg. display #ab";
-        }
-    }
-
-    if(currentCommand == FIND )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. find birthday";
-        }
-        else
-        {
-                _feedback = "eg. find #family";
-        }
-    }
-
-    if(currentCommand == SORT )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. sort by date?";
-        }
-        else
-        {
-                _feedback = "eg. sort by date?";
-        }
-    }
-
-    if(currentCommand == REDO )
-    {
-        _feedback = "Press enter to redo your last operation";
-    }
-
-    if(currentCommand == UNDO )
-    {
-        _feedback = "Press enter to undo your last operation";
-    }
-
-    if(currentCommand == MARK )
-    {
-        if(getrequirementsMet())
-        {
-                _feedback = "eg. mark today";
-        }
-        else
-        {
-                _feedback = "eg. mark 3";
-        }
-    }
     return _feedback;
 }
 void Intellisense::setFeedback(string newFeedback)
@@ -1051,6 +1193,8 @@ void Intellisense::setFeedback(string newFeedback)
 }
 bool Intellisense::isValidParaForCmd(int cmd,int parameter)
 {//this determines if the parameter is valid to work with the command
+    ASSERT(cmd>=0,"COMMAND CODE CANNOT BE LESS THAN ZERO");
+    ASSERT(cmd>=0,"PARAMETER CANNOT BE LESS ZERO");
     bool valid=false;
     if (cmd == ADD)
     {
@@ -1084,32 +1228,40 @@ bool Intellisense::isValidParaForCmd(int cmd,int parameter)
             parameter == ICATEGORY || parameter == IDATEEND ||  parameter == IID)
             valid =true;
     }
-
+    if (cmd == EXIT)
+    {
+            valid =false;
+    }
+    if (cmd == SORT)
+    {
+            valid =false;
+    }
     return valid;
 }
 string Intellisense::getParameter()
 {// output the string based on the flags set
     //refactor into many small functions
+    _parameter ="";//erase first
     if(isValidParaForCmd(currentCommand,INAME))//
     {
         if(statusFlags[INAME])
         {
-            _parameter ="<font color=green>[EventNAME] </font>";
+            _parameter =_parameter + GREENEVENTTEXT ;
         }
         else
         {
-            _parameter ="<font color=red>[EventNAME] </font>";
+            _parameter =_parameter + REDEVENTTEXT ;
         }
     }
     if(isValidParaForCmd(currentCommand,IDATE))//
     {
         if(statusFlags[IDATE])
         {
-            _parameter =_parameter + "<font color=green>[StartDate] </font>";
+            _parameter =_parameter + GREENSTARTDATETEXT ;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[StartDate] </font>";
+            _parameter =_parameter + REDSTARTDATETEXT ;
         }
     }
 
@@ -1117,11 +1269,11 @@ string Intellisense::getParameter()
     {
         if(statusFlags[IDATEEND])
         {
-            _parameter =_parameter + "<font color=green>[EndDate] </font>";
+            _parameter =_parameter + GREENENDDATETEXT;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[EndDate] </font>";
+            _parameter =_parameter + REDENDDATETEXT;
         }
     }
 
@@ -1129,11 +1281,11 @@ string Intellisense::getParameter()
     {
         if(statusFlags[IPRIORITY])
         {
-            _parameter =_parameter + "<font color=green>[PRIORITY] </font>";
+            _parameter =_parameter + GREENPRIORITYTEXT ;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[PRIORITY] </font>";
+            _parameter =_parameter + REDPRIORITYTEXT ;
         }
     }
 
@@ -1141,22 +1293,22 @@ string Intellisense::getParameter()
     {
         if(statusFlags[ICATEGORY])
         {
-            _parameter =_parameter + "<font color=green>[CATEGORY] </font>";
+            _parameter =_parameter + GREENCATEGORYTEXT;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[CATEGORY] </font>";
+            _parameter =_parameter + REDCATEGORYTEXT ;
         }
     }
     if(isValidParaForCmd(currentCommand,IID))//
     {
         if(statusFlags[IID])
         {
-            _parameter =_parameter + "<font color=green>[ID] </font>";
+            _parameter =_parameter + GREENIDTEXT ;
         }
         else
         {
-            _parameter =_parameter + "<font color=red>[ID] </font>";
+            _parameter =_parameter + REDIDTEXT ;
         }
     }
     //this is for the example feedback string
@@ -1170,7 +1322,9 @@ void Intellisense::setParameter(string newParameter)
 
 void Intellisense::smartAutoFill(Action &task)
 {
-    bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0 && task.getStartDate().tm_mday ==0);
+    ASSERT(&task!=NULL,"ACTION OBJECT CANNOT BE reference to null");
+    bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0
+                             && task.getStartDate().tm_mday ==0);
     if (isDateNotentered)
     {//we auto fill in todays day if date is unentered
         //

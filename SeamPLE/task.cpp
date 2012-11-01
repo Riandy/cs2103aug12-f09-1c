@@ -2,8 +2,8 @@
 
 const int  task::DATENORMAL         = 0;
 const int  task::DATEWEEKLY         = 1;
-const int task::DATEFORTNIGHTLY     = 2;
-const int task::DATEMONTHLY         = 3;
+const int  task::DATEFORTNIGHTLY     = 2;
+const int  task::DATEMONTHLY         = 3;
 
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
@@ -129,4 +129,17 @@ vector<string> task::toString()
     result.push_back("Priority : "+getPriority());
     result.push_back("Category : "+getCategory());
     return result;
+}
+tm  task::getEmptyDateTm()
+{
+
+    struct tm emptyTime;
+    emptyTime.tm_year = 0 ;
+    emptyTime.tm_mon  = 0;
+    emptyTime.tm_mday = 0;
+    emptyTime.tm_min  = 0;
+    emptyTime.tm_hour = 0;
+    emptyTime.tm_sec  = 0;
+
+    return emptyTime;
 }

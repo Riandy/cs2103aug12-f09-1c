@@ -50,7 +50,8 @@ HEADERS  += \
     TimeGetter.h \
     NotifyView.h \
     ErrorLogger.h \
-    timekeeper.h
+    timekeeper.h \
+    ndebug.h
 
 FORMS    += \
     SeampleView.ui \

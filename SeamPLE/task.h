@@ -56,6 +56,6 @@ public:
     string convertToDate(tm);
 
     vector<string> toString();
-
+    static tm getEmptyDateTm();
 };
 #endif
