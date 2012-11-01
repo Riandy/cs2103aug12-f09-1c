@@ -19,7 +19,7 @@ const string Intellisense::displayCommandArray[]= { "display" ,"show","-d","dsp"
 const string Intellisense::exitCommandArray[] = {"exit","quit","-q"};
 const string Intellisense::sortCommandArray[] = {"sort","arrange","-s"};
 const string Intellisense::findCommandArray[] = {"find","search","-f"};
-const string Intellisense::editCommandArray[] = {"edit","change","-e"};
+const string Intellisense::editCommandArray[] = {"edit","change","-e","defer","reschedule","change"};
 const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
 
