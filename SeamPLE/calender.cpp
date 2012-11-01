@@ -160,8 +160,8 @@ vector<task> calender::SearchByCat(string searchItem)
 	vector<task> _bufferStorage;
 	for (int i = 0; i < int(_storage.size()); i++)
 	{
-		string  bufferString = _storage[i].getCategory();
-		if (bufferString.find(searchItem))
+        string  bufferString = _storage[i].getCategory();
+        if (bufferString.compare(searchItem)==0)
 		{
 			_bufferStorage.push_back(_storage[i]);
 			
