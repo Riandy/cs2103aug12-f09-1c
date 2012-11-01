@@ -1,6 +1,8 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
+#include <QDebug>
+
 StandardView* StandardView::_standardView = NULL;
 
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
@@ -28,6 +30,8 @@ StandardView::StandardView(QWidget *parent):
     resetTableContents();
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
+    isTableView = true;
+    showTodayOrTable();
 }
 
 StandardView::~StandardView()
@@ -103,10 +107,13 @@ void StandardView:: showAppropriateColorInputEdit (InputBarFlag color)
 
 void StandardView:: instantiateTable(QVector <QString> output)
 {
-    _tableItems.output = output;
-    _tableItems.currentIndex = 0;
-    _tableItems.endIndex = output.size()/6;
-
+    //Defensive coding: output must be a factor of 6
+    if(output.size() % 6 == 0)
+    {
+        _tableItems.output = output;
+        _tableItems.currentIndex = 0;
+        _tableItems.endIndex = ((output.size()-1)/6);
+    }
     showTableResults();
 }
 
@@ -133,12 +140,9 @@ void StandardView:: resetTableContents()
     ui->label_24->setText("");
     ui->label_25->setText("");
     ui->label_26->setText("");
+
+    informNoDisplayResults();
 }
-
-//void StandardView:: showTodayEvents(QString events)
-//{
-
-//}
 
 void StandardView::show()
 {
@@ -174,6 +178,46 @@ bool StandardView::interfaceCurrentlyChanging()
     }
 
     return result;
+}
+
+void StandardView::showTable()
+{
+    ui->frame_4->show();
+    ui->label_5->show();
+    ui->label_6->show();
+    ui->label_27->show();
+}
+
+void StandardView::hideTable()
+{
+    ui->frame_4->hide();
+    ui->label_5->hide();
+    ui->label_6->hide();
+    ui->label_27->hide();
+}
+
+void StandardView::showTodayEvents()
+{
+    ui->frame_5->show();
+}
+
+void StandardView::hideTodayEvents()
+{
+    ui->frame_5->hide();
+}
+
+void StandardView::showTodayOrTable()
+{
+    if (isTableView)
+    {
+        hideTodayEvents();
+        showTable();
+    }
+    else
+    {
+        hideTable();
+        showTodayEvents();
+    }
 }
 
 void StandardView::recieve(QString input)
@@ -302,7 +346,7 @@ void StandardView::showTableResults()
     else
     {
         int i = _tableItems.currentIndex;
-        bool stillInResultsRange = (i < _tableItems.endIndex);
+        bool stillInResultsRange = (i <= _tableItems.endIndex);
         bool stillInTableRange = (i-_tableItems.currentIndex < 10);
 
         while (stillInResultsRange && stillInTableRange)
@@ -311,14 +355,15 @@ void StandardView::showTableResults()
             showTableEventName(i%10, _tableItems.output[(i*6)+1]);
 
             i++;
-            stillInResultsRange = (i < _tableItems.endIndex);
+            stillInResultsRange = (i <= _tableItems.endIndex);
             stillInTableRange = (i-_tableItems.currentIndex < 10);
+
         }
 
         //Reduce i as it will increment for one extra time in instantiating the bool conditions
         i--;
 
-        ui->label_27->setText(" Showing "
+        ui->label_27->setText("    "
                               +QString::number(_tableItems.currentIndex+1)
                               +" to "
                               +QString::number(i+1)
@@ -511,14 +556,17 @@ void StandardView:: setSignals()
     connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
             this,SLOT(clearTriggered()));
 
-    connect(_allShortcuts.getLeftKey(),SIGNAL(triggered()),
+    connect(_allShortcuts.getPageUpKey(),SIGNAL(triggered()),
             this,SLOT(pageUpTriggered()));
 
-    connect(_allShortcuts.getRightKey(),SIGNAL(triggered()),
+    connect(_allShortcuts.getPageDownKey(),SIGNAL(triggered()),
             this,SLOT(pageDownTriggered()));
 }
 
 bool StandardView::tableIsEmpty()
 {
+    qDebug() << _tableItems.output.size();
+    qDebug() << _tableItems.endIndex;
+    qDebug() << _tableItems.currentIndex;
     return (_tableItems.output.size() == 0);
 }

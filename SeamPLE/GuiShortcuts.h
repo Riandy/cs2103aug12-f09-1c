@@ -39,9 +39,9 @@ public:
 
     QAction* getClearKey();
 
-    QAction* getLeftKey();
+    QAction* getPageUpKey();
 
-    QAction* getRightKey();
+    QAction* getPageDownKey();
 
     //QxtGlobalShortcut* getShowHideViewKey();
 
@@ -56,8 +56,8 @@ private:
     QAction* _delete;
     QAction* _edit;
     QAction* _clear;
-    QAction* _left;
-    QAction* _right;
+    QAction* _pageUp;
+    QAction* _pageDown;
 
     //QxtGlobalShortcut * _showHideView;
 };
