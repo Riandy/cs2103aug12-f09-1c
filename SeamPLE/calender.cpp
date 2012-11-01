@@ -136,7 +136,7 @@ bool calender::editTask( task _edited)
     task _original = *taskMatch;
     saveHistory(_EDIT);
     saveOriginalEdits(_original);
-    saveNewEdits(_edited);
+
 
     if (taskMatch == NULL)// no match found
         return false;
@@ -166,6 +166,7 @@ bool calender::editTask( task _edited)
             taskMatch->setCategory(_edited.getCategory());
 
     }
+     saveNewEdits(_edited);
     return true;
 }
 
@@ -361,10 +362,11 @@ bool calender::undoAction()
         {
             _redoCommands.push(_EDIT);
             task tempTask = _newEdits.top();
+
             int position = findVectorPosition(tempTask);
-            if (position != NOTFOUND) // defensive programming
+                if (position != NOTFOUND) // defensive programming
             {
-                _storage[position] = _originalEdits.top();
+                 _storage[position] = _originalEdits.top();
                 swapTops(tempTask);
             }
             else if (position == NOTFOUND)
@@ -431,13 +433,26 @@ int calender::findVectorPosition(task _thisTask)
     int position = 1;
     for (int i = 0; i < _storage.size(); i++)
     {
-        if (_thisTask.getEventName() == _storage[position].getEventName())
+          if (_thisTask.getEventName() == _storage[position].getEventName())
+        {
+            cout<<endl;
+            cout<<"if loop";
+            system("pause");
             return position;
+        }
         else
+        {
+            cout<<endl;
+            cout<<"else loop";
+            system("pause");
             position++;
+        }
     }
 
-    return NOTFOUND; //DEFENSIVE PROGRAMMING
+    if (position <= _storage.size())
+        return position;
+    else
+        return NOTFOUND;
 }
 
 vector<task> calender::SearchByDate(string todayDate)
@@ -551,7 +566,7 @@ void calender::saveOriginalEdits(task _oldTask)
 void calender::saveNewEdits(task _newTask)
 {
     if (_newEdits.size() < 3)
-        _originalEdits.push(_newTask);
+        _newEdits.push(_newTask);
     else if (_newEdits.size() == 3)
     {
         stack<task> tempStack;
