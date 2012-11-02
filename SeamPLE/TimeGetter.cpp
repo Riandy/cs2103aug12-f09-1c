@@ -14,11 +14,11 @@ const QString TimeGetter:: SET_END_NEXT_SENTENCE =
         "</br>";
 
 const QString TimeGetter:: SET_DATE_FONT_FORMAT_AND_TAG =
-        "<font size=2 face=\"Arial\" color = #0B0B3B>";
+        "<font size=2 face=\"Arial\" color = #FCF40D>";
 const QString TimeGetter:: SET_END_FONT_TAG =
         "</font>";
 const QString TimeGetter:: SET_TIME_FONT_FORMAT_AND_TAG =
-        "<font size=3 face=\"Cambria\" color = #0B0B3B>";
+        "<font size=3 face=\"Cambria\" color = #FCF40D>";
 
 TimeGetter::TimeGetter()
 {

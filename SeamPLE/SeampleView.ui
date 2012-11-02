@@ -198,7 +198,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>60</y>
+        <y>62</y>
         <width>451</width>
         <height>31</height>
        </rect>
@@ -230,7 +230,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>90</y>
+        <y>92</y>
         <width>451</width>
         <height>41</height>
        </rect>
@@ -264,10 +264,10 @@ p, li { white-space: pre-wrap; }
      <widget class="STimeLabel" name="label_2" native="true">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>4</y>
-        <width>151</width>
-        <height>51</height>
+        <x>236</x>
+        <y>3</y>
+        <width>231</width>
+        <height>56</height>
        </rect>
       </property>
       <property name="font">
@@ -281,6 +281,8 @@ p, li { white-space: pre-wrap; }
       <property name="styleSheet">
        <string notr="true">#label_2
 {
+	
+
 }</string>
       </property>
       <property name="text" stdset="0">
