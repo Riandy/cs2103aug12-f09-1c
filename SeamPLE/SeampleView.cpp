@@ -160,6 +160,12 @@ void SeampleView::clearTriggered()
     emit relay("");
 }
 
+void SeampleView::helpTriggered()
+{
+    changeViewTriggered();
+    emit getHelpView();
+}
+
 bool SeampleView:: singleInstanceExists()
 {
     bool result;
@@ -235,4 +241,7 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
             this,SLOT(clearTriggered()));
+
+    connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
+            this,SLOT(helpTriggered()));
 }

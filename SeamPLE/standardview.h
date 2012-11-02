@@ -33,6 +33,7 @@ private:
     static StandardView* _standardView;
 
     const static QString MESSAGE_NO_CURRENT_RESULTS;
+    const static QString MESSAGE_VIEW_TYPE_WRONG;
     
 private:
     explicit StandardView(QWidget *parent = 0);
@@ -51,7 +52,7 @@ public:
 
     void showAppropriateColorInputEdit (InputBarFlag color) throw (string);
 
-    void instantiateTable(QVector <QString> output);
+    void instantiateTable(QVector <QString> output) throw (string);
 
     void resetTableContents();
 
@@ -101,6 +102,7 @@ private slots:
 
     void changeDisplayTriggered();
 
+public slots:
     void helpTriggered();
 
 private:
@@ -118,7 +120,7 @@ private:
 
     void hideTodayView();
 
-    void showViewWithType(viewType type);
+    void showViewWithType(viewType type) throw (string);
 
     void showTodayEvents();
 
@@ -143,6 +145,8 @@ private:
     bool tableIsEmpty();
 
 private:
+    ErrorLogger* _faulty;
+
     viewType _currentType;
 
     table _tableItems;
