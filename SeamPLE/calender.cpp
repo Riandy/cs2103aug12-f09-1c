@@ -84,19 +84,20 @@ bool calender::checkNameExists(string _name)
 
 bool calender::deleteItem(int taskID)
 {
-    if (taskID == 9999)
+    if (taskID == 9999) // change this to ALL later, debugging tool
     {
         _storage.clear();
-        return true;
+
     }
     else
     {
     saveHistory(_DELETE);
     saveDelete(taskID-1);
     _storage.erase(_storage.begin()+taskID-1);
+    }
     writeFile();
     return true;
-    }
+
 }
 
 bool calender::deleteItem(string eventName)
@@ -141,15 +142,12 @@ bool calender::checkID(int taskID)
 bool calender::editTask( task _edited)
 {
     task* taskMatch = pointerSearchByTask( _edited.getEventName());
-    task _original = *taskMatch;
-
-
-
     if (taskMatch == NULL)// no match found
         return false;
     else
     {
         saveHistory(_EDIT);
+        task _original = *taskMatch;
         saveOriginalEdits(_original);
         bool startDateentered = !(_edited.getStartDate().tm_year == 0 && _edited.getStartDate().tm_mon == 0
                                   && _edited.getStartDate().tm_mday ==0);
@@ -168,13 +166,18 @@ bool calender::editTask( task _edited)
             cout<<"enddate entered"<<endl;
             taskMatch->setEndDate(_edited.getEndDate());
         }
-        if(_edited.getPriority() != "LOW" )
-            taskMatch->setPriority(_edited.getPriority());
 
+        if(_edited.getPriority() != "LOW" )
+        {  taskMatch->setPriority(_edited.getPriority());
+
+        }
         if(_edited.getCategory() != "#" )
-            taskMatch->setCategory(_edited.getCategory());
+        taskMatch->setCategory(_edited.getCategory());
+
         saveNewEdits(*taskMatch);
+         writeFile();
        return true;
+
     }
 
 
@@ -244,7 +247,7 @@ vector<task> calender::SearchByPartialTask(string searchItem)
     }
     return _bufferStorage;
 }
-//end of ad hoc edit code
+
 int calender::getTaskID(string searchItem)
 {
     int taskID = NOTFOUND;
@@ -256,6 +259,7 @@ int calender::getTaskID(string searchItem)
 
     return taskID;
 }
+
 
 
 
@@ -373,7 +377,7 @@ bool calender::undoAction()
             _redoCommands.push(_EDIT);
             task tempTask = _newEdits.top();
 
-            int position = findVectorPosition(tempTask);
+            int position = getTaskID(tempTask.getEventName());
                 if (position != NOTFOUND) // defensive programming
             {
                  _storage[position] = _originalEdits.top();
@@ -414,7 +418,7 @@ bool calender::redoAction()
         else if (_redoCommands.top() == _EDIT)
         {
             task tempTask = _newEdits.top();
-            int position = findVectorPosition(tempTask);
+            int position = getTaskID(tempTask.getEventName());
             if (position != NOTFOUND) // defensive programming
             {
                 _storage[position] = _originalEdits.top();
@@ -439,20 +443,7 @@ void calender::swapTops(task bufferTask)
     _originalEdits.push(bufferTask);
 
 }
-int calender::findVectorPosition(task _thisTask)
-{
-    int position = 1;
-    for (int i = 0; i < _storage.size(); i++)
-    {
-          if (_thisTask.getEventName() == _storage[position].getEventName())
-        {
-            return position;
-        }
 
-        position++;
-    }
-    return NOTFOUND;
-}
 
 vector<task> calender::SearchByDate(string todayDate)
 {

@@ -42,7 +42,7 @@ private:
     bool loadFile();
 	void saveOriginalEdits(task _oldtask);
 	void saveNewEdits(task _newtask);
-	int findVectorPosition(task _thisTask);
+
 	void swapTops(task bufferTask);
 public:
 
