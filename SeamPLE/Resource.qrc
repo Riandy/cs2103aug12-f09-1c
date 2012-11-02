@@ -29,5 +29,8 @@
         <file>Note layout.gif</file>
         <file>tape.gif</file>
         <file>tape_2.gif</file>
+        <file>note_7.gif</file>
+        <file>Date Slip.gif</file>
+        <file>Priority.gif</file>
     </qresource>
 </RCC>
