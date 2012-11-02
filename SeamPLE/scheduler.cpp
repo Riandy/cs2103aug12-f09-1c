@@ -53,16 +53,12 @@ vector<string> scheduler::executeCommand(Action newAction)
            printMessage(ADD_FAILURE);
        }
     }
-    else if(command=="EXIT")
-    {
-        exit(0);
-    }
     else if(command=="DELETE")
     {
         //delete by ID
         //ASSERT((newTask.getID()==NULL && newTask.getEventName()=="#"),"No parameter passed in to the delete function");
 
-        if(eventCalender.checkID(newTask.getID()))
+        if(eventCalender.checkID(newTask.getID() || (newTask.getID() == 9999)))
         {
             eventCalender.deleteItem(newTask.getID());
             printMessage(DELETE_SUCCESS);
@@ -156,11 +152,12 @@ vector<string> scheduler::executeCommand(Action newAction)
         if (eventCalender.undoAction())
 	   {
           printMessage(UNDO_SUCCESS);
-		   taskVector = eventCalender.displayDatabase();
-			   updateGUI(taskVector);
+
 		}
         else if (!eventCalender.undoAction())
            printMessage(UNDO_FAILURE);
+        taskVector = eventCalender.displayDatabase();
+            updateGUI(taskVector);
     }
 
     else if (command == "REDO")
@@ -168,11 +165,12 @@ vector<string> scheduler::executeCommand(Action newAction)
         if (eventCalender.redoAction())
          {
              printMessage(REDO_SUCCESS);
-			taskVector = eventCalender.displayDatabase();
-		    updateGUI(taskVector);
+
 		}
         else if (!eventCalender.redoAction())
              printMessage(REDO_FAILURE);
+        taskVector = eventCalender.displayDatabase();
+        updateGUI(taskVector);
     }
 
     else if (command == "TODAY") 

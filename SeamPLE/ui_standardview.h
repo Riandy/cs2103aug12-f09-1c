@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Thu Nov 1 20:06:54 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Fri Nov 2 09:33:35 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -19,6 +19,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
+#include "sframe.h"
 #include "slineedit.h"
 #include "stimelabel.h"
 
@@ -27,7 +28,7 @@ QT_BEGIN_NAMESPACE
 class Ui_StandardView
 {
 public:
-    QFrame *frame;
+    Sframe *frame;
     QFrame *line;
     QFrame *frame_2;
     SLineEdit *lineEdit;
@@ -112,11 +113,11 @@ public:
     {
         if (StandardView->objectName().isEmpty())
             StandardView->setObjectName(QString::fromUtf8("StandardView"));
-        StandardView->resize(1358, 1110);
+        StandardView->resize(856, 664);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
         StandardView->setWindowIcon(icon);
-        frame = new QFrame(StandardView);
+        frame = new Sframe(StandardView);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(10, 10, 811, 641));
         frame->setStyleSheet(QString::fromUtf8("#frame\n"

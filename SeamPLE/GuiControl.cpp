@@ -13,6 +13,8 @@ const QString GuiControl:: MESSAGE_INVALID_COLOUR_FLAG_RETURN =
         "SEAMPLE NOT RETURNING APPROPRIATE COLOR FLAG";
 const QString GuiControl:: MESSAGE_SCHEDULER_INVALID_RETURN =
         "SCHEDULER IS NOT RETURNING ANY OUTPUT";
+const QString GuiControl:: MESSAGE_CANNOT_CREATE_SYSTEM_TRAY =
+        "SYSTEM TRAY NOT CREATED";
 const QString GuiControl:: MESSAGE_GUI_DISPLAY =
         "%123TABLE_SEAMPLE_&987";
 
@@ -29,7 +31,16 @@ GuiControl::GuiControl()
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
-    createSystemTrayIconIfPossible();
+
+    try
+    {
+        createSystemTrayIconIfPossible();
+    }
+    catch (string error)
+    {
+        _faulty->report(error);
+    }
+
     _timeControl.start();
 }
 
@@ -98,6 +109,7 @@ void GuiControl::check(QString input)
         {
             output.clear();
             output.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
+            _faulty->report(MESSAGE_INTELLISENSE_INVALID_RETURN.toStdString());
             _inputColorFlag = NONE;
         }
         else
@@ -106,9 +118,16 @@ void GuiControl::check(QString input)
             bool needStandardView =
                     (output[output.size()-2] == (MESSAGE_GUI_DISPLAY));
 
-            if (implementInputColorFlagFailure((output[output.size()-1])[0]))
+            try
             {
-                output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
+                if (implementInputColorFlagFailure((output[output.size()-1])[0]))
+                {
+                    output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
+                }
+            }
+            catch (string error)
+            {
+                _faulty->report(error);
             }
 
             if (needStandardView)
@@ -117,8 +136,14 @@ void GuiControl::check(QString input)
                 {
                     changeView(input,"",true);
                 }
-                qDebug() <<output;
-                _standardGui->instantiateTable(output.mid(1,output.size() - 3));
+                try
+                {
+                    _standardGui->instantiateTable(output.mid(1,output.size() - 3));
+                }
+                catch (string error)
+                {
+                    _faulty->report(error);
+                }
             }
         }
         send(output[0]);
@@ -153,7 +178,14 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             {
                 sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
             }
-            _standardGui->instantiateTable(output.mid(1,capacity - 2));
+            try
+            {
+                _standardGui->instantiateTable(output.mid(1,capacity - 2));
+            }
+            catch (string error)
+            {
+                _faulty->report(error);
+            }
         }
         else
         {
@@ -164,6 +196,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             if (invalidSchedulerReturn)
             {
                 output.push_front(MESSAGE_SCHEDULER_INVALID_RETURN);
+                _faulty->report(MESSAGE_SCHEDULER_INVALID_RETURN.toStdString());
             }
 
             if (interfaceIsStandardView())
@@ -222,6 +255,11 @@ void GuiControl::showHideView()
     }
 }
 
+void GuiControl::showHelpView()
+{
+    _standardGui->helpTriggered();
+}
+
 bool GuiControl:: singleInstanceExists()
 {
     bool result;
@@ -238,7 +276,7 @@ bool GuiControl:: singleInstanceExists()
     return result;
 }
 
-bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag)
+bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag) throw (string)
 {
     bool result;
 
@@ -251,6 +289,7 @@ bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag)
     {
         _inputColorFlag = NONE;
         result = true;
+        throw MESSAGE_INVALID_COLOUR_FLAG_RETURN.toStdString();
     }
 
     return result;
@@ -379,6 +418,10 @@ void GuiControl::setSeampleGuiSignals()
     //Recieve signal from standardGui to run slot for changing views
     connect(_seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
+
+    //Recieve signal from standardGui to run slot for changing views
+    connect(_seampleGui,SIGNAL(getHelpView()),
+            this,SLOT(showHelpView()));
 }
 
 //void GuiControl:: setGlobalSignals()
@@ -389,12 +432,16 @@ void GuiControl::setSeampleGuiSignals()
 //            this,SLOT(showHideView()));
 //}
 
-void GuiControl:: createSystemTrayIconIfPossible()
+void GuiControl:: createSystemTrayIconIfPossible() throw (string)
 {
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         _notifyInterface = _notifyInterface->getInstance();
-        _notifyInterface->showMessage("SeamPLE", "(>^.^)> MEOW <(^.^<)", QSystemTrayIcon::Information);
+        _notifyInterface->showMessage("SeamPLE", "Welcome to Seample. Press \"F1\" for help menu.", QSystemTrayIcon::Information);
+    }
+    else
+    {
+        throw MESSAGE_CANNOT_CREATE_SYSTEM_TRAY.toStdString();
     }
 }
 
