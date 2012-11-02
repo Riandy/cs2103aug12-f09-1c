@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Fri Nov 2 12:47:17 2012
+** Created: Fri Nov 2 18:08:09 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -60,6 +60,8 @@ public:
     QLabel *label_27;
     QLabel *label_6;
     QLabel *label_5;
+    QFrame *frame_15;
+    QFrame *frame_16;
     QFrame *frame_13;
     QFrame *frame_12;
     QLabel *label_30;
@@ -204,7 +206,7 @@ public:
         frame_14->setFrameShadow(QFrame::Raised);
         frame_4 = new QFrame(frame_14);
         frame_4->setObjectName(QString::fromUtf8("frame_4"));
-        frame_4->setGeometry(QRect(11, 70, 681, 271));
+        frame_4->setGeometry(QRect(11, 62, 681, 281));
         frame_4->setStyleSheet(QString::fromUtf8("#frame_4\n"
 "{\n"
 "	\n"
@@ -330,27 +332,6 @@ public:
         label_25->setFont(font4);
         label_25->setStyleSheet(QString::fromUtf8(""));
         label_25->setAlignment(Qt::AlignCenter);
-        label_7->raise();
-        label_10->raise();
-        label_14->raise();
-        label_11->raise();
-        label_26->raise();
-        label_17->raise();
-        label_19->raise();
-        label_21->raise();
-        label_20->raise();
-        label_22->raise();
-        label_23->raise();
-        label_8->raise();
-        label_24->raise();
-        label_18->raise();
-        label_16->raise();
-        label_9->raise();
-        label_13->raise();
-        label_12->raise();
-        label_15->raise();
-        label_25->raise();
-        frame_14->raise();
         label_27 = new QLabel(frame_14);
         label_27->setObjectName(QString::fromUtf8("label_27"));
         label_27->setGeometry(QRect(267, 349, 171, 42));
@@ -385,6 +366,26 @@ public:
 "\n"
 "\n"
 "}"));
+        frame_15 = new QFrame(frame_14);
+        frame_15->setObjectName(QString::fromUtf8("frame_15"));
+        frame_15->setGeometry(QRect(29, 334, 169, 32));
+        frame_15->setStyleSheet(QString::fromUtf8("#frame_15\n"
+"{\n"
+"	\n"
+"	background-image: url(:/bg/tape.gif);\n"
+"}"));
+        frame_15->setFrameShape(QFrame::StyledPanel);
+        frame_15->setFrameShadow(QFrame::Raised);
+        frame_16 = new QFrame(frame_14);
+        frame_16->setObjectName(QString::fromUtf8("frame_16"));
+        frame_16->setGeometry(QRect(600, 40, 56, 30));
+        frame_16->setStyleSheet(QString::fromUtf8("#frame_16\n"
+"{\n"
+"	\n"
+"	background-image: url(:/bg/tape_2.gif);\n"
+"}"));
+        frame_16->setFrameShape(QFrame::StyledPanel);
+        frame_16->setFrameShadow(QFrame::Raised);
         frame_13 = new QFrame(frame_3);
         frame_13->setObjectName(QString::fromUtf8("frame_13"));
         frame_13->setGeometry(QRect(17, 13, 701, 401));
@@ -616,40 +617,6 @@ public:
 "{\n"
 "	background-image: url(:/bg/Input-Large.gif);\n"
 "}"));
-        label_51->raise();
-        label_36->raise();
-        label_35->raise();
-        label_33->raise();
-        label_30->raise();
-        label_34->raise();
-        label_31->raise();
-        label_37->raise();
-        label_38->raise();
-        label_32->raise();
-        label_40->raise();
-        label_41->raise();
-        label_39->raise();
-        label_44->raise();
-        label_43->raise();
-        label_42->raise();
-        label_46->raise();
-        label_47->raise();
-        label_45->raise();
-        label_49->raise();
-        label_50->raise();
-        label_48->raise();
-        label_54->raise();
-        label_53->raise();
-        label_52->raise();
-        label_55->raise();
-        label_56->raise();
-        label_57->raise();
-        label_58->raise();
-        label_59->raise();
-        label_60->raise();
-        label_62->raise();
-        label_64->raise();
-        label_63->raise();
         label_29 = new QLabel(frame_13);
         label_29->setObjectName(QString::fromUtf8("label_29"));
         label_29->setGeometry(QRect(40, 34, 151, 102));
@@ -662,9 +629,11 @@ public:
 "	background-image: url(:/bg/note_6.gif);\n"
 "}"));
         label_29->setAlignment(Qt::AlignCenter);
+        frame_12->raise();
+        label_29->raise();
         frame_5 = new QFrame(frame_3);
         frame_5->setObjectName(QString::fromUtf8("frame_5"));
-        frame_5->setGeometry(QRect(16, 14, 701, 401));
+        frame_5->setGeometry(QRect(17, 13, 701, 401));
         frame_5->setStyleSheet(QString::fromUtf8(""));
         frame_5->setFrameShape(QFrame::StyledPanel);
         frame_5->setFrameShadow(QFrame::Raised);
@@ -719,9 +688,10 @@ public:
         frame_11->setStyleSheet(QString::fromUtf8("background-image: url(:/bg/Note_4.gif)"));
         frame_11->setFrameShape(QFrame::StyledPanel);
         frame_11->setFrameShadow(QFrame::Raised);
-        frame_4->raise();
-        frame_14->raise();
-        frame_13->raise();
+        lineEdit->raise();
+        label_2->raise();
+        label->raise();
+        frame_3->raise();
         frame_5->raise();
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
