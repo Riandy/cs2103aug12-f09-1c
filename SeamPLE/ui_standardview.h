@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Fri Nov 2 08:56:17 2012
+** Created: Fri Nov 2 09:33:35 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,7 +19,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
-#include <sframe.h>
+#include "sframe.h"
 #include "slineedit.h"
 #include "stimelabel.h"
 
@@ -113,7 +113,7 @@ public:
     {
         if (StandardView->objectName().isEmpty())
             StandardView->setObjectName(QString::fromUtf8("StandardView"));
-        StandardView->resize(1358, 1110);
+        StandardView->resize(856, 664);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
         StandardView->setWindowIcon(icon);

@@ -84,11 +84,19 @@ bool calender::checkNameExists(string _name)
 
 bool calender::deleteItem(int taskID)
 {
+    if (taskID == 9999)
+    {
+        _storage.clear();
+        return true;
+    }
+    else
+    {
     saveHistory(_DELETE);
     saveDelete(taskID-1);
     _storage.erase(_storage.begin()+taskID-1);
     writeFile();
     return true;
+    }
 }
 
 bool calender::deleteItem(string eventName)
@@ -166,7 +174,8 @@ bool calender::editTask( task _edited)
             taskMatch->setCategory(_edited.getCategory());
 
     }
-     saveNewEdits(_edited);
+
+     saveNewEdits(*taskMatch);
     return true;
 }
 
@@ -436,15 +445,12 @@ int calender::findVectorPosition(task _thisTask)
           if (_thisTask.getEventName() == _storage[position].getEventName())
         {
             cout<<endl;
-            cout<<"if loop";
-            system("pause");
+
             return position;
         }
         else
         {
-            cout<<endl;
-            cout<<"else loop";
-            system("pause");
+
             position++;
         }
     }
