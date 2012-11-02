@@ -33,6 +33,7 @@ StandardView::StandardView(QWidget *parent):
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
     setStartView();
+    _currentlyChanging = false;
 
     _faulty = _faulty->getInstance();
 }
@@ -158,38 +159,30 @@ void StandardView:: resetTableContents()
 
 void StandardView::show()
 {
+    _currentlyChanging = true;
+
     //Reset interface to original position
     changeGeometry();
 
     _opacityLvl = 0;
     setWindowOpacity(NONE);
     QMainWindow::show();
-    connect(&_fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
-    _fadeInTimer.start(1);
+    connect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
+    _fadeTimer.start(1);
 }
 
 void StandardView::hide()
 {
+    _currentlyChanging = true;
     _opacityLvl = 1;
     setWindowOpacity(LOGICAL);
-    connect(&_fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
-    _fadeOutTimer.start(1);
+    connect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
+    _fadeTimer.start(1);
 }
 
 bool StandardView::interfaceCurrentlyChanging()
 {
-    bool result;
-
-    if (_opacityLvl > 0.001 && _opacityLvl < LOGICAL)
-    {
-        result = true;
-    }
-    else
-    {
-        result = false;
-    }
-
-    return result;
+    return _currentlyChanging;
 }
 
 void StandardView::recieve(QString input)
@@ -257,29 +250,31 @@ void StandardView::fadeInChange()
 {
     _opacityLvl += 0.08;
 
+    setWindowOpacity(_opacityLvl);
+
     if (_opacityLvl >= LOGICAL)
     {
         _opacityLvl = 1;
-        _fadeInTimer.stop();
-        disconnect(&_fadeInTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
+        _fadeTimer.stop();
+        disconnect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
+        _currentlyChanging = false;
     }
-
-    setWindowOpacity(_opacityLvl);
 }
 
 void StandardView::fadeOutChange()
 {
     _opacityLvl -= 0.08;
 
+    setWindowOpacity(_opacityLvl);
+
     if (_opacityLvl <= NONE)
     {
         _opacityLvl = 0;
-        _fadeOutTimer.stop();
+        _fadeTimer.stop();
         QMainWindow::hide();
-        disconnect(&_fadeOutTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
+        disconnect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
+        _currentlyChanging = false;
     }
-
-    setWindowOpacity(_opacityLvl);
 }
 
 void StandardView::pageUpTriggered()
@@ -339,18 +334,12 @@ void StandardView::setStartView()
 
 void StandardView::showTable()
 {
-    ui->frame_4->show();
-    ui->label_5->show();
-    ui->label_6->show();
-    ui->label_27->show();
+    ui->frame_14->show();
 }
 
 void StandardView::hideTable()
 {
-    ui->frame_4->hide();
-    ui->label_5->hide();
-    ui->label_6->hide();
-    ui->label_27->hide();
+    ui->frame_14->hide();
 }
 
 void StandardView::showHelp()

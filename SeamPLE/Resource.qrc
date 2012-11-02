@@ -18,7 +18,6 @@
         <file>list.gif</file>
         <file>List num.gif</file>
         <file>Torn for num.gif</file>
-        <file>Note layout.gif</file>
         <file>Today.gif</file>
         <file>Note_2.gif</file>
         <file>Note_3.gif</file>
@@ -27,5 +26,8 @@
         <file>note_6.gif</file>
         <file>Input-Large.gif</file>
         <file>Input-Small.gif</file>
+        <file>Note layout.gif</file>
+        <file>tape.gif</file>
+        <file>tape_2.gif</file>
     </qresource>
 </RCC>

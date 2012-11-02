@@ -142,14 +142,15 @@ bool calender::editTask( task _edited)
 {
     task* taskMatch = pointerSearchByTask( _edited.getEventName());
     task _original = *taskMatch;
-    saveHistory(_EDIT);
-    saveOriginalEdits(_original);
+
 
 
     if (taskMatch == NULL)// no match found
         return false;
     else
     {
+        saveHistory(_EDIT);
+        saveOriginalEdits(_original);
         bool startDateentered = !(_edited.getStartDate().tm_year == 0 && _edited.getStartDate().tm_mon == 0
                                   && _edited.getStartDate().tm_mday ==0);
         // if( difftime( mktime(&(_edited.getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
@@ -172,11 +173,11 @@ bool calender::editTask( task _edited)
 
         if(_edited.getCategory() != "#" )
             taskMatch->setCategory(_edited.getCategory());
-
+        saveNewEdits(*taskMatch);
+       return true;
     }
 
-     saveNewEdits(*taskMatch);
-    return true;
+
 }
 
 vector<task> calender::SearchByCat(string searchItem)
@@ -377,6 +378,7 @@ bool calender::undoAction()
             {
                  _storage[position] = _originalEdits.top();
                 swapTops(tempTask);
+
             }
             else if (position == NOTFOUND)
                 return false;
@@ -444,21 +446,12 @@ int calender::findVectorPosition(task _thisTask)
     {
           if (_thisTask.getEventName() == _storage[position].getEventName())
         {
-            cout<<endl;
-
             return position;
         }
-        else
-        {
 
-            position++;
-        }
+        position++;
     }
-
-    if (position <= _storage.size())
-        return position;
-    else
-        return NOTFOUND;
+    return NOTFOUND;
 }
 
 vector<task> calender::SearchByDate(string todayDate)
