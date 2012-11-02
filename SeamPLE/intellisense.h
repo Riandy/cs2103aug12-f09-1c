@@ -157,12 +157,11 @@ private:
     vector<string> tokenize(string command);
     ErrorLogger *logger;
     bool isAllInt(const string& s );
-    void itTest(vector<string> tokens);
     operation determinOperation(vector<string>& tokens);
     string getfirst_Word(string command);
     bool checkString(const string& input, const string& command);
     bool checkCommandArray(const string& input, const string command[], int arraySize);
-    int checkDateString(string token);
+    int checkMonthByString(string token);
     string removeChar(string s,char chars[]);
     string& trim(string& s , const string& delimiters = " \f\r\t\v");
     string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
