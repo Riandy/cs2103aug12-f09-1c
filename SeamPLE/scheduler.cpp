@@ -53,6 +53,10 @@ vector<string> scheduler::executeCommand(Action newAction)
            printMessage(ADD_FAILURE);
        }
     }
+    else if(command=="EXIT")
+    {
+        exit(0);
+    }
     else if(command=="DELETE")
     {
         //delete by ID
