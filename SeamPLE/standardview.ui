@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1358</width>
-    <height>1110</height>
+    <width>856</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <iconset resource="Resource.qrc">
     <normaloff>:/bg/calendar.gif</normaloff>:/bg/calendar.gif</iconset>
   </property>
-  <widget class="QFrame" name="frame">
+  <widget class="Sframe" name="frame" native="true">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -1970,6 +1970,11 @@ p, li { white-space: pre-wrap; }
    <class>STimeLabel</class>
    <extends>QWidget</extends>
    <header>stimelabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Sframe</class>
+   <extends>QWidget</extends>
+   <header>sframe.h</header>
   </customwidget>
  </customwidgets>
  <resources>
