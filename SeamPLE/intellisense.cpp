@@ -81,7 +81,7 @@ Intellisense* Intellisense::intellisense = NULL;
 //miscellaneous function
 char toLower(char in){
     if(in<='Z' && in>='A')
-        return in-('Z'-'z');
+       { return in-('Z'-'z');}
     return in;
 }
 //end of miscellaneous
@@ -107,11 +107,8 @@ Intellisense::Intellisense(void)
     initFlags();
 
     logger->getInstance();
-
-
-
-
 }
+
 void Intellisense::initFlags()
 {
     for(int i=0; i<MAXNOOFPARAMETERS; i++)
@@ -250,11 +247,13 @@ bool Intellisense::checkString(const string& input, const string& command)
     }
     return true;
 }
+
 string Intellisense::toLowerString(string input)
 {
      transform(input.begin(), input.end(), input.begin(),toLower);
      return input;
 }
+
 bool Intellisense::checkCommandArray(const string& input, const string command[],int arraySize)
 {
     ASSERT(arraySize!= 0,"Available command cannot be 0.");
@@ -280,12 +279,13 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
         return false;
     }
 
-
 }
+
 string Intellisense::getfirst_Word(string command)
 {
     return tokenize(command)[0];
 }
+
 
 string Intellisense::getCommand(vector<string>& tokens,string _command)
 {
