@@ -153,9 +153,9 @@ private:
 
     double _opacityLvl;
 
-    QTimer _fadeInTimer;
+    QTimer _fadeTimer;
 
-    QTimer _fadeOutTimer;
+    bool _currentlyChanging;
 
     Ui::StandardView *ui;
 };
