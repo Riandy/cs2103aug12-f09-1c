@@ -2,6 +2,7 @@
 #define COMMONVIEW_H
 
 #include <QDesktopWidget>
+#include <QPropertyAnimation>
 #include "ErrorLogger.h"
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
@@ -41,9 +42,14 @@ protected:
 
     GuiShortcuts _allShortcuts;
 
-
 protected:
     CommonView();
+
+public:
+    bool interfaceCurrentlyChanging();
+
+protected:
+    bool _currentlyChanging;
 };
 
 

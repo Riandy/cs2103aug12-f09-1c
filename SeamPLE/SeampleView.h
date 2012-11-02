@@ -23,6 +23,10 @@ public:
 
     void endInstance();
 
+    void show();
+
+    void hide();
+
     void showFeedbackLabel(QString output);
 
     void showFeedbackInputEdit(QString output);
@@ -65,10 +69,18 @@ private slots:
 
     void helpTriggered();
 
+    void checkHideViewFinished(QAbstractAnimation::State,QAbstractAnimation::State);
+
+    void checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State);
+
 private:
     bool singleInstanceExists();
 
-    void changeGeometry();
+    void setDefaultGeometry();
+
+    QRect getDefaultGeometry();
+
+    QRect getHiddenGeometry();
 
     int getPosX(int maxX);
 
@@ -76,8 +88,12 @@ private:
 
     void setSignals();
 
+private:
     Ui::SeampleView *ui;
 
+    QPropertyAnimation *_animationIn;
+
+    QPropertyAnimation *_animationOut;
 };
 
 #endif // SEAMPLEVIEW_H

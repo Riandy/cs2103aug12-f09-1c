@@ -180,11 +180,6 @@ void StandardView::hide()
     _fadeTimer.start(1);
 }
 
-bool StandardView::interfaceCurrentlyChanging()
-{
-    return _currentlyChanging;
-}
-
 void StandardView::recieve(QString input)
 {
     emit relay(input);

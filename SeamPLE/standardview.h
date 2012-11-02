@@ -60,8 +60,6 @@ public:
 
     void hide();
 
-    bool interfaceCurrentlyChanging();
-
 signals:
     void relay(QString input);
 
@@ -154,8 +152,6 @@ private:
     double _opacityLvl;
 
     QTimer _fadeTimer;
-
-    bool _currentlyChanging;
 
     Ui::StandardView *ui;
 };

@@ -29,8 +29,7 @@ SOURCES += main.cpp\
     TimeGetter.cpp \
     NotifyView.cpp \
     timekeeper.cpp \
-    ErrorLogger.cpp \
-    SlidingFrame.cpp
+    ErrorLogger.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -52,8 +51,7 @@ HEADERS  += \
     NotifyView.h \
     ErrorLogger.h \
     timekeeper.h \
-    ndebug.h \
-    SlidingFrame.h
+    ndebug.h
 
 FORMS    += \
     SeampleView.ui \

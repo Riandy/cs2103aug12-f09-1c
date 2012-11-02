@@ -27,3 +27,8 @@ const string CommonView:: MESSAGE_ERROR_INCOMPLETE_RESULTS =
 CommonView::CommonView()
 {
 }
+
+bool CommonView::interfaceCurrentlyChanging()
+{
+    return _currentlyChanging;
+}

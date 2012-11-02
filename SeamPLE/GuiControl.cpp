@@ -210,7 +210,8 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 
 void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHasFocus)
 {
-    if (!(_standardGui->interfaceCurrentlyChanging()))
+    if (!(_standardGui->interfaceCurrentlyChanging())&&
+            !(_seampleGui->interfaceCurrentlyChanging()))
     {
         setStandardViewFlag(!interfaceIsStandardView());
 

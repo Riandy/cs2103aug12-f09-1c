@@ -1,6 +1,8 @@
 #include "SeampleView.h"
 #include "ui_SeampleView.h"
 
+#include <QDebug>
+
 SeampleView* SeampleView::_seampleView = NULL;
 
 SeampleView::SeampleView(QWidget *parent) :
@@ -8,22 +10,30 @@ SeampleView::SeampleView(QWidget *parent) :
     ui(new Ui::SeampleView)
 {
     ui->setupUi(this);
-    changeGeometry();
+    this->setWindowState(Qt::WindowMaximized);
+    setDefaultGeometry();
 
     //To make pri window transparent as focus is on
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
+    _animationOut = new QPropertyAnimation(ui->frame, "geometry");
+    _animationOut->setEasingCurve(QEasingCurve::Linear);
+    _animationIn = new QPropertyAnimation(ui->frame, "geometry");
+    _animationIn->setEasingCurve(QEasingCurve::OutQuart);
     _allShortcuts.setShortcutsTo(this);
     setSignals();
 
     //Prevent change view push button from snatching focus
     //from input line
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
+
+    _currentlyChanging = false;
 }
 
 SeampleView::~SeampleView()
 {
+    delete _animationOut;
     delete ui;
 }
 
@@ -44,6 +54,28 @@ void SeampleView:: endInstance()
         delete _seampleView;
         _seampleView = NULL;
     }
+}
+
+void SeampleView::show()
+{
+    _currentlyChanging = true;
+
+    _animationIn->setDuration(200);
+    _animationIn->setStartValue(getHiddenGeometry());
+    _animationIn->setEndValue(getDefaultGeometry());
+
+    QMainWindow::show();
+    _animationIn->start();
+}
+
+void SeampleView::hide()
+{
+    _currentlyChanging = true;
+    _animationOut->setDuration(200);
+    _animationOut->setStartValue(getDefaultGeometry());
+    _animationOut->setEndValue(getHiddenGeometry());
+
+    _animationOut->start();
 }
 
 //Function to change GUI interface label to contain output string
@@ -166,6 +198,25 @@ void SeampleView::helpTriggered()
     emit getHelpView();
 }
 
+void SeampleView::checkHideViewFinished(
+        QAbstractAnimation::State newState,QAbstractAnimation::State oldState)
+{
+    if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
+    {
+        QMainWindow::hide();
+        _currentlyChanging = false;
+    }
+}
+
+void SeampleView::checkShowViewFinished(
+        QAbstractAnimation::State newState,QAbstractAnimation::State oldState)
+{
+    if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
+    {
+        _currentlyChanging = false;
+    }
+}
+
 bool SeampleView:: singleInstanceExists()
 {
     bool result;
@@ -182,16 +233,37 @@ bool SeampleView:: singleInstanceExists()
     return result;
 }
 
-void SeampleView:: changeGeometry()
+void SeampleView:: setDefaultGeometry()
 {
-    this->setWindowState(Qt::WindowMaximized);
     QDesktopWidget screen;
     QRect sample = screen.availableGeometry(-1);
 
-    this->ui->frame->setGeometry(getPosX(sample.bottomRight().x()),
-                                 getPosY(sample.bottomRight().y()),
-                                 this->ui->frame->width(),
-                                 this->ui->frame->height());
+    ui->frame->setGeometry(getPosX(sample.bottomRight().x()),
+                           getPosY(sample.bottomRight().y()),
+                           this->ui->frame->width(),
+                           this->ui->frame->height());
+}
+
+QRect SeampleView:: getDefaultGeometry()
+{  
+    QDesktopWidget screen;
+    QRect sample = screen.availableGeometry(-1);
+
+    return QRect(getPosX(sample.bottomRight().x()),
+                 getPosY(sample.bottomRight().y()),
+                 this->ui->frame->width(),
+                 this->ui->frame->height());
+}
+
+QRect SeampleView:: getHiddenGeometry()
+{
+    QDesktopWidget screen;
+    QRect sample = screen.availableGeometry(-1);
+
+    return QRect(getPosX(sample.bottomRight().x()),
+                 screen.height(),
+                 this->ui->frame->width(),
+                 this->ui->frame->height());
 }
 
 int SeampleView:: getPosX(int maxX)
@@ -217,7 +289,7 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
-    \
+
     connect(_allShortcuts.getUndoKey(),SIGNAL(triggered()),
             this,SLOT(undoTriggered()));
 
@@ -244,4 +316,10 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
+
+    connect(_animationOut,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+            this,SLOT(checkHideViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
+
+    connect(_animationIn,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+            this,SLOT(checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
 }
