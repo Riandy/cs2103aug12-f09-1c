@@ -1,6 +1,12 @@
 #include "calender.h"
 
 
+static string _DELETE = "delete";
+static string _ADDITION = "add";
+static string _EDIT = "edit";
+static int NOTFOUND = -1;
+
+
 calender::calender()
 {
     calender::loadFile();
@@ -132,10 +138,11 @@ bool calender::writeFile()
 
 bool calender::checkID(int taskID)
 {
-    if (taskID > int(_storage.size()) || taskID<1)
+
+    if (taskID > int(_storage.size()) || taskID<1)     
         return false;
     else
-        return true;
+       return true;
 }
 
 
