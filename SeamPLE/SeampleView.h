@@ -63,7 +63,7 @@ private slots:
 
     void clearTriggered();
 
-    //void helpTriggered();
+    void helpTriggered();
 
 private:
     bool singleInstanceExists();

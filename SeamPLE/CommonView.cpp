@@ -21,8 +21,8 @@ const QString CommonView:: COMMAND_EDIT = "edit ";
 
 const string CommonView:: MESSAGE_ERROR_INVALID_COLOUR =
         "INVALID INPUT BAR COLOUR RETURNED";
-const string CommonView:: MESSAGE_ERROR_SINGLETON_INSTANTIATE =
-        "";
+const string CommonView:: MESSAGE_ERROR_INCOMPLETE_RESULTS =
+        "INCOMPLETE SCHEDULER RESULTS RETURNED";
 
 CommonView::CommonView()
 {

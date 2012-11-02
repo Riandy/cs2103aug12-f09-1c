@@ -37,7 +37,7 @@ protected:
 
     //Following will contain strings corresponding to error reports of both user interfaces
     const static string MESSAGE_ERROR_INVALID_COLOUR;
-    const static string MESSAGE_ERROR_SINGLETON_INSTANTIATE;
+    const static string MESSAGE_ERROR_INCOMPLETE_RESULTS;
 
     GuiShortcuts _allShortcuts;
 
