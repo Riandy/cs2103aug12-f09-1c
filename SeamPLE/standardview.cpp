@@ -133,27 +133,11 @@ void StandardView:: instantiateTable(QVector <QString> output) throw (string)
 //Remove all dynamically allocated memory given to table widget
 void StandardView:: resetTableContents()
 {
-    ui->label_7->setText("");
-    ui->label_8->setText("");
-    ui->label_9->setText("");
-    ui->label_10->setText("");
-    ui->label_11->setText("");
-    ui->label_12->setText("");
-    ui->label_13->setText("");
-    ui->label_14->setText("");
-    ui->label_15->setText("");
-    ui->label_16->setText("");
-    ui->label_17->setText("");
-    ui->label_18->setText("");
-    ui->label_19->setText("");
-    ui->label_20->setText("");
-    ui->label_21->setText("");
-    ui->label_22->setText("");
-    ui->label_23->setText("");
-    ui->label_24->setText("");
-    ui->label_25->setText("");
-    ui->label_26->setText("");
-
+    resetTableNumber();
+    resetTableName();
+    resetTableStartDate();
+    resetTableEndDate();
+    hideTableAllPriority();
     informNoDisplayResults();
 }
 
@@ -319,6 +303,76 @@ void StandardView::helpTriggered()
     showViewWithType(HELP_VIEW);
 }
 
+void StandardView::resetTableNumber()
+{
+    ui->label_7->setText("");
+    ui->label_8->setText("");
+    ui->label_9->setText("");
+    ui->label_10->setText("");
+    ui->label_11->setText("");
+    ui->label_12->setText("");
+    ui->label_13->setText("");
+    ui->label_14->setText("");
+    ui->label_15->setText("");
+    ui->label_16->setText("");
+}
+
+void StandardView::resetTableName()
+{
+    ui->label_17->setText("");
+    ui->label_18->setText("");
+    ui->label_19->setText("");
+    ui->label_20->setText("");
+    ui->label_21->setText("");
+    ui->label_22->setText("");
+    ui->label_23->setText("");
+    ui->label_24->setText("");
+    ui->label_25->setText("");
+    ui->label_26->setText("");
+}
+
+void StandardView::resetTableStartDate()
+{
+    ui->label_77->setText("");
+    ui->label_78->setText("");
+    ui->label_79->setText("");
+    ui->label_80->setText("");
+    ui->label_81->setText("");
+    ui->label_82->setText("");
+    ui->label_83->setText("");
+    ui->label_84->setText("");
+    ui->label_85->setText("");
+    ui->label_86->setText("");
+}
+
+void StandardView::resetTableEndDate()
+{
+    ui->label_87->setText("");
+    ui->label_88->setText("");
+    ui->label_89->setText("");
+    ui->label_90->setText("");
+    ui->label_91->setText("");
+    ui->label_92->setText("");
+    ui->label_93->setText("");
+    ui->label_94->setText("");
+    ui->label_95->setText("");
+    ui->label_96->setText("");
+}
+
+void StandardView::hideTableAllPriority()
+{
+    ui->label_97->hide();
+    ui->label_98->hide();
+    ui->label_99->hide();
+    ui->label_100->hide();
+    ui->label_101->hide();
+    ui->label_102->hide();
+    ui->label_103->hide();
+    ui->label_104->hide();
+    ui->label_105->hide();
+    ui->label_106->hide();
+}
+
 void StandardView::setStartView()
 {
     _currentType = TODAY_EVENTS;
@@ -454,19 +508,22 @@ void StandardView::showTableResults()
     }
     else
     {
+        qDebug() << _tableItems.output;
         int i = _tableItems.currentIndex;
         bool stillInResultsRange = (i <= _tableItems.endIndex);
         bool stillInTableRange = (i-_tableItems.currentIndex < 10);
 
         while (stillInResultsRange && stillInTableRange)
         {
-            showTableEventId(i%10,_tableItems.output[(i*6)]);
-            showTableEventName(i%10, _tableItems.output[(i*6)+1]);
+            showTableEventId(i,_tableItems.output[(i*6)]);
+            showTableEventName(i, _tableItems.output[(i*6)+1]);
+            showTableStartDate(i, _tableItems.output[(i*6)+2]);
+            showTableEndDate(i, _tableItems.output[(i*6)+3]);
+            showTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
 
             i++;
             stillInResultsRange = (i <= _tableItems.endIndex);
             stillInTableRange = (i-_tableItems.currentIndex < 10);
-
         }
 
         //Reduce i as it will increment for one extra time in instantiating the bool conditions
@@ -581,6 +638,162 @@ void StandardView:: showTableEventName(int index, QString name)
 
         default:
             break;
+    }
+}
+
+void StandardView:: showTableStartDate(int index, QString startDate)
+{
+    int reformatIndex = index%10;
+
+    switch (reformatIndex)
+    {
+        case 0:
+            ui->label_77->setText(startDate);
+            break;
+
+        case 1:
+            ui->label_78->setText(startDate);
+            break;
+
+        case 2:
+            ui->label_80->setText(startDate);
+            break;
+
+        case 3:
+            ui->label_79->setText(startDate);
+            break;
+
+        case 4:
+            ui->label_84->setText(startDate);
+            break;
+
+        case 5:
+            ui->label_81->setText(startDate);
+            break;
+
+        case 6:
+            ui->label_83->setText(startDate);
+            break;
+
+        case 7:
+            ui->label_82->setText(startDate);
+            break;
+
+        case 8:
+            ui->label_86->setText(startDate);
+            break;
+
+        case 9:
+            ui->label_85->setText(startDate);
+            break;
+
+        default:
+            break;
+    }
+}
+
+void StandardView:: showTableEndDate(int index, QString endDate)
+{
+    int reformatIndex = index%10;
+
+    switch (reformatIndex)
+    {
+        case 0:
+            ui->label_96->setText(endDate);
+            break;
+
+        case 1:
+            ui->label_88->setText(endDate);
+            break;
+
+        case 2:
+            ui->label_91->setText(endDate);
+            break;
+
+        case 3:
+            ui->label_90->setText(endDate);
+            break;
+
+        case 4:
+            ui->label_87->setText(endDate);
+            break;
+
+        case 5:
+            ui->label_93->setText(endDate);
+            break;
+
+        case 6:
+            ui->label_95->setText(endDate);
+            break;
+
+        case 7:
+            ui->label_94->setText(endDate);
+            break;
+
+        case 8:
+            ui->label_92->setText(endDate);
+            break;
+
+        case 9:
+            ui->label_89->setText(endDate);
+            break;
+
+        default:
+            break;
+    }
+}
+
+void StandardView:: showTablePriorityIcon(int index, QString priority)
+{
+    int reformatIndex = index%10;
+
+    if (priority == "HIGH")
+    {
+        switch (reformatIndex)
+        {
+            case 0:
+                ui->label_97->show();
+                break;
+
+            case 1:
+                ui->label_98->show();
+                break;
+
+            case 2:
+                ui->label_99->show();
+                break;
+
+            case 3:
+                ui->label_100->show();
+                break;
+
+            case 4:
+                ui->label_101->show();
+                break;
+
+            case 5:
+                ui->label_104->show();
+                break;
+
+            case 6:
+                ui->label_102->show();
+                break;
+
+            case 7:
+                ui->label_103->show();
+                break;
+
+            case 8:
+                ui->label_105->show();
+                break;
+
+            case 9:
+                ui->label_106->show();
+                break;
+
+            default:
+                break;
+        }
     }
 }
 

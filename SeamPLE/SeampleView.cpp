@@ -34,6 +34,7 @@ SeampleView::SeampleView(QWidget *parent) :
 SeampleView::~SeampleView()
 {
     delete _animationOut;
+    delete _animationIn;
     delete ui;
 }
 

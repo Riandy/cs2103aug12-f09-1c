@@ -104,6 +104,16 @@ public slots:
     void helpTriggered();
 
 private:
+    void resetTableNumber();
+
+    void resetTableName();
+
+    void resetTableStartDate();
+
+    void resetTableEndDate();
+
+    void hideTableAllPriority();
+
     void setStartView();
 
     void showTable();
@@ -127,6 +137,12 @@ private:
     void showTableEventId(int index, QString id);
 
     void showTableEventName(int index, QString name);
+
+    void showTableStartDate(int index, QString startDate);
+
+    void showTableEndDate(int index, QString endDate);
+
+    void showTablePriorityIcon(int index, QString priority);
 
     void informNoDisplayResults();
 
