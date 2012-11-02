@@ -157,12 +157,12 @@ private:
     vector<string> tokenize(string command);
     ErrorLogger *logger;
     bool isAllInt(const string& s );
-    void itTest(vector<string> tokens);
+    int checkDateString(string token);
     operation determinOperation(vector<string>& tokens);
     string getfirst_Word(string command);
     bool checkString(const string& input, const string& command);
     bool checkCommandArray(const string& input, const string command[], int arraySize);
-    int checkDateString(string token);
+    int checkMonthByString(string token);
     string removeChar(string s,char chars[]);
     string& trim(string& s , const string& delimiters = " \f\r\t\v");
     string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
@@ -179,6 +179,12 @@ private:
     Action editOperation(vector<string>& tokens);
     Action undoOperation(vector<string>& tokens);
     Action redoOperation(vector<string>& tokens);
+
+
+    bool processTimeSizeThree (tm &date, string time);
+    bool processTimeSizeFour (tm &date, string time);
+    bool processTimeSizeFive (tm &date, string time);
+
 
     bool getStatusFlagAt(int);
     void setStatusFlagAt(int,bool);
