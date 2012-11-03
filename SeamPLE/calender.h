@@ -50,7 +50,8 @@ private:
     void saveUndoneDelete(string Item);
 
     bool writeFile();
-    bool loadFile();
+    bool loadFile(string fileName);
+    void writeBackupFile();
     bool checkNameExists(string _name);
 
    string ensureUniqueName(string _name);
