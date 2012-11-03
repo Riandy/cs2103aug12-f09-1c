@@ -22,6 +22,8 @@ const string Intellisense::findCommandArray[] = {"find","search","-f"};
 const string Intellisense::editCommandArray[] = {"edit","change","-e","defer","reschedule","change"};
 const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
+const string Intellisense::todoCommandArray[] = {"todo"};
+
 
 const string Intellisense::EMPTYCATEGORY = "#";
 const string Intellisense::EMPTYEVENT = "";
@@ -169,6 +171,9 @@ Action Intellisense::check(string query)
     case REDO:
         task=redoOperation(buffer);
         break;
+    case TODO:
+        task= todoOperation(buffer);
+        break;
     default:
         logger->report("@Intellisense -> Unexpected command received" + determinOperation(buffer));    //logging the unexpected command
         ASSERT(false,"Command is not recognised");
@@ -223,6 +228,10 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     else if(checkCommandArray(commandword,redoCommandArray,sizeof(redoCommandArray)/sizeof(string)))
     {
         return REDO;
+    }
+    else if(checkCommandArray(commandword,todoCommandArray,sizeof(todoCommandArray)/sizeof(string)))
+    {
+        return TODO;
     }
     else
     {
@@ -1076,6 +1085,15 @@ int Intellisense::checkDateString(string token)
     return -1;
 }
 
+Action Intellisense::todoOperation(vector<string>& tokens)
+{
+    currentCommand = FIND;
+    Action task;
+    task.setCommand("FIND");
+    task.setCategory("F10AT");
+    setAllStatusFlag(task);
+    return task;
+}
 
 Action Intellisense::redoOperation(vector<string>& tokens)
 {

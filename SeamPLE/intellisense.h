@@ -34,7 +34,8 @@ enum operation{
     INVALID,
     UNDO,
     REDO,
-    EDITENTER
+    EDITENTER,
+    TODO
 };
 
 
@@ -64,6 +65,7 @@ private:
     const static string editCommandArray[];
     const static string undoCommandArray[];
     const static string redoCommandArray[];
+    const static string todoCommandArray[];
 
     const static string EMPTYCATEGORY;
     const static string EMPTYEVENT;
@@ -181,6 +183,7 @@ private:
     Action editOperation(vector<string>& tokens);
     Action undoOperation(vector<string>& tokens);
     Action redoOperation(vector<string>& tokens);
+    Action todoOperation(vector<string>& tokens);
 
 
     bool checkDateNumericalFormat(vector<string>& tokens, tm &date);
