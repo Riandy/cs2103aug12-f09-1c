@@ -147,12 +147,7 @@ public:
     string getParameter();
     void setParameter(string);
 
-    bool checkDateNumericalFormat(vector<string>& tokens, tm &date);
-    bool checkDateFormat1(string checkString, tm &date);
-    bool checkDateFormat2(string checkString, tm &date);
-    bool checkDateFormat3(string checkString, tm &date);
 
-    bool checkDateStringFormat(vector<string>& tokens, tm &date);
 
 
     bool getrequirementsMet();
@@ -188,9 +183,22 @@ private:
     Action redoOperation(vector<string>& tokens);
 
 
-    bool processTimeSizeThree (tm &date, string time);
-    bool processTimeSizeFour (tm &date, string time);
-    bool processTimeSizeFive (tm &date, string time);
+    bool checkDateNumericalFormat(vector<string>& tokens, tm &date);
+    bool checkDateFormat1(string checkString, tm &date);
+    bool checkDateFormat2(string checkString, tm &date);
+    bool checkDateFormat3(string checkString, tm &date);
+    bool checkDateFormat4(string checkString, tm &date);
+    bool checkDateFormat5(string checkString, tm &date);
+
+    bool checkDateStringFormat(vector<string>& tokens, tm &date);
+
+    bool processTimeFormat1 (tm &date, string time);
+    bool processTimeFormat2 (tm &date, string time);
+    bool processTimeFormat3 (tm &date, string time);
+    bool processTimeFormat4 (tm &date, string time);
+    bool processTimeFormat5 (tm &date, string time);
+    bool processTimeFormat6 (tm &date, string time);
+    bool processTimeFormat7 (tm &date, string time);
 
     bool checkImptDate(vector<string>& tokens,tm &date);
 
