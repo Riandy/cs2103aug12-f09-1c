@@ -15,6 +15,7 @@ GuiShortcuts::GuiShortcuts()
     _pageDown = NULL;
     _changeDisplay = NULL;
     _help = NULL;
+    _changeTableView = NULL;
     //_showHideView = NULL;
 }
 
@@ -71,6 +72,10 @@ GuiShortcuts::~GuiShortcuts()
     if (_help != NULL)
     {
         delete _help;
+    }
+    if (_changeTableView != NULL)
+    {
+        delete _changeTableView;
     }
 //    if (_showHideView != NULL)
 //    {
@@ -138,6 +143,10 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
     _changeDisplay = new QAction(Gui);
     Gui->addAction(_changeDisplay);
     _changeDisplay->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
+
+    _changeTableView = new QAction(Gui);
+    Gui->addAction(_changeTableView);
+    _changeTableView->setShortcut(QKeySequence(Qt::Key_Tab));
 }
 
 //void GuiShortcuts::setGlobalShortcuts()
@@ -208,6 +217,11 @@ QAction* GuiShortcuts::getChangeDisplayKey()
 QAction* GuiShortcuts::getHelpKey()
 {
     return _help;
+}
+
+QAction* GuiShortcuts::getChangeTableViewKey()
+{
+    return _changeTableView;
 }
 
 //QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()

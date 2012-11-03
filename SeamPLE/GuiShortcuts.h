@@ -46,6 +46,8 @@ public:
     QAction* getChangeDisplayKey();
 
     QAction* getHelpKey();
+
+    QAction* getChangeTableViewKey();
     //QxtGlobalShortcut* getShowHideViewKey();
 
 private:
@@ -63,6 +65,7 @@ private:
     QAction* _pageDown;
     QAction* _changeDisplay;
     QAction* _help;
+    QAction* _changeTableView;
 
     //QxtGlobalShortcut * _showHideView;
 };

@@ -56,6 +56,8 @@ public:
 
     void resetTableContents();
 
+    void resetTableExpandedContents();
+
     void show();
 
     void hide();
@@ -114,6 +116,10 @@ private:
 
     void hideTableAllPriority();
 
+    void resetTableExpandedNotes();
+
+    void resetTableExpandedCounter();
+
     void setStartView();
 
     void showTable();
@@ -134,6 +140,12 @@ private:
 
     void showTableResults();
 
+    void showTableNotExpanded();
+
+    void showTableExpanded();
+
+    void showTableExpandedNotes (int reformatIndex , QString result);
+
     void showTableEventId(int index, QString id);
 
     void showTableEventName(int index, QString name);
@@ -145,6 +157,8 @@ private:
     void showTablePriorityIcon(int index, QString priority);
 
     void informNoDisplayResults();
+
+    void calibrateTableIndex();
 
     bool singleInstanceExists();
 
@@ -159,6 +173,8 @@ private:
     bool tableIsEmpty();
 
 private:
+    bool _resultsTableViewExpanded;
+
     ErrorLogger* _faulty;
 
     viewType _currentType;

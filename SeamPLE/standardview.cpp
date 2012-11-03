@@ -30,6 +30,7 @@ StandardView::StandardView(QWidget *parent):
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
 
     resetTableContents();
+    _resultsTableViewExpanded = false;
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
     setStartView();
@@ -138,6 +139,13 @@ void StandardView:: resetTableContents()
     resetTableStartDate();
     resetTableEndDate();
     hideTableAllPriority();
+    informNoDisplayResults();
+}
+
+void StandardView:: resetTableExpandedContents()
+{
+    resetTableExpandedNotes();
+    resetTableExpandedCounter();
     informNoDisplayResults();
 }
 
@@ -258,23 +266,36 @@ void StandardView::fadeOutChange()
 
 void StandardView::pageUpTriggered()
 {
-    bool currInputNotAtFrontDisplay = (_tableItems.currentIndex >= 10);
+    int varyAmount = (_resultsTableViewExpanded ? 3 : 10);
 
-    if (!tableIsEmpty() && currInputNotAtFrontDisplay)
+    bool currInputNotAtFrontDisplay = (_tableItems.currentIndex >= varyAmount);
+    bool currViewTypeIsTable = (_currentType == RESULTS_TABLE);
+
+    if (!tableIsEmpty() && currInputNotAtFrontDisplay && currViewTypeIsTable)
     {
-        _tableItems.currentIndex -= 10;
+        _tableItems.currentIndex -= varyAmount;
+
         showTableResults();
+    }
+
+    if (_resultsTableViewExpanded && _tableItems.currentIndex < 3)
+    {
+        _tableItems.currentIndex = 0;
     }
 }
 
 void StandardView::pageDownTriggered()
 {
+    int varyAmount = (_resultsTableViewExpanded ? 3 : 10);
+
     bool currInputNotAtLastDisplay =
-            (_tableItems.endIndex - _tableItems.endIndex%10 !=
-             _tableItems.currentIndex -_tableItems.currentIndex%10);
-    if (!tableIsEmpty()&& currInputNotAtLastDisplay)
+            (_tableItems.endIndex - _tableItems.endIndex%varyAmount !=
+             _tableItems.currentIndex -_tableItems.currentIndex%varyAmount);
+    bool currViewTypeIsTable = (_currentType == RESULTS_TABLE);
+
+    if (!tableIsEmpty()&& currInputNotAtLastDisplay && currViewTypeIsTable)
     {
-        _tableItems.currentIndex += 10;
+        _tableItems.currentIndex += varyAmount;
         showTableResults();
     }
 }
@@ -373,6 +394,18 @@ void StandardView::hideTableAllPriority()
     ui->label_106->hide();
 }
 
+void StandardView::resetTableExpandedNotes()
+{
+    ui->label_107->setText("");
+    ui->label_108->setText("");
+    ui->label_109->setText("");
+}
+
+void StandardView::resetTableExpandedCounter()
+{
+    ui->label_74->setText("");
+}
+
 void StandardView::setStartView()
 {
     _currentType = TODAY_EVENTS;
@@ -383,12 +416,20 @@ void StandardView::setStartView()
 
 void StandardView::showTable()
 {
-    ui->frame_14->show();
+    if (_resultsTableViewExpanded)
+    {
+        ui->frame_18->show();
+    }
+    else
+    {
+        ui->frame_14->show();
+    }
 }
 
 void StandardView::hideTable()
 {
     ui->frame_14->hide();
+    ui->frame_18->hide();
 }
 
 void StandardView::showHelp()
@@ -492,9 +533,6 @@ void StandardView::showViewWithType(viewType type) throw (string)
 
 void StandardView::showTableResults()
 {
-    //Make sure all contents for last showing is removed and replaced
-    //with the current content
-    resetTableContents();
     bool isNotTableView = (_currentType != RESULTS_TABLE);
 
     if (isNotTableView)
@@ -502,40 +540,116 @@ void StandardView::showTableResults()
         showViewWithType(RESULTS_TABLE);
     }
 
-    if (tableIsEmpty())
+    if (_resultsTableViewExpanded)
     {
-        informNoDisplayResults();
+        resetTableExpandedContents();
+
+        if (tableIsEmpty())
+        {
+            informNoDisplayResults();
+        }
+        else
+        {
+            showTableExpanded();
+        }
     }
     else
     {
-        qDebug() << _tableItems.output;
-        int i = _tableItems.currentIndex;
-        bool stillInResultsRange = (i <= _tableItems.endIndex);
-        bool stillInTableRange = (i-_tableItems.currentIndex < 10);
+        //Make sure all contents for last showing is removed and replaced
+        //with the current content
+        resetTableContents();
 
-        while (stillInResultsRange && stillInTableRange)
+        //Condition is repeated as it must be after the appropriate reset
+        if (tableIsEmpty())
         {
-            showTableEventId(i,_tableItems.output[(i*6)]);
-            showTableEventName(i, _tableItems.output[(i*6)+1]);
-            showTableStartDate(i, _tableItems.output[(i*6)+2]);
-            showTableEndDate(i, _tableItems.output[(i*6)+3]);
-            showTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
-
-            i++;
-            stillInResultsRange = (i <= _tableItems.endIndex);
-            stillInTableRange = (i-_tableItems.currentIndex < 10);
+            informNoDisplayResults();
         }
+        else
+        {
+            calibrateTableIndex();
+            showTableNotExpanded();
+        }
+    }
+}
 
-        //Reduce i as it will increment for one extra time in instantiating the bool conditions
-        i--;
+void StandardView::showTableNotExpanded()
+{
+    int i = _tableItems.currentIndex;
+    bool stillInResultsRange = (i <= _tableItems.endIndex);
+    bool stillInTableRange = (i-_tableItems.currentIndex < 10);
 
-        ui->label_27->setText("    "
-                              +QString::number(_tableItems.currentIndex+1)
-                              +" to "
-                              +QString::number(i+1)
-                              +" of "
-                              +QString::number(_tableItems.endIndex+1)
-                              +" results ");
+    while (stillInResultsRange && stillInTableRange)
+    {
+        showTableEventId(i,_tableItems.output[(i*6)]);
+        showTableEventName(i, _tableItems.output[(i*6)+1]);
+        showTableStartDate(i, _tableItems.output[(i*6)+2]);
+        showTableEndDate(i, _tableItems.output[(i*6)+3]);
+        showTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
+
+        i++;
+        stillInResultsRange = (i <= _tableItems.endIndex);
+        stillInTableRange = (i-_tableItems.currentIndex < 10);
+    }
+    //Reduce i as it will increment for one extra time in instantiating the bool conditions
+    i--;
+
+    ui->label_27->setText("    "
+                          +QString::number(_tableItems.currentIndex+1)
+                          +" to "
+                          +QString::number(i+1)
+                          +" of "
+                          +QString::number(_tableItems.endIndex+1)
+                          +" results ");
+}
+
+void StandardView:: showTableExpanded()
+{
+    int i = _tableItems.currentIndex;
+    bool stillInResultsRange = (i <= _tableItems.endIndex);
+    bool stillInNotesRange = (i-_tableItems.currentIndex < 3);
+
+    while (stillInResultsRange && stillInNotesRange)
+    {
+        QString result = "<br>"+_tableItems.output[(i*6)]+
+                "<br>"+_tableItems.output[(i*6)+1]+
+                "<br>"+_tableItems.output[(i*6)+2]+
+                "<br>"+_tableItems.output[(i*6)+3]+
+                "<br>"+_tableItems.output[(i*6)+4]+
+                "<br>"+_tableItems.output[(i*6)+5];
+
+        showTableExpandedNotes(i-_tableItems.currentIndex,result);
+
+        stillInResultsRange = (i <= _tableItems.endIndex);
+        stillInNotesRange = (i-_tableItems.currentIndex < 3);
+    }
+
+    ui->label_74->setText("    "
+                          +QString::number(_tableItems.currentIndex+1)
+                          +" to "
+                          +QString::number(i+1)
+                          +" of "
+                          +QString::number(_tableItems.endIndex+1)
+                          +" results ");
+}
+
+void StandardView::showTableExpandedNotes(int reformatIndex, QString result)
+{
+    switch (reformatIndex)
+    {
+        case 0:
+            ui->label_107->setText(result);
+            break;
+
+        case 1:
+            ui->label_108->setText(result);
+            break;
+
+        case 2:
+            ui->label_109->setText(result);
+            break;
+
+        default:
+            break;
     }
 }
 
@@ -798,8 +912,22 @@ void StandardView:: showTablePriorityIcon(int index, QString priority)
 }
 
 void StandardView:: informNoDisplayResults()
+{    
+    if (_resultsTableViewExpanded)
+    {
+        ui->label_74->setText(MESSAGE_NO_CURRENT_RESULTS);
+    }
+    else
+    {
+        ui->label_27->setText(MESSAGE_NO_CURRENT_RESULTS);
+    }
+}
+
+//Function is used to reduce current table index back to original 0 - 9
+//list size after possible changes made from expanded view
+void StandardView::calibrateTableIndex()
 {
-    ui->label_27->setText(MESSAGE_NO_CURRENT_RESULTS);
+    _tableItems.currentIndex -= (_tableItems.currentIndex%10);
 }
 
 bool StandardView:: singleInstanceExists()
@@ -889,6 +1017,9 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
+
+    connect(_allShortcuts.getChangeTableViewKey(), SIGNAL(triggered()),
+            this, SLOT(addTriggered()));
 }
 
 bool StandardView::tableIsEmpty()
