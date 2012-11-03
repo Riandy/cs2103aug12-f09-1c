@@ -179,6 +179,11 @@ private:
     Action undoOperation(vector<string>& tokens);
     Action redoOperation(vector<string>& tokens);
 
+    bool processTimeSizeThree (tm &date, string time);
+    bool processTimeSizeFour (tm &date, string time);
+    bool processTimeSizeFive (tm &date, string time);
+
+
     bool getStatusFlagAt(int);
     void setStatusFlagAt(int,bool);
 
