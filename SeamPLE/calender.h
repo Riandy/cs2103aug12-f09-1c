@@ -23,39 +23,42 @@ private:
 
     vector<task> _storage;
     ErrorLogger* _faulty;
-    stack<string> _history;
 
-	stack<string> _redoCommands;
+    stack<string> _commandHistory;
+    stack<string> _undoHistory;
 
     //used in add
     stack<string> _addHistory;
-    stack<task> _redoHistory;
+    stack<task> _undoneAddTasks;
     // used in delete
-     stack <task> _deleteHistory;
+     stack <task> _deletedTasks;
+     stack<string> _deleteHistory;
     //used in edit
-    stack <task> _originalEdits;
+    stack <task> _undoOriginalEdits;
     stack<task> _redoNewEdits;
     stack<task> _redoOriginalEdits;
-    stack <task> _newEdits;
+    stack <task> _undoNewEdits;
 
-	bool checkNameExists(string _name);
-    void saveDelete(int taskID);
-	string ensureUniqueName(string _name);
+
+    void saveDeletedTask(int taskID);
     void saveHistory(string command);
-	bool writeFile();
-    bool loadFile();
     void undoOriginalEdits(task _oldtask);
     void undoNewEdits(task _newtask);
     void redoOriginalEdits(task _oldtask);
     void redoNewEdits(task _newtask);
     void saveAdd(string Item);
+    void saveUndoneDelete(string Item);
 
+    bool writeFile();
+    bool loadFile();
+    bool checkNameExists(string _name);
 
+   string ensureUniqueName(string _name);
 public:
 
     calender();
     ~calender();
-
+    int getTaskID(string searchItem);
     bool addItem(task currentTask);
     bool deleteItem(int taskID);
     bool deleteItem(string eventName);
@@ -70,12 +73,9 @@ public:
     vector<task> SearchByDate(string todayDate);
     vector<task> displayDatabase();
     vector<task> getToday();
-	int getTaskID(string searchItem);
     vector<task> SortByEvent();
     vector<task> SortByDeadline();
     vector<task> SortByCategory();
-
-    //implement the convert to date
     string convertToDate(tm _date);
 
 };
