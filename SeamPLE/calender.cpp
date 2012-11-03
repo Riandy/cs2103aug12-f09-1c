@@ -37,6 +37,7 @@ bool calender::addItem(task currentTask)
     string _currentName = currentTask.getEventName();
     string _uniqueName = ensureUniqueName(_currentName);
     currentTask.setEventName(_uniqueName);
+    saveAdd(currentTask.getEventName());
     _storage.push_back(currentTask);
     if(writeFile())
         return true;
@@ -155,7 +156,7 @@ bool calender::editTask( task _edited)
     {
         saveHistory(_EDIT);
         task _original = *taskMatch;
-        saveOriginalEdits(_original);
+        undoOriginalEdits(_original);
         bool startDateentered = !(_edited.getStartDate().tm_year == 0 && _edited.getStartDate().tm_mon == 0
                                   && _edited.getStartDate().tm_mday ==0);
         // if( difftime( mktime(&(_edited.getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
@@ -181,7 +182,7 @@ bool calender::editTask( task _edited)
         if(_edited.getCategory() != "#" )
         taskMatch->setCategory(_edited.getCategory());
 
-        saveNewEdits(*taskMatch);
+        undoNewEdits(*taskMatch);
          writeFile();
        return true;
 
@@ -362,16 +363,18 @@ bool calender::undoAction()
         return false;
     else
     {
+
         string lastCommand = _history.top();
+
         if (lastCommand == _ADDITION)
         {
             _redoCommands.push(_ADDITION);
-            int ID = _storage.size()-1;
-
+            int ID = getTaskID(_addHistory.top());
             _redoHistory.push(_storage[ID]);
             _storage.erase(_storage.begin()+ID);
-
+            _addHistory.pop();
         }
+
         else if (lastCommand == _DELETE)
         {
             _redoCommands.push(_DELETE);
@@ -388,8 +391,11 @@ bool calender::undoAction()
                 if (position != NOTFOUND) // defensive programming
             {
                  _storage[position] = _originalEdits.top();
-                swapTops(tempTask);
-
+                //swapTops(tempTask);
+                 redoOriginalEdits(_newEdits.top());
+                 redoNewEdits(_originalEdits.top());
+                 _originalEdits.pop();
+                 _newEdits.pop();
             }
             else if (position == NOTFOUND)
                 return false;
@@ -411,8 +417,8 @@ bool calender::redoAction()
             task lastUndo = _redoHistory.top();
             _storage.push_back(lastUndo);
             saveHistory(_ADDITION);
+            saveAdd(lastUndo.getEventName());
             _redoHistory.pop();
-
         }
         else if (_redoCommands.top() == _DELETE)
         {
@@ -424,13 +430,17 @@ bool calender::redoAction()
         }
         else if (_redoCommands.top() == _EDIT)
         {
-            task tempTask = _newEdits.top();
+            task tempTask = _redoNewEdits.top();
             int position = getTaskID(tempTask.getEventName());
             if (position != NOTFOUND) // defensive programming
             {
-                _storage[position] = _originalEdits.top();
-                swapTops(tempTask);
+                _storage[position] = _redoOriginalEdits.top();
+               // swapTops(tempTask);
                 saveHistory(_EDIT);
+                undoOriginalEdits(_redoNewEdits.top());
+                undoNewEdits(_redoOriginalEdits.top());
+                _redoNewEdits.pop();
+                _redoOriginalEdits.pop();
             }
             else if (position == NOTFOUND)
                 return false;
@@ -440,15 +450,6 @@ bool calender::redoAction()
 
     }
     return true;
-}
-
-void calender::swapTops(task bufferTask)
-{
-    _newEdits.pop();
-    _newEdits.push(_originalEdits.top());
-    _originalEdits.pop();
-    _originalEdits.push(bufferTask);
-
 }
 
 
@@ -536,8 +537,32 @@ void calender::saveHistory(string command)
 
 }
 
+void calender::saveAdd(string Item)
+{
+    if (_addHistory.size() < 3)
+        _addHistory.push(Item);
+    else if (_addHistory.size() == 3)
+    {
+        stack<string> tempStack;
+        while (_addHistory.size() != 1)
+        {
+            tempStack.push(_addHistory.top());
+            _addHistory.pop();
+        }
+        _addHistory.pop();
+        while(_addHistory.size() != 2)
+        {
+            _addHistory.push(tempStack.top());
+            tempStack.pop();
+        }
+        _addHistory.push(Item);
 
-void calender::saveOriginalEdits(task _oldTask)
+    }
+
+}
+
+
+void calender::undoOriginalEdits(task _oldTask)
 {
     if (_originalEdits.size() < 3)
         _originalEdits.push(_oldTask);
@@ -560,7 +585,7 @@ void calender::saveOriginalEdits(task _oldTask)
 
 }
 
-void calender::saveNewEdits(task _newTask)
+void calender::undoNewEdits(task _newTask)
 {
     if (_newEdits.size() < 3)
         _newEdits.push(_newTask);
@@ -581,3 +606,48 @@ void calender::saveNewEdits(task _newTask)
         _newEdits.push(_newTask);
     }
 }
+void calender::redoOriginalEdits(task _oldTask)
+{
+    if (_redoOriginalEdits.size() < 3)
+        _redoOriginalEdits.push(_oldTask);
+    else if (_redoOriginalEdits.size() == 3)
+    {
+        stack<task> tempStack;
+        while (_redoOriginalEdits.size() != 1)
+        {
+            tempStack.push(_redoOriginalEdits.top());
+            _redoOriginalEdits.pop();
+        }
+        _redoOriginalEdits.pop();
+        while(_redoOriginalEdits.size() != 2)
+        {
+            _redoOriginalEdits.push(tempStack.top());
+            tempStack.pop();
+        }
+        _redoOriginalEdits.push(_oldTask);
+    }
+
+}
+
+void calender::redoNewEdits(task _newTask)
+{
+    if (_redoNewEdits.size() < 3)
+        _redoNewEdits.push(_newTask);
+    else if (_redoNewEdits.size() == 3)
+    {
+        stack<task> tempStack;
+        while (_redoNewEdits.size() != 1)
+        {
+            tempStack.push(_redoNewEdits.top());
+           _redoNewEdits.pop();
+        }
+        _redoNewEdits.pop();
+        while(_redoNewEdits.size() != 2)
+        {
+           _redoNewEdits.push(tempStack.top());
+            tempStack.pop();
+        }
+        _redoNewEdits.push(_newTask);
+    }
+}
+
