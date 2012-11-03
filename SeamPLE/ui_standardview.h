@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'standardview.ui'
+** Form generated from reading UI file 'StandardView.ui'
 **
-** Created: Fri Nov 2 18:08:09 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Sat Nov 3 01:25:28 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -629,8 +629,6 @@ public:
 "	background-image: url(:/bg/note_6.gif);\n"
 "}"));
         label_29->setAlignment(Qt::AlignCenter);
-        frame_12->raise();
-        label_29->raise();
         frame_5 = new QFrame(frame_3);
         frame_5->setObjectName(QString::fromUtf8("frame_5"));
         frame_5->setGeometry(QRect(17, 13, 701, 401));
@@ -688,11 +686,6 @@ public:
         frame_11->setStyleSheet(QString::fromUtf8("background-image: url(:/bg/Note_4.gif)"));
         frame_11->setFrameShape(QFrame::StyledPanel);
         frame_11->setFrameShadow(QFrame::Raised);
-        lineEdit->raise();
-        label_2->raise();
-        label->raise();
-        frame_3->raise();
-        frame_5->raise();
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(-10, -4, 821, 51));
