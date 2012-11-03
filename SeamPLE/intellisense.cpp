@@ -344,75 +344,107 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
     while (it!=tokens.end())
     {
         time=it->c_str();
-        if(time.size()>=5)
-        {if(time.at(2) == ':' )
-            {
-                if(time.size()==5)
-                {
-                    time=removeChar(time,":");
-                    if(isAllInt(time))
-                    {
-                        it=tokens.erase(it);
-                        date.tm_hour=atoi(time.substr(0,2).c_str());
-                        date.tm_min=atoi(time.substr(2,2).c_str());
-                        return date;
-                    }
-
-                }
-            }
-        }else if(time.size()==4)
+        switch(time.size())
         {
-            if(checkString("PM",time.substr(2,2))|| checkString("AM",time.substr(2,2)))
-            {
-                if(isAllInt(time.substr(0,2)))
-                {
-                    it=tokens.erase(it);
-                    if(checkString("PM",time.substr(2,2)))
-                    {
-                        date.tm_hour=atoi(time.substr(0,2).c_str())+12;
-                        date.tm_min=atoi(time.substr(2,2).c_str());
-                        return date;
-                    }
-                    else
-                    {
-                        date.tm_hour=atoi(time.substr(0,2).c_str());
-                        date.tm_min=atoi(time.substr(2,2).c_str());
-                        return date;
-                    }
 
-                }
-            }
-        }else if(time.size()==3)
-        {
-            if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
-            {
-                if(isAllInt(string(1,time.at(0))))
-                {
-                    it=tokens.erase(it);
-                    if(checkString("PM",time.substr(1,2)))
-                    {
-                        date.tm_hour=atoi(time.substr(0,2).c_str())+12;
-                        date.tm_min=atoi(time.substr(2,2).c_str());
-                        return date;
-                    }
-                    else
-                    {
-                        date.tm_hour=atoi(time.substr(0,2).c_str());
-                        date.tm_min=atoi(time.substr(2,2).c_str());
-                        return date;
-                    }
+        case 3:   if(processTimeSizeThree(date, time))
+            {it=tokens.erase(it);}
+            break;
 
-                }
-            }
+        case 4:   if(processTimeSizeFour(date, time))
+            {it=tokens.erase(it);}
+            break;
+
+        case 5:   if(processTimeSizeFive(date, time))
+            {it=tokens.erase(it);}
+            break;
+
+
+        default:break;
+
         }
-
-
-
 
         if (it!=tokens.end())
             ++it;//only increment if it is not the last position
     }
     return date;
+}
+
+
+bool Intellisense::processTimeSizeFive (tm &date, string time)
+{
+    if(time.at(2) == ':' )
+                {
+                    if(time.size()==5)
+                    {
+                        time=removeChar(time,":");
+                        if(isAllInt(time))
+                        {
+
+                            date.tm_hour=atoi(time.substr(0,2).c_str());
+                            date.tm_min=atoi(time.substr(2,2).c_str());
+                            return true;
+                        }
+
+                    }
+                }
+    return false;
+}
+
+
+bool Intellisense::processTimeSizeFour (tm &date, string time)
+{
+    if(checkString("PM",time.substr(2,2))|| checkString("AM",time.substr(2,2)))
+    {
+        if(isAllInt(time.substr(0,2)))
+        {
+
+            if(checkString("PM",time.substr(2,2)))
+            {
+                date.tm_hour=atoi(time.substr(0,2).c_str())+12;
+                date.tm_min=atoi(time.substr(2,2).c_str());
+
+            }
+            else
+            {
+                date.tm_hour=atoi(time.substr(0,2).c_str());
+                date.tm_min=atoi(time.substr(2,2).c_str());
+
+            }
+        return true;
+        }
+    }
+
+    return false;
+}
+
+bool Intellisense::processTimeSizeThree (tm &date, string time)
+{
+
+ if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
+            {
+                if(isAllInt(string(1,time.at(0))))
+                {
+
+
+                    if(checkString("PM",time.substr(1,2)))
+                    {
+                        date.tm_hour=atoi(time.substr(0,2).c_str())+12;
+                        date.tm_min=atoi(time.substr(2,2).c_str());
+
+                    }
+                    else
+                    {
+                        date.tm_hour=atoi(time.substr(0,2).c_str());
+                        date.tm_min=atoi(time.substr(2,2).c_str());
+
+                    }
+
+                    return true;
+
+                }
+            }
+return false;
 }
 
 
