@@ -334,11 +334,10 @@ string Intellisense::getPriority(vector<string>& tokens)
     return string("LOW");
 }
 
-tm Intellisense::getTime(vector<string>& tokens,tm date)
+tm Intellisense::getTime(vector<string>& tokens,tm &date)
 {
     string time;
-    date.tm_hour=0;
-    date.tm_min=0;
+
 
     vector<string>::iterator it=tokens.begin();
     while (it!=tokens.end())
@@ -355,8 +354,9 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
             {it=tokens.erase(it);}
             break;
 
-        case 5:   if(processTimeSizeFive(date, time))
-            {it=tokens.erase(it);}
+        case 5: if(processTimeSizeFive(date, time))
+            {it=tokens.erase(it);
+                return date;}
             break;
 
 
@@ -367,6 +367,8 @@ tm Intellisense::getTime(vector<string>& tokens,tm date)
         if (it!=tokens.end())
             ++it;//only increment if it is not the last position
     }
+
+
     return date;
 }
 
@@ -496,15 +498,9 @@ string& Intellisense::trim(string& s ,const string& delimiters )
 }
 
 
-tm Intellisense::getImptDate(string _date)
+void Intellisense::getImptDate(string _date, tm &date)
 {
-    tm date;
-    date.tm_hour=NULL;
-    date.tm_min=NULL;
-    date.tm_sec=NULL;
-    date.tm_mday=NULL;
-    date.tm_mon=NULL;
-    date.tm_year=NULL;
+
 
     time_t timeNow;
     struct tm * timeinfo;
@@ -516,21 +512,13 @@ tm Intellisense::getImptDate(string _date)
     date.tm_year=timeinfo->tm_year+1900;   // get current year format
 
 
-return date;
+return ;
 }
 
 
-tm Intellisense::getDate(vector<string>& tokens)
+bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
 {
     string checkString;
-    tm date;
-    date.tm_hour=NULL;
-    date.tm_min=NULL;
-    date.tm_sec=NULL;
-    date.tm_mday=NULL;
-    date.tm_mon=NULL;
-    date.tm_year=NULL;
-
     vector<string>::iterator it1=tokens.begin();
     while (it1!=tokens.end())
     {
@@ -539,123 +527,196 @@ tm Intellisense::getDate(vector<string>& tokens)
        {
            if(checkString.compare(imptDates[i].name)==0)
            {
-
-               return getImptDate(imptDates[i].date);
+               getImptDate(imptDates[i].date, date);
+               return true;
            }
        }
-
-
 
         if (it1!=tokens.end())
             ++it1;//only increment if it is not the last position
 
     }
 
+    return false;
+}
+
+bool Intellisense::checkDateFormat1(string checkString, tm &date)
+{
+    if(isAllInt(checkString))
+    {
+
+        date.tm_mday=atoi(checkString.substr(0,2).c_str());
+        date.tm_mon=atoi(checkString.substr(2,2).c_str());
+        date.tm_year=atoi(checkString.substr(4,4).c_str());
+        return true;
+    }
+
+    return false;
+}
+
+bool Intellisense::checkDateFormat2(string checkString, tm &date)
+{
+    if(checkString.at(2) == '\\' && checkString.at(5)=='\\'  || checkString.at(2) == '/' && checkString.at(5)=='/'  )
+    {
+        checkString=removeChar(checkString,"/\\");
+        if(isAllInt(checkString))
+        {
+
+            date.tm_mday=atoi(checkString.substr(0,2).c_str());
+            date.tm_mon=atoi(checkString.substr(2,2).c_str());
+            date.tm_year=atoi(checkString.substr(4,4).c_str());
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Intellisense::checkDateFormat3(string checkString, tm &date)
+{
+    if(checkString.at(1) == '\\' && checkString.at(3)=='\\'  || checkString.at(1) == '/' && checkString.at(3)=='/'  )
+    {
+        checkString=removeChar(checkString,"/\\");
+        if(isAllInt(checkString))
+        {
+
+            date.tm_mday=atoi(checkString.substr(0,1).c_str());
+            date.tm_mon=atoi(checkString.substr(1,1).c_str());
+            date.tm_year=atoi(checkString.substr(2,4).c_str());
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
+{
+    string checkString;
     vector<string>::iterator it=tokens.begin();
     while (it!=tokens.end())
     {
         checkString = it->c_str();
-        if(checkString.size()==8)
-        {
-            if(isAllInt(checkString))
-            {
-                it=tokens.erase(it);
-                date.tm_mday=atoi(checkString.substr(0,2).c_str());
-                date.tm_mon=atoi(checkString.substr(2,2).c_str());
-                date.tm_year=atoi(checkString.substr(4,4).c_str());
-                return date=getTime(tokens,date);
-            }
+
+        switch(checkString.size()){
+
+        case 8:if(checkDateFormat1(checkString, date))
+            {it=tokens.erase(it);
+                return true;}
+            if(checkDateFormat3(checkString, date))
+            {it=tokens.erase(it);
+                return true;}
+            break;
+
+        case 10:if(checkDateFormat2(checkString, date))
+            {it=tokens.erase(it);
+                return true;}
+            break;
+
+        default : break;
         }
-        if(checkString.size()==10)
-        {
-            if(checkString.at(2) == '\\' && checkString.at(5)=='\\'  || checkString.at(2) == '/' && checkString.at(5)=='/'  )
-            {
-                checkString=removeChar(checkString,"/\\");
-                if(isAllInt(checkString))
-                {
-                    it=tokens.erase(it);
-                    date.tm_mday=atoi(checkString.substr(0,2).c_str());
-                    date.tm_mon=atoi(checkString.substr(2,2).c_str());
-                    date.tm_year=atoi(checkString.substr(4,4).c_str());
-                    return date=getTime(tokens,date);
-                }
-            }
-        }
-
-        if(checkString.size()==8)
-        {
-            if(checkString.at(1) == '\\' && checkString.at(3)=='\\'  || checkString.at(1) == '/' && checkString.at(3)=='/'  )
-            {
-                checkString=removeChar(checkString,"/\\");
-                if(isAllInt(checkString))
-                {
-                    it=tokens.erase(it);
-                    date.tm_mday=atoi(checkString.substr(0,1).c_str());
-                    date.tm_mon=atoi(checkString.substr(1,1).c_str());
-                    date.tm_year=atoi(checkString.substr(2,4).c_str());
-                    return date=getTime(tokens,date);
-                }
-            }
-        }
-
-
-        if(tokens.size()>=3)
-        {
-            int check=checkDateString(checkString);
-
-            if(check !=-1)
-            {
-                it--;
-                vector<string>::iterator it_day = it++;
-
-                if(++it == tokens.end())
-                {                // wenbin's own note, iterator unexplained
-                    return date=getTime(tokens,date);
-                }
-                --it;
-                vector<string>::iterator it_year = ++it;
-
-                string day =it_day->c_str();
-                if(day.size()>2 || day.size()<=0 || !isAllInt(day))
-                {
-                    return date=getTime(tokens,date);
-                }
-                string year = it_year->c_str();
-                if(year.size()!=4 || !isAllInt(year))
-                {
-                    return date=getTime(tokens,date);
-                }
-                if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
-                {
-
-                    return date=getTime(tokens,date);
-                }
-                int month = check;
-
-
-                it_day=tokens.erase(it_day);
-                it_day=tokens.erase(it_day);
-                it_day=tokens.erase(it_day);
-
-                it=it_day;
-
-                date.tm_mday=atoi(day.c_str());
-                date.tm_mon=month;
-                date.tm_year=atoi(year.c_str());
-                return date=getTime(tokens,date);
-
-
-            }
-        }
-
-
 
         if (it!=tokens.end())
             ++it;//only increment if it is not the last position
-    }
-    return date=getTime(tokens,date);
 
+
+    }
+    return false;
 }
+
+ bool Intellisense::checkDateStringFormat(vector<string>& tokens, tm &date)
+ {
+      string checkString;
+     vector<string>::iterator it=tokens.begin();
+
+         while (it!=tokens.end())
+         { checkString = it->c_str();
+         if(tokens.size()>=3)
+         {
+             int check=checkDateString(checkString);
+
+             if(check !=-1)
+             {
+                 it--;
+                 vector<string>::iterator it_day = it++;
+
+                 if(++it == tokens.end())
+                 {                // wenbin's own note, iterator unexplained
+                     return false;
+                 }
+                 --it;
+                 vector<string>::iterator it_year = ++it;
+
+                 string day =it_day->c_str();
+                 if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+                 {
+                     return false;
+                 }
+                 string year = it_year->c_str();
+                 if(year.size()!=4 || !isAllInt(year))
+                 {
+                     return false;
+                 }
+                 if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+                 {
+
+                     return false;
+                 }
+                 int month = check;
+
+
+                 it_day=tokens.erase(it_day);
+                 it_day=tokens.erase(it_day);
+                 it_day=tokens.erase(it_day);
+
+                 it=it_day;
+
+                 date.tm_mday=atoi(day.c_str());
+                 date.tm_mon=month;
+                 date.tm_year=atoi(year.c_str());
+                 return true;
+
+
+             }
+         }
+
+
+
+         if (it!=tokens.end())
+             ++it;//only increment if it is not the last position
+     }
+
+         return false;
+ }
+
+
+ tm Intellisense::getDate(vector<string>& tokens)
+ {
+
+     tm date;
+     date.tm_hour=NULL;
+     date.tm_min=NULL;
+     date.tm_sec=NULL;
+     date.tm_mday=NULL;
+     date.tm_mon=NULL;
+     date.tm_year=NULL;
+
+
+     if(checkImptDate(tokens, date))
+     {return date=getTime(tokens,date);}
+
+     else if(checkDateNumericalFormat(tokens,date))
+     {return date=getTime(tokens,date);}
+
+
+     else if(checkDateStringFormat(tokens,date))
+     {return date=getTime(tokens,date);}
+
+     else
+     {return date=getTime(tokens,date);}
+
+
+ }
 
 
 
@@ -853,6 +914,7 @@ Action Intellisense::undoOperation(vector<string>& tokens)
 
 int Intellisense::checkDateString(string token)
 {
+
     for(int i=0;i<=11;++i)
     {
         if(checkString(token,months[i]))
