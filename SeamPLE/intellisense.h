@@ -123,14 +123,14 @@ public:
     Action check(string query);
     string getOperation(vector<string>& tokens);
     tm getDate(vector<string>& tokens);
-    tm getImptDate(string _date);
+    void getImptDate(string _date, tm &date);
     string getEventName(vector<string>& tokens);
     int getID(vector<string>& tokens);
     string getCommand(vector<string>& tokens, string _command);
     string getCategory(vector<string>& tokens);
     string getPriority(vector<string>& tokens);
     int getDateType(vector<string>& tokens);
-    tm getTime(vector<string>& tokens, tm date);
+    tm getTime(vector<string>& tokens, tm &date);
     string getAddFeedBack();
     string getEditFeedBack();
     string getDeleteFeedBack();
@@ -146,6 +146,13 @@ public:
 
     string getParameter();
     void setParameter(string);
+
+    bool checkDateNumericalFormat(vector<string>& tokens, tm &date);
+    bool checkDateFormat1(string checkString, tm &date);
+    bool checkDateFormat2(string checkString, tm &date);
+    bool checkDateFormat3(string checkString, tm &date);
+
+    bool checkDateStringFormat(vector<string>& tokens, tm &date);
 
 
     bool getrequirementsMet();
@@ -184,6 +191,8 @@ private:
     bool processTimeSizeThree (tm &date, string time);
     bool processTimeSizeFour (tm &date, string time);
     bool processTimeSizeFive (tm &date, string time);
+
+    bool checkImptDate(vector<string>& tokens,tm &date);
 
 
     bool getStatusFlagAt(int);
