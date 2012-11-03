@@ -314,8 +314,8 @@ string Intellisense::getPriority(vector<string>& tokens)
 {
     if(tokens.size()>0)
     {
-        string checkHeadString =  tokens.front();
-        string checkTailString =  tokens.back();
+        string checkHeadString =  tokens.front();    //check the first word in string
+        string checkTailString =  tokens.back();     //check the last word in string
 
 
 
@@ -430,11 +430,11 @@ string Intellisense::getCategory(vector<string>& tokens)
         }
 
         if(it != tokens.end())
+        {
             it++;//only increment if it is not the last position
+        }
     }
     return category;
-
-
 }
 
 string Intellisense::removeChar(string s,char chars[])
@@ -477,11 +477,11 @@ tm Intellisense::getImptDate(string _date)
     time_t timeNow;
     struct tm * timeinfo;
     time (&timeNow);
-    timeinfo = localtime ( &timeNow );
+    timeinfo = localtime ( &timeNow );     // get current date time information
 
     date.tm_mday=atoi(_date.substr(0,2).c_str());
     date.tm_mon=atoi(_date.substr(2,2).c_str());
-    date.tm_year=timeinfo->tm_year+1900;
+    date.tm_year=timeinfo->tm_year+1900;   // get current year format
 
 
 return date;
@@ -569,7 +569,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 
         if(tokens.size()>=3)
         {
-            int check=checkDateString(checkString);
+            int check=checkMonthByString(checkString);
 
             if(check !=-1)
             {
@@ -627,7 +627,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 
 
 
-int Intellisense::checkDateString(string token)
+int Intellisense::checkMonthByString(string token)
 {
     for(int i=0;i<=11;++i)
     {
@@ -644,8 +644,7 @@ int Intellisense::checkDateString(string token)
 string Intellisense::getEventName(vector<string>& tokens)
 {
     stringstream ss;
-   // for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
-   // {
+
     vector<string>::iterator it=tokens.begin();
      while (it!=tokens.end())
      {
@@ -657,13 +656,12 @@ string Intellisense::getEventName(vector<string>& tokens)
            //only increment if it is not the last position
         }
      }
-   // }
-
     return ss.str();
 }
+
 int Intellisense::getDateType(vector<string>& tokens)
 {
-    int dType = task::DATENORMAL;//default normal if cant find other date types
+    int dType = task::DATENORMAL;      //Defensive coding: default normal if cant find other date types
     vector<string>::iterator it=tokens.begin();
     while(it!=tokens.end())
     {
@@ -691,26 +689,16 @@ int Intellisense::getDateType(vector<string>& tokens)
     return dType;
 
 }
-void Intellisense::itTest(vector<string> tokens)
-{
 
-
-    for(vector<string>::iterator it=tokens.begin();it!=tokens.end();++it)
-    {
-        cout<<it->c_str();
-
-
-    }
-
-
-    cout<<endl;
-}
 
 bool Intellisense::isAllInt(const string& s)
 {
     for(int i = 0; i < s.length(); i++)
     {
-        if(! (s[i] >= '0' && s[i] <= '9' || s[i] == ' ') ) return false;
+        if(! (s[i] >= '0' && s[i] <= '9' || s[i] == ' ') )
+        {
+            return false;
+        }
     }
     return true;
 }
@@ -750,6 +738,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
     smartAutoFill(task);//auto fill some of the fields that are unentered
     return task;
 }
+
 Action Intellisense::deleteOperation(vector<string>& tokens)
 {
     currentCommand = DELETE;
@@ -764,12 +753,12 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
         task.setID(ID);
     }
 
-
     setAllStatusFlag(task);
     checkDelReq();
 
     return task;
 }
+
 Action Intellisense::exitOperation(vector<string>& tokens)
 {
     currentCommand = EXIT;
@@ -778,8 +767,8 @@ Action Intellisense::exitOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     checkExitReq();
     return task;
-
 }
+
 Action Intellisense::displayOperation(vector<string>& tokens)
 {
     currentCommand = DISPLAY;
@@ -791,6 +780,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 
     return task;
 }
+
 Action Intellisense::markOperation(vector<string>& tokens)
 {
     currentCommand = MARK;
@@ -803,6 +793,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
 
     return task;
 }
+
 Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
@@ -818,6 +809,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
     smartAutoFill(task);//auto fill some of the fields that are unentered
     return task;
 }
+
 Action Intellisense::undoOperation(vector<string>& tokens)
 {
     currentCommand = UNDO;
@@ -826,6 +818,7 @@ Action Intellisense::undoOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     return task;
 }
+
 Action Intellisense::redoOperation(vector<string>& tokens)
 {
     currentCommand = REDO;
@@ -843,6 +836,7 @@ Action Intellisense::sortOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     return task;
 }
+
 Action Intellisense::findOperation(vector<string>& tokens)
 {
     currentCommand = FIND;
@@ -918,6 +912,8 @@ void Intellisense::setAllStatusFlag(Action task)
     else
         setStatusFlagAt(IID,true);
 }
+
+
 void  Intellisense::getAllStatusFlag(bool *flags)
 {
     ASSERT(flags!=NULL,"flags pointer cannot be NULL");
@@ -932,15 +928,18 @@ bool Intellisense::getStatusFlagAt(int index)
     ASSERT(index>=0,"flag index canot be less than 0");
     return statusFlags[index];
 }
+
 void Intellisense::setStatusFlagAt(int index,bool flag)
 {
     ASSERT(index>=0,"flag index canot be less than 0");
     statusFlags[index] = flag;
 }
+
 bool Intellisense::getrequirementsMet()
 {
     return requirementsMet;
 }
+
 void Intellisense::setRequirementsMet(bool req)
 {
     requirementsMet = req;
@@ -955,11 +954,13 @@ void Intellisense::checkAddReq()
     }
     requirementsMet = addReqMet;
 }
+
 void Intellisense::checkExitReq()
 {
     bool exitReq = true;//no condition to quit
     requirementsMet = exitReq;
 }
+
 void Intellisense::checkDelReq()
 {// need at least an ID to delete
     bool checkReqMet = false;
@@ -973,6 +974,7 @@ void Intellisense::checkDelReq()
     }
     requirementsMet = checkReqMet;
 }
+
 void Intellisense::checkDspReq()
 {
     bool dspReqMet = false;
@@ -990,6 +992,7 @@ void Intellisense::checkDspReq()
     requirementsMet = dspReqMet;
 
 }
+
 void Intellisense::checkMarkReq()
 {
     bool markReqMet = false;
@@ -1003,6 +1006,7 @@ void Intellisense::checkMarkReq()
     }
     requirementsMet = markReqMet;
 }
+
 void Intellisense::checkFindReq()
 {
     bool findReqMet = false;
@@ -1021,6 +1025,7 @@ void Intellisense::checkFindReq()
     requirementsMet = findReqMet;
 
 }
+
 void Intellisense::checkEditReq()
 {
     bool editReqMet = false;
@@ -1030,116 +1035,104 @@ void Intellisense::checkEditReq()
     }
     requirementsMet = editReqMet;
 }
+
 string Intellisense::getAddFeedBack()
 {
-    string feedback;
     if(getrequirementsMet())
     {
-            feedback = ADDFEEDBACK_1 ;
+            return ADDFEEDBACK_1 ;
     }
-    else
-    {
-            feedback = ADDFEEDBACK_2 ;
-    }
-    return feedback;
+
+ return ADDFEEDBACK_2 ;
 }
+
 string Intellisense::getEditFeedBack()
 {
-    string feedback;
     if(getrequirementsMet())
     {
-            feedback = EDITFEEDBACK_1 ;
+      return EDITFEEDBACK_1 ;
     }
-    else
-    {
-            feedback = EDITFEEDBACK_2 ;
-    }
-    return feedback;
+
+      return EDITFEEDBACK_2 ;
 }
+
 string Intellisense::getDeleteFeedBack()
 {
-    string feedback;
+
     if(getrequirementsMet())
     {
-            feedback = DELFEEDBACK_1 ;
+            return DELFEEDBACK_1 ;
     }
-    else
-    {
-            feedback = DELFEEDBACK_2;
-    }
-    return feedback;
+
+            return DELFEEDBACK_2;
+
 }
+
 string Intellisense::getExitFeedBack()
 {
-    string feedback;
-    feedback = EXITFEEDBACK_1;
-    return feedback;
+
+    return EXITFEEDBACK_1;
+
 }
+
 string Intellisense::getDisplayFeedBack()
 {
-    string feedback;
+
     if(getrequirementsMet())
     {
-        feedback = DISPLAYFEEDBACK_1;
+        return DISPLAYFEEDBACK_1;
     }
-    else
-    {
-        feedback = DISPLAYFEEDBACK_2;
-    }
-    return feedback;
+
+        return DISPLAYFEEDBACK_2;
+
 }
 
 string Intellisense::getFindFeedBack()
 {
-    string feedback;
     if(getrequirementsMet())
     {
-        feedback = FINDFEEDBACK_1;
+        return FINDFEEDBACK_1;
     }
-    else
-    {
-        feedback = FINDFEEDBACK_2;
-    }
-    return feedback;
+
+        return FINDFEEDBACK_2;
 }
+
 string Intellisense::getSortFeedBack()
 {
-    string feedback;
+
     if(getrequirementsMet())
     {
-        feedback = SORTFEEDBACK_1;
+        return  SORTFEEDBACK_1;
     }
-    else
-    {
-        feedback = SORTFEEDBACK_2;
-    }
-    return feedback;
+
+        return SORTFEEDBACK_2;
+
 }
+
 string Intellisense::getRedoFeedBack()
 {
     string feedback;
     feedback = REDOFEEDBACK_1 ;
     return feedback;
 }
+
 string Intellisense::getUndoFeedBack()
 {
     string feedback;
     feedback = UNDOFEEDBACK_1 ;
     return feedback;
 }
+
 string Intellisense::getMarkFeedBack()
 {
-    string feedback;
     if(getrequirementsMet())
     {
-            feedback = MARKFEEDBACK_1 ;
+            return MARKFEEDBACK_1 ;
     }
-    else
-    {
-            feedback =MARKFEEDBACK_2 ;
-    }
-    return feedback;
+
+            return MARKFEEDBACK_2 ;
 }
+
 string Intellisense::getFeedback()
 {//later refactor this into functions
     if(currentCommand == ADD)
