@@ -346,15 +346,31 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
         switch(time.size())
         {
 
-        case 3:   if(processTimeSizeThree(date, time))
+        case 3:   if( processTimeFormat1(date, time))
             {it=tokens.erase(it);}
             break;
 
-        case 4:   if(processTimeSizeFour(date, time))
+        case 4:   if(processTimeFormat2(date, time))
             {it=tokens.erase(it);}
             break;
 
-        case 5: if(processTimeSizeFive(date, time))
+        case 5: if(processTimeFormat3(date, time))
+            {it=tokens.erase(it);
+                return date;}
+            if(processTimeFormat5(date, time))
+            {it=tokens.erase(it);
+                return date;}
+            break;
+
+        case 6:if(processTimeFormat4(date,time))
+            {it=tokens.erase(it);
+                return date;}
+            if(processTimeFormat6(date,time))
+            {it=tokens.erase(it);
+                return date;}
+            break;
+
+        case 7:   if(processTimeFormat7(date,time))
             {it=tokens.erase(it);
                 return date;}
             break;
@@ -372,8 +388,85 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
     return date;
 }
 
+//function checks for time format "12:xxPM"
+bool Intellisense::processTimeFormat7 (tm &date, string checkString)
+{
+    if(checkString.at(2) == '.'  || checkString.at(2) == ':' )
+    {
+        checkString=removeChar(checkString,":.");
+        if(processTimeFormat6(date, checkString))
+        {return true;}
+    }
 
-bool Intellisense::processTimeSizeFive (tm &date, string time)
+    return false;
+}
+
+//function checks for time format "12xxPM"
+bool Intellisense::processTimeFormat6 (tm &date, string time)
+{
+    if(checkString("PM",time.substr(4,2))|| checkString("AM",time.substr(4,2)))
+    {
+        if(isAllInt(time.substr(0,4)))
+        {
+
+            if(checkString("PM",time.substr(4,2)))
+            {
+                date.tm_hour=atoi(time.substr(0,2).c_str())+12;\
+                if(date.tm_hour>=24)
+                { date.tm_hour = 0;}
+                date.tm_min=atoi(time.substr(2,2).c_str());
+
+            }
+            else
+            {
+                date.tm_hour=atoi(time.substr(0,2).c_str());
+                date.tm_min=atoi(time.substr(2,2).c_str());
+
+            }
+        return true;
+        }
+    }
+}
+
+//function checks for time format "9xxPM"
+bool Intellisense::processTimeFormat5 (tm &date, string time)
+{
+    if(checkString("PM",time.substr(3,2))|| checkString("AM",time.substr(3  ,2)))
+    {
+        if(isAllInt(time.substr(0,3)))
+        {
+
+            if(checkString("PM",time.substr(3,2)))
+            {
+                date.tm_hour=atoi(time.substr(0,1).c_str())+12;
+                date.tm_min=atoi(time.substr(1,2).c_str());
+
+            }
+            else
+            {
+                date.tm_hour=atoi(time.substr(0,1).c_str());
+                date.tm_min=atoi(time.substr(1,2).c_str());
+
+            }
+        return true;
+        }
+    }
+}
+
+//function checks for time format "9:xxPM"
+bool Intellisense::processTimeFormat4 (tm &date, string checkString)
+{
+    if(checkString.at(1) == '.'  || checkString.at(1) == ':' )
+    {
+        checkString=removeChar(checkString,":.");
+        if(processTimeFormat5(date, checkString))
+        {return true;}
+    }
+
+    return false;
+}
+
+bool Intellisense::processTimeFormat3 (tm &date, string time)
 {
     if(time.at(2) == ':' )
                 {
@@ -394,7 +487,8 @@ bool Intellisense::processTimeSizeFive (tm &date, string time)
 }
 
 
-bool Intellisense::processTimeSizeFour (tm &date, string time)
+
+bool Intellisense::processTimeFormat2 (tm &date, string time)
 {
     if(checkString("PM",time.substr(2,2))|| checkString("AM",time.substr(2,2)))
     {
@@ -420,7 +514,7 @@ bool Intellisense::processTimeSizeFour (tm &date, string time)
     return false;
 }
 
-bool Intellisense::processTimeSizeThree (tm &date, string time)
+bool Intellisense::processTimeFormat1 (tm &date, string time)
 {
 
  if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
@@ -539,7 +633,7 @@ bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
 
     return false;
 }
-
+// function checks for date format in the form "DDMMYYYY"
 bool Intellisense::checkDateFormat1(string checkString, tm &date)
 {
     if(isAllInt(checkString))
@@ -554,11 +648,12 @@ bool Intellisense::checkDateFormat1(string checkString, tm &date)
     return false;
 }
 
+// function checks for date format in the form "DD/MM/YYYY"
 bool Intellisense::checkDateFormat2(string checkString, tm &date)
 {
-    if(checkString.at(2) == '\\' && checkString.at(5)=='\\'  || checkString.at(2) == '/' && checkString.at(5)=='/'  )
+    if(checkString.at(2) == '\\' && checkString.at(5)=='\\'  || checkString.at(2) == '/' && checkString.at(5)=='/' ||  checkString.at(2)=='.' &&checkString.at(5)=='.' )
     {
-        checkString=removeChar(checkString,"/\\");
+        checkString=removeChar(checkString,"/\\.");
         if(isAllInt(checkString))
         {
 
@@ -572,17 +667,56 @@ bool Intellisense::checkDateFormat2(string checkString, tm &date)
     return false;
 }
 
+// function checks for date format in the form "D/M/YYYY"
 bool Intellisense::checkDateFormat3(string checkString, tm &date)
 {
-    if(checkString.at(1) == '\\' && checkString.at(3)=='\\'  || checkString.at(1) == '/' && checkString.at(3)=='/'  )
+    if(checkString.at(1) == '\\' && checkString.at(3)=='\\'  || checkString.at(1) == '/' && checkString.at(3)=='/' ||  checkString.at(1)=='.' &&checkString.at(3)=='.' )
     {
-        checkString=removeChar(checkString,"/\\");
+        checkString=removeChar(checkString,"/\\.");
         if(isAllInt(checkString))
         {
 
             date.tm_mday=atoi(checkString.substr(0,1).c_str());
             date.tm_mon=atoi(checkString.substr(1,1).c_str());
             date.tm_year=atoi(checkString.substr(2,4).c_str());
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// function checks for date format in the form "DD/M/YYYY"
+bool Intellisense::checkDateFormat4(string checkString, tm &date)
+{
+    if(checkString.at(2) == '\\' && checkString.at(4)=='\\'  || checkString.at(2) == '/' && checkString.at(4)=='/' ||  checkString.at(2)=='.' &&checkString.at(4)=='.' )
+    {
+        checkString=removeChar(checkString,"/\\.");
+        if(isAllInt(checkString))
+        {
+
+            date.tm_mday=atoi(checkString.substr(0,2).c_str());
+            date.tm_mon=atoi(checkString.substr(2,1).c_str());
+            date.tm_year=atoi(checkString.substr(3,4).c_str());
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// function checks for date format in the form "D/MM/YYYY"
+bool Intellisense::checkDateFormat5(string checkString, tm &date)
+{
+    if(checkString.at(1) == '\\' && checkString.at(4)=='\\'  || checkString.at(1) == '/' && checkString.at(4)=='/' ||  checkString.at(1)=='.' &&checkString.at(4)=='.' )
+    {
+        checkString=removeChar(checkString,"/\\.");
+        if(isAllInt(checkString))
+        {
+
+            date.tm_mday=atoi(checkString.substr(0,1).c_str());
+            date.tm_mon=atoi(checkString.substr(1,2).c_str());
+            date.tm_year=atoi(checkString.substr(3,4).c_str());
             return true;
         }
     }
@@ -607,6 +741,14 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
             {it=tokens.erase(it);
                 return true;}
             break;
+        case 9:if(checkDateFormat4(checkString, date))
+            {it=tokens.erase(it);
+                return true;}
+            if(checkDateFormat5(checkString, date))
+            {it=tokens.erase(it);
+                return true;}
+            break;
+
 
         case 10:if(checkDateFormat2(checkString, date))
             {it=tokens.erase(it);
