@@ -601,7 +601,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 
         if(tokens.size()>=3)
         {
-            int check=checkMonthByString(checkString);
+            int check=checkDateString(checkString);
 
             if(check !=-1)
             {
@@ -850,6 +850,20 @@ Action Intellisense::undoOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     return task;
 }
+
+int Intellisense::checkDateString(string token)
+{
+    for(int i=0;i<=11;++i)
+    {
+        if(checkString(token,months[i]))
+        {
+            return i+1;
+        }
+    }
+
+    return -1;
+}
+
 
 Action Intellisense::redoOperation(vector<string>& tokens)
 {
