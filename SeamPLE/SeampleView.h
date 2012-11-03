@@ -91,9 +91,8 @@ private:
 private:
     Ui::SeampleView *ui;
 
-    QPropertyAnimation *_animationIn;
+    QPropertyAnimation *_animation;
 
-    QPropertyAnimation *_animationOut;
 };
 
 #endif // SEAMPLEVIEW_H
