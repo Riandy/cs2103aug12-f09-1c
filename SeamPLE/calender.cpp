@@ -4,12 +4,13 @@
 static string _DELETE = "delete";
 static string _ADDITION = "add";
 static string _EDIT = "edit";
+static string _DELETEALL = "deleteAll";
 static int NOTFOUND = -1;
 
 
 calender::calender()
 {
-    calender::loadFile();
+    calender::loadFile("storage.txt");
     _faulty = _faulty->getInstance();
 }
 
@@ -95,7 +96,9 @@ bool calender::deleteItem(int taskID)
 {
     if (taskID == 9999) // change this to ALL later, debugging tool
     {
+        writeBackupFile();
         _storage.clear();
+        saveHistory(_DELETEALL);
 
     }
     else
@@ -137,6 +140,15 @@ bool calender::writeFile()
     }
 
     return true;
+}
+
+void calender::writeBackupFile()
+{
+        std::ifstream    inFile("storage.txt");
+        std::ofstream    outFile("backup.txt");
+
+        outFile << inFile.rdbuf();
+
 }
 
 bool calender::checkID(int taskID)
@@ -282,12 +294,12 @@ vector<task> calender::displayDatabase()
 
 
 
-bool calender::loadFile()
+bool calender::loadFile(string fileName)
 {
 
     _storage.clear();
 
-    ifstream readFile("storage.txt");
+    ifstream readFile(fileName);
 
     string temp,description,priority,category;
     char space;
@@ -403,9 +415,18 @@ bool calender::undoAction()
             else if (position == NOTFOUND)
                 return false;
         }
+        else if (lastCommand == _DELETEALL)
+        {
+            loadFile("backup.txt");
+            remove("backup.txt");
+            _undoHistory.push(_DELETEALL);
+        }
+        else
+            _faulty->report("Calender class: Unknown undo command");
+        _commandHistory.pop();
+        writeFile();
     }
-    _commandHistory.pop();
-    writeFile();
+
     return true;
 }
 
@@ -456,6 +477,14 @@ bool calender::redoAction()
             else if (position == NOTFOUND)
                 return false;
         }
+        else if (_undoHistory.top() == _DELETEALL)
+        {
+            writeBackupFile();
+            _storage.clear();
+            saveHistory(_DELETEALL);
+        }
+        else
+            _faulty->report("Calender class: Unknown redo command");
         _undoHistory.pop();
         writeFile();
 
