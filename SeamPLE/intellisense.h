@@ -157,6 +157,7 @@ private:
     vector<string> tokenize(string command);
     ErrorLogger *logger;
     bool isAllInt(const string& s );
+    int checkDateString(string token);
     operation determinOperation(vector<string>& tokens);
     string getfirst_Word(string command);
     bool checkString(const string& input, const string& command);
@@ -178,6 +179,7 @@ private:
     Action editOperation(vector<string>& tokens);
     Action undoOperation(vector<string>& tokens);
     Action redoOperation(vector<string>& tokens);
+
 
     bool processTimeSizeThree (tm &date, string time);
     bool processTimeSizeFour (tm &date, string time);
