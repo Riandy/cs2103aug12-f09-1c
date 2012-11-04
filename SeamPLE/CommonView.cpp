@@ -32,3 +32,8 @@ bool CommonView::interfaceCurrentlyChanging()
 {
     return _currentlyChanging;
 }
+
+bool CommonView::screenCurrentlySliding()
+{
+    return _currentlySliding;
+}
