@@ -129,8 +129,9 @@ bool calender::deleteItem(string eventName)
 
 bool calender::writeFile()
 {
+    calender::SortByDate();
     ofstream writeFile("storage.txt");
-
+    cout<<"Sorted"<<endl;
     for (int i=0;i<int(_storage.size());i++)
     {
         vector<string> temp=_storage[i].toString();
@@ -282,10 +283,6 @@ int calender::getTaskID(string searchItem)
 
     return taskID;
 }
-
-
-
-
 
 vector<task> calender::displayDatabase()
 {
@@ -729,7 +726,7 @@ bool calender::dateComparator(task task1,task task2)
     //year,month,day,hour,min,sec
     tm date1=task1.getStartDate();
     tm date2=task2.getStartDate();
-    bool result=true;
+    bool result=false;
 
     if(date1.tm_year<date2.tm_year)
         return date1.tm_year<date2.tm_year;
