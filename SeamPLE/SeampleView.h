@@ -59,6 +59,8 @@ private slots:
 
     void findTriggered();
 
+    void findFloatTriggered();
+
     void displayTriggered();
 
     void deleteTriggered();
@@ -91,9 +93,8 @@ private:
 private:
     Ui::SeampleView *ui;
 
-    QPropertyAnimation *_animationIn;
+    QPropertyAnimation *_animation;
 
-    QPropertyAnimation *_animationOut;
 };
 
 #endif // SEAMPLEVIEW_H
