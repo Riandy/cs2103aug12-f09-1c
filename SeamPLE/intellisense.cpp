@@ -1563,28 +1563,21 @@ void Intellisense::setParameter(string newParameter)
     _parameter = newParameter;
 }
 
+bool Intellisense::isDateNotentered(Action _task)
+{
+    return (_task.getStartDate().tm_year == 0 && _task.getStartDate().tm_mon == 0
+            && _task.getStartDate().tm_mday ==0);
+}
+
+
 void Intellisense::smartAutoFill(Action &task)
 {
     ASSERT(&task!=NULL,"ACTION OBJECT CANNOT BE reference to null");
-    bool isDateNotentered = (task.getStartDate().tm_year == 0 && task.getStartDate().tm_mon == 0
-                             && task.getStartDate().tm_mday ==0);
-    if (isDateNotentered)
-    {//we auto fill in todays day if date is unentered
-        //
-        time_t timeNow;
-        struct tm * timeinfo;
-        time (&timeNow);
-        timeinfo = localtime ( &timeNow );
-        timeinfo->tm_year+=1900;//add 1900 years to fit our format
-        timeinfo->tm_mon+=1; //to fit our format
-        if(task.getStartDate().tm_hour==0 && task.getStartDate().tm_min==00)
-        {
-            task.setStartDate(*timeinfo);
-        }
-        else
-        {
-            task.setStartDateWithoutTime(*timeinfo);
-        }
+
+    if (isDateNotentered(task))
+    {//we identify this task as a floating task since no date is stated
+
+        task.setCategory("F10AT");
 
     }
 }
