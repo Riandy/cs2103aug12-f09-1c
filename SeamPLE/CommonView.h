@@ -48,14 +48,8 @@ protected:
 public:
     bool interfaceCurrentlyChanging();
 
-    bool screenCurrentlySliding();
-
 protected:
-    QPropertyAnimation *_animation;
-
     bool _currentlyChanging;
-
-    bool _currentlySliding;
 };
 
 
