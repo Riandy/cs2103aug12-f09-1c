@@ -3,7 +3,7 @@
 
 
 
-const string Intellisense::months[12] = {"JANURARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
+const string Intellisense::months[12] = {"JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
 
 
 //important date events
@@ -1619,4 +1619,5 @@ void Intellisense::smartAutoFill(Action &task)
 
     }
 }
+
 
