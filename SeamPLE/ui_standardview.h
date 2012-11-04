@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'standardview.ui'
+** Form generated from reading UI file 'StandardView.ui'
 **
-** Created: Sat Nov 3 10:06:29 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Sun Nov 4 09:49:36 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -149,10 +149,6 @@ public:
     QLabel *label_61;
     QLabel *label_72;
     QFrame *frame_17;
-    QLabel *label_4;
-    QLabel *label_3;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton;
     QFrame *frame_18;
     QLabel *label_73;
     QLabel *label_74;
@@ -162,6 +158,10 @@ public:
     QLabel *label_108;
     QFrame *frame_21;
     QLabel *label_109;
+    QLabel *label_4;
+    QLabel *label_3;
+    QPushButton *pushButton_2;
+    QPushButton *pushButton;
 
     void setupUi(QWidget *StandardView)
     {
@@ -1054,6 +1054,64 @@ public:
 "}"));
         frame_17->setFrameShape(QFrame::StyledPanel);
         frame_17->setFrameShadow(QFrame::Raised);
+        frame_18 = new QFrame(frame_3);
+        frame_18->setObjectName(QString::fromUtf8("frame_18"));
+        frame_18->setGeometry(QRect(16, 13, 701, 431));
+        frame_18->setFrameShape(QFrame::StyledPanel);
+        frame_18->setFrameShadow(QFrame::Raised);
+        label_73 = new QLabel(frame_18);
+        label_73->setObjectName(QString::fromUtf8("label_73"));
+        label_73->setGeometry(QRect(10, 10, 231, 42));
+        label_73->setFont(font8);
+        label_73->setStyleSheet(QString::fromUtf8("#label_73\n"
+"{\n"
+"	\n"
+"	background-image: url(:/bg/Results Slip.gif);\n"
+"\n"
+"\n"
+"}"));
+        label_74 = new QLabel(frame_18);
+        label_74->setObjectName(QString::fromUtf8("label_74"));
+        label_74->setGeometry(QRect(500, 380, 171, 42));
+        label_74->setStyleSheet(QString::fromUtf8("#label_74\n"
+"{\n"
+"	background-image: url(:/bg/Torn for num.gif);\n"
+"}"));
+        label_74->setAlignment(Qt::AlignCenter);
+        frame_19 = new QFrame(frame_18);
+        frame_19->setObjectName(QString::fromUtf8("frame_19"));
+        frame_19->setGeometry(QRect(10, 60, 207, 310));
+        frame_19->setStyleSheet(QString::fromUtf8("#frame_19\n"
+"{\n"
+"	\n"
+"	background-image: url(:/bg/Expand_note_1.gif);\n"
+"}"));
+        frame_19->setFrameShape(QFrame::StyledPanel);
+        frame_19->setFrameShadow(QFrame::Raised);
+        label_107 = new QLabel(frame_19);
+        label_107->setObjectName(QString::fromUtf8("label_107"));
+        label_107->setGeometry(QRect(60, 100, 71, 16));
+        frame_20 = new QFrame(frame_18);
+        frame_20->setObjectName(QString::fromUtf8("frame_20"));
+        frame_20->setGeometry(QRect(238, 61, 207, 310));
+        frame_20->setStyleSheet(QString::fromUtf8("#frame_20\n"
+"{\n"
+"	background-image: url(:/bg/Expand_note_2.gif);\n"
+"}"));
+        frame_20->setFrameShape(QFrame::StyledPanel);
+        frame_20->setFrameShadow(QFrame::Raised);
+        label_108 = new QLabel(frame_20);
+        label_108->setObjectName(QString::fromUtf8("label_108"));
+        label_108->setGeometry(QRect(70, 90, 71, 16));
+        frame_21 = new QFrame(frame_18);
+        frame_21->setObjectName(QString::fromUtf8("frame_21"));
+        frame_21->setGeometry(QRect(478, 61, 207, 310));
+        frame_21->setStyleSheet(QString::fromUtf8("background-image: url(:/bg/Expand_note_3.gif);"));
+        frame_21->setFrameShape(QFrame::StyledPanel);
+        frame_21->setFrameShadow(QFrame::Raised);
+        label_109 = new QLabel(frame_21);
+        label_109->setObjectName(QString::fromUtf8("label_109"));
+        label_109->setGeometry(QRect(70, 90, 71, 16));
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(-10, -4, 821, 51));
@@ -1128,64 +1186,6 @@ public:
         pushButton->setAutoDefault(false);
         pushButton->setDefault(false);
         pushButton->setFlat(false);
-        frame_18 = new QFrame(StandardView);
-        frame_18->setObjectName(QString::fromUtf8("frame_18"));
-        frame_18->setGeometry(QRect(10, 720, 701, 431));
-        frame_18->setFrameShape(QFrame::StyledPanel);
-        frame_18->setFrameShadow(QFrame::Raised);
-        label_73 = new QLabel(frame_18);
-        label_73->setObjectName(QString::fromUtf8("label_73"));
-        label_73->setGeometry(QRect(10, 10, 231, 42));
-        label_73->setFont(font8);
-        label_73->setStyleSheet(QString::fromUtf8("#label_73\n"
-"{\n"
-"	\n"
-"	background-image: url(:/bg/Results Slip.gif);\n"
-"\n"
-"\n"
-"}"));
-        label_74 = new QLabel(frame_18);
-        label_74->setObjectName(QString::fromUtf8("label_74"));
-        label_74->setGeometry(QRect(500, 380, 171, 42));
-        label_74->setStyleSheet(QString::fromUtf8("#label_74\n"
-"{\n"
-"	background-image: url(:/bg/Torn for num.gif);\n"
-"}"));
-        label_74->setAlignment(Qt::AlignCenter);
-        frame_19 = new QFrame(frame_18);
-        frame_19->setObjectName(QString::fromUtf8("frame_19"));
-        frame_19->setGeometry(QRect(10, 60, 207, 310));
-        frame_19->setStyleSheet(QString::fromUtf8("#frame_19\n"
-"{\n"
-"	\n"
-"	background-image: url(:/bg/Expand_note_1.gif);\n"
-"}"));
-        frame_19->setFrameShape(QFrame::StyledPanel);
-        frame_19->setFrameShadow(QFrame::Raised);
-        label_107 = new QLabel(frame_19);
-        label_107->setObjectName(QString::fromUtf8("label_107"));
-        label_107->setGeometry(QRect(60, 100, 71, 16));
-        frame_20 = new QFrame(frame_18);
-        frame_20->setObjectName(QString::fromUtf8("frame_20"));
-        frame_20->setGeometry(QRect(238, 61, 207, 310));
-        frame_20->setStyleSheet(QString::fromUtf8("#frame_20\n"
-"{\n"
-"	background-image: url(:/bg/Expand_note_2.gif);\n"
-"}"));
-        frame_20->setFrameShape(QFrame::StyledPanel);
-        frame_20->setFrameShadow(QFrame::Raised);
-        label_108 = new QLabel(frame_20);
-        label_108->setObjectName(QString::fromUtf8("label_108"));
-        label_108->setGeometry(QRect(70, 90, 71, 16));
-        frame_21 = new QFrame(frame_18);
-        frame_21->setObjectName(QString::fromUtf8("frame_21"));
-        frame_21->setGeometry(QRect(478, 61, 207, 310));
-        frame_21->setStyleSheet(QString::fromUtf8("background-image: url(:/bg/Expand_note_3.gif);"));
-        frame_21->setFrameShape(QFrame::StyledPanel);
-        frame_21->setFrameShadow(QFrame::Raised);
-        label_109 = new QLabel(frame_21);
-        label_109->setObjectName(QString::fromUtf8("label_109"));
-        label_109->setGeometry(QRect(70, 90, 71, 16));
 
         retranslateUi(StandardView);
         QObject::connect(pushButton, SIGNAL(clicked()), StandardView, SLOT(close()));
@@ -1486,10 +1486,6 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:36pt; color:#005500;\">4</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QString());
-        label_3->setText(QString());
-        pushButton_2->setText(QString());
-        pushButton->setText(QString());
         label_73->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1499,6 +1495,10 @@ public:
         label_107->setText(QApplication::translate("StandardView", "LOREM IPSUM", 0, QApplication::UnicodeUTF8));
         label_108->setText(QApplication::translate("StandardView", "LOREM IPSUM", 0, QApplication::UnicodeUTF8));
         label_109->setText(QApplication::translate("StandardView", "LOREM IPSUM", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QString());
+        label_3->setText(QString());
+        pushButton_2->setText(QString());
+        pushButton->setText(QString());
     } // retranslateUi
 
 };
