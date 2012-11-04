@@ -415,17 +415,19 @@ bool Intellisense::processTimeFormat6 (tm &date, string time)
                 if(date.tm_hour>=24)
                 { date.tm_hour = 0;}
                 date.tm_min=atoi(time.substr(2,2).c_str());
-
+                 return true;
             }
             else
             {
                 date.tm_hour=atoi(time.substr(0,2).c_str());
                 date.tm_min=atoi(time.substr(2,2).c_str());
-
+                 return true;
             }
-        return true;
+
         }
     }
+
+    return false;
 }
 
 //function checks for time format "9xxPM"
@@ -440,17 +442,21 @@ bool Intellisense::processTimeFormat5 (tm &date, string time)
             {
                 date.tm_hour=atoi(time.substr(0,1).c_str())+12;
                 date.tm_min=atoi(time.substr(1,2).c_str());
-
+                return true;
             }
             else
             {
                 date.tm_hour=atoi(time.substr(0,1).c_str());
                 date.tm_min=atoi(time.substr(1,2).c_str());
+                return true;
 
             }
-        return true;
+
         }
+
     }
+
+     return false;
 }
 
 //function checks for time format "9:xxPM"
