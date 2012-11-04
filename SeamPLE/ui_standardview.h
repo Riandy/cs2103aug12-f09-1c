@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Sun Nov 4 03:22:39 2012
+** Created: Sun Nov 4 12:51:24 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -1127,11 +1127,6 @@ public:
 "{\n"
 "	background-image: url(:/bg/Date Slip.gif)\n"
 "}"));
-        lineEdit->raise();
-        label_2->raise();
-        label->raise();
-        frame_3->raise();
-        frame_5->raise();
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(-10, -4, 821, 51));
@@ -1208,7 +1203,6 @@ public:
         pushButton->setFlat(false);
 
         retranslateUi(StandardView);
-        QObject::connect(pushButton, SIGNAL(clicked()), StandardView, SLOT(close()));
 
         QMetaObject::connectSlotsByName(StandardView);
     } // setupUi

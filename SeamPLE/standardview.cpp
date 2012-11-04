@@ -346,6 +346,14 @@ void StandardView::checkAnimationDone(
     }
 }
 
+void StandardView::calibrateCloseMechanism()
+{
+    if (!screenCurrentlySliding() && !interfaceCurrentlyChanging())
+    {
+        this->close();
+    }
+}
+
 void StandardView::helpTriggered()
 {
     showViewWithType(HELP_VIEW);
@@ -989,6 +997,9 @@ int StandardView:: getPosY(int maxY)
 
 void StandardView:: setSignals()
 {
+    connect(ui->pushButton,SIGNAL(clicked()),
+            this,SLOT(calibrateCloseMechanism()));
+
     connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
             this,SLOT(recieve(QString)));
 
