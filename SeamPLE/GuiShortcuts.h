@@ -31,6 +31,8 @@ public:
 
     QAction* getFindKey();
 
+    QAction* getFindFloatKey();
+
     QAction* getDisplayKey();
 
     QAction* getDeleteKey();
@@ -48,6 +50,13 @@ public:
     QAction* getHelpKey();
 
     QAction* getChangeTableViewKey();
+
+    QAction* getChangeScreenOneView();
+
+    QAction* getChangeScreenTwoView();
+
+    QAction* getChangeScreenThreeView();
+
     //QxtGlobalShortcut* getShowHideViewKey();
 
 private:
@@ -57,6 +66,7 @@ private:
     QAction* _redo;
     QAction* _add;
     QAction* _find;
+    QAction* _findFloat;
     QAction* _display;
     QAction* _delete;
     QAction* _edit;
@@ -66,6 +76,10 @@ private:
     QAction* _changeDisplay;
     QAction* _help;
     QAction* _changeTableView;
+    QAction* _changeScreenOneView;
+    QAction* _changeScreenTwoView;
+    QAction* _changeScreenThreeView;
+
 
     //QxtGlobalShortcut * _showHideView;
 };

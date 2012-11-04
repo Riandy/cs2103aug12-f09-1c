@@ -19,6 +19,8 @@ const QString CommonView:: COMMAND_DISPLAY = "display";
 const QString CommonView:: COMMAND_DELETE = "delete ";
 const QString CommonView:: COMMAND_EDIT = "edit ";
 
+const QString CommonView:: COMMAND_FIND_FLOAT = "find #F10AT";
+
 const string CommonView:: MESSAGE_ERROR_INVALID_COLOUR =
         "INVALID INPUT BAR COLOUR RETURNED";
 const string CommonView:: MESSAGE_ERROR_INCOMPLETE_RESULTS =
@@ -31,4 +33,9 @@ CommonView::CommonView()
 bool CommonView::interfaceCurrentlyChanging()
 {
     return _currentlyChanging;
+}
+
+bool CommonView::screenCurrentlySliding()
+{
+    return _currentlySliding;
 }
