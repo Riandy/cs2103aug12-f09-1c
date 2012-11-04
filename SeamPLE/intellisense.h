@@ -191,6 +191,7 @@ private:
     bool checkDateFormat5(string checkString, tm &date);
 
     bool checkDateStringFormat(vector<string>& tokens, tm &date);
+    bool isDateNotentered(Action _task);
 
     bool processTimeFormat1 (tm &date, string time);
     bool processTimeFormat2 (tm &date, string time);
