@@ -1566,7 +1566,7 @@ void Intellisense::setParameter(string newParameter)
 bool Intellisense::isDateNotentered(Action _task)
 {
     return (_task.getStartDate().tm_year == 0 && _task.getStartDate().tm_mon == 0
-            && _task.getStartDate().tm_mday ==0);
+            && _task.getStartDate().tm_mday ==0 );
 }
 
 bool Intellisense::isDateOver(Action _task)
@@ -1576,11 +1576,26 @@ bool Intellisense::isDateOver(Action _task)
 
     tm toCompare = _task.getStartDate();
 
-    if(now->tm_year>toCompare.tm_year || now->tm_mon>toCompare.tm_mon || now->tm_mday > now->tm_mday || now ->tm_hour>toCompare.tm_hour || now->tm_min > now->tm_min)
+    if(now->tm_year>toCompare.tm_year )
        { return true;}
     else
-      {  return false;}
+    {return false;}
+
+    if(now->tm_year == toCompare.tm_year && now->tm_mon > toCompare.tm_mon)
+    {
+        return true;
+
+    }else
+    {return false;}
+
+    if(now->tm_year == toCompare.tm_year && now->tm_mon == toCompare.tm_mon && now->tm_mday > toCompare.tm_mday)
+    {return true;}
+    else
+    {return false;}
+
+    return false;
 }
+
 
 void Intellisense::smartAutoFill(Action &task)
 {
@@ -1594,7 +1609,7 @@ void Intellisense::smartAutoFill(Action &task)
 
         task.setCategory("F10AT");
         task.setStartDate(emptyDate);
-        task.setStartDate(emptyDate);
+        task.setEndDate(emptyDate);
 
     }
 }
