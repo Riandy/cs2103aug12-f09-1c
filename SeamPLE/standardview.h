@@ -84,6 +84,8 @@ private slots:
 
     void findTriggered();
 
+    void findFloatTriggered();
+
     void displayTriggered();
 
     void deleteTriggered();
@@ -107,6 +109,10 @@ private slots:
     void checkAnimationDone(QAbstractAnimation::State newState,QAbstractAnimation::State oldState);
 
     void calibrateCloseMechanism();
+
+    void screenTwoTriggered();
+
+    void screenThreeTriggered();
 
 public slots:
     void helpTriggered();

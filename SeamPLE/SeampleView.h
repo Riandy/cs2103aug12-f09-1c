@@ -59,6 +59,8 @@ private slots:
 
     void findTriggered();
 
+    void findFloatTriggered();
+
     void displayTriggered();
 
     void deleteTriggered();

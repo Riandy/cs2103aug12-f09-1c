@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Sun Nov 4 12:51:24 2012
+** Created: Sun Nov 4 13:26:06 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -253,7 +253,7 @@ public:
         frame_3->setFrameShadow(QFrame::Raised);
         frame_22 = new QFrame(frame_3);
         frame_22->setObjectName(QString::fromUtf8("frame_22"));
-        frame_22->setGeometry(QRect(-724, 14, 2181, 397));
+        frame_22->setGeometry(QRect(-723, 14, 2181, 397));
         frame_22->setFrameShape(QFrame::StyledPanel);
         frame_22->setFrameShadow(QFrame::Raised);
         frame_5 = new QFrame(frame_22);
@@ -1201,6 +1201,8 @@ public:
         pushButton->setAutoDefault(false);
         pushButton->setDefault(false);
         pushButton->setFlat(false);
+        frame->raise();
+        frame_5->raise();
 
         retranslateUi(StandardView);
 
@@ -1367,7 +1369,7 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"> undo</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px"
                         "; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">  CTRL      1</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">  CTRL      R</span></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_46->setText(QString());
         label_47->setText(QString());
         label_48->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -1379,7 +1381,7 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"> redo</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px"
                         "; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">  CTRL      2</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">  CTRL      T</span></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_49->setText(QString());
         label_50->setText(QString());
         label_51->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
