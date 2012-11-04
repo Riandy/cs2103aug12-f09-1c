@@ -35,12 +35,16 @@ StandardView::StandardView(QWidget *parent):
     _tableItems.endIndex = 0;
     setStartView();
     _currentlyChanging = false;
-
+    _animation = NULL;
     _faulty = _faulty->getInstance();
 }
 
 StandardView::~StandardView()
 {
+    if (_animation != NULL)
+    {
+        delete _animation;
+    }
     _faulty->endInstance();
     delete ui;
 }
@@ -128,7 +132,7 @@ void StandardView:: instantiateTable(QVector <QString> output) throw (string)
     {
         throw MESSAGE_ERROR_INCOMPLETE_RESULTS;
     }
-    showTableResults();
+    displayTableResults();
 }
 
 //Remove all dynamically allocated memory given to table widget
@@ -268,19 +272,20 @@ void StandardView::pageUpTriggered()
 {
     int varyAmount = (_resultsTableViewExpanded ? 3 : 10);
 
+    bool currInputAtFrontDisplayExcept1stIndex = (_tableItems.currentIndex < 3 && _tableItems.currentIndex > 0);
+    if (currInputAtFrontDisplayExcept1stIndex)
+    {
+        _tableItems.currentIndex = 3;
+    }
+
     bool currInputNotAtFrontDisplay = (_tableItems.currentIndex >= varyAmount);
     bool currViewTypeIsTable = (_currentType == RESULTS_TABLE);
 
     if (!tableIsEmpty() && currInputNotAtFrontDisplay && currViewTypeIsTable)
     {
+
         _tableItems.currentIndex -= varyAmount;
-
-        showTableResults();
-    }
-
-    if (_resultsTableViewExpanded && _tableItems.currentIndex < 3)
-    {
-        _tableItems.currentIndex = 0;
+        displayTableResults();
     }
 }
 
@@ -289,14 +294,13 @@ void StandardView::pageDownTriggered()
     int varyAmount = (_resultsTableViewExpanded ? 3 : 10);
 
     bool currInputNotAtLastDisplay =
-            (_tableItems.endIndex - _tableItems.endIndex%varyAmount !=
-             _tableItems.currentIndex -_tableItems.currentIndex%varyAmount);
+            (_tableItems.endIndex - _tableItems.currentIndex >= varyAmount);
     bool currViewTypeIsTable = (_currentType == RESULTS_TABLE);
 
     if (!tableIsEmpty()&& currInputNotAtLastDisplay && currViewTypeIsTable)
     {
         _tableItems.currentIndex += varyAmount;
-        showTableResults();
+        displayTableResults();
     }
 }
 
@@ -316,6 +320,29 @@ void StandardView::changeDisplayTriggered()
     catch (string error)
     {
          _faulty->report(error);
+    }
+}
+
+void StandardView::changeTableViewKey()
+{
+    if (_currentType == RESULTS_TABLE && !screenCurrentlySliding())
+    {
+        _resultsTableViewExpanded = !_resultsTableViewExpanded;
+        showResultsTableType();
+        displayTableResults();
+    }
+}
+
+void StandardView::checkAnimationDone(
+        QAbstractAnimation::State newState,QAbstractAnimation::State oldState)
+{
+    if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
+    {
+        disconnect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+                this,SLOT(checkAnimationDone(QAbstractAnimation::State,QAbstractAnimation::State)));
+        delete _animation;
+        _animation = NULL;
+        _currentlySliding = false;
     }
 }
 
@@ -409,109 +436,103 @@ void StandardView::resetTableExpandedCounter()
 void StandardView::setStartView()
 {
     _currentType = TODAY_EVENTS;
+}
 
-    hideTable();
-    hideHelp();
+void StandardView::showResultsTableType()
+{
+    if (_resultsTableViewExpanded)
+    {
+        setFrameAnimationProperties(ui->frame_23, 1480,0);
+    }
+    else
+    {
+        setFrameAnimationProperties(ui->frame_23, 1480, -437);
+    }
+}
+
+void StandardView::setFrameAnimationProperties(QFrame* frame, int xCoord, int yCoord)
+{
+    _currentlySliding = true;
+
+    _animation = new QPropertyAnimation(frame, "geometry");
+
+    connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+            this,SLOT(checkAnimationDone(QAbstractAnimation::State,QAbstractAnimation::State)));
+
+    _animation->setEasingCurve(QEasingCurve::OutQuart);
+    _animation->setDuration(500);
+    _animation->setStartValue(frame->geometry());
+    _animation->setEndValue(QRect(xCoord,yCoord,frame->width(),frame->height()));
+    _animation->start();
 }
 
 void StandardView::showTable()
 {
-    if (_resultsTableViewExpanded)
-    {
-        ui->frame_18->show();
-    }
-    else
-    {
-        ui->frame_14->show();
-    }
-}
-
-void StandardView::hideTable()
-{
-    ui->frame_14->hide();
-    ui->frame_18->hide();
+    setFrameAnimationProperties(ui->frame_22, -1464,14);
 }
 
 void StandardView::showHelp()
 {
-    ui->frame_13->show();
-}
-
-void StandardView::hideHelp()
-{
-    ui->frame_13->hide();
+    setFrameAnimationProperties(ui->frame_22, 16,14);
 }
 
 void StandardView::showTodayView()
 {
-    ui->frame_5->show();
+    setFrameAnimationProperties(ui->frame_22, -723,14);
 }
 
-void StandardView::hideTodayView()
-{
-    ui->frame_5->hide();
-}
-
-void StandardView::showTodayEvents()
+void StandardView::displayTodayEvents()
 {
 
 }
 
 void StandardView::showViewWithType(viewType type) throw (string)
 {
-    switch (type)
+    if (!screenCurrentlySliding())
     {
-        case TODAY_EVENTS:
-            switch (_currentType)
-            {
-                case TODAY_EVENTS:
-                    break;
-
-                case RESULTS_TABLE:
-                    hideTable();
-                    break;
-
-                case HELP_VIEW:
-                    hideHelp();
-                    break;
-
-                default:
-                    throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
-                    break;
-            }
-            showTodayView();
-            break;
-
-        case RESULTS_TABLE:
-            switch (_currentType)
-            {
-                case TODAY_EVENTS:
-                    hideTodayView();
-                    break;
-
-                case RESULTS_TABLE:
-                    break;
-
-                case HELP_VIEW:
-                    hideHelp();
-                    break;
-
-                default:
-                    throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
-                    break;
-            }
-            showTable();
-            break;
-
-        case HELP_VIEW:
-            switch (_currentType)
-            {
+        switch (type)
+        {
+            case TODAY_EVENTS:
+                switch (_currentType)
+                {
                     case TODAY_EVENTS:
-                        hideTodayView();
+                        displayTodayEvents();
                         break;
 
                     case RESULTS_TABLE:
-                        hideTable();
+                    case HELP_VIEW:
+                        showTodayView();
+                        break;
+
+                    default:
+                        throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
+                        break;
+                }
+                break;
+
+            case RESULTS_TABLE:
+                switch (_currentType)
+                {
+                    case RESULTS_TABLE:
+                        break;
+
+                    case TODAY_EVENTS:
+                    case HELP_VIEW:
+                        showTable();
+                        break;
+
+                    default:
+                        throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
+                        break;
+                }
+                break;
+
+            case HELP_VIEW:
+                switch (_currentType)
+                {
+                    case TODAY_EVENTS:
+                    case RESULTS_TABLE:
+                        showHelp();
                         break;
 
                     case HELP_VIEW:
@@ -520,18 +541,18 @@ void StandardView::showViewWithType(viewType type) throw (string)
                     default:
                         throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
                         break;
-            }
-            showHelp();
-            break;
+                }
+                break;
 
-        default:
-            throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
-            break;
+            default:
+                throw(MESSAGE_VIEW_TYPE_WRONG.toStdString());
+                break;
+        }
+        _currentType = type;
     }
-    _currentType = type;
 }
 
-void StandardView::showTableResults()
+void StandardView::displayTableResults()
 {
     bool isNotTableView = (_currentType != RESULTS_TABLE);
 
@@ -550,7 +571,7 @@ void StandardView::showTableResults()
         }
         else
         {
-            showTableExpanded();
+            displayTableExpanded();
         }
     }
     else
@@ -567,12 +588,12 @@ void StandardView::showTableResults()
         else
         {
             calibrateTableIndex();
-            showTableNotExpanded();
+            displayTableNotExpanded();
         }
     }
 }
 
-void StandardView::showTableNotExpanded()
+void StandardView::displayTableNotExpanded()
 {
     int i = _tableItems.currentIndex;
     bool stillInResultsRange = (i <= _tableItems.endIndex);
@@ -590,19 +611,17 @@ void StandardView::showTableNotExpanded()
         stillInResultsRange = (i <= _tableItems.endIndex);
         stillInTableRange = (i-_tableItems.currentIndex < 10);
     }
-    //Reduce i as it will increment for one extra time in instantiating the bool conditions
-    i--;
 
     ui->label_27->setText("    "
                           +QString::number(_tableItems.currentIndex+1)
                           +" to "
-                          +QString::number(i+1)
+                          +QString::number(i)
                           +" of "
                           +QString::number(_tableItems.endIndex+1)
                           +" results ");
 }
 
-void StandardView:: showTableExpanded()
+void StandardView:: displayTableExpanded()
 {
     int i = _tableItems.currentIndex;
     bool stillInResultsRange = (i <= _tableItems.endIndex);
@@ -610,15 +629,15 @@ void StandardView:: showTableExpanded()
 
     while (stillInResultsRange && stillInNotesRange)
     {
-        QString result = "<br>"+_tableItems.output[(i*6)]+
+        QString result = " "+_tableItems.output[(i*6)]+
                 "<br>"+_tableItems.output[(i*6)+1]+
                 "<br>"+_tableItems.output[(i*6)+2]+
                 "<br>"+_tableItems.output[(i*6)+3]+
                 "<br>"+_tableItems.output[(i*6)+4]+
                 "<br>"+_tableItems.output[(i*6)+5];
-
         showTableExpandedNotes(i-_tableItems.currentIndex,result);
 
+        i++;
         stillInResultsRange = (i <= _tableItems.endIndex);
         stillInNotesRange = (i-_tableItems.currentIndex < 3);
     }
@@ -626,7 +645,7 @@ void StandardView:: showTableExpanded()
     ui->label_74->setText("    "
                           +QString::number(_tableItems.currentIndex+1)
                           +" to "
-                          +QString::number(i+1)
+                          +QString::number(i)
                           +" of "
                           +QString::number(_tableItems.endIndex+1)
                           +" results ");
@@ -1019,7 +1038,7 @@ void StandardView:: setSignals()
             this,SLOT(helpTriggered()));
 
     connect(_allShortcuts.getChangeTableViewKey(), SIGNAL(triggered()),
-            this, SLOT(addTriggered()));
+            this, SLOT(changeTableViewKey()));
 }
 
 bool StandardView::tableIsEmpty()
