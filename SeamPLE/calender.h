@@ -32,8 +32,8 @@ private:
     stack<string> _addHistory;
     stack<task> _undoneAddTasks;
     // used in delete
-     stack <task> _deletedTasks;
-     stack<string> _deleteHistory;
+    stack <task> _deletedTasks;
+    stack<string> _deleteHistory;
     //used in edit
     stack <task> _undoOriginalEdits;
     stack<task> _redoNewEdits;
@@ -54,8 +54,12 @@ private:
     bool loadFile(char* fileName);
     void writeBackupFile();
     bool checkNameExists(string _name);
+    vector<task> SearchPastEvent();
+    bool archivePastEvent();
+    string ensureUniqueName(string _name);
+    static bool taskDateComparator(task task1,task task2);
+    static bool dateComparator(tm date1,tm date2);
 
-   string ensureUniqueName(string _name);
 public:
 
     calender();
@@ -73,12 +77,12 @@ public:
     vector<task> SearchByPartialTask(string searchItem);
     task* pointerSearchByTask(string searchItem);
     vector<task> SearchByDate(string todayDate);
+
     vector<task> displayDatabase();
     vector<task> getToday();
     vector<task> SortByEvent();
     void SortByDate();
     vector<task> SortByCategory();
     string convertToDate(tm _date);
-    static bool dateComparator(task task1,task task2);
 };
 #endif

@@ -6,13 +6,15 @@ static string _ADDITION = "add";
 static string _EDIT = "edit";
 static string _DELETEALL = "deleteAll";
 static int NOTFOUND = -1;
-
+static char* ARCHIVE_FILENAME = "archive.txt";
+static char* STORAGE_FILENAME = "storage.txt";
 
 calender::calender()
 {
-    calender::loadFile("storage.txt");
+    calender::loadFile(STORAGE_FILENAME);
     _faulty = _faulty->getInstance();
     calender::SortByDate();
+    calender::archivePastEvent();
 }
 
 calender::~calender()
@@ -130,8 +132,7 @@ bool calender::deleteItem(string eventName)
 bool calender::writeFile()
 {
     calender::SortByDate();
-    ofstream writeFile("storage.txt");
-    cout<<"Sorted"<<endl;
+    ofstream writeFile(STORAGE_FILENAME);
     for (int i=0;i<int(_storage.size());i++)
     {
         vector<string> temp=_storage[i].toString();
@@ -146,7 +147,7 @@ bool calender::writeFile()
 
 void calender::writeBackupFile()
 {
-        std::ifstream    inFile("storage.txt");
+        std::ifstream    inFile("STORAGE_FILENAME");
         std::ofstream    outFile("backup.txt");
 
         outFile << inFile.rdbuf();
@@ -717,15 +718,20 @@ void calender::redoNewEdits(task _newTask)
 
 void calender::SortByDate()
 {
-    sort(_storage.begin(),_storage.end(),dateComparator);
+    sort(_storage.begin(),_storage.end(),taskDateComparator);
 }
 
-bool calender::dateComparator(task task1,task task2)
+bool calender::taskDateComparator(task task1,task task2)
+{
+    tm date1=task1.getStartDate();
+    tm date2=task2.getStartDate();
+    return calender::dateComparator(date1,date2);
+}
+
+bool calender::dateComparator(tm date1,tm date2)
 {
     //check in the sequence of
     //year,month,day,hour,min,sec
-    tm date1=task1.getStartDate();
-    tm date2=task2.getStartDate();
     bool result=false;
 
     if(date1.tm_year<date2.tm_year)
@@ -759,3 +765,54 @@ bool calender::dateComparator(task task1,task task2)
     return result;
 
 }
+
+vector<task> calender::SearchPastEvent()
+{
+    time_t t = time(0);   // get time now
+    tm  now = *localtime( & t );
+    now.tm_year+=1900;
+    now.tm_mon+=1;
+
+    vector<task> bufferStorage;
+
+    for(int i=0;i<_storage.size();i++)
+        if(dateComparator(_storage[i].getStartDate(),now)==true && _storage[i].getCategory()!="F10AT")
+            bufferStorage.push_back(_storage[i]);
+
+    return bufferStorage;
+}
+
+bool calender::archivePastEvent()
+{
+    vector<task> pastEvents;
+    pastEvents=calender::SearchPastEvent();
+
+    //delete the past event from actual storage database
+    //starting from the back of the vector
+    for(int i=pastEvents.size()-1;i>=0;i--)
+    {
+        _storage.erase(_storage.begin()+pastEvents[i].getID()-1);
+    }
+    SortByDate();
+    writeFile();
+
+    //write the past event to the archive file.
+    ofstream write (ARCHIVE_FILENAME, fstream::app);
+
+    for(int i=0;i<pastEvents.size();i++)
+    {
+        vector<string> temp= pastEvents[i].toString();
+        for(int j=1;j <int(temp.size());j++)
+            write<<temp[j]<<endl;
+        write<<endl;
+        temp.clear();
+    }
+    pastEvents.clear();
+    write.close();
+}
+
+
+
+
+
+
