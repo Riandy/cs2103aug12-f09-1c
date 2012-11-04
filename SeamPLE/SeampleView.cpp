@@ -25,7 +25,7 @@ SeampleView::SeampleView(QWidget *parent) :
     //from input line
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
 
-    _currentlySliding = false;
+    _currentlyChanging = false;
 }
 
 SeampleView::~SeampleView()
@@ -172,6 +172,11 @@ void SeampleView::findTriggered()
     showFocusInInputEdit(true);
 }
 
+void SeampleView::findFloatTriggered()
+{
+    emit run(COMMAND_FIND_FLOAT, ui->lineEdit->getFocusInput());
+}
+
 void SeampleView::displayTriggered()
 {
     emit run(COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
@@ -310,6 +315,9 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
             this,SLOT(findTriggered()));
+
+    connect(_allShortcuts.getFindFloatKey(),SIGNAL(triggered()),
+            this,SLOT(findFloatTriggered()));
 
     connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
             this,SLOT(displayTriggered()));

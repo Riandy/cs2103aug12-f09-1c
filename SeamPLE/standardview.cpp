@@ -35,6 +35,7 @@ StandardView::StandardView(QWidget *parent):
     _tableItems.endIndex = 0;
     setStartView();
     _currentlyChanging = false;
+    _currentlySliding = false;
     _animation = NULL;
     _faulty = _faulty->getInstance();
 }
@@ -213,6 +214,11 @@ void StandardView::findTriggered()
     showFocusInInputEdit(true);
 }
 
+void StandardView::findFloatTriggered()
+{
+    emit run(COMMAND_FIND_FLOAT, ui->lineEdit->getFocusInput());
+}
+
 void StandardView::displayTriggered()
 {
     emit run(COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
@@ -308,13 +314,19 @@ void StandardView::changeDisplayTriggered()
 {
     try
     {
-        if (_currentType == RESULTS_TABLE || _currentType == HELP_VIEW)
+        switch (_currentType)
         {
-            showViewWithType(TODAY_EVENTS);
-        }
-        else
-        {
-            showViewWithType(RESULTS_TABLE);
+            case RESULTS_TABLE:
+            case HELP_VIEW:
+                showViewWithType(TODAY_EVENTS);
+                break;
+
+            case TODAY_EVENTS:
+                showViewWithType(RESULTS_TABLE);
+                break;
+
+            default:
+                break;
         }
     }
     catch (string error)
@@ -352,6 +364,16 @@ void StandardView::calibrateCloseMechanism()
     {
         this->close();
     }
+}
+
+void StandardView::screenTwoTriggered()
+{
+    showViewWithType(TODAY_EVENTS);
+}
+
+void StandardView::screenThreeTriggered()
+{
+    showViewWithType(RESULTS_TABLE);
 }
 
 void StandardView::helpTriggered()
@@ -1024,6 +1046,9 @@ void StandardView:: setSignals()
     connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
             this,SLOT(findTriggered()));
 
+    connect(_allShortcuts.getFindFloatKey(),SIGNAL(triggered()),
+            this,SLOT(findFloatTriggered()));
+
     connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
             this,SLOT(displayTriggered()));
 
@@ -1050,6 +1075,15 @@ void StandardView:: setSignals()
 
     connect(_allShortcuts.getChangeTableViewKey(), SIGNAL(triggered()),
             this, SLOT(changeTableViewKey()));
+
+    connect(_allShortcuts.getChangeScreenOneView(), SIGNAL(triggered()),
+            this, SLOT(helpTriggered()));
+
+    connect(_allShortcuts.getChangeScreenTwoView(), SIGNAL(triggered()),
+            this, SLOT(screenTwoTriggered()));
+
+    connect(_allShortcuts.getChangeScreenThreeView(), SIGNAL(triggered()),
+            this, SLOT(screenThreeTriggered()));
 }
 
 bool StandardView::tableIsEmpty()
