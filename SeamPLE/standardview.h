@@ -102,6 +102,10 @@ private slots:
 
     void changeDisplayTriggered();
 
+    void changeTableViewKey();
+
+    void checkAnimationDone(QAbstractAnimation::State newState,QAbstractAnimation::State oldState);
+
 public slots:
     void helpTriggered();
 
@@ -122,27 +126,25 @@ private:
 
     void setStartView();
 
-    void showTable();
+    void showResultsTableType();
 
-    void hideTable();
+    void setFrameAnimationProperties(QFrame* frame, int xCoord, int yCoord);
+
+    void showTable();
 
     void showHelp();
 
-    void hideHelp();
-
     void showTodayView();
-
-    void hideTodayView();
 
     void showViewWithType(viewType type) throw (string);
 
-    void showTodayEvents();
+    void displayTodayEvents();
 
-    void showTableResults();
+    void displayTableResults();
 
-    void showTableNotExpanded();
+    void displayTableNotExpanded();
 
-    void showTableExpanded();
+    void displayTableExpanded();
 
     void showTableExpandedNotes (int reformatIndex , QString result);
 
