@@ -11,6 +11,7 @@ static string MESSAGE_UNDO_FAILURE = "There is nothing to undo";
 static string MESSAGE_REDO_SUCCESS = "Redo operation was successful";
 static string MESSAGE_REDO_FAILURE = "There is nothing to redo";
 static string MESSAGE_GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
+static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date";
 
 bool scheduler::instanceFlag=false;
 scheduler* scheduler::_scheduler=NULL;
@@ -54,6 +55,13 @@ vector<string> scheduler::executeCommand(Action newAction)
 
     if(command=="ADD")
     {
+        if(newTask.getCategory() == "1NVAL1D")
+        {
+            printMessage(MESSAGE_ADD_INVALID_DATE);
+        }
+        else
+        {
+
        if( eventCalender.addItem(newTask))
 	   {
          printMessage(MESSAGE_ADD_SUCCESS);
@@ -63,6 +71,7 @@ vector<string> scheduler::executeCommand(Action newAction)
        {
            _faulty->report("Scheduler class: Add command FAIL");
            printMessage(MESSAGE_ADD_FAILURE);
+       }
        }
     }
 

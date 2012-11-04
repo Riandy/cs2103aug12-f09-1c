@@ -206,6 +206,7 @@ private:
     bool checkImptDate(vector<string>& tokens,tm &date);
 
 
+
     bool getStatusFlagAt(int);
     void setStatusFlagAt(int,bool);
 
@@ -229,6 +230,9 @@ private:
 
     bool isValidParaForCmd(int,int);
     void smartAutoFill(Action &task);
+    bool isDateValid(Action task);
+    void handleInvalidDate(Action &task);
+    int daysMonth(int year, int month);
 
 
 };

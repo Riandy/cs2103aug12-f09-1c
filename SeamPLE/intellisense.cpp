@@ -977,6 +977,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     checkAddReq();
     smartAutoFill(task);//auto fill some of the fields that are unentered
+    handleInvalidDate(task);
     return task;
 }
 
@@ -1048,6 +1049,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     checkAddReq();
     smartAutoFill(task);//auto fill some of the fields that are unentered
+    handleInvalidDate(task);
     return task;
 }
 
@@ -1577,30 +1579,82 @@ bool Intellisense::isDateNotentered(Action _task)
 
 bool Intellisense::isDateOver(Action _task)
 {
+
     time_t t = time(0);
     struct tm * now = localtime( & t );
-
+    now->tm_year += 1900;
+    now->tm_mon +=1;
     tm toCompare = _task.getStartDate();
 
     if(now->tm_year>toCompare.tm_year )
-       { return true;}
-    else
-    {return false;}
+    {return true;}
 
     if(now->tm_year == toCompare.tm_year && now->tm_mon > toCompare.tm_mon)
-    {
-        return true;
+    {return true;}
 
-    }else
-    {return false;}
+
 
     if(now->tm_year == toCompare.tm_year && now->tm_mon == toCompare.tm_mon && now->tm_mday > toCompare.tm_mday)
     {return true;}
-    else
-    {return false;}
+
 
     return false;
 }
+
+int Intellisense::daysMonth(int year, int month)
+{
+    int numberOfDays;
+    if (month == 4 || month == 6 || month == 9 || month == 11)
+      {numberOfDays = 30;}
+    else if (month == 2)
+    { bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+      if (isLeapYear)
+       { numberOfDays = 29;}
+      else
+       { numberOfDays = 28;}
+    }
+    else
+     { numberOfDays = 31;}
+
+    return numberOfDays;
+}
+
+bool Intellisense::isDateValid(Action task)
+{
+    int day=task.getStartDate().tm_mday;
+    int month = task.getStartDate().tm_mon;
+    int numberOfDaysInMonth = daysMonth(task.getStartDate().tm_year,month);
+    int hour = task.getStartDate().tm_hour;
+    int min = task.getStartDate().tm_min;
+
+
+    if(day<=0 || day>numberOfDaysInMonth)
+    {
+        return false;
+    }
+
+    if(month<=0 || month >12)
+    {return false;}
+
+    if(hour<0 || hour>=24)
+    {return false;}
+
+    if(min<0 || min >=60)
+    {return false;}
+
+
+    return true;
+
+}
+
+void Intellisense::handleInvalidDate(Action &task)
+{
+    if(!isDateValid(task) && task.getCategory()== "#")
+    {
+        task.setCategory("1NVAL1D");
+    }
+}
+
 
 
 void Intellisense::smartAutoFill(Action &task)
