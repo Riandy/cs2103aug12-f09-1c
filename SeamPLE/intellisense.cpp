@@ -415,17 +415,19 @@ bool Intellisense::processTimeFormat6 (tm &date, string time)
                 if(date.tm_hour>=24)
                 { date.tm_hour = 0;}
                 date.tm_min=atoi(time.substr(2,2).c_str());
-
+                 return true;
             }
             else
             {
                 date.tm_hour=atoi(time.substr(0,2).c_str());
                 date.tm_min=atoi(time.substr(2,2).c_str());
-
+                 return true;
             }
-        return true;
+
         }
     }
+
+    return false;
 }
 
 //function checks for time format "9xxPM"
@@ -440,17 +442,21 @@ bool Intellisense::processTimeFormat5 (tm &date, string time)
             {
                 date.tm_hour=atoi(time.substr(0,1).c_str())+12;
                 date.tm_min=atoi(time.substr(1,2).c_str());
-
+                return true;
             }
             else
             {
                 date.tm_hour=atoi(time.substr(0,1).c_str());
                 date.tm_min=atoi(time.substr(1,2).c_str());
+                return true;
 
             }
-        return true;
+
         }
+
     }
+
+     return false;
 }
 
 //function checks for time format "9:xxPM"
@@ -1566,7 +1572,7 @@ void Intellisense::setParameter(string newParameter)
 bool Intellisense::isDateNotentered(Action _task)
 {
     return (_task.getStartDate().tm_year == 0 && _task.getStartDate().tm_mon == 0
-            && _task.getStartDate().tm_mday ==0);
+            && _task.getStartDate().tm_mday ==0 );
 }
 
 bool Intellisense::isDateOver(Action _task)
@@ -1576,11 +1582,26 @@ bool Intellisense::isDateOver(Action _task)
 
     tm toCompare = _task.getStartDate();
 
-    if(now->tm_year>toCompare.tm_year || now->tm_mon>toCompare.tm_mon || now->tm_mday > now->tm_mday || now ->tm_hour>toCompare.tm_hour || now->tm_min > now->tm_min)
+    if(now->tm_year>toCompare.tm_year )
        { return true;}
     else
-      {  return false;}
+    {return false;}
+
+    if(now->tm_year == toCompare.tm_year && now->tm_mon > toCompare.tm_mon)
+    {
+        return true;
+
+    }else
+    {return false;}
+
+    if(now->tm_year == toCompare.tm_year && now->tm_mon == toCompare.tm_mon && now->tm_mday > toCompare.tm_mday)
+    {return true;}
+    else
+    {return false;}
+
+    return false;
 }
+
 
 void Intellisense::smartAutoFill(Action &task)
 {
@@ -1594,7 +1615,7 @@ void Intellisense::smartAutoFill(Action &task)
 
         task.setCategory("F10AT");
         task.setStartDate(emptyDate);
-        task.setStartDate(emptyDate);
+        task.setEndDate(emptyDate);
 
     }
 }
