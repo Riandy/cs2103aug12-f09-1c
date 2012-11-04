@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <stdlib.h>
 #include <ctime>
 #include <sstream>
@@ -50,7 +51,7 @@ private:
     void saveUndoneDelete(string Item);
 
     bool writeFile();
-    bool loadFile(string fileName);
+    bool loadFile(char* fileName);
     void writeBackupFile();
     bool checkNameExists(string _name);
 
@@ -75,9 +76,9 @@ public:
     vector<task> displayDatabase();
     vector<task> getToday();
     vector<task> SortByEvent();
-    vector<task> SortByDeadline();
+    void SortByDate();
     vector<task> SortByCategory();
     string convertToDate(tm _date);
-
+    static bool dateComparator(task task1,task task2);
 };
 #endif

@@ -12,6 +12,7 @@ calender::calender()
 {
     calender::loadFile("storage.txt");
     _faulty = _faulty->getInstance();
+    calender::SortByDate();
 }
 
 calender::~calender()
@@ -294,7 +295,7 @@ vector<task> calender::displayDatabase()
 
 
 
-bool calender::loadFile(string fileName)
+bool calender::loadFile(char* fileName)
 {
 
     _storage.clear();
@@ -717,3 +718,47 @@ void calender::redoNewEdits(task _newTask)
     }
 }
 
+void calender::SortByDate()
+{
+    sort(_storage.begin(),_storage.end(),dateComparator);
+}
+
+bool calender::dateComparator(task task1,task task2)
+{
+    //check in the sequence of
+    //year,month,day,hour,min,sec
+    tm date1=task1.getStartDate();
+    tm date2=task2.getStartDate();
+    bool result=true;
+
+    if(date1.tm_year<date2.tm_year)
+        return date1.tm_year<date2.tm_year;
+    else if(date1.tm_year==date2.tm_year)
+    {
+        if(date1.tm_mon<date2.tm_mon)
+            result=true;
+        else if(date1.tm_mon==date2.tm_mon)
+        {
+            if(date1.tm_mday<date2.tm_mday)
+                result=true;
+            else if(date1.tm_mday==date2.tm_mday)
+            {
+                if(date1.tm_hour<date2.tm_hour)
+                    result=true;
+                else if(date1.tm_hour==date2.tm_hour)
+                {
+                    if(date1.tm_min<date2.tm_min)
+                        result=true;
+                    else if(date1.tm_min==date2.tm_min)
+                    {
+                        if(date1.tm_sec<date2.tm_sec)
+                            result=true;
+                    }
+                }
+            }
+        }
+    }
+
+    return result;
+
+}
