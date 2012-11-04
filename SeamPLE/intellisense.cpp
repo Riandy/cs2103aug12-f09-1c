@@ -1569,15 +1569,32 @@ bool Intellisense::isDateNotentered(Action _task)
             && _task.getStartDate().tm_mday ==0);
 }
 
+bool Intellisense::isDateOver(Action _task)
+{
+    time_t t = time(0);
+    struct tm * now = localtime( & t );
+
+    tm toCompare = _task.getStartDate();
+
+    if(now->tm_year>toCompare.tm_year || now->tm_mon>toCompare.tm_mon || now->tm_mday > now->tm_mday || now ->tm_hour>toCompare.tm_hour || now->tm_min > now->tm_min)
+       { return true;}
+    else
+      {  return false;}
+}
 
 void Intellisense::smartAutoFill(Action &task)
 {
     ASSERT(&task!=NULL,"ACTION OBJECT CANNOT BE reference to null");
 
-    if (isDateNotentered(task))
+
+    tm emptyDate ={0,0,0,0,0,0,0,0,0};
+
+    if (isDateNotentered(task) || isDateOver(task))
     {//we identify this task as a floating task since no date is stated
 
         task.setCategory("F10AT");
+        task.setStartDate(emptyDate);
+        task.setStartDate(emptyDate);
 
     }
 }
