@@ -8,6 +8,7 @@ static string _DELETEALL = "deleteAll";
 static int NOTFOUND = -1;
 static char* ARCHIVE_FILENAME = "archive.txt";
 static char* STORAGE_FILENAME = "storage.txt";
+static char* BACKUP_FILENAME = "backup.txt"
 
 calender::calender()
 {
@@ -148,7 +149,7 @@ bool calender::writeFile()
 void calender::writeBackupFile()
 {
         std::ifstream    inFile("STORAGE_FILENAME");
-        std::ofstream    outFile("backup.txt");
+        std::ofstream    outFile("BACKUP_FILENAME");
 
         outFile << inFile.rdbuf();
 
