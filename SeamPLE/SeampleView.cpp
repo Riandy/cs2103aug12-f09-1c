@@ -17,10 +17,7 @@ SeampleView::SeampleView(QWidget *parent) :
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    _animationOut = new QPropertyAnimation(ui->frame, "geometry");
-    _animationOut->setEasingCurve(QEasingCurve::Linear);
-    _animationIn = new QPropertyAnimation(ui->frame, "geometry");
-    _animationIn->setEasingCurve(QEasingCurve::OutQuart);
+    _animation = new QPropertyAnimation(ui->frame, "geometry");
     _allShortcuts.setShortcutsTo(this);
     setSignals();
 
@@ -33,8 +30,7 @@ SeampleView::SeampleView(QWidget *parent) :
 
 SeampleView::~SeampleView()
 {
-    delete _animationOut;
-    delete _animationIn;
+    delete _animation;
     delete ui;
 }
 
@@ -59,24 +55,31 @@ void SeampleView:: endInstance()
 
 void SeampleView::show()
 {
-    _currentlyChanging = true;
+  connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+          this,SLOT(checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
 
-    _animationIn->setDuration(200);
-    _animationIn->setStartValue(getHiddenGeometry());
-    _animationIn->setEndValue(getDefaultGeometry());
+    _currentlyChanging = true;
+    _animation->setEasingCurve(QEasingCurve::OutQuart);
+    _animation->setDuration(200);
+    _animation->setStartValue(getHiddenGeometry());
+    _animation->setEndValue(getDefaultGeometry());
 
     QMainWindow::show();
-    _animationIn->start();
+    _animation->start();
 }
 
 void SeampleView::hide()
 {
-    _currentlyChanging = true;
-    _animationOut->setDuration(200);
-    _animationOut->setStartValue(getDefaultGeometry());
-    _animationOut->setEndValue(getHiddenGeometry());
+    connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+            this,SLOT(checkHideViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
 
-    _animationOut->start();
+    _currentlyChanging = true;
+    _animation->setEasingCurve(QEasingCurve::Linear);
+    _animation->setDuration(200);
+    _animation->setStartValue(getDefaultGeometry());
+    _animation->setEndValue(getHiddenGeometry());
+
+    _animation->start();
 }
 
 //Function to change GUI interface label to contain output string
@@ -169,6 +172,11 @@ void SeampleView::findTriggered()
     showFocusInInputEdit(true);
 }
 
+void SeampleView::findFloatTriggered()
+{
+    emit run(COMMAND_FIND_FLOAT, ui->lineEdit->getFocusInput());
+}
+
 void SeampleView::displayTriggered()
 {
     emit run(COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
@@ -204,6 +212,9 @@ void SeampleView::checkHideViewFinished(
 {
     if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
     {
+        disconnect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+                this,SLOT(checkHideViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
+
         QMainWindow::hide();
         _currentlyChanging = false;
     }
@@ -214,6 +225,8 @@ void SeampleView::checkShowViewFinished(
 {
     if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
     {
+        disconnect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
+                this,SLOT(checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
         _currentlyChanging = false;
     }
 }
@@ -303,6 +316,9 @@ void SeampleView:: setSignals()
     connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
             this,SLOT(findTriggered()));
 
+    connect(_allShortcuts.getFindFloatKey(),SIGNAL(triggered()),
+            this,SLOT(findFloatTriggered()));
+
     connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
             this,SLOT(displayTriggered()));
 
@@ -317,10 +333,4 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
-
-    connect(_animationOut,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
-            this,SLOT(checkHideViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
-
-    connect(_animationIn,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
-            this,SLOT(checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
 }

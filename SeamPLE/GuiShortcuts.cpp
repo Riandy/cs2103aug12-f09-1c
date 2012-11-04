@@ -7,6 +7,7 @@ GuiShortcuts::GuiShortcuts()
     _redo = NULL;
     _add = NULL;
     _find = NULL;
+    _findFloat = NULL;
     _display = NULL;
     _delete = NULL;
     _edit = NULL;
@@ -16,6 +17,9 @@ GuiShortcuts::GuiShortcuts()
     _changeDisplay = NULL;
     _help = NULL;
     _changeTableView = NULL;
+    _changeScreenOneView = NULL;
+    _changeScreenTwoView = NULL;
+    _changeScreenThreeView = NULL;
     //_showHideView = NULL;
 }
 
@@ -40,6 +44,10 @@ GuiShortcuts::~GuiShortcuts()
     if (_find != NULL)
     {
         delete _find;
+    }
+    if (_findFloat != NULL)
+    {
+        delete _findFloat;
     }
     if (_display != NULL)
     {
@@ -77,6 +85,18 @@ GuiShortcuts::~GuiShortcuts()
     {
         delete _changeTableView;
     }
+    if (_changeScreenOneView != NULL)
+    {
+        delete _changeScreenOneView;
+    }
+    if (_changeScreenTwoView != NULL)
+    {
+        delete _changeScreenTwoView;
+    }
+    if (_changeScreenThreeView != NULL)
+    {
+        delete _changeScreenThreeView;
+    }
 //    if (_showHideView != NULL)
 //    {
 //        delete _showHideView;
@@ -93,11 +113,11 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
 
     _undo = new QAction(Gui);
     Gui->addAction(_undo);
-    _undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
+    _undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
     _redo = new QAction(Gui);
     Gui->addAction(_redo);
-    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
+    _redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_T));
 
     _add = new QAction(Gui);
     Gui->addAction(_add);
@@ -106,6 +126,10 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     _find = new QAction(Gui);
     Gui->addAction(_find);
     _find->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F));
+
+    _findFloat = new QAction(Gui);
+    Gui->addAction(_findFloat);
+    _findFloat->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_G));
 
     _display = new QAction(Gui);
     Gui->addAction(_display);
@@ -147,6 +171,18 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
     _changeTableView = new QAction(Gui);
     Gui->addAction(_changeTableView);
     _changeTableView->setShortcut(QKeySequence(Qt::Key_Tab));
+
+    _changeScreenOneView = new QAction(Gui);
+    Gui->addAction(_changeScreenOneView);
+    _changeScreenOneView->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
+
+    _changeScreenTwoView = new QAction(Gui);
+    Gui->addAction(_changeScreenTwoView);
+    _changeScreenTwoView->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
+
+    _changeScreenThreeView = new QAction(Gui);
+    Gui->addAction(_changeScreenThreeView);
+    _changeScreenThreeView->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
 }
 
 //void GuiShortcuts::setGlobalShortcuts()
@@ -177,6 +213,11 @@ QAction* GuiShortcuts::getAddKey()
 QAction* GuiShortcuts::getFindKey()
 {
     return _find;
+}
+
+QAction* GuiShortcuts::getFindFloatKey()
+{
+    return _findFloat;
 }
 
 QAction* GuiShortcuts::getDisplayKey()
@@ -222,6 +263,21 @@ QAction* GuiShortcuts::getHelpKey()
 QAction* GuiShortcuts::getChangeTableViewKey()
 {
     return _changeTableView;
+}
+
+QAction* GuiShortcuts::getChangeScreenOneView()
+{
+    return _changeScreenOneView;
+}
+
+QAction* GuiShortcuts::getChangeScreenTwoView()
+{
+    return _changeScreenTwoView;
+}
+
+QAction* GuiShortcuts::getChangeScreenThreeView()
+{
+    return _changeScreenThreeView;
 }
 
 //QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()
