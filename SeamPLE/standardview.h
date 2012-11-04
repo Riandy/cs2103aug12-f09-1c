@@ -106,6 +106,8 @@ private slots:
 
     void checkAnimationDone(QAbstractAnimation::State newState,QAbstractAnimation::State oldState);
 
+    void calibrateCloseMechanism();
+
 public slots:
     void helpTriggered();
 

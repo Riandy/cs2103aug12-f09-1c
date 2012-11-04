@@ -3127,11 +3127,6 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </widget>
-    <zorder>lineEdit</zorder>
-    <zorder>label_2</zorder>
-    <zorder>label</zorder>
-    <zorder>frame_3</zorder>
-    <zorder>frame_5</zorder>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
@@ -3287,22 +3282,5 @@ p, li { white-space: pre-wrap; }
  <resources>
   <include location="Resource.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>StandardView</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>767</x>
-     <y>89</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>651</x>
-     <y>59</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
