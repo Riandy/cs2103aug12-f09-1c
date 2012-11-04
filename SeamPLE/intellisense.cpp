@@ -977,7 +977,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     checkAddReq();
     smartAutoFill(task);//auto fill some of the fields that are unentered
-    handleInvalidDate(task);
+
     return task;
 }
 
@@ -1049,7 +1049,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
     setAllStatusFlag(task);
     checkAddReq();
     smartAutoFill(task);//auto fill some of the fields that are unentered
-    handleInvalidDate(task);
+
     return task;
 }
 
@@ -1664,7 +1664,7 @@ void Intellisense::smartAutoFill(Action &task)
 
     tm emptyDate ={0,0,0,0,0,0,0,0,0};
 
-    if (isDateNotentered(task) || isDateOver(task))
+    if (isDateNotentered(task))
     {//we identify this task as a floating task since no date is stated
 
         task.setCategory("F10AT");
@@ -1672,6 +1672,16 @@ void Intellisense::smartAutoFill(Action &task)
         task.setEndDate(emptyDate);
 
     }
+    handleInvalidDate(task);
+    if (isDateOver(task))
+    {//we identify this task as a floating task since no date is stated
+
+        task.setCategory("F10AT");
+        task.setStartDate(emptyDate);
+        task.setEndDate(emptyDate);
+
+    }
+
 }
 
 
