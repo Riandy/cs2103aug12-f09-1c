@@ -35,7 +35,8 @@ enum operation{
     UNDO,
     REDO,
     EDITENTER,
-    TODO
+    TODO,
+    TODAY
 };
 
 
@@ -66,6 +67,7 @@ private:
     const static string undoCommandArray[];
     const static string redoCommandArray[];
     const static string todoCommandArray[];
+    const static string todayCommandArray[];
 
     const static string EMPTYCATEGORY;
     const static string EMPTYEVENT;
@@ -74,9 +76,6 @@ private:
 
     const static string HIGHPRIORITY;
     const static string HIGHPRIORITY_L;
-    const static string LOWPRIORITY;
-    const static string LOWPRIORITY_L;
-
     const static string WEEKLY;
     const static string MONTHLY;
     const static string FORTNIGHTLY;
@@ -187,6 +186,7 @@ private:
     Action undoOperation(vector<string>& tokens);
     Action redoOperation(vector<string>& tokens);
     Action todoOperation(vector<string>& tokens);
+    Action todayOperation(vector<string>& tokens);
 
 
     bool checkDateNumericalFormat(vector<string>& tokens, tm &date);

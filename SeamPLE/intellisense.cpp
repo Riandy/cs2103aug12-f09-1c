@@ -23,6 +23,7 @@ const string Intellisense::editCommandArray[] = {"edit","change","-e","defer","r
 const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
 const string Intellisense::todoCommandArray[] = {"todo"};
+const string Intellisense::todayCommandArray[] = {"today"};
 
 
 const string Intellisense::EMPTYCATEGORY = "#";
@@ -30,9 +31,7 @@ const string Intellisense::EMPTYEVENT = "";
 const string Intellisense::EMPTYPRIORITY = "LOW";
 const int    Intellisense::EMPTYID = -1;
 const string Intellisense::HIGHPRIORITY  = "HIGH";
-const string Intellisense::LOWPRIORITY  = "LOW";
 const string Intellisense::HIGHPRIORITY_L = "high";
-const string Intellisense::LOWPRIORITY_L = "low";
 const string Intellisense::WEEKLY = "weekly";
 const string Intellisense::MONTHLY = "monthly";
 const string Intellisense::FORTNIGHTLY = "fortnightly";
@@ -176,6 +175,10 @@ Action Intellisense::check(string query)
     case TODO:
         task= todoOperation(buffer);
         break;
+    case TODAY:
+        task= todayOperation(buffer);
+        break;
+
     default:
         logger->report("@Intellisense -> Unexpected command received" + determinOperation(buffer));    //logging the unexpected command
         ASSERT(false,"Command is not recognised");
@@ -204,6 +207,9 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     }else if(checkCommandArray(commandword,deleteCommandArray,sizeof(deleteCommandArray)/sizeof(string)))
     {
         return DELETE;
+    }else if(checkCommandArray(commandword,todayCommandArray,sizeof(deleteCommandArray)/sizeof(string)))
+    {
+        return TODAY;
     }else if(checkCommandArray(commandword,editCommandArray,sizeof(editCommandArray)/sizeof(string)))
     {
         return EDIT;
@@ -341,19 +347,8 @@ string Intellisense::getPriority(vector<string>& tokens)
             tokens.pop_back();
             return HIGHPRIORITY;
         }
-        if((checkHeadString.compare(LOWPRIORITY)==0)|| checkHeadString.compare(LOWPRIORITY_L)==0)
-        {
-            tokens.erase(tokens.begin());
-            return LOWPRIORITY;
-        }
-        if((checkTailString.compare(LOWPRIORITY)==0)|| checkTailString.compare(LOWPRIORITY_L)==0)
-        {
-            tokens.pop_back();
-            return LOWPRIORITY;
-        }
-
     }
-    return string("");
+    return string("LOW");
 }
 
 tm Intellisense::getTime(vector<string>& tokens,tm &date)
@@ -1096,6 +1091,15 @@ int Intellisense::checkDateString(string token)
     }
 
     return -1;
+}
+
+Action Intellisense::todayOperation(vector<string>& tokens)
+{
+    currentCommand = TODAY;
+    Action task;
+    task.setCommand("TODAY");
+    setAllStatusFlag(task);
+    return task;
 }
 
 Action Intellisense::todoOperation(vector<string>& tokens)
