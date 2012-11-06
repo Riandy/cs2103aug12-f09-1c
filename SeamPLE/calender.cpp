@@ -8,7 +8,7 @@ static string _DELETEALL = "deleteAll";
 static int NOTFOUND = -1;
 static char* ARCHIVE_FILENAME = "archive.txt";
 static char* STORAGE_FILENAME = "storage.txt";
-static char* BACKUP_FILENAME = "backup.txt"
+static char* BACKUP_FILENAME = "backup.txt";
 
 calender::calender()
 {
@@ -16,10 +16,13 @@ calender::calender()
     _faulty = _faulty->getInstance();
     calender::SortByDate();
     calender::archivePastEvent();
+    if (fileExists(BACKUP_FILENAME))
+         remove(BACKUP_FILENAME);
 }
 
 calender::~calender()
 {
+
     _faulty->endInstance();
 }
 
@@ -37,12 +40,17 @@ string calender::convertToDate(tm _date)
 
 bool calender::addItem(task currentTask)
 {
-    //ASSERT(currentTask.getEventName()=="","Fail to add, task doesn't contain event name");
+    ASSERT(currentTask.getEventName() !="","Fail to add, task doesn't contain event name");
     saveHistory(_ADDITION);
     string _currentName = currentTask.getEventName();
     string _uniqueName = ensureUniqueName(_currentName);
-
     currentTask.setEventName(_uniqueName);
+
+    if (currentTask.getPriority() == "")
+    {
+        currentTask.setPriority("LOW");
+    }
+
     saveAdd(currentTask.getEventName());
 
     _storage.push_back(currentTask);
@@ -148,8 +156,8 @@ bool calender::writeFile()
 
 void calender::writeBackupFile()
 {
-        std::ifstream    inFile("STORAGE_FILENAME");
-        std::ofstream    outFile("BACKUP_FILENAME");
+        std::ifstream    inFile(STORAGE_FILENAME);
+        std::ofstream    outFile(BACKUP_FILENAME);
 
         outFile << inFile.rdbuf();
 
@@ -193,16 +201,17 @@ bool calender::editTask( task _edited)
             taskMatch->setEndDate(_edited.getEndDate());
         }
 
-        if(_edited.getPriority() != "LOW" )
-        {  taskMatch->setPriority(_edited.getPriority());
-
+        if(_edited.getPriority() !="" )
+        {
+            taskMatch->setPriority(_edited.getPriority());
         }
+
         if(_edited.getCategory() != "#" )
         taskMatch->setCategory(_edited.getCategory());
 
         undoNewEdits(*taskMatch);
-         writeFile();
-       return true;
+        writeFile();
+        return true;
 
     }
 
@@ -417,8 +426,8 @@ bool calender::undoAction()
         }
         else if (lastCommand == _DELETEALL)
         {
-            loadFile("backup.txt");
-            remove("backup.txt");
+            loadFile(BACKUP_FILENAME);
+            remove(BACKUP_FILENAME);
             _undoHistory.push(_DELETEALL);
         }
         else
@@ -450,9 +459,11 @@ bool calender::redoAction()
             saveDeletedTask(taskID-1);
             _storage.erase(_storage.begin()+taskID-1);
             saveHistory(_DELETE);*/
+            // ABOVE OBSOLETE CODE
+
             saveHistory(_DELETE);
             int ID = getTaskID(_deleteHistory.top());
-            //ASSERT(ID == NOTFOUND, "Fail to redo an undone delete, task not found in storage");
+
             saveDeletedTask(ID);
             _storage.erase(_storage.begin()+ ID);
             _deleteHistory.pop();
@@ -467,8 +478,7 @@ bool calender::redoAction()
             if (position != NOTFOUND) // defensive programming
             {
                 _storage[position] = _redoOriginalEdits.top();
-               // swapTops(tempTask);
-                saveHistory(_EDIT);
+                               saveHistory(_EDIT);
                 undoOriginalEdits(_redoNewEdits.top());
                 undoNewEdits(_redoOriginalEdits.top());
                 _redoNewEdits.pop();
@@ -786,15 +796,22 @@ vector<task> calender::SearchPastEvent()
 bool calender::archivePastEvent()
 {
     vector<task> pastEvents;
-    pastEvents=calender::SearchPastEvent();
 
-    //delete the past event from actual storage database
-    //starting from the back of the vector
-    for(int i=pastEvents.size()-1;i>=0;i--)
+    pastEvents = SearchPastEvent();
+
+    cout<<pastEvents.size();
+
+
+// Delete from real storage vector
+    for (int i = 0; i< pastEvents.size(); i++)
     {
-        _storage.erase(_storage.begin()+pastEvents[i].getID()-1);
+        int ID = getTaskID(pastEvents[i].getEventName());
+        _storage.erase(_storage.begin() + ID);
     }
+
+
     SortByDate();
+
     writeFile();
 
     //write the past event to the archive file.
@@ -810,10 +827,20 @@ bool calender::archivePastEvent()
     }
     pastEvents.clear();
     write.close();
+
+
+return true;
 }
 
 
+bool calender::fileExists(const char *fileName)
+{
 
-
+  ifstream ifile(fileName);
+  if (ifile)
+      return true;
+  else
+      return false;
+}
 
 

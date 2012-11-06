@@ -1,5 +1,6 @@
 #include "task.h"
 
+
 const int  task::DATENORMAL         = 0;
 const int  task::DATEWEEKLY         = 1;
 const int  task::DATEFORTNIGHTLY     = 2;
@@ -70,6 +71,7 @@ string task::getPriority()
 }
 void task::setPriority(string newPriority)
 {
+    //ASSERT((newPriority == "LOW" || newPriority == "HIGH"), "Priority error");
     _priority = newPriority;
 }
 
@@ -107,7 +109,6 @@ string task::convertToDate(tm _date)
     convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
     convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
     _result=convert.str();
-    //cout<<"YAY"<<_result<<endl;
     return _result;
 }
 
