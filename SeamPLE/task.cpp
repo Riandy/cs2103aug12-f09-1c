@@ -71,7 +71,7 @@ string task::getPriority()
 }
 void task::setPriority(string newPriority)
 {
-    ASSERT((newPriority == "LOW" || newPriority == "HIGH"), "Priority error");
+    //ASSERT((newPriority == "LOW" || newPriority == "HIGH"), "Priority error");
     _priority = newPriority;
 }
 

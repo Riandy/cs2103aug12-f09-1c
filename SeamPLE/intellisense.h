@@ -74,6 +74,9 @@ private:
 
     const static string HIGHPRIORITY;
     const static string HIGHPRIORITY_L;
+    const static string LOWPRIORITY;
+    const static string LOWPRIORITY_L;
+
     const static string WEEKLY;
     const static string MONTHLY;
     const static string FORTNIGHTLY;
