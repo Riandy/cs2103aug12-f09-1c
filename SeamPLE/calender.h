@@ -49,16 +49,19 @@ private:
     void redoNewEdits(task _newtask);
     void saveAdd(string Item);
     void saveUndoneDelete(string Item);
+    void writeBackupFile();
 
     bool writeFile();
     bool loadFile(char* fileName);
-    void writeBackupFile();
+    bool fileExists(const char* fileName);
     bool checkNameExists(string _name);
-    vector<task> SearchPastEvent();
     bool archivePastEvent();
-    string ensureUniqueName(string _name);
+
     static bool taskDateComparator(task task1,task task2);
     static bool dateComparator(tm date1,tm date2);
+
+    vector<task> SearchPastEvent();
+    string ensureUniqueName(string _name);
 
 public:
 

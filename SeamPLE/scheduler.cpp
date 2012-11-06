@@ -78,21 +78,21 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if(command=="DELETE")
     {
         //delete by ID
-        //ASSERT((newTask.getID()==NULL && newTask.getEventName()=="#"),"No parameter passed in to the delete function");
-
-
+        ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
         if(eventCalender.checkID(newTask.getID()) || (newTask.getID() == 9999))
         {
             eventCalender.deleteItem(newTask.getID());
             printMessage(MESSAGE_DELETE_SUCCESS);
             updateGUI();
         }
+
         //delete by event name
         else if(newTask.getEventName()!="-" && eventCalender.deleteItem(newTask.getEventName()))
         {
             printMessage(MESSAGE_DELETE_SUCCESS);
             updateGUI();
         }
+
         //error handling
         else
         {
