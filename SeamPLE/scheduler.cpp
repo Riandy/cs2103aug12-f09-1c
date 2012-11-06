@@ -58,7 +58,26 @@ vector<string> scheduler::executeCommand(Action newAction)
         if(newTask.getCategory() == "1NVAL1D")
         {
             printMessage(MESSAGE_ADD_INVALID_DATE);
+
         }
+
+
+
+
+// EXTRA CODE TO BE REMOVED
+        else if (newTask.getEventName() == "Rick Roll")
+        {
+            taskVector = eventCalender.rickRoll();
+            partialUpdateGUI(taskVector);
+        }
+// END OF EXTRA CODE TO BE REMOVED
+
+
+
+
+
+
+
         else
         {
 
@@ -428,3 +447,5 @@ void scheduler::printMessage(string _messageType)
 {
     _result.push_back(_messageType);
 }
+
+
