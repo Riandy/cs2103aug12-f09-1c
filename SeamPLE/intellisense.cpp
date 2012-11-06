@@ -30,7 +30,9 @@ const string Intellisense::EMPTYEVENT = "";
 const string Intellisense::EMPTYPRIORITY = "LOW";
 const int    Intellisense::EMPTYID = -1;
 const string Intellisense::HIGHPRIORITY  = "HIGH";
+const string Intellisense::LOWPRIORITY  = "LOW";
 const string Intellisense::HIGHPRIORITY_L = "high";
+const string Intellisense::LOWPRIORITY_L = "low";
 const string Intellisense::WEEKLY = "weekly";
 const string Intellisense::MONTHLY = "monthly";
 const string Intellisense::FORTNIGHTLY = "fortnightly";
@@ -339,8 +341,19 @@ string Intellisense::getPriority(vector<string>& tokens)
             tokens.pop_back();
             return HIGHPRIORITY;
         }
+        if((checkHeadString.compare(LOWPRIORITY)==0)|| checkHeadString.compare(LOWPRIORITY_L)==0)
+        {
+            tokens.erase(tokens.begin());
+            return LOWPRIORITY;
+        }
+        if((checkTailString.compare(LOWPRIORITY)==0)|| checkTailString.compare(LOWPRIORITY_L)==0)
+        {
+            tokens.pop_back();
+            return LOWPRIORITY;
+        }
+
     }
-    return string("LOW");
+    return string("");
 }
 
 tm Intellisense::getTime(vector<string>& tokens,tm &date)
