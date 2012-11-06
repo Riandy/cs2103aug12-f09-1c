@@ -32,6 +32,7 @@ private:
     void partialUpdateGUI(vector<task> taskVector);
 
 
+
 public:
     static bool instanceFlag;
     static scheduler* getInstance();

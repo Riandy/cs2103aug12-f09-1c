@@ -844,3 +844,100 @@ bool calender::fileExists(const char *fileName)
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// EXTRA CODE TO BE REMOVED
+vector<task> calender::rickRoll()
+{
+    vector<task> bufferStorage;
+
+    ifstream readFile("EndUserAgreement.txt");
+
+      string temp,description,priority,category;
+      char space;
+
+      string startDate,endDate;
+      //variable temp is used to read unecessary string/ character
+
+      while(readFile>>temp)
+      {
+
+
+          readFile>>temp;
+          readFile.get(space);
+          getline(readFile,description);
+
+          readFile>>temp;
+          readFile>>temp;
+          getline(readFile,startDate);
+          istringstream iss(startDate);
+          tm _startDate;
+          iss >> _startDate.tm_mday;
+          iss >> temp;
+          iss >> _startDate.tm_mon;
+          iss >> temp;
+          iss >> _startDate.tm_year;
+          iss >> temp;
+          iss >> _startDate.tm_hour;
+          iss >> temp;
+          iss >> _startDate.tm_min;
+          iss >> temp;
+          iss >> _startDate.tm_sec;
+
+          readFile>>temp;
+          readFile>>temp;
+          getline(readFile,endDate);
+          istringstream isss(endDate);
+          tm _endDate;
+          isss >> _endDate.tm_mday;
+          isss >> temp;
+          isss >> _endDate.tm_mon;
+          isss >> temp;
+          isss >> _endDate.tm_year;
+          isss >> temp;
+          isss >> _endDate.tm_hour;
+          isss >> temp;
+          isss >> _endDate.tm_min;
+          isss >> temp;
+          isss >> _endDate.tm_sec;
+
+          readFile>>temp;
+          readFile>>temp;
+          readFile>>priority;
+
+          readFile>>temp;
+          readFile>>temp;
+          readFile>>category;
+
+          task* newTask= new task;
+          newTask->setID(_storage.size());
+          newTask->setEventName(description);
+          newTask->setStartDate(_startDate);
+          newTask->setEndDate(_endDate);
+          newTask->setPriority(priority);
+          newTask->setCategory(category);
+        bufferStorage.push_back(*newTask);
+
+      }
+      return bufferStorage;
+}
+
+// END OF EXTRA CODE
+

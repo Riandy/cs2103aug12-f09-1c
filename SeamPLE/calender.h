@@ -87,5 +87,20 @@ public:
     void SortByDate();
     vector<task> SortByCategory();
     string convertToDate(tm _date);
+
+
+
+
+
+
+
+
+
+
+
+
+    // EXTRA CODE TO BE REMOVED
+    vector<task> rickRoll();
+    // END OF EXTRA CODE TO BE REMOVED
 };
 #endif
