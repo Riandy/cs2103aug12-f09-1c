@@ -39,23 +39,23 @@ const string Intellisense::WEEKLY = "weekly";
 const string Intellisense::MONTHLY = "monthly";
 const string Intellisense::FORTNIGHTLY = "fortnightly";
 
-const string Intellisense::ADDFEEDBACK_1 = "eg. add baby Birthday Preparation 24 Aug #family";
-const string Intellisense::ADDFEEDBACK_2 = "eg. Add baby birthday 24 aug";
-const string Intellisense::EDITFEEDBACK_1 = "eg. edit homework #HIGH";
-const string Intellisense::EDITFEEDBACK_2= "eg. edit homework #HIGH";
-const string Intellisense::DELFEEDBACK_1= "eg. del 3";
-const string Intellisense::DELFEEDBACK_2= "eg. del 3";
+const string Intellisense::ADDFEEDBACK_1 = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
+const string Intellisense::ADDFEEDBACK_2 = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
+const string Intellisense::EDITFEEDBACK_1 = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
+const string Intellisense::EDITFEEDBACK_2 = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
+const string Intellisense::DELFEEDBACK_1= "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
+const string Intellisense::DELFEEDBACK_2= "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
 const string Intellisense::EXITFEEDBACK_1= " Are you sure you want to exit?";
-const string Intellisense::DISPLAYFEEDBACK_1= "eg. display #category";
-const string Intellisense::DISPLAYFEEDBACK_2= "eg. display #category";
-const string Intellisense::FINDFEEDBACK_1= "eg. find birthday";
-const string Intellisense::FINDFEEDBACK_2="eg. find birthday";
-const string Intellisense::SORTFEEDBACK_1="eg. The Events Will be Sorted By Date";
-const string Intellisense::SORTFEEDBACK_2="eg. The Events Will be Sorted By Date";
+const string Intellisense::DISPLAYFEEDBACK_1= "Display will show all events. Press Enter to continue.";
+const string Intellisense::DISPLAYFEEDBACK_2= "Display will show all events. Press Enter to continue.";
+const string Intellisense::FINDFEEDBACK_1= "eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
+const string Intellisense::FINDFEEDBACK_2="eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
+const string Intellisense::SORTFEEDBACK_1=" The Events Will be Sorted By Date";
+const string Intellisense::SORTFEEDBACK_2=" The Events Will be Sorted By Date";
 const string Intellisense::REDOFEEDBACK_1="Press enter to redo your last operation";
 const string Intellisense::UNDOFEEDBACK_1="Press enter to undo your last operation";
-const string Intellisense::MARKFEEDBACK_1="eg. mark today";
-const string Intellisense::MARKFEEDBACK_2="eg. mark today";
+const string Intellisense::MARKFEEDBACK_1="eg. mark  Dinner with Myat";
+const string Intellisense::MARKFEEDBACK_2="eg. mark  Dinner with Myat";
 
 const  string Intellisense::GREENEVENTTEXT = "<font color=Chartreuse >[EventNAME] </font>";
 const  string Intellisense::REDEVENTTEXT  = "<font color=Salmon >[EventNAME] </font>";
@@ -1509,8 +1509,7 @@ bool Intellisense::isValidParaForCmd(int cmd,int parameter)
     }
     if (cmd == DISPLAY)
     {
-        if (parameter == INAME ||  parameter == ICATEGORY )
-            valid =true;
+         valid =false;
     }
     if (cmd == MARK)
     {

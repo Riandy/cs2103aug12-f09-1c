@@ -7,9 +7,9 @@ static string MESSAGE_ADD_FAILURE = "Your event was not added successfully";
 static string MESSAGE_DELETE_SUCCESS = "Your event was deleted successfully";
 static string MESSAGE_EDIT_SUCCESS = "Your event was edited successfully";
 static string MESSAGE_UNDO_SUCCESS = "Undo operation was successful";
-static string MESSAGE_UNDO_FAILURE = "There is nothing to undo";
+static string MESSAGE_UNDO_FAILURE = "There is nothing to undo.";
 static string MESSAGE_REDO_SUCCESS = "Redo operation was successful";
-static string MESSAGE_REDO_FAILURE = "There is nothing to redo";
+static string MESSAGE_REDO_FAILURE = "There is nothing to redo.";
 static string MESSAGE_GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
 static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date";
 
