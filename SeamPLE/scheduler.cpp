@@ -442,7 +442,35 @@ void scheduler::updateGUI()
 void scheduler::partialUpdateGUI(vector<task> taskVector)
 {
     updateResultFound(taskVector.size());
-    updateGUI();
+    int vectorSize = taskVector.size();
+    for (int i = 0; i < vectorSize; i++)
+
+    {
+        string _startDate,_endDate;
+        if(isTimeZero(taskVector[i].getStartDate()))
+            _startDate="-";
+        else
+            _startDate = convertToDate(taskVector[i].getStartDate());
+
+        if(isTimeZero(taskVector[i].getEndDate()))
+            _endDate="-";
+        else
+            _endDate = convertToDate(taskVector[i].getEndDate());
+
+        ostringstream convert;
+        //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
+        convert << i+1;//i added this as a temporary replacement for the id above,remove this when u updated ur code
+        string id= convert.str();
+        _result.push_back(id);
+        _result.push_back(taskVector.at(i).getEventName());
+        _result.push_back(_startDate);
+        _result.push_back(_endDate);
+        _result.push_back(taskVector.at(i).getPriority());
+        _result.push_back(taskVector.at(i).getCategory());
+    }
+    //decision to either view in standard or simple view
+    if (vectorSize!=0)
+        _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
 }
 
 void scheduler::updateResultFound(int size)
