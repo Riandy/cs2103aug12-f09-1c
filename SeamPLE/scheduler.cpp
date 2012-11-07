@@ -372,8 +372,33 @@ string scheduler::convertToDate(tm _date)
 {
     string _result;
     ostringstream convert;
-    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
-    convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
+    if(_date.tm_mday<10)
+        convert<<"0"<<_date.tm_mday<<" / ";
+    else
+        convert<<_date.tm_mday<<" / ";
+
+    if(_date.tm_mon<10)
+        convert<<"0"<<_date.tm_mon<<" / ";
+    else
+        convert<<_date.tm_mon<<" / ";
+
+    convert<< _date.tm_year << " - " ;
+
+    if(_date.tm_hour<10)
+        convert<<"0"<<_date.tm_hour<< " : ";
+    else
+        convert<<_date.tm_hour<< " : ";
+
+    if(_date.tm_min<10)
+        convert<<"0"<<_date.tm_min<< " : ";
+    else
+        convert<<_date.tm_min<< " : ";
+
+    if(_date.tm_sec<10)
+        convert<<"0"<<_date.tm_sec;
+    else
+        convert<<_date.tm_sec;
+
     _result=convert.str();
     return _result;
 }
@@ -387,16 +412,15 @@ void scheduler::updateGUI()
     for (int i = 0; i < vectorSize; i++)
     {
         string _startDate,_endDate;
-        if(isFloatingTask(taskVector[i]))
-        {
+        if(isTimeZero(taskVector[i].getStartDate()))
             _startDate="-";
-            _endDate="-";
-        }
         else
-        {
             _startDate = convertToDate(taskVector[i].getStartDate());
+
+        if(isTimeZero(taskVector[i].getEndDate()))
+            _endDate="-";
+        else
             _endDate = convertToDate(taskVector[i].getEndDate());
-        }
 
         ostringstream convert;
         //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
@@ -435,9 +459,9 @@ void scheduler::printMessage(string _messageType)
     _result.push_back(_messageType);
 }
 
-bool scheduler::isFloatingTask(task task1)
+bool scheduler::isTimeZero(tm time)
 {
-    if(task1.getCategory()=="F10AT")
+    if(time.tm_hour==0 && time.tm_mday==0 && time.tm_min==0 && time.tm_mon==0 && time.tm_sec==0 && time.tm_year==0)
         return true;
     else
         return false;

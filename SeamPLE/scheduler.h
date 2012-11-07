@@ -30,7 +30,7 @@ private:
     int daysMonth(int year, int month);
     void printMessage(string _messageType);
     void partialUpdateGUI(vector<task> taskVector);
-    bool isFloatingTask(task task1);
+    bool isTimeZero(tm time);
 
 
 public:
