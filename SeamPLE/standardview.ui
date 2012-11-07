@@ -135,7 +135,7 @@ p, li { white-space: pre-wrap; }
      </property>
      <property name="font">
       <font>
-       <family>MV Boli</family>
+       <family>Gill Sans Ultra Bold Condensed</family>
        <pointsize>9</pointsize>
       </font>
      </property>
@@ -3178,9 +3178,6 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </widget>
-       <zorder>frame_18</zorder>
-       <zorder>frame_14</zorder>
-       <zorder>frame_22</zorder>
       </widget>
      </widget>
     </widget>
