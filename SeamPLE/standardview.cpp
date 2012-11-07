@@ -659,11 +659,20 @@ void StandardView:: displayTableExpanded()
 
     while (stillInResultsRange && stillInNotesRange)
     {
-        QString result = _tableItems.output[(i*6)+1]+"<br>"+
-                "<br>"+_tableItems.output[(i*6)]+"<br>"+
-                "<br>"+_tableItems.output[(i*6)+2]+"<br>"+
-                "<br>"+_tableItems.output[(i*6)+3]+"<br>"+
-                "<br>"+_tableItems.output[(i*6)+4];
+        QString result =
+                "<b>Event Name:</b><br>"+
+                _tableItems.output[(i*6)+1]+
+                "<br><br><b>Event ID:</b><br>"+
+                _tableItems.output[(i*6)]+
+                "<br><br><b>Category:</b><br>"+
+                _tableItems.output[(i*6)+5]+
+                "<br><br><b>Start Date:</b><br>"+
+                _tableItems.output[(i*6)+2]+
+                "<br><br><b>End Date:</b><br>"+
+                _tableItems.output[(i*6)+3]+
+                "<br><br><b>Priority:</b><br>"+
+                _tableItems.output[(i*6)+4];
+
         showTableExpandedNotes(i-_tableItems.currentIndex,result);
 
         i++;
