@@ -312,7 +312,7 @@ bool calender::loadFile(char* fileName)
 
     string temp,description,priority,category;
     char space;
-
+    char *dateType;
     string startDate,endDate;
     //variable temp is used to read unecessary string/ character
 
@@ -360,6 +360,10 @@ bool calender::loadFile(char* fileName)
 
         readFile>>temp;
         readFile>>temp;
+        readFile>>*dateType;
+
+        readFile>>temp;
+        readFile>>temp;
         readFile>>priority;
 
         readFile>>temp;
@@ -371,6 +375,7 @@ bool calender::loadFile(char* fileName)
         newTask->setEventName(description);
         newTask->setStartDate(_startDate);
         newTask->setEndDate(_endDate);
+        newTask->setDateType(atoi(dateType));
         newTask->setPriority(priority);
         newTask->setCategory(category);
         _storage.push_back(*newTask);

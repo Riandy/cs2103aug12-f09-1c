@@ -19,7 +19,7 @@ private:
     string _category;
     int dateType;
     int _id;
-
+    string convertInt(int number);
 
 
 public:
