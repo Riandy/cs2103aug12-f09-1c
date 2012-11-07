@@ -237,8 +237,11 @@
       </property>
       <property name="font">
        <font>
-        <family>MV Boli</family>
+        <family>Gill Sans Ultra Bold Condensed</family>
         <pointsize>9</pointsize>
+        <weight>50</weight>
+        <italic>true</italic>
+        <bold>false</bold>
        </font>
       </property>
       <property name="styleSheet">

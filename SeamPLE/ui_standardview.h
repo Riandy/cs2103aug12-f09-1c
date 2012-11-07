@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'standardview.ui'
+** Form generated from reading UI file 'StandardView.ui'
 **
-** Created: Wed Nov 7 18:28:42 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Wed 7. Nov 22:11:22 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -232,7 +232,7 @@ public:
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(49, 98, 701, 41));
         QFont font2;
-        font2.setFamily(QString::fromUtf8("MV Boli"));
+        font2.setFamily(QString::fromUtf8("Gill Sans Ultra Bold Condensed"));
         font2.setPointSize(9);
         label->setFont(font2);
         label->setStyleSheet(QString::fromUtf8("#label_2\n"
@@ -1137,9 +1137,6 @@ public:
 "{\n"
 "	background-image: url(:/bg/Date Slip.gif)\n"
 "}"));
-        frame_18->raise();
-        frame_14->raise();
-        frame_22->raise();
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(-10, -4, 821, 51));
