@@ -106,19 +106,21 @@ bool calender::checkNameExists(string _name)
 
 bool calender::deleteItem(int taskID)
 {
-    if (taskID == 9999) // change this to ALL later, debugging tool
-    {
-        writeBackupFile();
-        _storage.clear();
-        saveHistory(_DELETEALL);
 
-    }
-    else
-    {
     saveHistory(_DELETE);
     saveDeletedTask(taskID-1);
     _storage.erase(_storage.begin()+taskID-1);
-    }
+
+    writeFile();
+    return true;
+
+}
+
+bool calender::deleteAll()
+{
+    writeBackupFile();
+    _storage.clear();
+    saveHistory(_DELETEALL);
     writeFile();
     return true;
 
@@ -283,6 +285,7 @@ vector<task> calender::SearchByPartialTask(string searchItem)
     return _bufferStorage;
 }
 
+
 int calender::getTaskID(string searchItem)
 {
     int taskID = NOTFOUND;
@@ -312,7 +315,7 @@ bool calender::loadFile(char* fileName)
 
     string temp,description,priority,category;
     char space;
-    char *dateType;
+    char * dateType;
     string startDate,endDate;
     //variable temp is used to read unecessary string/ character
 
@@ -360,6 +363,8 @@ bool calender::loadFile(char* fileName)
 
         readFile>>temp;
         readFile>>temp;
+
+
         readFile>>*dateType;
 
         readFile>>temp;
@@ -431,8 +436,11 @@ bool calender::undoAction()
         }
         else if (lastCommand == _DELETEALL)
         {
+    ;
             loadFile(BACKUP_FILENAME);
+
             remove(BACKUP_FILENAME);
+
             _undoHistory.push(_DELETEALL);
         }
         else
@@ -508,7 +516,7 @@ bool calender::redoAction()
 }
 
 
-vector<task> calender::SearchByDate(string todayDate)
+vector<task> calender::SearchByDate(string searchDate)
 {
 
     vector<task> _bufferStorage;
@@ -520,7 +528,7 @@ vector<task> calender::SearchByDate(string todayDate)
         convert<< _date.tm_mday << "-" << _date.tm_mon << "-" << _date.tm_year;
         bufferDate=convert.str();
 
-        if(todayDate==bufferDate)
+        if(searchDate==bufferDate)
             _bufferStorage.push_back(_storage[i]);
     }
     return _bufferStorage;
