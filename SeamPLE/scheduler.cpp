@@ -98,26 +98,29 @@ vector<string> scheduler::executeCommand(Action newAction)
     {
         //delete by ID
         ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
-        if(eventCalender.checkID(newTask.getID()) || (newTask.getID() == 9999))
+        if (newTask.getEventName() == "all")
+        {
+             eventCalender.deleteAll();
+            printMessage(MESSAGE_DELETE_SUCCESS);
+        }
+        else if(eventCalender.checkID(newTask.getID()))
         {
             eventCalender.deleteItem(newTask.getID());
             printMessage(MESSAGE_DELETE_SUCCESS);
-            updateGUI();
         }
 
         //delete by event name
         else if(newTask.getEventName()!="-" && eventCalender.deleteItem(newTask.getEventName()))
         {
             printMessage(MESSAGE_DELETE_SUCCESS);
-            updateGUI();
         }
 
         //error handling
         else
         {
             printMessage(MESSAGE_ERROR_NOT_FOUND);
-            updateGUI();
         }
+        updateGUI();
     }
 
 
@@ -164,6 +167,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 
     else if(command=="FIND")
     {
+        string _dateString = eventCalender.convertToDate(newTask.getStartDate());
         //case 1: search by category
         if(newTask.getCategory()!="#")
         {
@@ -175,6 +179,11 @@ vector<string> scheduler::executeCommand(Action newAction)
         else if (newTask.getEventName()!="")
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
+            partialUpdateGUI(taskVector);
+        }
+         else if (_dateString != "0 / 0 / 0 - 0 : 0 : 0")
+        {
+            taskVector = eventCalender.SearchByDate(_dateString);
             partialUpdateGUI(taskVector);
         }
         else

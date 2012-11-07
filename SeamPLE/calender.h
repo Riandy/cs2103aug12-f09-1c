@@ -75,11 +75,13 @@ public:
     bool editTask(task _edited);
     bool undoAction();
     bool redoAction();
+    bool deleteAll();
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
     vector<task> SearchByPartialTask(string searchItem);
+
     task* pointerSearchByTask(string searchItem);
-    vector<task> SearchByDate(string todayDate);
+    vector<task> SearchByDate(string searchDate);
 
     vector<task> displayDatabase();
     vector<task> getToday();
