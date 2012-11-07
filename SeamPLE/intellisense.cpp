@@ -55,23 +55,23 @@ const string Intellisense::MARKFEEDBACK_1="eg. mark today";
 const string Intellisense::MARKFEEDBACK_2="eg. mark today";
 
 const  string Intellisense::GREENEVENTTEXT = "<font color=Chartreuse >[EventNAME] </font>";
-const  string Intellisense::REDEVENTTEXT  = "<font color=DarkRed >[EventNAME] </font>";
+const  string Intellisense::REDEVENTTEXT  = "<font color=Salmon >[EventNAME] </font>";
 
 const  string Intellisense::GREENSTARTDATETEXT = "<font color=Chartreuse>[StartDate] </font>" ;
-const  string Intellisense::REDSTARTDATETEXT = "<font color=DarkRed >[StartDate] </font>";
+const  string Intellisense::REDSTARTDATETEXT = "<font color=Salmon   >[StartDate] </font>";
 
 const  string Intellisense::GREENENDDATETEXT = "<font color=Chartreuse>[EndDate] </font>";
-const  string Intellisense::REDENDDATETEXT = "<font color=DarkRed >[EndDate] </font>";
+const  string Intellisense::REDENDDATETEXT = "<font color=Salmon  >[EndDate] </font>";
 
 const  string Intellisense::GREENPRIORITYTEXT = "<font color=Chartreuse>[PRIORITY] </font>";
-const  string Intellisense::REDPRIORITYTEXT = "<font color=DarkRed>[PRIORITY] </font>";
+const  string Intellisense::REDPRIORITYTEXT = "<font color=Salmon>[PRIORITY] </font>";
 
 
 const  string Intellisense::GREENCATEGORYTEXT = "<font color=Chartreuse>[CATEGORY] </font>";
-const  string Intellisense::REDCATEGORYTEXT = "<font color=DarkRed >[CATEGORY] </font>";
+const  string Intellisense::REDCATEGORYTEXT = "<font color=Salmon >[CATEGORY] </font>";
 
 const  string Intellisense::GREENIDTEXT = "<font color=Chartreuse>[ID] </font>";
-const  string Intellisense::REDIDTEXT = "<font color=DarkRed>[ID] </font>";
+const  string Intellisense::REDIDTEXT = "<font color=Salmon>[ID] </font>";
 
 const char Intellisense::CATEGORYRECOGNISER = '#' ;
 
