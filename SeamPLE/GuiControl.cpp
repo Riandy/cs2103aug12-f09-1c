@@ -438,7 +438,7 @@ void GuiControl:: createSystemTrayIconIfPossible() throw (string)
     if (QSystemTrayIcon::isSystemTrayAvailable())
     {
         _notifyInterface = _notifyInterface->getInstance();
-        _notifyInterface->showMessage("SeamPLE", "Welcome to Seample. Press \"F1\" for help menu.", QSystemTrayIcon::Information);
+        //_notifyInterface->showMessage("SeamPLE", "Welcome to Seample. Press \"F1\" for help menu.", QSystemTrayIcon::Information);
     }
     else
     {

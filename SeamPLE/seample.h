@@ -12,7 +12,12 @@
 
 
 
-class GuiControl;
+enum Command
+{
+    TO_INTELLISENSE,
+    TO_SCHEDULER_AND_RETURN_RESULTS,
+    TO_SCHEDULER_AND_RETURN_TODAY_EVENTS
+};
 
 
 class Seample
