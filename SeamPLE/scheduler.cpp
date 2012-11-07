@@ -386,9 +386,17 @@ void scheduler::updateGUI()
     int vectorSize = taskVector.size();
     for (int i = 0; i < vectorSize; i++)
     {
-        //testing
-        string _startDate = convertToDate(taskVector[i].getStartDate());
-        string _endDate = convertToDate(taskVector[i].getEndDate());
+        string _startDate,_endDate;
+        if(isFloatingTask(taskVector[i]))
+        {
+            _startDate="-";
+            _endDate="-";
+        }
+        else
+        {
+            _startDate = convertToDate(taskVector[i].getStartDate());
+            _endDate = convertToDate(taskVector[i].getEndDate());
+        }
 
         ostringstream convert;
         //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
@@ -410,28 +418,7 @@ void scheduler::updateGUI()
 void scheduler::partialUpdateGUI(vector<task> taskVector)
 {
     updateResultFound(taskVector.size());
-    int vectorSize = taskVector.size();
-    for (int i = 0; i < vectorSize; i++)
-
-    {
-        //testing
-        string _startDate = convertToDate(taskVector[i].getStartDate());
-        string _endDate = convertToDate(taskVector[i].getEndDate());
-
-        ostringstream convert;
-        //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
-        convert << i+1;//i added this as a temporary replacement for the id above,remove this when u updated ur code
-        string id= convert.str();
-        _result.push_back(id);
-        _result.push_back(taskVector.at(i).getEventName());
-        _result.push_back(_startDate);
-        _result.push_back(_endDate);
-        _result.push_back(taskVector.at(i).getPriority());
-        _result.push_back(taskVector.at(i).getCategory());
-    }
-    //decision to either view in standard or simple view
-    if (vectorSize!=0)
-        _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+    updateGUI();
 }
 
 void scheduler::updateResultFound(int size)
@@ -448,4 +435,10 @@ void scheduler::printMessage(string _messageType)
     _result.push_back(_messageType);
 }
 
-
+bool scheduler::isFloatingTask(task task1)
+{
+    if(task1.getCategory()=="F10AT")
+        return true;
+    else
+        return false;
+}
