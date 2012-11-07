@@ -659,12 +659,11 @@ void StandardView:: displayTableExpanded()
 
     while (stillInResultsRange && stillInNotesRange)
     {
-        QString result = " "+_tableItems.output[(i*6)]+
-                "<br>"+_tableItems.output[(i*6)+1]+
-                "<br>"+_tableItems.output[(i*6)+2]+
-                "<br>"+_tableItems.output[(i*6)+3]+
-                "<br>"+_tableItems.output[(i*6)+4]+
-                "<br>"+_tableItems.output[(i*6)+5];
+        QString result = _tableItems.output[(i*6)+1]+"<br>"+
+                "<br>"+_tableItems.output[(i*6)]+"<br>"+
+                "<br>"+_tableItems.output[(i*6)+2]+"<br>"+
+                "<br>"+_tableItems.output[(i*6)+3]+"<br>"+
+                "<br>"+_tableItems.output[(i*6)+4];
         showTableExpandedNotes(i-_tableItems.currentIndex,result);
 
         i++;
