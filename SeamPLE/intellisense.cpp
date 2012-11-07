@@ -54,24 +54,24 @@ const string Intellisense::UNDOFEEDBACK_1="Press enter to undo your last operati
 const string Intellisense::MARKFEEDBACK_1="eg. mark today";
 const string Intellisense::MARKFEEDBACK_2="eg. mark today";
 
-const  string Intellisense::GREENEVENTTEXT = "<font color=green>[EventNAME] </font>";
-const  string Intellisense::REDEVENTTEXT  = "<font color=red>[EventNAME] </font>";
+const  string Intellisense::GREENEVENTTEXT = "<font color=Chartreuse >[EventNAME] </font>";
+const  string Intellisense::REDEVENTTEXT  = "<font color=DarkRed >[EventNAME] </font>";
 
-const  string Intellisense::GREENSTARTDATETEXT = "<font color=green>[StartDate] </font>" ;
-const  string Intellisense::REDSTARTDATETEXT = "<font color=red>[StartDate] </font>";
+const  string Intellisense::GREENSTARTDATETEXT = "<font color=Chartreuse>[StartDate] </font>" ;
+const  string Intellisense::REDSTARTDATETEXT = "<font color=DarkRed >[StartDate] </font>";
 
-const  string Intellisense::GREENENDDATETEXT = "<font color=green>[EndDate] </font>";
-const  string Intellisense::REDENDDATETEXT = "<font color=red>[EndDate] </font>";
+const  string Intellisense::GREENENDDATETEXT = "<font color=Chartreuse>[EndDate] </font>";
+const  string Intellisense::REDENDDATETEXT = "<font color=DarkRed >[EndDate] </font>";
 
-const  string Intellisense::GREENPRIORITYTEXT = "<font color=green>[PRIORITY] </font>";
-const  string Intellisense::REDPRIORITYTEXT = "<font color=red>[PRIORITY] </font>";
+const  string Intellisense::GREENPRIORITYTEXT = "<font color=Chartreuse>[PRIORITY] </font>";
+const  string Intellisense::REDPRIORITYTEXT = "<font color=DarkRed>[PRIORITY] </font>";
 
 
-const  string Intellisense::GREENCATEGORYTEXT = "<font color=green>[CATEGORY] </font>";
-const  string Intellisense::REDCATEGORYTEXT = "<font color=red>[CATEGORY] </font>";
+const  string Intellisense::GREENCATEGORYTEXT = "<font color=Chartreuse>[CATEGORY] </font>";
+const  string Intellisense::REDCATEGORYTEXT = "<font color=DarkRed >[CATEGORY] </font>";
 
-const  string Intellisense::GREENIDTEXT = "<font color=green>[ID] </font>";
-const  string Intellisense::REDIDTEXT = "<font color=red>[ID] </font>";
+const  string Intellisense::GREENIDTEXT = "<font color=Chartreuse>[ID] </font>";
+const  string Intellisense::REDIDTEXT = "<font color=DarkRed>[ID] </font>";
 
 const char Intellisense::CATEGORYRECOGNISER = '#' ;
 
@@ -1505,7 +1505,7 @@ bool Intellisense::isValidParaForCmd(int cmd,int parameter)
     }
     if (cmd == FIND)
     {
-        if (parameter == INAME ||  parameter == ICATEGORY )
+        if (parameter == INAME ||  parameter == ICATEGORY ||  parameter == IDATE)
             valid =true;
     }
     if (cmd == EDIT)
