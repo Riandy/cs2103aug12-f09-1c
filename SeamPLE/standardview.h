@@ -54,9 +54,7 @@ public:
 
     void instantiateTable(QVector <QString> output) throw (string);
 
-    void resetTableContents();
-
-    void resetTableExpandedContents();
+    void resetAllTablesContents();
 
     void show();
 
@@ -118,6 +116,10 @@ public slots:
     void helpTriggered();
 
 private:
+    void resetTableContents();
+
+    void resetTableExpandedContents();
+
     void resetTableNumber();
 
     void resetTableName();
