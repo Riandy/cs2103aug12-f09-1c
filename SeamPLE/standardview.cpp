@@ -29,10 +29,9 @@ StandardView::StandardView(QWidget *parent):
     //from input line
     ui->pushButton_2->setFocusPolicy(Qt::NoFocus);
 
-    resetTableContents();
+    resetAllTablesContents();
     _resultsTableViewExpanded = false;
-    _tableItems.currentIndex = 0;
-    _tableItems.endIndex = 0;
+
     setStartView();
     _currentlyChanging = false;
     _currentlySliding = false;
@@ -136,22 +135,13 @@ void StandardView:: instantiateTable(QVector <QString> output) throw (string)
     displayTableResults();
 }
 
-//Remove all dynamically allocated memory given to table widget
-void StandardView:: resetTableContents()
+void StandardView::resetAllTablesContents()
 {
-    resetTableNumber();
-    resetTableName();
-    resetTableStartDate();
-    resetTableEndDate();
-    hideTableAllPriority();
-    informNoDisplayResults();
-}
-
-void StandardView:: resetTableExpandedContents()
-{
-    resetTableExpandedNotes();
-    resetTableExpandedCounter();
-    informNoDisplayResults();
+    resetTableContents();
+    resetTableExpandedContents();
+    _tableItems.output.clear();
+    _tableItems.currentIndex = 0;
+    _tableItems.endIndex = 0;
 }
 
 void StandardView::show()
@@ -379,6 +369,23 @@ void StandardView::screenThreeTriggered()
 void StandardView::helpTriggered()
 {
     showViewWithType(HELP_VIEW);
+}
+
+void StandardView:: resetTableContents()
+{
+    resetTableNumber();
+    resetTableName();
+    resetTableStartDate();
+    resetTableEndDate();
+    hideTableAllPriority();
+    informNoDisplayResults();
+}
+
+void StandardView:: resetTableExpandedContents()
+{
+    resetTableExpandedNotes();
+    resetTableExpandedCounter();
+    informNoDisplayResults();
 }
 
 void StandardView::resetTableNumber()
