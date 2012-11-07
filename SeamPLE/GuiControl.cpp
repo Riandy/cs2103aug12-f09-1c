@@ -4,9 +4,9 @@
 GuiControl* GuiControl::_guiControl = NULL;
 
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
-        "<font size=3 face=\"MV Boli\" color = \"orange\">"
+        "<font size=3 face=\"Gill Sans Ultra Bold Condensed\" color = \"orange\">"
         "Available Commands: add, delete, mark, unmark, "
-        "edit and find</font>";
+        "edit,<br>      find, undo, redo , display </font>";
 const QString GuiControl:: MESSAGE_INTELLISENSE_INVALID_RETURN =
         "INTELLISENSE IS NOT WORKING";
 const QString GuiControl:: MESSAGE_INVALID_COLOUR_FLAG_RETURN =
