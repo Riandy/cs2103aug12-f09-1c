@@ -1084,7 +1084,6 @@ Action Intellisense::markOperation(vector<string>& tokens)
     currentCommand = MARK;
     Action task;
     task.setCommand(getCommand(tokens,"MARK"));
-    task.setStartDate(getDate(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkMarkReq();
@@ -1143,10 +1142,10 @@ Action Intellisense::todayOperation(vector<string>& tokens)
 
 Action Intellisense::todoOperation(vector<string>& tokens)
 {
-    currentCommand = FIND;
+    currentCommand = TODO;
     Action task;
-    task.setCommand("FIND");
-    task.setCategory("F10AT");
+    task.setCommand("TODO");
+    task.setDateType(4);
     setAllStatusFlag(task);
     return task;
 }
@@ -1740,7 +1739,7 @@ void Intellisense::smartAutoFill(Action &task)
     if (isDateNotentered(task))
     {//we identify this task as a floating task since no date is stated
 
-        task.setCategory("F10AT");
+        task.setDateType(4);
         task.setStartDate(emptyDate);
         task.setEndDate(emptyDate);
 
@@ -1749,7 +1748,7 @@ void Intellisense::smartAutoFill(Action &task)
     if (isDateOver(task))
     {//we identify this task as a floating task since no date is stated
 
-        task.setCategory("F10AT");
+        task.setDateType(4);
         task.setStartDate(emptyDate);
         task.setEndDate(emptyDate);
 
