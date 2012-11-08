@@ -1,5 +1,21 @@
 #include "timekeeper.h"
-#include <QDebug>
+
+const string Timekeeper:: MESSAGE_TITLE =
+        "SeamPLE";
+const string Timekeeper:: MESSAGE_CORNER_BRACE =
+        "\"";
+const string Timekeeper:: MESSAGE_EXPIRED =
+        " has expired!";
+const string Timekeeper:: MESSAGE_STARTED =
+        " has started!";
+const string Timekeeper:: MESSAGE_END_TEN_MINS =
+        " will expire in 10 minutes.";
+const string Timekeeper:: MESSAGE_END_THIRTY_MINS =
+        " will expire in 30 minutes.";
+const string Timekeeper:: MESSAGE_START_TEN_MINS =
+        " will start in 10 minutes.";
+const string Timekeeper:: MESSAGE_START_THIRTY_MINS =
+        " will start in 30 minutes.";
 
 Timekeeper::Timekeeper()
 {
@@ -75,7 +91,7 @@ void Timekeeper:: getEventForPopUp()
                 //that start 30 mins later.
                 else
                 {
-                    countMinutesLater(hour, min,30);
+                    countMinutesLater(hour, min, 20);
                     result = _scheduler->getEventNameForEnd(hour,min);
                     if (isAppropriate(result))
                     {
@@ -129,7 +145,9 @@ void Timekeeper::displayToTrayIcon(string message)
 {
     if (_popUp != NULL && isAppropriate(message))
     {
-        _popUp->showMessage("SeamPLE",QString::fromStdString(message),QSystemTrayIcon::Information);
+        _popUp->showMessage(QString::fromStdString(MESSAGE_TITLE),
+                            QString::fromStdString(message),
+                            QSystemTrayIcon::Information);
     }
 }
 
@@ -143,27 +161,33 @@ void Timekeeper::evaluateResults (string result, int flag)
     switch (flag)
     {
         case 0:
-            result = "\""+result+"\""+" has expired!";
+            result = MESSAGE_CORNER_BRACE+result+MESSAGE_CORNER_BRACE+
+                    MESSAGE_EXPIRED;
             break;
 
         case 1:
-            result = "\""+result+"\""+" has started!";
+            result = MESSAGE_CORNER_BRACE+result+MESSAGE_CORNER_BRACE+
+                    MESSAGE_STARTED;
             break;
 
         case 2:
-            result = "\""+result+"\""+" will expire in 10 minutes.";
+            result = MESSAGE_CORNER_BRACE+result+MESSAGE_CORNER_BRACE+
+                    MESSAGE_END_TEN_MINS;
             break;
 
         case 3:
-            result = "\""+result+"\""+" will start in 10 minutes.";
+            result = MESSAGE_CORNER_BRACE+result+MESSAGE_CORNER_BRACE+
+                    MESSAGE_START_TEN_MINS;
             break;
 
         case 4:
-            result = "\""+result+"\""+" will expire in 30 minutes.";
+            result = MESSAGE_CORNER_BRACE+result+MESSAGE_CORNER_BRACE+
+                    MESSAGE_END_THIRTY_MINS;
             break;
 
         case 5:
-            result = "\""+result+"\""+" will start in 30 minutes.";
+            result = MESSAGE_CORNER_BRACE+result+MESSAGE_CORNER_BRACE+
+                    MESSAGE_START_THIRTY_MINS;
             break;
 
         default:

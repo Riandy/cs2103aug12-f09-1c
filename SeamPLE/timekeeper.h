@@ -13,6 +13,17 @@ class Timekeeper: public QObject
 {
     Q_OBJECT
 
+private:
+    const static string MESSAGE_TITLE;
+    const static string MESSAGE_CORNER_BRACE;
+    const static string MESSAGE_EXPIRED;
+    const static string MESSAGE_STARTED;
+    const static string MESSAGE_END_TEN_MINS;
+    const static string MESSAGE_END_THIRTY_MINS;
+    const static string MESSAGE_START_TEN_MINS;
+    const static string MESSAGE_START_THIRTY_MINS;
+
+
 public:
     Timekeeper();
     ~Timekeeper();

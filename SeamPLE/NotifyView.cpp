@@ -7,8 +7,8 @@ NotifyView::NotifyView()
 {
     _popUp = new QSystemTrayIcon();
     _popUp->setIcon(QIcon(QPixmap(":/bg/pin icon.gif")));
-    _popUp->show();
     _popUp->setToolTip("SeamPLE");
+    _popUp->show();
 }
 
 NotifyView::~NotifyView()
@@ -46,7 +46,6 @@ void NotifyView::endInstance()
 {
     if (singleInstanceExists())
     {
-        _popUp->setVisible(false);
         delete _notificationInterface;
         _notificationInterface = NULL;
     }
@@ -56,6 +55,7 @@ void NotifyView::showMessage(QString title, QString message, QSystemTrayIcon::Me
 {
     if (singleInstanceExists())
     {
+        _popUp->show();
         _popUp->showMessage(title, message, icon, 10000);
     }
 }

@@ -268,10 +268,6 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
-vector<string> scheduler:: getEventOverview()
-{
-    return getTodayEvents();
-}
 
 int scheduler::daysMonth(int year, int month)
 {
@@ -445,6 +441,58 @@ string scheduler::getEventNameForStart(int hour, int min)
     return feedbackMessage.str();
 }
 
+//Function returns a summary of the events occuring today
+vector<string> scheduler:: getTodayEvents()
+{
+    vector<task> taskList = eventCalender.getToday();
+    int size = taskList.size();
+    vector<task> firstPriority;
+    bool firstPriorityFound = false;
+    int threeCountFlag = 0;
+    vector<task> threeTasks;
+    int highPriorityTasks = 0;
+
+    for (int i = 0; i < size ; i++)
+    {
+        if (taskList[i].getPriority() == "HIGH")
+        {
+            highPriorityTasks++;
+        }
+
+        if (!firstPriorityFound && taskList[i].getPriority() == "HIGH")
+        {
+            firstPriorityFound = true;
+            firstPriority.push_back(taskList[i]);
+        }
+        else if (threeCountFlag < 3)
+        {
+            threeCountFlag++;
+            threeTasks.push_back(taskList[i]);
+        }
+    }
+
+    vector<string> eventsOverview;
+    eventsOverview.push_back(getStringFromInt(size));
+    eventsOverview.push_back(getStringFromInt(highPriorityTasks));
+    if (firstPriorityFound)
+    {
+        partialUpdateGUI(firstPriority);
+        _result.erase(_result.begin());
+        _result.erase(_result.end());
+        eventsOverview = combineStringVectors(eventsOverview,_result);
+    }
+    if (threeCountFlag != 0)
+    {
+        _result.clear();
+        partialUpdateGUI(threeTasks);
+        _result.erase(_result.begin());
+        _result.erase(_result.end());
+        eventsOverview = combineStringVectors(eventsOverview,_result);
+    }
+
+    return eventsOverview;
+}
+
 task scheduler::processAction(Action newAction)
 {
     taskVector.clear();
@@ -564,29 +612,7 @@ void scheduler::partialUpdateGUI(vector<task> taskVector)
         _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
 }
 
-//Function returns a summary of the events occuring today
-vector<string> scheduler:: getTodayEvents()
-{
-    taskVector = eventCalender.getToday();
-    bool firstPriorityFound = false;
-    stringstream buffer;
-    int size = taskVector.size();
-    int highPriorityTasks = 0;
-    for (int i = 0; i < size ; i++)
-    {
-        if (!firstPriorityFound && taskVector[i].getPriority() == "HIGH")
-        {
-            firstPriorityFound = true;
-        }
 
-        if (taskVector[i].getPriority() == "HIGH")
-        {
-            highPriorityTasks++;
-        }
-    }
-
-    return _result;
-}
 
 void scheduler::updateResultFound(int size)
 {
@@ -608,4 +634,28 @@ bool scheduler::isTimeZero(tm time)
         return true;
     else
         return false;
+}
+
+//Take the content of both vectors and return as a single
+//vector of strings
+vector<string> scheduler:: combineStringVectors(
+        vector<string> first, vector<string> second)
+{
+    vector<string> combined = first;
+
+    int size = second.size();
+    for (int i = 0; i < size ;i++)
+    {
+        combined.push_back(second[i]);
+    }
+
+    return combined;
+}
+
+//Get a string conversion from the integer that is sent in as the parameter
+string scheduler:: getStringFromInt(int subject)
+{
+    stringstream buffer;
+    buffer << subject;
+    return buffer.str();
 }

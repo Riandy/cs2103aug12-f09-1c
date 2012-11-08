@@ -137,6 +137,10 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
         DisplayEvent(response);//for debugging info only
 
     }
+    else if (componentType == TO_SCHEDULER_AND_RETURN_TODAY_EVENTS)
+    {
+        feedback = convertQString(_scheduler->getTodayEvents());
+    }
 
     QVector <QString> result = feedback;
     feedback.clear();
