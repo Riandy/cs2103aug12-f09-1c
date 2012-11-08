@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Thu Nov 8 15:47:50 2012
+** Created: Thu Nov 8 22:38:29 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,7 +19,6 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
-#include "sframe.h"
 #include "slineedit.h"
 #include "stimelabel.h"
 
@@ -28,7 +27,7 @@ QT_BEGIN_NAMESPACE
 class Ui_StandardView
 {
 public:
-    Sframe *frame;
+    QFrame *frame;
     QFrame *line;
     QFrame *frame_2;
     SLineEdit *lineEdit;
@@ -172,9 +171,9 @@ public:
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
         StandardView->setWindowIcon(icon);
-        frame = new Sframe(StandardView);
+        frame = new QFrame(StandardView);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(10, 10, 811, 641));
+        frame->setGeometry(QRect(10, 10, 811, 661));
         frame->setStyleSheet(QString::fromUtf8("#frame\n"
 "{\n"
 "	background-image: url(:/bg/scenary.jpg);\n"
@@ -193,7 +192,7 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         frame_2 = new QFrame(frame);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        frame_2->setGeometry(QRect(0, 40, 811, 601));
+        frame_2->setGeometry(QRect(0, 40, 811, 621));
         lineEdit = new SLineEdit(frame_2);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(50, 65, 701, 31));
@@ -227,10 +226,12 @@ public:
 "}"));
         label = new QLabel(frame_2);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(49, 98, 701, 41));
+        label->setGeometry(QRect(49, 98, 701, 71));
         QFont font2;
         font2.setFamily(QString::fromUtf8("MV Boli"));
         font2.setPointSize(9);
+        font2.setBold(true);
+        font2.setWeight(75);
         label->setFont(font2);
         label->setStyleSheet(QString::fromUtf8("#label_2\n"
 "{\n"
@@ -240,7 +241,7 @@ public:
         label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
         frame_3 = new QFrame(frame_2);
         frame_3->setObjectName(QString::fromUtf8("frame_3"));
-        frame_3->setGeometry(QRect(40, 145, 731, 421));
+        frame_3->setGeometry(QRect(40, 170, 731, 421));
         frame_3->setStyleSheet(QString::fromUtf8("#frame_3\n"
 "{\n"
 "	\n"
@@ -287,12 +288,14 @@ public:
         frame_6->setFrameShadow(QFrame::Raised);
         label_69 = new QLabel(frame_6);
         label_69->setObjectName(QString::fromUtf8("label_69"));
-        label_69->setGeometry(QRect(10, 40, 141, 91));
+        label_69->setGeometry(QRect(10, 30, 138, 131));
         QFont font4;
-        font4.setFamily(QString::fromUtf8("Verdana"));
-        font4.setBold(true);
-        font4.setWeight(75);
+        font4.setFamily(QString::fromUtf8("Tahoma"));
+        font4.setPointSize(9);
+        font4.setBold(false);
+        font4.setWeight(50);
         label_69->setFont(font4);
+        label_69->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         frame_10 = new QFrame(frame_5);
         frame_10->setObjectName(QString::fromUtf8("frame_10"));
         frame_10->setGeometry(QRect(10, 62, 140, 119));
@@ -305,11 +308,21 @@ public:
         label_65 = new QLabel(frame_10);
         label_65->setObjectName(QString::fromUtf8("label_65"));
         label_65->setGeometry(QRect(1, 79, 141, 31));
-        label_65->setFont(font4);
+        QFont font5;
+        font5.setFamily(QString::fromUtf8("Verdana"));
+        font5.setBold(true);
+        font5.setWeight(75);
+        label_65->setFont(font5);
         label_71 = new QLabel(frame_10);
         label_71->setObjectName(QString::fromUtf8("label_71"));
-        label_71->setGeometry(QRect(-1, 10, 141, 91));
-        label_71->setFont(font4);
+        label_71->setGeometry(QRect(-1, 15, 141, 91));
+        QFont font6;
+        font6.setFamily(QString::fromUtf8("Verdana"));
+        font6.setPointSize(24);
+        font6.setBold(true);
+        font6.setWeight(75);
+        label_71->setFont(font6);
+        label_71->setAlignment(Qt::AlignCenter);
         frame_9 = new QFrame(frame_5);
         frame_9->setObjectName(QString::fromUtf8("frame_9"));
         frame_9->setGeometry(QRect(170, 120, 180, 245));
@@ -321,16 +334,17 @@ public:
         frame_9->setFrameShadow(QFrame::Raised);
         label_66 = new QLabel(frame_9);
         label_66->setObjectName(QString::fromUtf8("label_66"));
-        label_66->setGeometry(QRect(25, 188, 141, 31));
-        QFont font5;
-        font5.setFamily(QString::fromUtf8("AR CHRISTY"));
-        font5.setBold(false);
-        font5.setWeight(50);
-        label_66->setFont(font5);
+        label_66->setGeometry(QRect(33, 201, 141, 31));
+        QFont font7;
+        font7.setFamily(QString::fromUtf8("AR CHRISTY"));
+        font7.setBold(false);
+        font7.setWeight(50);
+        label_66->setFont(font7);
         label_70 = new QLabel(frame_9);
         label_70->setObjectName(QString::fromUtf8("label_70"));
-        label_70->setGeometry(QRect(24, 56, 141, 111));
+        label_70->setGeometry(QRect(13, 48, 138, 151));
         label_70->setFont(font4);
+        label_70->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         frame_11 = new QFrame(frame_5);
         frame_11->setObjectName(QString::fromUtf8("frame_11"));
         frame_11->setGeometry(QRect(10, 190, 140, 119));
@@ -343,11 +357,12 @@ public:
         label_61 = new QLabel(frame_11);
         label_61->setObjectName(QString::fromUtf8("label_61"));
         label_61->setGeometry(QRect(-3, 78, 141, 31));
-        label_61->setFont(font4);
+        label_61->setFont(font5);
         label_72 = new QLabel(frame_11);
         label_72->setObjectName(QString::fromUtf8("label_72"));
-        label_72->setGeometry(QRect(-5, 7, 141, 91));
-        label_72->setFont(font4);
+        label_72->setGeometry(QRect(-4, 10, 141, 91));
+        label_72->setFont(font6);
+        label_72->setAlignment(Qt::AlignCenter);
         frame_7 = new QFrame(frame_5);
         frame_7->setObjectName(QString::fromUtf8("frame_7"));
         frame_7->setGeometry(QRect(430, 220, 161, 168));
@@ -359,8 +374,9 @@ public:
         frame_7->setFrameShadow(QFrame::Raised);
         label_68 = new QLabel(frame_7);
         label_68->setObjectName(QString::fromUtf8("label_68"));
-        label_68->setGeometry(QRect(10, 44, 141, 91));
+        label_68->setGeometry(QRect(10, 34, 138, 131));
         label_68->setFont(font4);
+        label_68->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         frame_8 = new QFrame(frame_5);
         frame_8->setObjectName(QString::fromUtf8("frame_8"));
         frame_8->setGeometry(QRect(360, 60, 161, 168));
@@ -372,8 +388,9 @@ public:
         frame_8->setFrameShadow(QFrame::Raised);
         label_67 = new QLabel(frame_8);
         label_67->setObjectName(QString::fromUtf8("label_67"));
-        label_67->setGeometry(QRect(10, 40, 141, 91));
+        label_67->setGeometry(QRect(10, 30, 138, 131));
         label_67->setFont(font4);
+        label_67->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         frame_13 = new QFrame(frame_22);
         frame_13->setObjectName(QString::fromUtf8("frame_13"));
         frame_13->setGeometry(QRect(0, 0, 701, 397));
@@ -642,9 +659,9 @@ public:
         label_29 = new QLabel(frame_13);
         label_29->setObjectName(QString::fromUtf8("label_29"));
         label_29->setGeometry(QRect(40, 34, 151, 102));
-        QFont font6;
-        font6.setFamily(QString::fromUtf8("Comic Sans MS"));
-        label_29->setFont(font6);
+        QFont font8;
+        font8.setFamily(QString::fromUtf8("Comic Sans MS"));
+        label_29->setFont(font8);
         label_29->setStyleSheet(QString::fromUtf8("#label_29\n"
 "{\n"
 "	\n"
@@ -664,9 +681,9 @@ public:
         label_73 = new QLabel(frame_18);
         label_73->setObjectName(QString::fromUtf8("label_73"));
         label_73->setGeometry(QRect(10, 10, 231, 42));
-        QFont font7;
-        font7.setFamily(QString::fromUtf8("Levenim MT"));
-        label_73->setFont(font7);
+        QFont font9;
+        font9.setFamily(QString::fromUtf8("Levenim MT"));
+        label_73->setFont(font9);
         label_73->setStyleSheet(QString::fromUtf8("#label_73\n"
 "{\n"
 "	\n"
@@ -739,244 +756,244 @@ public:
         label_7 = new QLabel(frame_4);
         label_7->setObjectName(QString::fromUtf8("label_7"));
         label_7->setGeometry(QRect(59, 0, 245, 29));
-        QFont font8;
-        font8.setFamily(QString::fromUtf8("Simplified Arabic"));
-        font8.setPointSize(10);
-        label_7->setFont(font8);
+        QFont font10;
+        font10.setFamily(QString::fromUtf8("Simplified Arabic"));
+        font10.setPointSize(10);
+        label_7->setFont(font10);
         label_7->setStyleSheet(QString::fromUtf8(""));
         label_10 = new QLabel(frame_4);
         label_10->setObjectName(QString::fromUtf8("label_10"));
         label_10->setGeometry(QRect(59, 79, 245, 29));
-        label_10->setFont(font8);
+        label_10->setFont(font10);
         label_10->setStyleSheet(QString::fromUtf8(""));
         label_14 = new QLabel(frame_4);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setGeometry(QRect(59, 187, 245, 29));
-        label_14->setFont(font8);
+        label_14->setFont(font10);
         label_14->setStyleSheet(QString::fromUtf8(""));
         label_11 = new QLabel(frame_4);
         label_11->setObjectName(QString::fromUtf8("label_11"));
         label_11->setGeometry(QRect(59, 106, 245, 29));
-        label_11->setFont(font8);
+        label_11->setFont(font10);
         label_11->setStyleSheet(QString::fromUtf8(""));
         label_26 = new QLabel(frame_4);
         label_26->setObjectName(QString::fromUtf8("label_26"));
         label_26->setGeometry(QRect(-1, 241, 48, 29));
-        QFont font9;
-        font9.setFamily(QString::fromUtf8("Times New Roman"));
-        font9.setPointSize(10);
-        font9.setBold(true);
-        font9.setWeight(75);
-        label_26->setFont(font9);
+        QFont font11;
+        font11.setFamily(QString::fromUtf8("Times New Roman"));
+        font11.setPointSize(10);
+        font11.setBold(true);
+        font11.setWeight(75);
+        label_26->setFont(font11);
         label_26->setStyleSheet(QString::fromUtf8(""));
         label_26->setAlignment(Qt::AlignCenter);
         label_17 = new QLabel(frame_4);
         label_17->setObjectName(QString::fromUtf8("label_17"));
         label_17->setGeometry(QRect(0, 0, 48, 29));
-        label_17->setFont(font9);
+        label_17->setFont(font11);
         label_17->setStyleSheet(QString::fromUtf8(""));
         label_17->setAlignment(Qt::AlignCenter);
         label_19 = new QLabel(frame_4);
         label_19->setObjectName(QString::fromUtf8("label_19"));
         label_19->setGeometry(QRect(0, 53, 48, 29));
-        label_19->setFont(font9);
+        label_19->setFont(font11);
         label_19->setStyleSheet(QString::fromUtf8(""));
         label_19->setAlignment(Qt::AlignCenter);
         label_21 = new QLabel(frame_4);
         label_21->setObjectName(QString::fromUtf8("label_21"));
         label_21->setGeometry(QRect(0, 106, 48, 29));
-        label_21->setFont(font9);
+        label_21->setFont(font11);
         label_21->setStyleSheet(QString::fromUtf8(""));
         label_21->setAlignment(Qt::AlignCenter);
         label_20 = new QLabel(frame_4);
         label_20->setObjectName(QString::fromUtf8("label_20"));
         label_20->setGeometry(QRect(0, 79, 48, 29));
-        label_20->setFont(font9);
+        label_20->setFont(font11);
         label_20->setStyleSheet(QString::fromUtf8(""));
         label_20->setAlignment(Qt::AlignCenter);
         label_22 = new QLabel(frame_4);
         label_22->setObjectName(QString::fromUtf8("label_22"));
         label_22->setGeometry(QRect(0, 133, 48, 29));
-        label_22->setFont(font9);
+        label_22->setFont(font11);
         label_22->setStyleSheet(QString::fromUtf8(""));
         label_22->setAlignment(Qt::AlignCenter);
         label_23 = new QLabel(frame_4);
         label_23->setObjectName(QString::fromUtf8("label_23"));
         label_23->setGeometry(QRect(0, 160, 48, 29));
-        label_23->setFont(font9);
+        label_23->setFont(font11);
         label_23->setStyleSheet(QString::fromUtf8(""));
         label_23->setAlignment(Qt::AlignCenter);
         label_8 = new QLabel(frame_4);
         label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setGeometry(QRect(59, 27, 245, 29));
-        label_8->setFont(font8);
+        label_8->setFont(font10);
         label_8->setStyleSheet(QString::fromUtf8(""));
         label_24 = new QLabel(frame_4);
         label_24->setObjectName(QString::fromUtf8("label_24"));
         label_24->setGeometry(QRect(0, 187, 48, 29));
-        label_24->setFont(font9);
+        label_24->setFont(font11);
         label_24->setStyleSheet(QString::fromUtf8(""));
         label_24->setAlignment(Qt::AlignCenter);
         label_18 = new QLabel(frame_4);
         label_18->setObjectName(QString::fromUtf8("label_18"));
         label_18->setGeometry(QRect(0, 27, 48, 29));
-        label_18->setFont(font9);
+        label_18->setFont(font11);
         label_18->setStyleSheet(QString::fromUtf8(""));
         label_18->setAlignment(Qt::AlignCenter);
         label_16 = new QLabel(frame_4);
         label_16->setObjectName(QString::fromUtf8("label_16"));
         label_16->setGeometry(QRect(59, 241, 245, 29));
-        label_16->setFont(font8);
+        label_16->setFont(font10);
         label_16->setStyleSheet(QString::fromUtf8(""));
         label_9 = new QLabel(frame_4);
         label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(59, 53, 245, 29));
-        label_9->setFont(font8);
+        label_9->setFont(font10);
         label_9->setStyleSheet(QString::fromUtf8(""));
         label_13 = new QLabel(frame_4);
         label_13->setObjectName(QString::fromUtf8("label_13"));
         label_13->setGeometry(QRect(59, 160, 245, 29));
-        label_13->setFont(font8);
+        label_13->setFont(font10);
         label_13->setStyleSheet(QString::fromUtf8(""));
         label_12 = new QLabel(frame_4);
         label_12->setObjectName(QString::fromUtf8("label_12"));
         label_12->setGeometry(QRect(59, 133, 245, 29));
-        label_12->setFont(font8);
+        label_12->setFont(font10);
         label_12->setStyleSheet(QString::fromUtf8(""));
         label_15 = new QLabel(frame_4);
         label_15->setObjectName(QString::fromUtf8("label_15"));
         label_15->setGeometry(QRect(59, 214, 245, 29));
-        label_15->setFont(font8);
+        label_15->setFont(font10);
         label_15->setStyleSheet(QString::fromUtf8(""));
         label_25 = new QLabel(frame_4);
         label_25->setObjectName(QString::fromUtf8("label_25"));
         label_25->setGeometry(QRect(0, 214, 48, 29));
-        label_25->setFont(font9);
+        label_25->setFont(font11);
         label_25->setStyleSheet(QString::fromUtf8(""));
         label_25->setAlignment(Qt::AlignCenter);
         label_77 = new QLabel(frame_4);
         label_77->setObjectName(QString::fromUtf8("label_77"));
         label_77->setGeometry(QRect(326, 0, 141, 29));
-        QFont font10;
-        font10.setFamily(QString::fromUtf8("Arial"));
-        font10.setPointSize(8);
-        font10.setBold(true);
-        font10.setWeight(75);
-        label_77->setFont(font10);
+        QFont font12;
+        font12.setFamily(QString::fromUtf8("Arial"));
+        font12.setPointSize(8);
+        font12.setBold(true);
+        font12.setWeight(75);
+        label_77->setFont(font12);
         label_77->setStyleSheet(QString::fromUtf8(""));
         label_77->setAlignment(Qt::AlignCenter);
         label_78 = new QLabel(frame_4);
         label_78->setObjectName(QString::fromUtf8("label_78"));
         label_78->setGeometry(QRect(326, 27, 141, 29));
-        label_78->setFont(font10);
+        label_78->setFont(font12);
         label_78->setStyleSheet(QString::fromUtf8(""));
         label_78->setAlignment(Qt::AlignCenter);
         label_79 = new QLabel(frame_4);
         label_79->setObjectName(QString::fromUtf8("label_79"));
         label_79->setGeometry(QRect(326, 81, 141, 29));
-        label_79->setFont(font10);
+        label_79->setFont(font12);
         label_79->setStyleSheet(QString::fromUtf8(""));
         label_79->setAlignment(Qt::AlignCenter);
         label_80 = new QLabel(frame_4);
         label_80->setObjectName(QString::fromUtf8("label_80"));
         label_80->setGeometry(QRect(326, 54, 141, 29));
-        label_80->setFont(font10);
+        label_80->setFont(font12);
         label_80->setStyleSheet(QString::fromUtf8(""));
         label_80->setAlignment(Qt::AlignCenter);
         label_81 = new QLabel(frame_4);
         label_81->setObjectName(QString::fromUtf8("label_81"));
         label_81->setGeometry(QRect(326, 136, 141, 29));
-        label_81->setFont(font10);
+        label_81->setFont(font12);
         label_81->setStyleSheet(QString::fromUtf8(""));
         label_81->setAlignment(Qt::AlignCenter);
         label_82 = new QLabel(frame_4);
         label_82->setObjectName(QString::fromUtf8("label_82"));
         label_82->setGeometry(QRect(326, 190, 141, 29));
-        label_82->setFont(font10);
+        label_82->setFont(font12);
         label_82->setStyleSheet(QString::fromUtf8(""));
         label_82->setAlignment(Qt::AlignCenter);
         label_83 = new QLabel(frame_4);
         label_83->setObjectName(QString::fromUtf8("label_83"));
         label_83->setGeometry(QRect(326, 163, 141, 29));
-        label_83->setFont(font10);
+        label_83->setFont(font12);
         label_83->setStyleSheet(QString::fromUtf8(""));
         label_83->setAlignment(Qt::AlignCenter);
         label_84 = new QLabel(frame_4);
         label_84->setObjectName(QString::fromUtf8("label_84"));
         label_84->setGeometry(QRect(326, 109, 141, 29));
-        label_84->setFont(font10);
+        label_84->setFont(font12);
         label_84->setStyleSheet(QString::fromUtf8(""));
         label_84->setAlignment(Qt::AlignCenter);
         label_85 = new QLabel(frame_4);
         label_85->setObjectName(QString::fromUtf8("label_85"));
         label_85->setGeometry(QRect(326, 242, 141, 29));
-        label_85->setFont(font10);
+        label_85->setFont(font12);
         label_85->setStyleSheet(QString::fromUtf8(""));
         label_85->setAlignment(Qt::AlignCenter);
         label_86 = new QLabel(frame_4);
         label_86->setObjectName(QString::fromUtf8("label_86"));
         label_86->setGeometry(QRect(326, 215, 141, 29));
-        label_86->setFont(font10);
+        label_86->setFont(font12);
         label_86->setStyleSheet(QString::fromUtf8(""));
         label_86->setAlignment(Qt::AlignCenter);
         label_87 = new QLabel(frame_4);
         label_87->setObjectName(QString::fromUtf8("label_87"));
         label_87->setGeometry(QRect(477, 110, 141, 29));
-        label_87->setFont(font10);
+        label_87->setFont(font12);
         label_87->setStyleSheet(QString::fromUtf8(""));
         label_87->setAlignment(Qt::AlignCenter);
         label_88 = new QLabel(frame_4);
         label_88->setObjectName(QString::fromUtf8("label_88"));
         label_88->setGeometry(QRect(477, 28, 141, 29));
-        label_88->setFont(font10);
+        label_88->setFont(font12);
         label_88->setStyleSheet(QString::fromUtf8(""));
         label_88->setAlignment(Qt::AlignCenter);
         label_89 = new QLabel(frame_4);
         label_89->setObjectName(QString::fromUtf8("label_89"));
         label_89->setGeometry(QRect(477, 243, 141, 29));
-        label_89->setFont(font10);
+        label_89->setFont(font12);
         label_89->setStyleSheet(QString::fromUtf8(""));
         label_89->setAlignment(Qt::AlignCenter);
         label_90 = new QLabel(frame_4);
         label_90->setObjectName(QString::fromUtf8("label_90"));
         label_90->setGeometry(QRect(477, 82, 141, 29));
-        label_90->setFont(font10);
+        label_90->setFont(font12);
         label_90->setStyleSheet(QString::fromUtf8(""));
         label_90->setAlignment(Qt::AlignCenter);
         label_91 = new QLabel(frame_4);
         label_91->setObjectName(QString::fromUtf8("label_91"));
         label_91->setGeometry(QRect(477, 55, 141, 29));
-        label_91->setFont(font10);
+        label_91->setFont(font12);
         label_91->setStyleSheet(QString::fromUtf8(""));
         label_91->setAlignment(Qt::AlignCenter);
         label_92 = new QLabel(frame_4);
         label_92->setObjectName(QString::fromUtf8("label_92"));
         label_92->setGeometry(QRect(477, 216, 141, 29));
-        label_92->setFont(font10);
+        label_92->setFont(font12);
         label_92->setStyleSheet(QString::fromUtf8(""));
         label_92->setAlignment(Qt::AlignCenter);
         label_93 = new QLabel(frame_4);
         label_93->setObjectName(QString::fromUtf8("label_93"));
         label_93->setGeometry(QRect(477, 137, 141, 29));
-        label_93->setFont(font10);
+        label_93->setFont(font12);
         label_93->setStyleSheet(QString::fromUtf8(""));
         label_93->setAlignment(Qt::AlignCenter);
         label_94 = new QLabel(frame_4);
         label_94->setObjectName(QString::fromUtf8("label_94"));
         label_94->setGeometry(QRect(477, 191, 141, 29));
-        label_94->setFont(font10);
+        label_94->setFont(font12);
         label_94->setStyleSheet(QString::fromUtf8(""));
         label_94->setAlignment(Qt::AlignCenter);
         label_95 = new QLabel(frame_4);
         label_95->setObjectName(QString::fromUtf8("label_95"));
         label_95->setGeometry(QRect(477, 164, 141, 29));
-        label_95->setFont(font10);
+        label_95->setFont(font12);
         label_95->setStyleSheet(QString::fromUtf8(""));
         label_95->setAlignment(Qt::AlignCenter);
         label_96 = new QLabel(frame_4);
         label_96->setObjectName(QString::fromUtf8("label_96"));
         label_96->setGeometry(QRect(477, 1, 141, 29));
-        label_96->setFont(font10);
+        label_96->setFont(font12);
         label_96->setStyleSheet(QString::fromUtf8(""));
         label_96->setAlignment(Qt::AlignCenter);
         label_97 = new QLabel(frame_4);
@@ -1060,10 +1077,10 @@ public:
         label_6 = new QLabel(frame_14);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(10, 10, 61, 42));
-        QFont font11;
-        font11.setFamily(QString::fromUtf8("Levenim MT"));
-        font11.setPointSize(16);
-        label_6->setFont(font11);
+        QFont font13;
+        font13.setFamily(QString::fromUtf8("Levenim MT"));
+        font13.setPointSize(16);
+        label_6->setFont(font13);
         label_6->setStyleSheet(QString::fromUtf8("#label_6\n"
 "{\n"
 "	background-image: url(:/bg/SN Slip.gif);\n"
@@ -1073,7 +1090,7 @@ public:
         label_5 = new QLabel(frame_14);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(81, 10, 231, 42));
-        label_5->setFont(font7);
+        label_5->setFont(font9);
         label_5->setStyleSheet(QString::fromUtf8("#label_5\n"
 "{\n"
 "	\n"
@@ -1104,7 +1121,7 @@ public:
         label_75 = new QLabel(frame_14);
         label_75->setObjectName(QString::fromUtf8("label_75"));
         label_75->setGeometry(QRect(346, 10, 131, 42));
-        label_75->setFont(font7);
+        label_75->setFont(font9);
         label_75->setStyleSheet(QString::fromUtf8("#label_75\n"
 "{	\n"
 "	background-image: url(:/bg/Date Slip.gif)\n"
@@ -1112,7 +1129,7 @@ public:
         label_76 = new QLabel(frame_14);
         label_76->setObjectName(QString::fromUtf8("label_76"));
         label_76->setGeometry(QRect(493, 10, 131, 42));
-        label_76->setFont(font7);
+        label_76->setFont(font9);
         label_76->setStyleSheet(QString::fromUtf8("#label_76\n"
 "{\n"
 "	background-image: url(:/bg/Date Slip.gif)\n"
@@ -1206,11 +1223,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'AR JULIAN'; font-size:16pt; font-weight:600;\"></p></body></html>", 0, QApplication::UnicodeUTF8)));
-        label->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MV Boli'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffaa00;\">Available Commands: add, delete, mark, unmark, edit and find</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("StandardView", "<font size=3 face=\"Gill Sans Ultra Bold Condensed\" color = \"orange\">Available Commands: add, delete, mark, unmark, edit,<br> find, undo, redo , display </font>", 0, QApplication::UnicodeUTF8));
         label_28->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1219,23 +1232,14 @@ public:
         label_69->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#000000;\">Watch ****</span></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#000000;\"></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#000000;\">10pm</span></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; "
-                        "margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#000000;\"></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#000000;\">LOL</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Verdana'; font-size:8pt; font-weight:600;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_65->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#aa0000;\">HIGH PRIORITY</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        label_71->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:36pt; color:#aa0000;\">1</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+        label_71->setText(QString());
         label_66->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1244,46 +1248,25 @@ public:
         label_70->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#ff0000;\">Hand in assignment</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#ff0000;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#ff0000;\">2pm</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-blo"
-                        "ck-indent:0; text-indent:0px; font-size:8pt; color:#ff0000;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#ff0000;\">GEM2026</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#ff0000;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#ff0000;\">HIGH PRIORITY</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Verdana'; font-size:8pt; font-weight:600;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_61->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#555500;\">OUTSTANDING</span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#555500;\">EVENTS</span></p></body></html>", 0, QApplication::UnicodeUTF8));
-        label_72->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:36pt; color:#005500;\">4</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+        label_72->setText(QString());
         label_68->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#005500;\">Eat Lunch</span></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#005500;\"></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#005500;\">12 Noon</span></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px"
-                        "; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#005500;\"></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#005500;\">GIRLFRIEND</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Verdana'; font-size:8pt; font-weight:600;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_67->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Verdana'; font-size:8.25pt; font-weight:600; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#00007f;\">Playing Tennis</span></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#00007f;\"></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#00007f;\">3:30pm to 6:30pm</span></p>\n"
-"<p align=\"center\" style=\"-qt-paragraph-type:empty; "
-                        "margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; color:#00007f;\"></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; color:#00007f;\">SPORTS_SESSION</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Verdana'; font-size:8pt; font-weight:600;\"></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_30->setText(QApplication::translate("StandardView", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

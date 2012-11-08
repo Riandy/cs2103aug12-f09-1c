@@ -30,7 +30,7 @@ GuiControl::GuiControl()
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
-
+    getTodaysEvents();
     try
     {
         createSystemTrayIconIfPossible();
@@ -259,6 +259,13 @@ void GuiControl::showHelpView()
     _standardGui->helpTriggered();
 }
 
+void GuiControl::getTodaysEvents()
+{
+    _standardGui->displayTodayView(
+                _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,""));
+    //qDebug() << _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
+}
+
 bool GuiControl:: singleInstanceExists()
 {
     bool result;
@@ -292,16 +299,6 @@ bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag) throw (strin
     }
 
     return result;
-}
-
-QVector <QString> GuiControl::getTodaysEvents()
-{
-    return _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
-}
-
-void GuiControl::toShow(QVector <QString> events)
-{
-
 }
 
 bool GuiControl::interfaceIsStandardView()

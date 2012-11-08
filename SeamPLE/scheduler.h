@@ -31,18 +31,19 @@ private:
     void printMessage(string _messageType);
     void partialUpdateGUI(vector<task> taskVector);
     bool isTimeZero(tm time);
-    vector<string> getTodayEvents();
-
+    vector<string> combineStringVectors(
+            vector<string> first, vector<string> second);
+    string getStringFromInt(int subject);
 
 public:
     static bool instanceFlag;
     static scheduler* getInstance();
     ~scheduler();
     vector<string> executeCommand(Action newaction);
-    vector<string> getEventOverview();
     string getEventBasedOnTime(int hour, int min);
     string getEventNameForEnd(int hour, int min);
     string getEventNameForStart(int hour, int min);
+    vector<string> getTodayEvents();
 
 };
 

@@ -1,14 +1,25 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
-#include <QDebug>
-
 StandardView* StandardView::_standardView = NULL;
 
+const QString StandardView::MESSAGE_NIL = "";
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
         "No Search Results Available";
 const QString StandardView::MESSAGE_VIEW_TYPE_WRONG =
         "View type in StandardView is not given a valid input";
+const QString StandardView::MESSAGE_EVENT_NAME_LABEL =
+        "<b>Event Name:</b><br>";
+const QString StandardView::MESSAGE_EVENT_ID_LABEL =
+        "<br><br><b>Event ID:</b><br>";
+const QString StandardView::MESSAGE_CATEGORY_LABEL =
+        "<br><br><b>Category:</b><br>";
+const QString StandardView::MESSAGE_START_DATE_LABEL =
+        "<br><br><b>Start Date:</b><br>";
+const QString StandardView::MESSAGE_END_DATE_LABEL =
+        "<br><br><b>End Date:</b><br>";
+const QString StandardView::MESSAGE_PRIORITY_LABEL =
+        "<br><br><b>Priority:</b><br>";
 
 StandardView::StandardView(QWidget *parent):
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
@@ -142,6 +153,26 @@ void StandardView::resetAllTablesContents()
     _tableItems.output.clear();
     _tableItems.currentIndex = 0;
     _tableItems.endIndex = 0;
+}
+
+void StandardView::displayTodayView(QVector<QString> info)
+{
+    QString outstandingEvents = info[0];
+    QString priorityEvents = info[1];
+
+    ui->label_72->setText(outstandingEvents);
+    ui->label_71->setText(priorityEvents);
+
+    if (priorityEvents != "0")
+    {
+        displayTodayViewPriority(info.mid(2,6));
+        displayTodayViewNotes(info.mid(8,info.size()-8));
+    }
+    else
+    {
+        ui->label_70->setText("");
+        displayTodayViewNotes(info.mid(2,info.size()-2));
+    }
 }
 
 void StandardView::show()
@@ -390,58 +421,58 @@ void StandardView:: resetTableExpandedContents()
 
 void StandardView::resetTableNumber()
 {
-    ui->label_7->setText("");
-    ui->label_8->setText("");
-    ui->label_9->setText("");
-    ui->label_10->setText("");
-    ui->label_11->setText("");
-    ui->label_12->setText("");
-    ui->label_13->setText("");
-    ui->label_14->setText("");
-    ui->label_15->setText("");
-    ui->label_16->setText("");
+    ui->label_7->setText(MESSAGE_NIL);
+    ui->label_8->setText(MESSAGE_NIL);
+    ui->label_9->setText(MESSAGE_NIL);
+    ui->label_10->setText(MESSAGE_NIL);
+    ui->label_11->setText(MESSAGE_NIL);
+    ui->label_12->setText(MESSAGE_NIL);
+    ui->label_13->setText(MESSAGE_NIL);
+    ui->label_14->setText(MESSAGE_NIL);
+    ui->label_15->setText(MESSAGE_NIL);
+    ui->label_16->setText(MESSAGE_NIL);
 }
 
 void StandardView::resetTableName()
 {
-    ui->label_17->setText("");
-    ui->label_18->setText("");
-    ui->label_19->setText("");
-    ui->label_20->setText("");
-    ui->label_21->setText("");
-    ui->label_22->setText("");
-    ui->label_23->setText("");
-    ui->label_24->setText("");
-    ui->label_25->setText("");
-    ui->label_26->setText("");
+    ui->label_17->setText(MESSAGE_NIL);
+    ui->label_18->setText(MESSAGE_NIL);
+    ui->label_19->setText(MESSAGE_NIL);
+    ui->label_20->setText(MESSAGE_NIL);
+    ui->label_21->setText(MESSAGE_NIL);
+    ui->label_22->setText(MESSAGE_NIL);
+    ui->label_23->setText(MESSAGE_NIL);
+    ui->label_24->setText(MESSAGE_NIL);
+    ui->label_25->setText(MESSAGE_NIL);
+    ui->label_26->setText(MESSAGE_NIL);
 }
 
 void StandardView::resetTableStartDate()
 {
-    ui->label_77->setText("");
-    ui->label_78->setText("");
-    ui->label_79->setText("");
-    ui->label_80->setText("");
-    ui->label_81->setText("");
-    ui->label_82->setText("");
-    ui->label_83->setText("");
-    ui->label_84->setText("");
-    ui->label_85->setText("");
-    ui->label_86->setText("");
+    ui->label_77->setText(MESSAGE_NIL);
+    ui->label_78->setText(MESSAGE_NIL);
+    ui->label_79->setText(MESSAGE_NIL);
+    ui->label_80->setText(MESSAGE_NIL);
+    ui->label_81->setText(MESSAGE_NIL);
+    ui->label_82->setText(MESSAGE_NIL);
+    ui->label_83->setText(MESSAGE_NIL);
+    ui->label_84->setText(MESSAGE_NIL);
+    ui->label_85->setText(MESSAGE_NIL);
+    ui->label_86->setText(MESSAGE_NIL);
 }
 
 void StandardView::resetTableEndDate()
 {
-    ui->label_87->setText("");
-    ui->label_88->setText("");
-    ui->label_89->setText("");
-    ui->label_90->setText("");
-    ui->label_91->setText("");
-    ui->label_92->setText("");
-    ui->label_93->setText("");
-    ui->label_94->setText("");
-    ui->label_95->setText("");
-    ui->label_96->setText("");
+    ui->label_87->setText(MESSAGE_NIL);
+    ui->label_88->setText(MESSAGE_NIL);
+    ui->label_89->setText(MESSAGE_NIL);
+    ui->label_90->setText(MESSAGE_NIL);
+    ui->label_91->setText(MESSAGE_NIL);
+    ui->label_92->setText(MESSAGE_NIL);
+    ui->label_93->setText(MESSAGE_NIL);
+    ui->label_94->setText(MESSAGE_NIL);
+    ui->label_95->setText(MESSAGE_NIL);
+    ui->label_96->setText(MESSAGE_NIL);
 }
 
 void StandardView::hideTableAllPriority()
@@ -460,14 +491,14 @@ void StandardView::hideTableAllPriority()
 
 void StandardView::resetTableExpandedNotes()
 {
-    ui->label_107->setText("");
-    ui->label_108->setText("");
-    ui->label_109->setText("");
+    ui->label_107->setText(MESSAGE_NIL);
+    ui->label_108->setText(MESSAGE_NIL);
+    ui->label_109->setText(MESSAGE_NIL);
 }
 
 void StandardView::resetTableExpandedCounter()
 {
-    ui->label_74->setText("");
+    ui->label_74->setText(MESSAGE_NIL);
 }
 
 void StandardView::setStartView()
@@ -667,17 +698,17 @@ void StandardView:: displayTableExpanded()
     while (stillInResultsRange && stillInNotesRange)
     {
         QString result =
-                "<b>Event Name:</b><br>"+
+                MESSAGE_EVENT_NAME_LABEL+
                 _tableItems.output[(i*6)+1]+
-                "<br><br><b>Event ID:</b><br>"+
+                MESSAGE_EVENT_ID_LABEL+
                 _tableItems.output[(i*6)]+
-                "<br><br><b>Category:</b><br>"+
+                MESSAGE_CATEGORY_LABEL+
                 _tableItems.output[(i*6)+5]+
-                "<br><br><b>Start Date:</b><br>"+
+                MESSAGE_START_DATE_LABEL+
                 _tableItems.output[(i*6)+2]+
-                "<br><br><b>End Date:</b><br>"+
+                MESSAGE_END_DATE_LABEL+
                 _tableItems.output[(i*6)+3]+
-                "<br><br><b>Priority:</b><br>"+
+                MESSAGE_PRIORITY_LABEL+
                 _tableItems.output[(i*6)+4];
 
         showTableExpandedNotes(i-_tableItems.currentIndex,result);
@@ -1104,4 +1135,53 @@ void StandardView:: setSignals()
 bool StandardView::tableIsEmpty()
 {
     return (_tableItems.output.size() == 0);
+}
+
+void StandardView::displayTodayViewPriority (QVector <QString> priority)
+{
+    QString result = MESSAGE_EVENT_NAME_LABEL+priority[1]+
+            MESSAGE_START_DATE_LABEL+priority[2]+
+            MESSAGE_END_DATE_LABEL+priority[3];
+
+    ui->label_70->setText(result);
+}
+
+void StandardView::displayTodayViewNotes (QVector<QString> notes)
+{
+    int count, size = notes.size();
+    QString event;
+
+    for(count = 0; count < 3 ; count++)
+    {
+        if (count < size)
+        {
+            event = MESSAGE_EVENT_NAME_LABEL+notes[1]+
+                    MESSAGE_START_DATE_LABEL+notes[2]+
+                    MESSAGE_END_DATE_LABEL+notes[3];
+        }
+        else
+        {
+            event = "";
+        }
+        displayTodayViewNotesIndividual(event,count);
+    }
+}
+
+void StandardView::displayTodayViewNotesIndividual(QString event, int flag)
+{
+    switch (flag)
+    {
+        case 0:
+            ui->label_67->setText(event);
+            break;
+        case 1:
+            ui->label_68->setText(event);
+            break;
+        case 2:
+            ui->label_69->setText(event);
+            break;
+
+        default:
+            break;
+    }
 }

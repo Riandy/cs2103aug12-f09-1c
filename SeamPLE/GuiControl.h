@@ -48,15 +48,13 @@ private slots:
 
     void showHelpView();
 
+    void getTodaysEvents();
+
 private:
 
     bool singleInstanceExists();
 
     bool implementInputColorFlagFailure(QCharRef colorFlag) throw (string);
-
-    QVector <QString> getTodaysEvents();
-
-    void toShow(QVector <QString> events);
 
     bool interfaceIsStandardView();
 

@@ -32,8 +32,15 @@ private:
 private:
     static StandardView* _standardView;
 
+    const static QString MESSAGE_NIL;
     const static QString MESSAGE_NO_CURRENT_RESULTS;
     const static QString MESSAGE_VIEW_TYPE_WRONG;
+    const static QString MESSAGE_EVENT_NAME_LABEL;
+    const static QString MESSAGE_EVENT_ID_LABEL;
+    const static QString MESSAGE_CATEGORY_LABEL;
+    const static QString MESSAGE_START_DATE_LABEL;
+    const static QString MESSAGE_END_DATE_LABEL;
+    const static QString MESSAGE_PRIORITY_LABEL;
     
 private:
     explicit StandardView(QWidget *parent = 0);
@@ -55,6 +62,8 @@ public:
     void instantiateTable(QVector <QString> output) throw (string);
 
     void resetAllTablesContents();
+
+    void displayTodayView(QVector<QString> info);
 
     void show();
 
@@ -183,6 +192,12 @@ private:
     void setSignals();
 
     bool tableIsEmpty();
+
+    void displayTodayViewPriority (QVector <QString> priority);
+
+    void displayTodayViewNotes (QVector<QString> notes);
+
+    void displayTodayViewNotesIndividual(QString event, int flag);
 
 private:
     bool _resultsTableViewExpanded;
