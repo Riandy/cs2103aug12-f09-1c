@@ -268,6 +268,11 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
+vector<string> scheduler:: getEventOverview()
+{
+    return getTodayEvents();
+}
+
 int scheduler::daysMonth(int year, int month)
 {
     int numberOfDays;
@@ -398,6 +403,48 @@ string scheduler::getEventBasedOnTime(int hour, int min)
     return feedbackMessage.str();
 }
 
+//Get Event name for any event today ending with the hour and minute
+string scheduler::getEventNameForEnd(int hour, int min)
+{
+    std::stringstream feedbackMessage;
+    tm eventDate;
+    vector<task> taskV=eventCalender.getToday();
+
+    int size = taskV.size();
+    for(int i = 0 ; i < size ; i++)
+    {
+        task currTask = taskV[i];
+        eventDate = currTask.getEndDate();
+        if(hour==eventDate.tm_hour &&min==eventDate.tm_min)
+        {
+            feedbackMessage<< currTask.getEventName();
+            break;
+        }
+    }
+    return feedbackMessage.str();
+}
+
+//Get Event name for any event today starting with the hour and minute
+string scheduler::getEventNameForStart(int hour, int min)
+{
+    std::stringstream feedbackMessage;
+    tm eventDate;
+    vector<task> taskV=eventCalender.getToday();
+
+    int size = taskV.size();
+    for(int i = 0 ; i < size ; i++)
+    {
+        task currTask = taskV[i];
+        eventDate = currTask.getStartDate();
+        if(hour==eventDate.tm_hour &&min==eventDate.tm_min)
+        {
+            feedbackMessage<< currTask.getEventName();
+            break;
+        }
+    }
+    return feedbackMessage.str();
+}
+
 task scheduler::processAction(Action newAction)
 {
     taskVector.clear();
@@ -515,6 +562,30 @@ void scheduler::partialUpdateGUI(vector<task> taskVector)
     //decision to either view in standard or simple view
     if (vectorSize!=0)
         _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+}
+
+//Function returns a summary of the events occuring today
+vector<string> scheduler:: getTodayEvents()
+{
+    taskVector = eventCalender.getToday();
+    bool firstPriorityFound = false;
+    stringstream buffer;
+    int size = taskVector.size();
+    int highPriorityTasks = 0;
+    for (int i = 0; i < size ; i++)
+    {
+        if (!firstPriorityFound && taskVector[i].getPriority() == "HIGH")
+        {
+            firstPriorityFound = true;
+        }
+
+        if (taskVector[i].getPriority() == "HIGH")
+        {
+            highPriorityTasks++;
+        }
+    }
+
+    return _result;
 }
 
 void scheduler::updateResultFound(int size)

@@ -10,8 +10,6 @@
 #include "seample.h"
 #include "scheduler.h"
 
-
-
 enum Command
 {
     TO_INTELLISENSE,
@@ -44,7 +42,7 @@ public:
     ~Seample();
     void init(int argc, char *argv[]);
     void updateUserInput(string userInput);
-    QVector <QString> run(bool runCommand, string _userInput);
+    QVector <QString> run(Command operationType, string _userInput);
     QVector <QString> fireAction();
 };
 
