@@ -162,7 +162,6 @@ void calender::writeBackupFile()
         std::ofstream    outFile(BACKUP_FILENAME);
 
         outFile << inFile.rdbuf();
-
 }
 
 bool calender::checkID(int taskID)
@@ -315,8 +314,8 @@ bool calender::loadFile(char* fileName)
 
     string temp,description,priority,category;
     char space;
-    char * dateType;
-    string startDate,endDate;
+    int dateType;
+    string startDate,endDate,test;
     //variable temp is used to read unecessary string/ character
 
     while(readFile>>temp)
@@ -363,9 +362,11 @@ bool calender::loadFile(char* fileName)
 
         readFile>>temp;
         readFile>>temp;
+        getline(readFile,test);
+        istringstream in(test);
+        in >> dateType;
 
-
-        readFile>>*dateType;
+        //readFile>>*dateType;
 
         readFile>>temp;
         readFile>>temp;
@@ -380,7 +381,7 @@ bool calender::loadFile(char* fileName)
         newTask->setEventName(description);
         newTask->setStartDate(_startDate);
         newTask->setEndDate(_endDate);
-        newTask->setDateType(atoi(dateType));
+        newTask->setDateType(dateType);
         newTask->setPriority(priority);
         newTask->setCategory(category);
         _storage.push_back(*newTask);
