@@ -16,7 +16,7 @@ calender::calender()
     _faulty = _faulty->getInstance();
     calender::SortByDate();
     calender::archivePastEvent();
-    if (fileExists(BACKUP_FILENAME))
+     if (fileExists(BACKUP_FILENAME))
          remove(BACKUP_FILENAME);
 }
 
@@ -436,7 +436,7 @@ bool calender::undoAction()
         }
         else if (lastCommand == _DELETEALL)
         {
-    ;
+
             loadFile(BACKUP_FILENAME);
 
             remove(BACKUP_FILENAME);

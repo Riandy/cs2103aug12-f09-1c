@@ -54,7 +54,7 @@ private:
     bool writeFile();
     bool loadFile(char* fileName);
     bool fileExists(const char* fileName);
-    bool checkNameExists(string _name);
+
     bool archivePastEvent();
 
     static bool taskDateComparator(task task1,task task2);
@@ -67,6 +67,7 @@ public:
 
     calender();
     ~calender();
+    bool checkNameExists(string _name);
     int getTaskID(string searchItem);
     bool addItem(task currentTask);
     bool deleteItem(int taskID);

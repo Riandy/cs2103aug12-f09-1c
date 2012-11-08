@@ -1,18 +1,20 @@
 #include "scheduler.h"
 
-static string MESSAGE_ERROR_NOT_FOUND = "Error - The item does not exist.";
-static string MESSAGE_ERROR_INTELLISENSE_CHECK = "Error - The system failed to process your request. Please try again";
+static string MESSAGE_ERROR_NOT_FOUND = "The item does not exist.";
+static string MESSAGE_ERROR_INTELLISENSE_CHECK = "Error - The system failed to process your request. Please try again.";
 static string MESSAGE_ADD_SUCCESS = "Your event was added successfully.";
-static string MESSAGE_ADD_FAILURE = "Your event was not added successfully";
-static string MESSAGE_DELETE_SUCCESS = "Your event was deleted successfully";
-static string MESSAGE_EDIT_SUCCESS = "Your event was edited successfully";
-static string MESSAGE_UNDO_SUCCESS = "Undo operation was successful";
+static string MESSAGE_DELETE_ALL_SUCCESS = "All events deleted successfully.";
+static string MESSAGE_ADD_FAILURE = "Your event was not added successfully.";
+static string MESSAGE_DELETE_SUCCESS = "Your event was deleted successfully.";
+static string MESSAGE_EDIT_SUCCESS = "Your event was edited successfully.";
+static string MESSAGE_UNDO_SUCCESS = "Undo operation was successful.";
 static string MESSAGE_UNDO_FAILURE = "There is nothing to undo.";
-static string MESSAGE_REDO_SUCCESS = "Redo operation was successful";
+static string MESSAGE_REDO_SUCCESS = "Redo operation was successful.";
 static string MESSAGE_REDO_FAILURE = "There is nothing to redo.";
 static string MESSAGE_GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
-static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date";
-
+static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date.";
+static string MESSAGE_ADD_NO_NAME = "You have not entered a valid event description.";
+static string MESSAGE_DELETE_WARNING = "Your input was both an event name as well as a serial number. An entry was deleted by its serial number.";
 bool scheduler::instanceFlag=false;
 scheduler* scheduler::_scheduler=NULL;
 
@@ -43,6 +45,7 @@ scheduler::~scheduler()
 
 vector<string> scheduler::executeCommand(Action newAction)
 {
+
     //get the command type
     string command=newAction.getCommand();
     ASSERT(command!="","Command is NULL");
@@ -55,7 +58,14 @@ vector<string> scheduler::executeCommand(Action newAction)
 
     if(command=="ADD")
     {
-        if(newTask.getCategory() == "1NVAL1D")
+
+        if (newTask.getEventName() =="")
+        {
+            printMessage(MESSAGE_ADD_NO_NAME);
+
+        }
+
+       else if(newTask.getCategory() == "1NVAL1D")
         {
             printMessage(MESSAGE_ADD_INVALID_DATE);
 
@@ -74,35 +84,48 @@ vector<string> scheduler::executeCommand(Action newAction)
 
 
 
-
-
-
-
         else
         {
 
-       if( eventCalender.addItem(newTask))
-	   {
-         printMessage(MESSAGE_ADD_SUCCESS);
-         updateGUI();
-	   }
-       else
-       {
-           _faulty->report("Scheduler class: Add command FAIL");
-           printMessage(MESSAGE_ADD_FAILURE);
-       }
+            if( eventCalender.addItem(newTask))
+             {
+              printMessage(MESSAGE_ADD_SUCCESS);
+              updateGUI();
+             }
+            else
+              {
+               _faulty->report("Scheduler class: Add command FAIL");
+               printMessage(MESSAGE_ADD_FAILURE);
+              }
        }
     }
 
     else if(command=="DELETE")
-    {
+{
         //delete by ID
         ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
+
+        ostringstream convert;
+        convert<<newTask.getID();
+        string _eventName = convert.str();
+
         if (newTask.getEventName() == "all")
         {
              eventCalender.deleteAll();
-            printMessage(MESSAGE_DELETE_SUCCESS);
+            printMessage(MESSAGE_DELETE_ALL_SUCCESS);
         }
+
+
+       else if (eventCalender.checkNameExists(_eventName) && eventCalender.checkID(newTask.getID()))
+        {
+            // case whereby user's input is both an event name and valid id.
+            eventCalender.deleteItem(newTask.getID());
+            printMessage(MESSAGE_DELETE_WARNING);
+
+        }
+
+
+
         else if(eventCalender.checkID(newTask.getID()))
         {
             eventCalender.deleteItem(newTask.getID());
@@ -113,6 +136,18 @@ vector<string> scheduler::executeCommand(Action newAction)
         else if(newTask.getEventName()!="-" && eventCalender.deleteItem(newTask.getEventName()))
         {
             printMessage(MESSAGE_DELETE_SUCCESS);
+        }
+
+       else if(newTask.getID()!=-1)
+        {
+            // check if user wanted to delete by name, but the name is an integer and was
+            // parsed by intellisense to be an integer.
+
+            if (eventCalender.deleteItem(_eventName))
+                printMessage(MESSAGE_DELETE_SUCCESS);
+           else
+                printMessage(MESSAGE_ERROR_NOT_FOUND);
+
         }
 
         //error handling
