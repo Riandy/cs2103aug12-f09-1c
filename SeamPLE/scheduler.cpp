@@ -75,7 +75,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 
 
 // EXTRA CODE TO BE REMOVED
-        else if (newTask.getEventName() == "Rick Roll")
+        else if (newTask.getEventName() == "RickRoll")
         {
             taskVector = eventCalender.rickRoll();
             partialUpdateGUI(taskVector);

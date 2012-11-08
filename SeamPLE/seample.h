@@ -44,6 +44,7 @@ public:
     void updateUserInput(string userInput);
     QVector <QString> run(Command operationType, string _userInput);
     QVector <QString> fireAction();
+    bool requirementsMet();
 };
 
 #endif // SEAMPLE_H

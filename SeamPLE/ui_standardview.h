@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'StandardView.ui'
+** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Fri Nov 9 01:10:38 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Fri Nov 9 14:12:07 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -19,7 +19,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
-#include <sframe.h>
+#include "sframe.h"
 #include "slineedit.h"
 #include "stimelabel.h"
 
