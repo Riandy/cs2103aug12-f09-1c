@@ -444,6 +444,7 @@ string scheduler::getEventNameForStart(int hour, int min)
 //Function returns a summary of the events occuring today
 vector<string> scheduler:: getTodayEvents()
 {
+    _result.clear();
     vector<task> taskList = eventCalender.getToday();
     int size = taskList.size();
     vector<task> firstPriority;
