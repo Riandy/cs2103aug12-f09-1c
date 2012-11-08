@@ -3,7 +3,7 @@
 
 
 
-const string Intellisense::months[12] = {"JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
+const string Intellisense::months[24] = {"JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
 
 
 //important date events
@@ -865,7 +865,8 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
                      return false;
                  }
                  int month = check;
-
+                 if(month>12)
+                 {month -=12;}
 
                  it_day=tokens.erase(it_day);
                  it_day=tokens.erase(it_day);
@@ -1120,7 +1121,7 @@ Action Intellisense::undoOperation(vector<string>& tokens)
 int Intellisense::checkDateString(string token)
 {
 
-    for(int i=0;i<=11;++i)
+    for(int i=0;i<=23;++i)
     {
         if(checkString(token,months[i]))
         {

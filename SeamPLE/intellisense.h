@@ -52,7 +52,7 @@ private:
 
 
     Intellisense(void);
-    static const string months[12];
+    static const string months[24];
 
     //    added array support for commands
 
