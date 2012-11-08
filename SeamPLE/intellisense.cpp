@@ -383,6 +383,8 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
         case 4:   if(processTimeFormat2(date, time))
             {it=tokens.erase(it);}
+            if(processTimeFormat8(date, time))
+            {it=tokens.erase(it);}
             break;
 
         case 5: if(processTimeFormat3(date, time))
@@ -418,6 +420,27 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
     return date;
 }
+
+bool Intellisense::processTimeFormat8 (tm &date, string time)
+{
+    if(time.at(1) == ':' )
+                {
+                    if(time.size()==4)
+                    {
+                        time=removeChar(time,":");
+                        if(isAllInt(time))
+                        {
+
+                            date.tm_hour=atoi(time.substr(0,1).c_str());
+                            date.tm_min=atoi(time.substr(1,2).c_str());
+                            return true;
+                        }
+
+                    }
+                }
+    return false;
+}
+
 
 //function checks for time format "12:xxPM"
 bool Intellisense::processTimeFormat7 (tm &date, string checkString)
