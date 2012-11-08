@@ -66,13 +66,13 @@ void Seample::updateUserInput(string userInput)
     this->userInput=userInput;
 }
 
-QVector <QString> Seample::run(bool runCommand, string _userInput)
+QVector <QString> Seample::run(Command componentType, string _userInput)
 {
     userInput = _userInput;
     response = intellisense->check(userInput);
     setShortCutRequirementsMet(_userInput);
     cout<<"Requirements met:"<<intellisense->getrequirementsMet()<<endl;
-    if (runCommand && intellisense->getrequirementsMet())
+    if (componentType == TO_SCHEDULER_AND_RETURN_RESULTS && intellisense->getrequirementsMet())
         //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
         //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
     {
@@ -80,9 +80,9 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
         if( (response.getCommand()) == "EDIT" )
             response.setCommand("EDITENTER") ;
         //end of adhoc edit code
-        feedback = fireAction();
+        feedback = fireAction(); 
     }
-    else
+    else if (componentType == TO_INTELLISENSE)
     {
             if( (response.getCommand()) != "EDIT" )//crude way to do it since i have no idea the format of display
             {// have to make this work with the below part together with teh table
@@ -103,8 +103,8 @@ QVector <QString> Seample::run(bool runCommand, string _userInput)
                 cout<<"running la"<<endl;
                 feedback += fireAction(); //append the results at the end
 
-                //WEIYUAN: Copied and paste here so that colour flag is still there
-                intellisense->getParameter();
+                feedback[0] = QString::fromStdString(intellisense->getParameter()) + "<br>" + feedback[0];
+
                 if (intellisense->getrequirementsMet())
                 {
                     feedback.push_back("1");

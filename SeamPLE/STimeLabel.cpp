@@ -17,7 +17,6 @@ void STimeLabel::setAutoDateAndTimeDisplay()
 {
     _dateAndTime = _dateAndTime->getInstance();
     _interval = new QTimer(this);
-    _interval->singleShot(1,_dateAndTime, SLOT(getStringDateAndTime()));
     connect(_interval, SIGNAL(timeout()), _dateAndTime, SLOT(getStringDateAndTime()));
     connect(_dateAndTime, SIGNAL(relayStringDateAndTime(QString)), this, SLOT(setText(QString)));
     _interval->setSingleShot(false);
