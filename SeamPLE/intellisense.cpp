@@ -1004,6 +1004,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
     task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
+    task.setDateType(getDateType(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkAddReq();
