@@ -263,7 +263,7 @@ void GuiControl::getTodaysEvents()
 {
     _standardGui->displayTodayView(
                 _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,""));
-    //qDebug() << _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
+    qDebug() << _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
 }
 
 bool GuiControl:: singleInstanceExists()
@@ -396,6 +396,9 @@ void GuiControl::setStandardGuiSignals()
     //Recieve signal from standardGui to run slot for changing views
     connect(_standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
+
+    connect(_standardGui,SIGNAL(todayViewTriggered()),
+            this, SLOT(getTodaysEvents()));
 
 }
 

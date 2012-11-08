@@ -547,6 +547,7 @@ void StandardView::showHelp()
 void StandardView::showTodayView()
 {
     setFrameAnimationProperties(ui->frame_22, -723,14);
+    emit todayViewTriggered();
 }
 
 void StandardView::displayTodayEvents()
@@ -1153,11 +1154,11 @@ void StandardView::displayTodayViewNotes (QVector<QString> notes)
 
     for(count = 0; count < 3 ; count++)
     {
-        if (count < size)
+        if (count < (size/6))
         {
-            event = MESSAGE_EVENT_NAME_LABEL+notes[1]+
-                    MESSAGE_START_DATE_LABEL+notes[2]+
-                    MESSAGE_END_DATE_LABEL+notes[3];
+            event = MESSAGE_EVENT_NAME_LABEL+notes[(count*6)+1]+
+                    MESSAGE_START_DATE_LABEL+notes[(count*6)+2]+
+                    MESSAGE_END_DATE_LABEL+notes[(count*6)+3];
         }
         else
         {

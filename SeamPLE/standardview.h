@@ -76,6 +76,8 @@ signals:
 
     void toSeampleView(QString input, QString inputChecked, bool focus);
 
+    void todayViewTriggered();
+
 private slots:
     void recieve(QString input);
 
