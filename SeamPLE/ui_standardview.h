@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Thu Nov 8 22:38:29 2012
+** Created: Thu Nov 8 22:45:22 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,6 +19,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QWidget>
+#include <sframe.h>
 #include "slineedit.h"
 #include "stimelabel.h"
 
@@ -27,7 +28,7 @@ QT_BEGIN_NAMESPACE
 class Ui_StandardView
 {
 public:
-    QFrame *frame;
+    Sframe *frame;
     QFrame *line;
     QFrame *frame_2;
     SLineEdit *lineEdit;
@@ -171,7 +172,7 @@ public:
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/bg/calendar.gif"), QSize(), QIcon::Normal, QIcon::Off);
         StandardView->setWindowIcon(icon);
-        frame = new QFrame(StandardView);
+        frame = new Sframe(StandardView);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(10, 10, 811, 661));
         frame->setStyleSheet(QString::fromUtf8("#frame\n"
@@ -230,8 +231,8 @@ public:
         QFont font2;
         font2.setFamily(QString::fromUtf8("MV Boli"));
         font2.setPointSize(9);
-        font2.setBold(true);
-        font2.setWeight(75);
+        font2.setBold(false);
+        font2.setWeight(50);
         label->setFont(font2);
         label->setStyleSheet(QString::fromUtf8("#label_2\n"
 "{\n"

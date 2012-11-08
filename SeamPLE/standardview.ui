@@ -17,7 +17,7 @@
    <iconset resource="Resource.qrc">
     <normaloff>:/bg/calendar.gif</normaloff>:/bg/calendar.gif</iconset>
   </property>
-  <widget class="QFrame" name="frame">
+  <widget class="Sframe" name="frame">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -137,8 +137,8 @@ p, li { white-space: pre-wrap; }
       <font>
        <family>MV Boli</family>
        <pointsize>9</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
