@@ -30,7 +30,7 @@ private:
     int daysMonth(int year, int month);
     void printMessage(string _messageType);
     void partialUpdateGUI(vector<task> taskVector);
-
+    vector<string> getTodayEvents();
 
 
 public:
@@ -38,7 +38,10 @@ public:
     static scheduler* getInstance();
     ~scheduler();
     vector<string> executeCommand(Action newaction);
+    vector<string> getEventOverview();
     string getEventBasedOnTime(int hour, int min);
+    string getEventNameForEnd(int hour, int min);
+    string getEventNameForStart(int hour, int min);
 
 };
 
