@@ -1,4 +1,5 @@
 #include "NotifyView.h"
+#include <QDebug>
 
 NotifyView* NotifyView::_notificationInterface = NULL;
 
@@ -45,7 +46,7 @@ void NotifyView::endInstance()
 {
     if (singleInstanceExists())
     {
-        _notificationInterface->_popUp->hide();
+        _popUp->setVisible(false);
         delete _notificationInterface;
         _notificationInterface = NULL;
     }

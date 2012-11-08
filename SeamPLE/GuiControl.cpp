@@ -1,5 +1,4 @@
 #include "GuiControl.h"
-#include <QDebug>
 
 GuiControl* GuiControl::_guiControl = NULL;
 
@@ -40,8 +39,6 @@ GuiControl::GuiControl()
     {
         _faulty->report(error);
     }
-
-    _timeControl.start();
 }
 
 GuiControl::~GuiControl()
@@ -101,8 +98,8 @@ void GuiControl::check(QString input)
     }
     else
     {
-        bool command = false;
-        QVector <QString> output = _inputProcessor->run(command,input.toStdString());
+        QVector <QString> output =
+                _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
         bool invalidSchedulerReturn = (output.size() < 2);
 
         if (invalidSchedulerReturn)
@@ -161,8 +158,9 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     }
     else
     {
-        bool command = true;
-        QVector <QString> output = _inputProcessor->run(command,input.toStdString());
+        QVector <QString> output =
+                _inputProcessor->run(TO_SCHEDULER_AND_RETURN_RESULTS,input.toStdString());
+
         int capacity = output.size();
         bool needStandardView =
                 (output[output.size()-1] == (MESSAGE_GUI_DISPLAY));
@@ -298,12 +296,12 @@ bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag) throw (strin
 
 QVector <QString> GuiControl::getTodaysEvents()
 {
-    return _inputProcessor->run(true, "TODAY");
+    return _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
 }
 
 void GuiControl::toShow(QVector <QString> events)
 {
-    //implement code here to show events retrieved.
+
 }
 
 bool GuiControl::interfaceIsStandardView()
