@@ -21,6 +21,12 @@ const QString StandardView::MESSAGE_END_DATE_LABEL =
 const QString StandardView::MESSAGE_PRIORITY_LABEL =
         "<br><br><b>Priority:</b><br>";
 
+const QString StandardView::MESSAGE_FONT_COLOUR_RED =
+        "<font color = \"#6A0D10\">";
+const QString StandardView::MESSAGE_FONT_COLOUR_GREEN =
+        "<font color = \"#0F6A0D\">";
+const QString StandardView::MESSAGE_FONT_END = "</font>";
+
 StandardView::StandardView(QWidget *parent):
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
     ui(new Ui::StandardView)
@@ -161,8 +167,10 @@ void StandardView::displayTodayView(QVector<QString> info)
     QString outstandingEvents = info[0];
     QString priorityEvents = info[1];
 
-    ui->label_72->setText(outstandingEvents);
-    ui->label_71->setText(priorityEvents);
+    ui->label_72->setText(MESSAGE_FONT_COLOUR_GREEN+outstandingEvents
+                          +MESSAGE_FONT_END);
+    ui->label_71->setText(MESSAGE_FONT_COLOUR_RED+priorityEvents
+                          +MESSAGE_FONT_END);
 
     if (priorityEvents != "0")
     {
@@ -1167,9 +1175,11 @@ bool StandardView::tableIsEmpty()
 
 void StandardView::displayTodayViewPriority (QVector <QString> priority)
 {
-    QString result = MESSAGE_EVENT_NAME_LABEL+priority[1]+
+    QString result = MESSAGE_FONT_COLOUR_RED+
+            MESSAGE_EVENT_NAME_LABEL+priority[1]+
             MESSAGE_START_DATE_LABEL+priority[2]+
-            MESSAGE_END_DATE_LABEL+priority[3];
+            MESSAGE_END_DATE_LABEL+priority[3]+
+            MESSAGE_FONT_END;
 
     ui->label_70->setText(result);
 }
