@@ -3,7 +3,7 @@
 
 
 
-const string Intellisense::months[12] = {"JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"};
+const string Intellisense::months[24] = {"JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
 
 
 //important date events
@@ -383,6 +383,8 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
         case 4:   if(processTimeFormat2(date, time))
             {it=tokens.erase(it);}
+            if(processTimeFormat8(date, time))
+            {it=tokens.erase(it);}
             break;
 
         case 5: if(processTimeFormat3(date, time))
@@ -418,6 +420,27 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
     return date;
 }
+
+bool Intellisense::processTimeFormat8 (tm &date, string time)
+{
+    if(time.at(1) == ':' )
+                {
+                    if(time.size()==4)
+                    {
+                        time=removeChar(time,":");
+                        if(isAllInt(time))
+                        {
+
+                            date.tm_hour=atoi(time.substr(0,1).c_str());
+                            date.tm_min=atoi(time.substr(1,2).c_str());
+                            return true;
+                        }
+
+                    }
+                }
+    return false;
+}
+
 
 //function checks for time format "12:xxPM"
 bool Intellisense::processTimeFormat7 (tm &date, string checkString)
@@ -842,7 +865,8 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
                      return false;
                  }
                  int month = check;
-
+                 if(month>12)
+                 {month -=12;}
 
                  it_day=tokens.erase(it_day);
                  it_day=tokens.erase(it_day);
@@ -1060,7 +1084,6 @@ Action Intellisense::markOperation(vector<string>& tokens)
     currentCommand = MARK;
     Action task;
     task.setCommand(getCommand(tokens,"MARK"));
-    task.setStartDate(getDate(tokens));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkMarkReq();
@@ -1097,7 +1120,7 @@ Action Intellisense::undoOperation(vector<string>& tokens)
 int Intellisense::checkDateString(string token)
 {
 
-    for(int i=0;i<=11;++i)
+    for(int i=0;i<=23;++i)
     {
         if(checkString(token,months[i]))
         {
@@ -1119,10 +1142,10 @@ Action Intellisense::todayOperation(vector<string>& tokens)
 
 Action Intellisense::todoOperation(vector<string>& tokens)
 {
-    currentCommand = FIND;
+    currentCommand = TODO;
     Action task;
-    task.setCommand("FIND");
-    task.setCategory("F10AT");
+    task.setCommand("TODO");
+    task.setDateType(4);
     setAllStatusFlag(task);
     return task;
 }
@@ -1716,7 +1739,7 @@ void Intellisense::smartAutoFill(Action &task)
     if (isDateNotentered(task))
     {//we identify this task as a floating task since no date is stated
 
-        task.setCategory("F10AT");
+        task.setDateType(4);
         task.setStartDate(emptyDate);
         task.setEndDate(emptyDate);
 
@@ -1725,7 +1748,7 @@ void Intellisense::smartAutoFill(Action &task)
     if (isDateOver(task))
     {//we identify this task as a floating task since no date is stated
 
-        task.setCategory("F10AT");
+        task.setDateType(4);
         task.setStartDate(emptyDate);
         task.setEndDate(emptyDate);
 
