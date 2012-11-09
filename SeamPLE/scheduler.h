@@ -35,6 +35,20 @@ private:
             vector<string> first, vector<string> second);
     string getStringFromInt(int subject);
 
+
+    void Add(task thisTask);
+    void Delete(task thisTask);
+    void Edit(task thisTask);
+    void EditEnter(task thisTask);
+    void Find(task thisTask);
+    void Display();
+    void Undo();
+    void Redo();
+    void Today();
+    void Mark(task thisTask);
+    void Todo();
+    void Exit();
+
 public:
     static bool instanceFlag;
     static scheduler* getInstance();
