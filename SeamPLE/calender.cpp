@@ -818,9 +818,10 @@ bool calender::dateComparator(tm date1,tm date2) //@RIANDY
     bool result=false;
 
     if(date1.tm_year<date2.tm_year)
-        return date1.tm_year<date2.tm_year;
+        return true;
     else if(date1.tm_year==date2.tm_year)
     {
+
         if(date1.tm_mon<date2.tm_mon)
             result=true;
         else if(date1.tm_mon==date2.tm_mon)
@@ -859,7 +860,8 @@ vector<task> calender::SearchPastEvent() //@RIANDY
     vector<task> bufferStorage;
 
     for(int i=0;i<_storage.size();i++)
-        if(dateComparator(_storage[i].getStartDate(),now)==true && _storage[i].getCategory()!="F10AT")
+        if(dateComparator(_storage[i].getEndDate(),now)==true && _storage[i].getDateType() != F10AT)
+
             bufferStorage.push_back(_storage[i]);
 
     return bufferStorage;
