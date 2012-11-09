@@ -379,12 +379,14 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
         case 3:   if( processTimeFormat1(date, time))
             {it=tokens.erase(it);}
+            return date;
             break;
 
         case 4:   if(processTimeFormat2(date, time))
             {it=tokens.erase(it);}
             if(processTimeFormat8(date, time))
             {it=tokens.erase(it);}
+            return date;
             break;
 
         case 5: if(processTimeFormat3(date, time))
@@ -1754,6 +1756,33 @@ void Intellisense::smartAutoFill(Action &task)
 
     }
 
+    if(task.getDateType()!=4)
+    {
+        task.setEndDate(getEndOfDay(task));
+    }
+
 }
+
+ tm Intellisense::getEndOfDay(Action &task)
+ {
+     tm  timeinfo;
+     tm  endDate = task.getEndDate();
+     if(endDate.tm_year == 0
+             && endDate.tm_mon == 0
+             && endDate.tm_mday == 0
+             && endDate.tm_hour == 0
+             && endDate.tm_min ==0 )
+     {
+     tm startDate = task.getStartDate();
+     timeinfo.tm_year = startDate.tm_year;
+     timeinfo.tm_mday = startDate.tm_mday;
+     timeinfo.tm_mon= startDate.tm_mon;
+     timeinfo.tm_hour=23;
+     timeinfo.tm_min=59;
+      return timeinfo;
+     }else
+     {return endDate;}
+
+ }
 
 
