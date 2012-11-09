@@ -35,7 +35,7 @@ GuiControl::GuiControl()
     {
         createSystemTrayIconIfPossible();
     }
-    catch (string error)
+    catch (string& error)
     {
         _faulty->report(error);
     }
@@ -101,7 +101,7 @@ void GuiControl::check(QString input)
         QVector <QString> output =
                 _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
         bool invalidSchedulerReturn = (output.size() < 2);
-
+        qDebug() << "THIS";
         if (invalidSchedulerReturn)
         {
             output.clear();
@@ -122,7 +122,7 @@ void GuiControl::check(QString input)
                     output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
                 }
             }
-            catch (string error)
+            catch (string& error)
             {
                 _faulty->report(error);
             }
@@ -137,7 +137,7 @@ void GuiControl::check(QString input)
                 {
                     _standardGui->instantiateTable(output.mid(1,output.size() - 3));
                 }
-                catch (string error)
+                catch (string& error)
                 {
                     _faulty->report(error);
                 }
@@ -181,7 +181,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                 {
                     _standardGui->instantiateTable(output.mid(1,capacity - 2));
                 }
-                catch (string error)
+                catch (string& error)
                 {
                     _faulty->report(error);
                 }
@@ -349,7 +349,7 @@ void GuiControl::send(QString feedback)
             _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
         }
     }
-    catch (string error)
+    catch (string& error)
     {
         _faulty->report(error);
     }

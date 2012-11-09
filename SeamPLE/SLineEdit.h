@@ -6,10 +6,12 @@
 
 enum LineEdit_Code
 {
+    NON_EXISTENT = -2,
+    DEFAULT = -1,
     EMPTY = 0,
     FULL = 10,
     ENTER = 16777220,
-    UP = 16777236,
+    UP = 16777235,
     DOWN = 16777237
 };
 
@@ -27,7 +29,7 @@ protected:
 
     void focusOutEvent(QFocusEvent *);
 
-    //void keyPressEvent(QKeyEvent *);
+    void keyPressEvent(QKeyEvent *);
 
     bool positionIsSet();
 
