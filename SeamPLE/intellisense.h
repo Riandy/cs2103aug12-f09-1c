@@ -131,6 +131,7 @@ public:
     Action check(string query);
     string getOperation(vector<string>& tokens);
     tm getDate(vector<string>& tokens);
+    tm getEndOfDay(Action &task);
     void getImptDate(string _date, tm &date);
     string getEventName(vector<string>& tokens);
     int getID(vector<string>& tokens);
