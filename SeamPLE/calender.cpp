@@ -29,14 +29,25 @@ calender::~calender()
 
 string calender::convertToDate(tm _date) //@RIANDY
 {
-    string _result;
+    string _dateString;
     ostringstream convert;
-    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year << " - " ;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year<< " - " ;
     convert<< _date.tm_hour << " : " << _date.tm_min << " : " << _date.tm_sec;
-    _result=convert.str();
-    return _result;
+    _dateString=convert.str();
+    return _dateString;
 
 }
+
+string calender::convertToDateNoTime(tm _date) //@RIANDY
+{
+    string _dateString;
+    ostringstream convert;
+    convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year;
+    _dateString=convert.str();
+    return _dateString;
+
+}
+
 
 
 bool calender::addItem(task currentTask) //@JOHN
@@ -557,8 +568,12 @@ vector<task> calender::SearchByDate(string searchDate) //@RIANDY
         string  bufferDate;
         tm _date=_storage[i].getStartDate();
         ostringstream convert;
-        convert<< _date.tm_mday << "-" << _date.tm_mon << "-" << _date.tm_year;
+        convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year;
         bufferDate=convert.str();
+        cout<<bufferDate;
+        cout<<endl;
+        cout<<searchDate;
+        cout<<endl;
 
         if(searchDate==bufferDate)
             _bufferStorage.push_back(_storage[i]);

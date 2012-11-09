@@ -78,6 +78,7 @@ public:
     bool redoAction();
     bool markTask(string taskName);
     bool deleteAll();
+    string convertToDateNoTime(tm _date);
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
     vector<task> SearchByPartialTask(string searchItem);

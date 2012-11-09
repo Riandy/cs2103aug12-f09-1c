@@ -57,6 +57,9 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
     //convert command to upper case to ensure that it is not case sensitive
     transform(command.begin(), command.end(),command.begin(), ::toupper);
 
+    cout<<"\n\n\n";
+    cout<<newAction.getDateType()<<"\n\n";
+
     //process and package the action into task
     task newTask=processAction(newAction);
     cout<<newTask.getDateType();
@@ -205,8 +208,10 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
 
     else if(command=="FIND")
     {
-        string _dateString = eventCalender.convertToDate(newTask.getStartDate());
+        string _dateString = eventCalender.convertToDateNoTime(newTask.getStartDate());
         //case 1: search by category
+
+
         if(newTask.getCategory()!="#")
         {
             taskVector = eventCalender.SearchByCat(newTask.getCategory());
@@ -221,6 +226,7 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
         }
          else if (_dateString != "0 / 0 / 0 - 0 : 0 : 0")
         {
+
             taskVector = eventCalender.SearchByDate(_dateString);
             partialUpdateGUI(taskVector);
         }
@@ -522,13 +528,14 @@ task scheduler::processAction(Action newAction) //@RIANDY
     newTask.setPriority(newAction.getPriority());
     newTask.setStartDate(newAction.getStartDate());
     newTask.setEndDate(newAction.getEndDate());
+    newTask.setDateType(newAction.getDateType());
     newTask.setID(newAction.getID());
     return newTask;
 }
 
 string scheduler::convertToDate(tm _date) //@RIANDY
 {
-    string _result;
+    string _dateString;
     ostringstream convert;
     if(_date.tm_mday<10)
         convert<<"0"<<_date.tm_mday<<" / ";
@@ -542,7 +549,7 @@ string scheduler::convertToDate(tm _date) //@RIANDY
 
     convert<< _date.tm_year << " - " ;
 
-    if(_date.tm_hour<10)
+   if(_date.tm_hour<10)
         convert<<"0"<<_date.tm_hour<< " : ";
     else
         convert<<_date.tm_hour<< " : ";
@@ -557,8 +564,8 @@ string scheduler::convertToDate(tm _date) //@RIANDY
     else
         convert<<_date.tm_sec;
 
-    _result=convert.str();
-    return _result;
+   _dateString =convert.str();
+    return _dateString;
 }
 
 
