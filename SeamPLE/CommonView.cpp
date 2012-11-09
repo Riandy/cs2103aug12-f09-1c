@@ -18,7 +18,8 @@ const QString CommonView:: COMMAND_FIND = "find ";
 const QString CommonView:: COMMAND_DISPLAY = "display";
 const QString CommonView:: COMMAND_DELETE = "delete ";
 const QString CommonView:: COMMAND_EDIT = "edit ";
-
+const QString CommonView:: COMMAND_MARK = "mark ";
+const QString CommonView:: COMMAND_TODAY = "today";
 const QString CommonView:: COMMAND_FIND_FLOAT = "find #F10AT";
 
 const string CommonView:: MESSAGE_ERROR_INVALID_COLOUR =
