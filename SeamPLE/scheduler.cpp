@@ -1,5 +1,7 @@
 #include "scheduler.h"
 
+#include <QDebug>
+
 static string MESSAGE_ERROR_NOT_FOUND = "The item does not exist.";
 static string MESSAGE_ERROR_INTELLISENSE_CHECK = "Error - The system failed to process your request. Please try again.";
 static string MESSAGE_ADD_SUCCESS = "Your event was added successfully.";
@@ -290,59 +292,6 @@ string scheduler::getEventNameForStart(int hour, int min) //@RIANDY
     return feedbackMessage.str();
 }
 
-
-vector<string> scheduler:: getTodayEvents() //@RIANDY
-{
-    _result.clear();
-    vector<task> taskList = eventCalender.getToday();
-    int size = taskList.size();
-    vector<task> firstPriority;
-    bool firstPriorityFound = false;
-    int threeCountFlag = 0;
-    vector<task> threeTasks;
-    int highPriorityTasks = 0;
-
-    for (int i = 0; i < size ; i++)
-    {
-        if (taskList[i].getPriority() == "HIGH")
-        {
-            highPriorityTasks++;
-        }
-
-        if (!firstPriorityFound && taskList[i].getPriority() == "HIGH")
-        {
-            firstPriorityFound = true;
-            firstPriority.push_back(taskList[i]);
-        }
-        else if (threeCountFlag < 3)
-        {
-            threeCountFlag++;
-            threeTasks.push_back(taskList[i]);
-        }
-    }
-
-    vector<string> eventsOverview;
-    eventsOverview.push_back(getStringFromInt(size));
-    eventsOverview.push_back(getStringFromInt(highPriorityTasks));
-    if (firstPriorityFound)
-    {
-        partialUpdateGUI(firstPriority);
-        _result.erase(_result.begin());
-        _result.erase(_result.end());
-        eventsOverview = combineStringVectors(eventsOverview,_result);
-    }
-    if (threeCountFlag != 0)
-    {
-        _result.clear();
-        partialUpdateGUI(threeTasks);
-        _result.erase(_result.begin());
-        _result.erase(_result.end());
-        eventsOverview = combineStringVectors(eventsOverview,_result);
-    }
-
-    return eventsOverview;
-}
-
 task scheduler::processAction(Action newAction) //@RIANDY
 {
     taskVector.clear();
@@ -485,30 +434,6 @@ bool scheduler::isTimeZero(tm time) //@RIANDY
         return true;
     else
         return false;
-}
-
-//Take the content of both vectors and return as a single
-//vector of strings
-vector<string> scheduler:: combineStringVectors(
-        vector<string> first, vector<string> second) //@RIANDY
-{
-    vector<string> combined = first;
-
-    int size = second.size();
-    for (int i = 0; i < size ;i++)
-    {
-        combined.push_back(second[i]);
-    }
-
-    return combined;
-}
-
-//Get a string conversion from the integer that is sent in as the parameter
-string scheduler:: getStringFromInt(int subject) //@RIANDY
-{
-    stringstream buffer;
-    buffer << subject;
-    return buffer.str();
 }
 
 void scheduler::Add(task thisTask) //@JOHN
@@ -725,5 +650,98 @@ void scheduler::Todo() //@JOHN
 
 
 
+//Get a list of today's events for StandardView
+vector<string> scheduler:: getTodayEvents() //@WEIYUAN
+{
+    int size;
+    vector<task> firstPriority;
+    bool firstPriorityFound = false;
+    int threeCountFlag = 0;
+    vector<task> threeTasks;
+    int highPriorityTasks = 0;
 
+    getAllRequiredParameters(&firstPriority, &firstPriorityFound,
+                             &highPriorityTasks,&size,
+                             &threeCountFlag, &threeTasks);
+    qDebug() << highPriorityTasks;
+    return makeTodayStringResults(firstPriority, firstPriorityFound,
+                                  highPriorityTasks,size,
+                                  threeCountFlag, threeTasks);
+}
 
+void scheduler::getAllRequiredParameters(vector<task>* firstPriority, bool* firstPriorityFound,
+                                         int* highPriorityTasks, int* size,
+                                         int* threeCountFlag, vector<task>* threeTasks)
+{
+    _result.clear();
+    vector<task> taskList = eventCalender.getToday();
+    *size = taskList.size();
+
+    for (int i = 0; i < *size ; i++)
+    {
+        if (taskList[i].getPriority() == "HIGH")
+        {
+            *highPriorityTasks++;
+        }
+
+        if (!*firstPriorityFound && taskList[i].getPriority() == "HIGH")
+        {
+            *firstPriorityFound = true;
+            firstPriority->push_back(taskList[i]);
+        }
+        else if (*threeCountFlag < 3)
+        {
+            *threeCountFlag++;
+            threeTasks->push_back(taskList[i]);
+        }
+    }
+}
+
+vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
+                                                 int highPriorityTasks, int size,
+                                                 int threeCountFlag, vector<task> threeTasks)
+{
+    vector<string> eventsOverview;
+    eventsOverview.push_back(getStringFromInt(size));
+    eventsOverview.push_back(getStringFromInt(highPriorityTasks));
+    if (firstPriorityFound)
+    {
+        partialUpdateGUI(firstPriority);
+        _result.erase(_result.begin());
+        _result.erase(_result.end());
+        eventsOverview = combineStringVectors(eventsOverview,_result);
+    }
+    if (threeCountFlag != 0)
+    {
+        _result.clear();
+        partialUpdateGUI(threeTasks);
+        _result.erase(_result.begin());
+        _result.erase(_result.end());
+        eventsOverview = combineStringVectors(eventsOverview,_result);
+    }
+    return eventsOverview;
+}
+
+//Take the content of both vectors and return as a single
+//vector of strings
+vector<string> scheduler:: combineStringVectors(
+        vector<string> first, vector<string> second) //@WEIYUAN
+{
+    vector<string> combined = first;
+
+    int size = second.size();
+    for (int i = 0; i < size ;i++)
+    {
+        combined.push_back(second[i]);
+    }
+
+    return combined;
+}
+
+//Get a string conversion from the integer that is sent in as the parameter
+string scheduler:: getStringFromInt(int subject) //@WEIYUAN
+{
+    stringstream buffer;
+    buffer << subject;
+    return buffer.str();
+}
