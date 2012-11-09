@@ -45,7 +45,6 @@ string calender::convertToDateNoTime(tm _date) //@RIANDY
     convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year;
     _dateString=convert.str();
     return _dateString;
-
 }
 
 
@@ -53,7 +52,6 @@ string calender::convertToDateNoTime(tm _date) //@RIANDY
 bool calender::addItem(task currentTask) //@JOHN
 {
     ASSERT(currentTask.getEventName() !="","Fail to add, task doesn't contain event name");
-    saveHistory(_ADDITION);
     string _currentName = currentTask.getEventName();
     string _uniqueName = ensureUniqueName(_currentName);
     currentTask.setEventName(_uniqueName);
@@ -64,6 +62,7 @@ bool calender::addItem(task currentTask) //@JOHN
     }
 
     saveAdd(currentTask.getEventName());
+    saveHistory(_ADDITION);
 
     _storage.push_back(currentTask);
     if(writeFile())
@@ -73,7 +72,6 @@ bool calender::addItem(task currentTask) //@JOHN
         _faulty->report("cannot write to file");
         return false;
     }
-
 }
 
 
@@ -83,8 +81,9 @@ string calender::ensureUniqueName(string _name) //@JOHN
         return _name;
     else
     {
-        // 1 is not a magic number, it is the actual number that is being
-        // appended to the task name.
+        // 1 can be treated as a string, which will be appended to events with duplicate
+        // names, so as to ensure unique names. This will be incremented until a unique name is
+        // found.
 
         int collisionNumber = 1;
         string _originalName = _name;
@@ -145,14 +144,11 @@ vector<task> calender::getFloatingEvents() //@JOHN
 
 bool calender::deleteItem(int taskID) //@JOHN
 {
-
     saveHistory(_DELETE);
     saveDeletedTask(taskID-1);
     _storage.erase(_storage.begin()+taskID-1);
-
     writeFile();
     return true;
-
 }
 
 bool calender::deleteAll() //@JOHN
@@ -162,7 +158,6 @@ bool calender::deleteAll() //@JOHN
     saveHistory(_DELETEALL);
     writeFile();
     return true;
-
 }
 
 bool calender::deleteItem(string eventName) //@RIANDY
@@ -200,13 +195,11 @@ void calender::writeBackupFile() //@JOHN
 {
         std::ifstream    inFile(STORAGE_FILENAME);
         std::ofstream    outFile(BACKUP_FILENAME);
-
         outFile << inFile.rdbuf();
 }
 
 bool calender::checkID(int taskID) //@JOHN
 {
-
     if (taskID > int(_storage.size()) || taskID<1)     
         return false;
     else
@@ -261,7 +254,6 @@ bool calender::editTask( task _edited) //@WENREN
 
 vector<task> calender::SearchByCat(string searchItem) //@RIANDY
 {
-
     vector<task> _bufferStorage;
     for (int i = 0; i < int(_storage.size()); i++)
     {
@@ -277,7 +269,6 @@ vector<task> calender::SearchByCat(string searchItem) //@RIANDY
 
 vector<task> calender::SearchByTask(string searchItem) //@RIANDY
 {
-
     vector<task> _bufferStorage;
     for (int i = 0; i < int(_storage.size()); i++)
     {
@@ -333,7 +324,6 @@ int calender::getTaskID(string searchItem) //@JOHN
         if (_storage[i].getEventName() == searchItem)
             taskID = i;
     }
-
     return taskID;
 }
 
@@ -360,8 +350,6 @@ bool calender::loadFile(char* fileName) //@RIANDY
 
     while(readFile>>temp)
     {
-
-
         readFile>>temp;
         readFile.get(space);
         getline(readFile,description);
@@ -440,50 +428,24 @@ bool calender::undoAction() //@JOHN
         string lastCommand = _commandHistory.top();
         if (lastCommand == _ADDITION)
         {
-            _undoHistory.push(_ADDITION);
-            int ID = getTaskID(_addHistory.top());
-             _undoneAddTasks.push(_storage[ID]);
-            _storage.erase(_storage.begin()+ID);
-            _addHistory.pop();
+
+            this->undoAdd();
         }
 
         else if (lastCommand == _DELETE)
         {
-            ASSERT(_deletedTasks.size() != 0,"Nothing in deleted tasks stack");
-            _undoHistory.push(_DELETE);
-            task tempTask = _deletedTasks.top();
-            _storage.push_back(tempTask);
-            saveUndoneDelete(tempTask.getEventName());
-            _deletedTasks.pop();
+
+            this->undoDelete();
         }
 
         else if (lastCommand == _EDIT)
         {
-            ASSERT(_undoNewEdits.size() != 0, "Nothing in undo stack");
-            _undoHistory.push(_EDIT);
-            task tempTask = _undoNewEdits.top();
-
-            int position = getTaskID(tempTask.getEventName());
-                if (position != NOTFOUND) // defensive programming
-            {
-                 _storage[position] = _undoOriginalEdits.top();
-                //swapTops(tempTask);
-                 redoOriginalEdits(_undoNewEdits.top());
-                 redoNewEdits(_undoOriginalEdits.top());
-                 _undoOriginalEdits.pop();
-                 _undoNewEdits.pop();
-            }
-            else if (position == NOTFOUND)
+            if(!(this->undoEdit()))
                 return false;
         }
         else if (lastCommand == _DELETEALL)
         {
-
-            loadFile(BACKUP_FILENAME);
-
-            remove(BACKUP_FILENAME);
-
-            _undoHistory.push(_DELETEALL);
+            this->undoDeleteAll();
         }
         else
             _faulty->report("Calender class: Unknown undo command");
@@ -502,52 +464,23 @@ bool calender::redoAction() //@JOHN
     {
         if (_undoHistory.top() == _ADDITION)
         {
-            task lastUndo =  _undoneAddTasks.top();
-            _storage.push_back(lastUndo);
-            saveHistory(_ADDITION);
-            saveAdd(lastUndo.getEventName());
-             _undoneAddTasks.pop();
+
+            this->redoAdd();
         }
         else if (_undoHistory.top() == _DELETE)
         {
-           /* int taskID = _storage.size();
-            saveDeletedTask(taskID-1);
-            _storage.erase(_storage.begin()+taskID-1);
-            saveHistory(_DELETE);*/
-            // ABOVE OBSOLETE CODE
-
-            saveHistory(_DELETE);
-            int ID = getTaskID(_deleteHistory.top());
-
-          saveDeletedTask(ID);
-
-            _storage.erase(_storage.begin()+ ID);
-            _deleteHistory.pop();
-
-
-
+            this->redoDelete();
         }
         else if (_undoHistory.top() == _EDIT)
         {
-            task tempTask = _redoNewEdits.top();
-            int position = getTaskID(tempTask.getEventName());
-            if (position != NOTFOUND) // defensive programming
-            {
-                _storage[position] = _redoOriginalEdits.top();
-                               saveHistory(_EDIT);
-                undoOriginalEdits(_redoNewEdits.top());
-                undoNewEdits(_redoOriginalEdits.top());
-                _redoNewEdits.pop();
-                _redoOriginalEdits.pop();
-            }
-            else if (position == NOTFOUND)
+
+            if(!(this->redoEdit()))
                 return false;
         }
         else if (_undoHistory.top() == _DELETEALL)
         {
-            writeBackupFile();
-            _storage.clear();
-            saveHistory(_DELETEALL);
+
+            this->redoDeleteAll();
         }
         else
             _faulty->report("Calender class: Unknown redo command");
@@ -920,9 +853,92 @@ bool calender::fileExists(const char *fileName) //@JOHN
 
 
 
+void calender::undoAdd() //@JOHN
+{
+    _undoHistory.push(_ADDITION);
+    int ID = getTaskID(_addHistory.top());
+     _undoneAddTasks.push(_storage[ID]);
+    _storage.erase(_storage.begin()+ID);
+    _addHistory.pop();
+}
+
+void calender::undoDelete() //@JOHN
+{
+    ASSERT(_deletedTasks.size() != 0,"Nothing in deleted tasks stack");
+    _undoHistory.push(_DELETE);
+    task tempTask = _deletedTasks.top();
+    _storage.push_back(tempTask);
+    saveUndoneDelete(tempTask.getEventName());
+    _deletedTasks.pop();
+}
+bool calender::undoEdit() //@JOHN
+{
+    ASSERT(_undoNewEdits.size() != 0, "Nothing in undo stack");
+    _undoHistory.push(_EDIT);
+    task tempTask = _undoNewEdits.top();
+
+    int position = getTaskID(tempTask.getEventName());
+        if (position != NOTFOUND) // defensive programming
+    {
+         _storage[position] = _undoOriginalEdits.top();
+         redoOriginalEdits(_undoNewEdits.top());
+         redoNewEdits(_undoOriginalEdits.top());
+         _undoOriginalEdits.pop();
+         _undoNewEdits.pop();
+         return true;
+    }
+    else if (position == NOTFOUND)
+        return false;
+}
+void calender::undoDeleteAll() //@JOHN
+{
+    loadFile(BACKUP_FILENAME);
+
+    remove(BACKUP_FILENAME);
+
+    _undoHistory.push(_DELETEALL);
+}
 
 
+void calender::redoAdd() //@JOHN
+{
+    task lastUndo =  _undoneAddTasks.top();
+    _storage.push_back(lastUndo);
+    saveHistory(_ADDITION);
+    saveAdd(lastUndo.getEventName());
+     _undoneAddTasks.pop();
+}
 
+void calender::redoDelete() //@JOHN
+{
+    saveHistory(_DELETE);
+    int ID = getTaskID(_deleteHistory.top());
+    saveDeletedTask(ID);
+    _storage.erase(_storage.begin()+ ID);
+    _deleteHistory.pop();
+}
 
+bool calender::redoEdit() //@JOHN
+{
+    task tempTask = _redoNewEdits.top();
+    int position = getTaskID(tempTask.getEventName());
+    if (position != NOTFOUND) // defensive programming
+    {
+        _storage[position] = _redoOriginalEdits.top();
+                       saveHistory(_EDIT);
+        undoOriginalEdits(_redoNewEdits.top());
+        undoNewEdits(_redoOriginalEdits.top());
+        _redoNewEdits.pop();
+        _redoOriginalEdits.pop();
+        return true;
+    }
+    else if (position == NOTFOUND)
+        return false;
+}
 
-
+void calender::redoDeleteAll() //@JOHN
+{
+    writeBackupFile();
+    _storage.clear();
+    saveHistory(_DELETEALL);
+}

@@ -51,6 +51,16 @@ private:
     void saveUndoneDelete(string Item);
     void writeBackupFile();
 
+    void undoAdd();
+    void undoDelete();
+    bool undoEdit();
+    void undoDeleteAll();
+
+    void redoAdd();
+    void redoDelete();
+    bool redoEdit();
+    void redoDeleteAll();
+
     bool writeFile();
     bool loadFile(char* fileName);
     bool fileExists(const char* fileName);
