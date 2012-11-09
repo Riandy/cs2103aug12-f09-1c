@@ -42,6 +42,7 @@ StandardView::StandardView(QWidget *parent):
 
     resetAllTablesContents();
     _resultsTableViewExpanded = false;
+    _helpPageNo = 1;
 
     setStartView();
     _currentlyChanging = false;
@@ -79,22 +80,22 @@ void StandardView:: endInstance()
     }
 }
 
-void StandardView::showFeedbackLabel(QString output)
+void StandardView::displayFeedbackLabel(QString output)
 {
     ui->label->setText(output);
 }
 
-void StandardView::showFeedbackInputEdit(QString output)
+void StandardView::displayFeedbackInputEdit(QString output)
 {
     ui->lineEdit->setText(output);
 }
 
-void StandardView:: showFocusInInputEdit (bool focus)
+void StandardView:: displayFocusInInputEdit (bool focus)
 {
     ui->lineEdit->setFocusInput(focus);
 }
 
-void StandardView:: showAppropriateColorInputEdit (InputBarFlag color) throw (string)
+void StandardView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (string)
 {
     switch (color)
     {
@@ -226,13 +227,15 @@ void StandardView::redoTriggered()
 void StandardView::addTriggered()
 {
     ui->lineEdit->setText(COMMAND_ADD);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::findTriggered()
 {
     ui->lineEdit->setText(COMMAND_FIND);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::findFloatTriggered()
@@ -248,19 +251,21 @@ void StandardView::displayTriggered()
 void StandardView::deleteTriggered()
 {
     ui->lineEdit->setText(COMMAND_DELETE);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::editTriggered()
 {
     ui->lineEdit->setText(COMMAND_EDIT);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::clearTriggered()
 {
-    showFocusInInputEdit(true);
-    showFeedbackInputEdit("");
+    displayFocusInInputEdit(true);
+    displayFeedbackInputEdit("");
     emit relay("");
 }
 
@@ -356,13 +361,25 @@ void StandardView::changeDisplayTriggered()
     }
 }
 
-void StandardView::changeTableViewKey()
+void StandardView::changeViewModeTriggered()
 {
-    if (_currentType == RESULTS_TABLE && !screenCurrentlySliding())
+    if (!screenCurrentlySliding())
     {
-        _resultsTableViewExpanded = !_resultsTableViewExpanded;
-        showResultsTableType();
-        displayTableResults();
+        if (_currentType == RESULTS_TABLE)
+        {
+            _resultsTableViewExpanded = !_resultsTableViewExpanded;
+            showResultsTableType();
+            displayTableResults();
+        }
+        else if (_currentType == HELP_VIEW)
+        {
+            _helpPageNo++;
+            if (_helpPageNo == 4)
+            {
+                _helpPageNo = 1;
+            }
+            showHelpViewType();
+        }
     }
 }
 
@@ -395,6 +412,18 @@ void StandardView::screenTwoTriggered()
 void StandardView::screenThreeTriggered()
 {
     showViewWithType(RESULTS_TABLE);
+}
+
+void StandardView::markTriggered()
+{
+    ui->lineEdit->setText(COMMAND_MARK);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
+}
+
+void StandardView::todayTriggered()
+{
+    emit run(COMMAND_TODAY, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::helpTriggered()
@@ -518,6 +547,27 @@ void StandardView::showResultsTableType()
     }
 }
 
+void StandardView::showHelpViewType()
+{
+    switch (_helpPageNo)
+    {
+        case 1:
+            setFrameAnimationProperties(ui->frame_17, 0,0);
+            break;
+
+        case 2:
+            setFrameAnimationProperties(ui->frame_17, 0,-437);
+            break;
+
+        case 3:
+            setFrameAnimationProperties(ui->frame_17, 0,-874);
+            break;
+
+        default:
+            break;
+    }
+}
+
 void StandardView::setFrameAnimationProperties(QFrame* frame, int xCoord, int yCoord)
 {
     _currentlySliding = true;
@@ -550,11 +600,6 @@ void StandardView::showTodayView()
     emit todayViewTriggered();
 }
 
-void StandardView::displayTodayEvents()
-{
-
-}
-
 void StandardView::showViewWithType(viewType type) throw (string)
 {
     if (!screenCurrentlySliding())
@@ -565,7 +610,6 @@ void StandardView::showViewWithType(viewType type) throw (string)
                 switch (_currentType)
                 {
                     case TODAY_EVENTS:
-                        displayTodayEvents();
                         break;
 
                     case RESULTS_TABLE:
@@ -670,11 +714,11 @@ void StandardView::displayTableNotExpanded()
 
     while (stillInResultsRange && stillInTableRange)
     {
-        showTableEventId(i,_tableItems.output[(i*6)]);
-        showTableEventName(i, _tableItems.output[(i*6)+1]);
-        showTableStartDate(i, _tableItems.output[(i*6)+2]);
-        showTableEndDate(i, _tableItems.output[(i*6)+3]);
-        showTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
+        displayTableEventId(i,_tableItems.output[(i*6)]);
+        displayTableEventName(i, _tableItems.output[(i*6)+1]);
+        displayTableStartDate(i, _tableItems.output[(i*6)+2]);
+        displayTableEndDate(i, _tableItems.output[(i*6)+3]);
+        displayTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
 
         i++;
         stillInResultsRange = (i <= _tableItems.endIndex);
@@ -712,7 +756,7 @@ void StandardView:: displayTableExpanded()
                 MESSAGE_PRIORITY_LABEL+
                 _tableItems.output[(i*6)+4];
 
-        showTableExpandedNotes(i-_tableItems.currentIndex,result);
+        displayTableExpandedNotes(i-_tableItems.currentIndex,result);
 
         i++;
         stillInResultsRange = (i <= _tableItems.endIndex);
@@ -728,7 +772,7 @@ void StandardView:: displayTableExpanded()
                           +" results ");
 }
 
-void StandardView::showTableExpandedNotes(int reformatIndex, QString result)
+void StandardView::displayTableExpandedNotes(int reformatIndex, QString result)
 {
     switch (reformatIndex)
     {
@@ -749,7 +793,7 @@ void StandardView::showTableExpandedNotes(int reformatIndex, QString result)
     }
 }
 
-void StandardView:: showTableEventId(int index, QString id)
+void StandardView:: displayTableEventId(int index, QString id)
 {
     int reformatIndex = index%10;
 
@@ -800,7 +844,7 @@ void StandardView:: showTableEventId(int index, QString id)
     }
 }
 
-void StandardView:: showTableEventName(int index, QString name)
+void StandardView:: displayTableEventName(int index, QString name)
 {
     int reformatIndex = index%10;
 
@@ -851,7 +895,7 @@ void StandardView:: showTableEventName(int index, QString name)
     }
 }
 
-void StandardView:: showTableStartDate(int index, QString startDate)
+void StandardView:: displayTableStartDate(int index, QString startDate)
 {
     int reformatIndex = index%10;
 
@@ -902,7 +946,7 @@ void StandardView:: showTableStartDate(int index, QString startDate)
     }
 }
 
-void StandardView:: showTableEndDate(int index, QString endDate)
+void StandardView:: displayTableEndDate(int index, QString endDate)
 {
     int reformatIndex = index%10;
 
@@ -953,7 +997,7 @@ void StandardView:: showTableEndDate(int index, QString endDate)
     }
 }
 
-void StandardView:: showTablePriorityIcon(int index, QString priority)
+void StandardView:: displayTablePriorityIcon(int index, QString priority)
 {
     int reformatIndex = index%10;
 
@@ -1068,69 +1112,52 @@ void StandardView:: setSignals()
 {
     connect(ui->pushButton,SIGNAL(clicked()),
             this,SLOT(calibrateCloseMechanism()));
-
     connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
             this,SLOT(recieve(QString)));
-
     connect(ui->lineEdit,SIGNAL(returnPressed()),
             this,SLOT(enterTriggered()));
-
     connect(ui->pushButton_2,SIGNAL(clicked()),
             this,SLOT(changeViewTriggered()));
-
     connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
-
     connect(_allShortcuts.getUndoKey(),SIGNAL(triggered()),
             this,SLOT(undoTriggered()));
-
     connect(_allShortcuts.getRedoKey(),SIGNAL(triggered()),
             this,SLOT(redoTriggered()));
-
     connect(_allShortcuts.getAddKey(),SIGNAL(triggered()),
             this,SLOT(addTriggered()));
-
     connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
             this,SLOT(findTriggered()));
-
     connect(_allShortcuts.getFindFloatKey(),SIGNAL(triggered()),
             this,SLOT(findFloatTriggered()));
-
     connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
             this,SLOT(displayTriggered()));
-
     connect(_allShortcuts.getDeleteKey(),SIGNAL(triggered()),
             this,SLOT(deleteTriggered()));
-
     connect(_allShortcuts.getEditKey(),SIGNAL(triggered()),
             this,SLOT(editTriggered()));
-
     connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
             this,SLOT(clearTriggered()));
-
     connect(_allShortcuts.getPageUpKey(),SIGNAL(triggered()),
             this,SLOT(pageUpTriggered()));
-
     connect(_allShortcuts.getPageDownKey(),SIGNAL(triggered()),
             this,SLOT(pageDownTriggered()));
-
     connect(_allShortcuts.getChangeDisplayKey(),SIGNAL(triggered()),
             this,SLOT(changeDisplayTriggered()));
-
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
-
     connect(_allShortcuts.getChangeTableViewKey(), SIGNAL(triggered()),
-            this, SLOT(changeTableViewKey()));
-
-    connect(_allShortcuts.getChangeScreenOneView(), SIGNAL(triggered()),
+            this, SLOT(changeViewModeTriggered()));
+    connect(_allShortcuts.getChangeScreenOneViewKey(), SIGNAL(triggered()),
             this, SLOT(helpTriggered()));
-
-    connect(_allShortcuts.getChangeScreenTwoView(), SIGNAL(triggered()),
+    connect(_allShortcuts.getChangeScreenTwoViewKey(), SIGNAL(triggered()),
             this, SLOT(screenTwoTriggered()));
-
-    connect(_allShortcuts.getChangeScreenThreeView(), SIGNAL(triggered()),
+    connect(_allShortcuts.getChangeScreenThreeViewKey(), SIGNAL(triggered()),
             this, SLOT(screenThreeTriggered()));
+    connect(_allShortcuts.getMarkKey(),SIGNAL(triggered()),
+            this,SLOT(markTriggered()));
+    connect(_allShortcuts.getTodayKey(),SIGNAL(triggered()),
+            this,SLOT(todayTriggered()));
 }
 
 bool StandardView::tableIsEmpty()

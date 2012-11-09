@@ -83,23 +83,23 @@ void SeampleView::hide()
 }
 
 //Function to change GUI interface label to contain output string
-void SeampleView::showFeedbackLabel(QString output)
+void SeampleView::displayFeedbackLabel(QString output)
 {
     ui->label->setText(output);
 }
 
 //Function to change GUI interface label to contain output string
-void SeampleView::showFeedbackInputEdit(QString output)
+void SeampleView::displayFeedbackInputEdit(QString output)
 {
     ui->lineEdit->setText(output);
 }
 
-void SeampleView:: showFocusInInputEdit (bool focus)
+void SeampleView:: displayFocusInInputEdit (bool focus)
 {
     ui->lineEdit->setFocusInput(focus);
 }
 
-void SeampleView:: showAppropriateColorInputEdit (InputBarFlag color) throw (string)
+void SeampleView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (string)
 {
     switch (color)
     {
@@ -163,13 +163,15 @@ void SeampleView::redoTriggered()
 void SeampleView::addTriggered()
 {
     ui->lineEdit->setText(COMMAND_ADD);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::findTriggered()
 {
     ui->lineEdit->setText(COMMAND_FIND);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::findFloatTriggered()
@@ -185,19 +187,21 @@ void SeampleView::displayTriggered()
 void SeampleView::deleteTriggered()
 {
     ui->lineEdit->setText(COMMAND_DELETE);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::editTriggered()
 {
     ui->lineEdit->setText(COMMAND_EDIT);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::clearTriggered()
 {
-    showFocusInInputEdit(true);
-    showFeedbackInputEdit("");
+    displayFocusInInputEdit(true);
+    displayFeedbackInputEdit("");
     emit relay("");
 }
 
@@ -229,6 +233,18 @@ void SeampleView::checkShowViewFinished(
                 this,SLOT(checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
         _currentlyChanging = false;
     }
+}
+
+void SeampleView::markTriggered()
+{
+    ui->lineEdit->setText(COMMAND_MARK);
+    displayFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
+}
+
+void SeampleView::todayTriggered()
+{
+    emit run(COMMAND_TODAY, ui->lineEdit->getFocusInput());
 }
 
 bool SeampleView:: singleInstanceExists()
@@ -333,4 +349,10 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
+
+    connect(_allShortcuts.getMarkKey(),SIGNAL(triggered()),
+            this,SLOT(markTriggered()));
+
+    connect(_allShortcuts.getTodayKey(),SIGNAL(triggered()),
+            this,SLOT(todayTriggered()));
 }

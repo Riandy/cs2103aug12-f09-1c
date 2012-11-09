@@ -324,13 +324,13 @@ void GuiControl::emptyResponse()
 
     if (interfaceIsStandardView())
     {
-        _standardGui->showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
-        _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
+        _standardGui->displayFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
+        _standardGui->displayAppropriateColorInputEdit(_inputColorFlag);
     }
     else
     {
-        _seampleGui->showFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
-        _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
+        _seampleGui->displayFeedbackLabel(MESSAGE_AVAILABLE_COMMANDS);
+        _seampleGui->displayAppropriateColorInputEdit(_inputColorFlag);
     }
 }
 
@@ -340,13 +340,13 @@ void GuiControl::send(QString feedback)
     {
         if (interfaceIsStandardView())
         {
-            _standardGui->showFeedbackLabel(feedback);
-            _standardGui->showAppropriateColorInputEdit(_inputColorFlag);
+            _standardGui->displayFeedbackLabel(feedback);
+            _standardGui->displayAppropriateColorInputEdit(_inputColorFlag);
         }
         else
         {
-            _seampleGui->showFeedbackLabel(feedback);
-            _seampleGui->showAppropriateColorInputEdit(_inputColorFlag);
+            _seampleGui->displayFeedbackLabel(feedback);
+            _seampleGui->displayAppropriateColorInputEdit(_inputColorFlag);
         }
     }
     catch (string& error)
@@ -361,11 +361,11 @@ void GuiControl:: sendWithInputEditItem(QString input,QString feedback)
 
     if (interfaceIsStandardView())
     {
-        _standardGui->showFeedbackInputEdit(input);
+        _standardGui->displayFeedbackInputEdit(input);
     }
     else
     {
-        _seampleGui->showFeedbackInputEdit(input);
+        _seampleGui->displayFeedbackInputEdit(input);
     }
 }
 
@@ -375,11 +375,11 @@ void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus, QString input
 
     if (interfaceIsStandardView())
     {
-        _standardGui->showFocusInInputEdit(inputBarHasFocus);
+        _standardGui->displayFocusInInputEdit(inputBarHasFocus);
     }
     else
     {
-        _seampleGui->showFocusInInputEdit(inputBarHasFocus);
+        _seampleGui->displayFocusInInputEdit(inputBarHasFocus);
     }
 }
 
