@@ -123,6 +123,10 @@ private slots:
 
     void screenThreeTriggered();
 
+    void markTriggered();
+
+    void todayTriggered();
+
 public slots:
     void helpTriggered();
 

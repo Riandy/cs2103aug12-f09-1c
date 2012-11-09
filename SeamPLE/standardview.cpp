@@ -227,12 +227,14 @@ void StandardView::addTriggered()
 {
     ui->lineEdit->setText(COMMAND_ADD);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::findTriggered()
 {
     ui->lineEdit->setText(COMMAND_FIND);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::findFloatTriggered()
@@ -249,12 +251,14 @@ void StandardView::deleteTriggered()
 {
     ui->lineEdit->setText(COMMAND_DELETE);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::editTriggered()
 {
     ui->lineEdit->setText(COMMAND_EDIT);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void StandardView::clearTriggered()
@@ -395,6 +399,18 @@ void StandardView::screenTwoTriggered()
 void StandardView::screenThreeTriggered()
 {
     showViewWithType(RESULTS_TABLE);
+}
+
+void StandardView::markTriggered()
+{
+    ui->lineEdit->setText(COMMAND_MARK);
+    showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
+}
+
+void StandardView::todayTriggered()
+{
+    emit run(COMMAND_TODAY, ui->lineEdit->getFocusInput());
 }
 
 void StandardView::helpTriggered()
@@ -1068,69 +1084,52 @@ void StandardView:: setSignals()
 {
     connect(ui->pushButton,SIGNAL(clicked()),
             this,SLOT(calibrateCloseMechanism()));
-
     connect(ui->lineEdit,SIGNAL(textEdited(const QString&)),
             this,SLOT(recieve(QString)));
-
     connect(ui->lineEdit,SIGNAL(returnPressed()),
             this,SLOT(enterTriggered()));
-
     connect(ui->pushButton_2,SIGNAL(clicked()),
             this,SLOT(changeViewTriggered()));
-
     connect(_allShortcuts.getSwitchViewKey(),SIGNAL(triggered()),
             this,SLOT(changeViewTriggered()));
-
     connect(_allShortcuts.getUndoKey(),SIGNAL(triggered()),
             this,SLOT(undoTriggered()));
-
     connect(_allShortcuts.getRedoKey(),SIGNAL(triggered()),
             this,SLOT(redoTriggered()));
-
     connect(_allShortcuts.getAddKey(),SIGNAL(triggered()),
             this,SLOT(addTriggered()));
-
     connect(_allShortcuts.getFindKey(),SIGNAL(triggered()),
             this,SLOT(findTriggered()));
-
     connect(_allShortcuts.getFindFloatKey(),SIGNAL(triggered()),
             this,SLOT(findFloatTriggered()));
-
     connect(_allShortcuts.getDisplayKey(),SIGNAL(triggered()),
             this,SLOT(displayTriggered()));
-
     connect(_allShortcuts.getDeleteKey(),SIGNAL(triggered()),
             this,SLOT(deleteTriggered()));
-
     connect(_allShortcuts.getEditKey(),SIGNAL(triggered()),
             this,SLOT(editTriggered()));
-
     connect(_allShortcuts.getClearKey(),SIGNAL(triggered()),
             this,SLOT(clearTriggered()));
-
     connect(_allShortcuts.getPageUpKey(),SIGNAL(triggered()),
             this,SLOT(pageUpTriggered()));
-
     connect(_allShortcuts.getPageDownKey(),SIGNAL(triggered()),
             this,SLOT(pageDownTriggered()));
-
     connect(_allShortcuts.getChangeDisplayKey(),SIGNAL(triggered()),
             this,SLOT(changeDisplayTriggered()));
-
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
-
     connect(_allShortcuts.getChangeTableViewKey(), SIGNAL(triggered()),
             this, SLOT(changeTableViewKey()));
-
-    connect(_allShortcuts.getChangeScreenOneView(), SIGNAL(triggered()),
+    connect(_allShortcuts.getChangeScreenOneViewKey(), SIGNAL(triggered()),
             this, SLOT(helpTriggered()));
-
-    connect(_allShortcuts.getChangeScreenTwoView(), SIGNAL(triggered()),
+    connect(_allShortcuts.getChangeScreenTwoViewKey(), SIGNAL(triggered()),
             this, SLOT(screenTwoTriggered()));
-
-    connect(_allShortcuts.getChangeScreenThreeView(), SIGNAL(triggered()),
+    connect(_allShortcuts.getChangeScreenThreeViewKey(), SIGNAL(triggered()),
             this, SLOT(screenThreeTriggered()));
+    connect(_allShortcuts.getMarkKey(),SIGNAL(triggered()),
+            this,SLOT(markTriggered()));
+    connect(_allShortcuts.getTodayKey(),SIGNAL(triggered()),
+            this,SLOT(todayTriggered()));
 }
 
 bool StandardView::tableIsEmpty()

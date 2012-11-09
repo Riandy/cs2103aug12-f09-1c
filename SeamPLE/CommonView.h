@@ -34,8 +34,9 @@ protected:
     const static QString COMMAND_DISPLAY;
     const static QString COMMAND_DELETE;
     const static QString COMMAND_EDIT;
-
     const static QString COMMAND_FIND_FLOAT;
+    const static QString COMMAND_MARK;
+    const static QString COMMAND_TODAY;
 
     //Following will contain strings corresponding to error reports of both user interfaces
     const static string MESSAGE_ERROR_INVALID_COLOUR;

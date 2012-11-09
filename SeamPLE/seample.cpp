@@ -179,7 +179,7 @@ QVector <QString> Seample::convertQString(vector <string> input)
 
 void Seample::setShortCutRequirementsMet(string command)
 {
-    if (command == "undo" || command == "redo" || command == "display")
+    if (command == "undo" || command == "redo" || command == "display" || command == "today")
     {
         intellisense->setRequirementsMet(true);
     }
