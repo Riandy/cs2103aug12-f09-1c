@@ -1,8 +1,12 @@
 #include "SLineEdit.h"
 
+#include <QDebug>
+
 //Set memory position to be -1, which will be checked as the
 //inexistent position
-int SLineEdit:: memPos = -1;
+int SLineEdit:: _memPos = -1;
+
+QVector <QString> SLineEdit:: _commandMem;
 
 SLineEdit::SLineEdit(QWidget *parent): QLineEdit(parent)
 {
@@ -42,27 +46,41 @@ void SLineEdit::focusOutEvent(QFocusEvent *event)
 
 //void SLineEdit::keyPressEvent(QKeyEvent *event)
 //{
-//    if (event->key() == Qt::Key_Enter)
+//    if (event->key() == ENTER)
 //    {
-//        if (commandMem.size() < MAX_SIZE)
+//        if (_commandMem.size() >= FULL)
 //        {
-//            commandMem.push_back(text());
+//            _commandMem.pop_front();
 //        }
-//        memPos = 0;
+//        _commandMem.push_back(text());
+//        _memPos = 0;
 //    }
-//    else if (event->key() == Qt::UpArrow)
+
+//    if (positionIsSet())
 //    {
-//        if (memPos < 9)
+//        if (event->key() == UP)
 //        {
-//            memPos++;
-//            setText(commandMem[memPos]);
+//            if (_memPos < FULL - 1)
+//            {
+//                _memPos++;
+//            }
+//            setText(_commandMem[_memPos]);
+//        }
+//        else if (event->key() == DOWN)
+//        {
+//            qDebug() << "I AM HERE";
+//            if (_memPos > EMPTY)
+//            {
+//                _memPos--;
+//            }
+//            setText(_commandMem[_memPos]);
 //        }
 //    }
-//    else if (event->key() == Qt::DownArrow)
-//    {
-//        if (memPos > 0)
-//        {
-//            memPos--;
-//        }
-//    }
+
+//    QLineEdit::keyPressEvent(event);
 //}
+
+bool SLineEdit::positionIsSet()
+{
+    return (_memPos != -1);
+}

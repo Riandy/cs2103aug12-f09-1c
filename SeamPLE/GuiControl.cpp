@@ -160,48 +160,50 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     {
         QVector <QString> output =
                 _inputProcessor->run(TO_SCHEDULER_AND_RETURN_RESULTS,input.toStdString());
-
-        int capacity = output.size();
-        bool needStandardView =
-                (output[output.size()-1] == (MESSAGE_GUI_DISPLAY));
-        _inputColorFlag = NONE;
-
-        if (needStandardView)
+        if (_inputProcessor->requirementsMet())
         {
-            if (!interfaceIsStandardView())
+            int capacity = output.size();
+            bool needStandardView =
+                    (output[output.size()-1] == (MESSAGE_GUI_DISPLAY));
+            _inputColorFlag = NONE;
+
+            if (needStandardView)
             {
-                changeView("",output[0], inputBarHasFocus);
+                if (!interfaceIsStandardView())
+                {
+                    changeView("",output[0], inputBarHasFocus);
+                }
+                else
+                {
+                    sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
+                }
+                try
+                {
+                    _standardGui->instantiateTable(output.mid(1,capacity - 2));
+                }
+                catch (string error)
+                {
+                    _faulty->report(error);
+                }
             }
             else
             {
-                sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
-            }
-            try
-            {
-                _standardGui->instantiateTable(output.mid(1,capacity - 2));
-            }
-            catch (string error)
-            {
-                _faulty->report(error);
-            }
-        }
-        else
-        {
-            //Scheduler must send results back. If not, we error handle it
-            //to produce an output that informs that no output is returned
-            bool invalidSchedulerReturn = (output.size() == 0);
+                //Scheduler must send results back. If not, we error handle it
+                //to produce an output that informs that no output is returned
+                bool invalidSchedulerReturn = (output.size() == 0);
 
-            if (invalidSchedulerReturn)
-            {
-                output.push_front(MESSAGE_SCHEDULER_INVALID_RETURN);
-                _faulty->report(MESSAGE_SCHEDULER_INVALID_RETURN.toStdString());
-            }
+                if (invalidSchedulerReturn)
+                {
+                    output.push_front(MESSAGE_SCHEDULER_INVALID_RETURN);
+                    _faulty->report(MESSAGE_SCHEDULER_INVALID_RETURN.toStdString());
+                }
 
-            if (interfaceIsStandardView())
-            {
-                _standardGui->resetAllTablesContents();
+                if (interfaceIsStandardView())
+                {
+                    _standardGui->resetAllTablesContents();
+                }
+                sendWithInputEditItem("",output[0]);
             }
-            sendWithInputEditItem("",output[0]);
         }
     }
 }

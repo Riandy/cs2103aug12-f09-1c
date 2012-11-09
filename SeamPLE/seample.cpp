@@ -155,6 +155,13 @@ QVector <QString> Seample::fireAction()
     return convertQString(result);
 }
 
+//Function to inform if the requirements of the edit bar
+//has been met
+bool Seample::requirementsMet()
+{
+    return intellisense->getrequirementsMet();
+}
+
 //Following function is for converting vector of QString
 //to QVector of QString
 QVector <QString> Seample::convertQString(vector <string> input)
