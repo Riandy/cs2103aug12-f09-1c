@@ -17,6 +17,7 @@ static string MESSAGE_ADD_NO_NAME = "You have not entered a valid event descript
 static string MESSAGE_DELETE_WARNING = "Your input was both an event name as well as a serial number. An entry was deleted by its serial number.";
 static string MESSAGE_MARK_SUCCESS = "Your event was marked.";
 static string MESSAGE_MARK_FAILURE = "There was an error marking your event.";
+static string MESSAGE_DELETE_NOT_ENOUGH_INPUT = "There is too little information to choose a task to delete.";
 bool scheduler::instanceFlag=false;
 static int NOTFOUND = -1;
 scheduler* scheduler::_scheduler=NULL;
@@ -100,12 +101,16 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
     else if(command=="DELETE")
 {
         //delete by ID
-        ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
-
-        ostringstream convert;
-        convert<<newTask.getID();
-        string _eventName = convert.str();
-
+        //ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
+        if ((newTask.getID() == -1) && (newTask.getEventName() == ""))
+        {
+            printMessage(MESSAGE_DELETE_NOT_ENOUGH_INPUT);
+        }
+        else
+        {
+            ostringstream convert;
+            convert<<newTask.getID();
+            string _eventName = convert.str();
         if (newTask.getEventName() == "all")
         {
              eventCalender.deleteAll();
@@ -151,6 +156,7 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
         else
         {
             printMessage(MESSAGE_ERROR_NOT_FOUND);
+        }
         }
         updateGUI();
     }
