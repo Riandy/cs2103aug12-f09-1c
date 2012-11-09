@@ -31,10 +31,6 @@ private:
     void printMessage(string _messageType);
     void partialUpdateGUI(vector<task> taskVector);
     bool isTimeZero(tm time);
-    vector<string> combineStringVectors(
-            vector<string> first, vector<string> second);
-    string getStringFromInt(int subject);
-
 
     void Add(task thisTask);
     void Delete(task thisTask);
@@ -57,7 +53,23 @@ public:
     string getEventBasedOnTime(int hour, int min);
     string getEventNameForEnd(int hour, int min);
     string getEventNameForStart(int hour, int min);
+
+
+//--TodayEvents generating functions-------------
+public:
     vector<string> getTodayEvents();
+
+private:
+    void getAllRequiredParameters(vector<task>* firstPriority, bool* firstPriorityFound,
+                                  int* highPriorityTasks, int* size,
+                                  int* threeCountFlag, vector<task>* threeTasks);
+    vector<string> makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
+                                          int highPriorityTasks, int size,
+                                          int threeCountFlag, vector<task> threeTasks);
+    vector<string> combineStringVectors(
+            vector<string> first, vector<string> second);
+    string getStringFromInt(int subject);
+//------------------------------------------------
 
 };
 
