@@ -48,22 +48,12 @@ private slots:
 #pragma region Scheduler UnitTesting
 
     void testSchedulerAdd();
-    void testSchedulerAdd2();
-    void testSchedulerAdd3();
-    void testSchedulerAdd4();
-    void testSchedulerAdd5();
-    void testSchedulerDelete();
-    void testSchedulerDelete2();
-    void testSchedulerDelete3();
-    void testSchedulerDelete3_2();
-    void testSchedulerDelete4();
-
-    void testSchedulerUnknownCommand();
-    void testSchedulerUnknownCommand2();
-    void testSchedulerUnknownCommand3();
-    void testSchedulerUnknownCommand4();
+    void testSchedulerAdd2(); //pass
+    void testSchedulerAdd3(); //pass
+    void testSchedulerAdd4(); //pass
+    void testSchedulerAdd5(); //pass
     void testUndo();
-    void testUnd2();
+    void testUndo2();
     void testUndo3();
     void testUndo4();
 
@@ -71,9 +61,53 @@ private slots:
     void testRedo2();
     void testRedo3();
     void testRedo4();
-        void testUndo5();
+    void testUndo5();
     void testRedo5();
 
+    void testSchedulerDelete(); //pass
+    void testSchedulerDelete2();
+    void testSchedulerDelete3();
+    void testSchedulerDelete3_2(); //pass
+    void testSchedulerDelete4();
+    void testUndo6();
+    void testUndo7();
+    void testUndo8();
+    void testUndo9();
+
+    void testRedo6();
+    void testRedo7();
+    void testRedo8();
+    void testRedo9();
+    void testUndo10();
+    void testRedo10();
+    void testSchedulerUnknownCommand();
+    void testSchedulerUnknownCommand2();
+    void testSchedulerUnknownCommand3();
+    void testSchedulerUnknownCommand4();
+
+
+    void testEdit();
+    void testEdit2();
+    void testEdit3();
+    void testEdit4();
+    void testEdit5();
+    void testUndo11();
+    void testUndo12();
+    void testUndo13();
+    void testUndo14();
+
+    void testRedo11();
+    void testRedo12();
+    void testRedo13();
+    void testRedo14();
+    void testUndo15();
+    void testRedo15();
+
+    void testMark();
+    void testMark2();
+    void testMark3();
+    void testMark4();
+    void testMark5();
 #pragma endregion Scheduler UnitTesting
 
 };

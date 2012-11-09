@@ -524,7 +524,7 @@ void UnitTest::testUndo() //@JOHN
     delete testTask;
 }
 
-void UnitTest::testUnd2() //@JOHN
+void UnitTest::testUndo2() //@JOHN
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -658,6 +658,479 @@ void UnitTest::testRedo5() //@JOHN
 
     vector<string> testVector =testScheduler->executeCommand(*testAction);
     QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testEdit() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("editenter");
+    task* testTask = new task;
+    testTask->setEventName("");
+    testAction->setTask(*testTask);
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Error - The system failed to process your request. Please try again."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testEdit2() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("editenter");
+    task* testTask = new task;
+    testTask->setEventName("ChickenRice");
+    testTask->setPriority("HIGH");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Your event was edited successfully."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testEdit3() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("editenter");
+    task* testTask = new task;
+    testTask->setEventName("ChickenRice");
+    testTask->setPriority("LOW");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Your event was edited successfully."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testEdit4() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("editenter");
+    task* testTask = new task;
+    testTask->setEventName("ChickenRice");
+    testTask->setPriority("HIGH");
+    testTask->setCategory("#nice");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Your event was edited successfully."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testEdit5() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("editenter");
+    task* testTask = new task;
+    testTask->setEventName("ChickenRice");
+
+    testTask->setCategory("#notnice");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Your event was edited successfully."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo9() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("There is nothing to undo."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testUndo8() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("undO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo7() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("Undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo6() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testRedo7() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testRedo8() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testRedo6() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testRedo9() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("There is nothing to redo."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo10() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("Undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testRedo10() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo11() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testUndo12() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("undO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo13() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("Undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo14() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("There is nothing to undo."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testRedo11() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testRedo12() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testRedo13() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testRedo14() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("There is nothing to redo."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testUndo15() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("Undo");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Undo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testRedo15() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("redO");
+    task* testTask = new task;
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Redo operation was successful."));
+    delete testAction;
+    delete testTask;
+}
+
+void UnitTest::testMark() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("MARK");
+    task* testTask = new task;
+    testTask->setEventName("ChickenRice");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Your event was marked."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testMark2() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("MARK");
+    task* testTask = new task;
+    testTask->setEventName("googlehiremenaoz");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("Your event was marked."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testMark3() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("MARK");
+    task* testTask = new task;
+    testTask->setEventName("googlehiremenaoz");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("There was an error marking your event."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testMark4() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("MARK");
+    task* testTask = new task;
+    testTask->setEventName("");
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("There was an error marking your event."));
+    delete testAction;
+    delete testTask;
+}
+void UnitTest::testMark5() //@JOHN
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    Action* testAction = new Action;
+    testAction->setCommand("MARK");
+    task* testTask = new task;
+    testTask->setID(3);
+    testAction->setTask(*testTask);
+
+    vector<string> testVector =testScheduler->executeCommand(*testAction);
+    QCOMPARE(testVector[0], string("There was an error marking your event."));
     delete testAction;
     delete testTask;
 }

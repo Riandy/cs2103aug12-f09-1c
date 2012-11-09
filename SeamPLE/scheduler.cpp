@@ -682,7 +682,7 @@ bool scheduler::isTimeZero(tm time) //@RIANDY
 //Take the content of both vectors and return as a single
 //vector of strings
 vector<string> scheduler:: combineStringVectors(
-        vector<string> first, vector<string> second)
+        vector<string> first, vector<string> second) //@RIANDY
 {
     vector<string> combined = first;
 
@@ -703,7 +703,7 @@ string scheduler:: getStringFromInt(int subject) //@RIANDY
     return buffer.str();
 }
 
-void scheduler::Add(task thisTask)
+void scheduler::Add(task thisTask) //@JOHN
 {
 
     if (thisTask.getEventName() =="")
@@ -800,14 +800,14 @@ void scheduler::Delete(task thisTask)
 
 
 
-void scheduler::Edit(task thisTask)
+void scheduler::Edit(task thisTask) //@WENREN
 {
     cout<<"Edit execution with normal keypress"<<endl;
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
     partialUpdateGUI(taskVector);
 }
 
-void scheduler::EditEnter(task thisTask)
+void scheduler::EditEnter(task thisTask) //@JOHN
 {
     if (thisTask.getEventName()!="")
            {
@@ -838,13 +838,13 @@ void scheduler::EditEnter(task thisTask)
            updateGUI();
 }
 
-void scheduler::Display()
+void scheduler::Display() //@JOHN
 {
     taskVector=eventCalender.displayDatabase();
             partialUpdateGUI(taskVector);
 }
 
-void scheduler::Undo()
+void scheduler::Undo() //@JOHN
 {
     if (eventCalender.undoAction())
            printMessage(MESSAGE_UNDO_SUCCESS);
@@ -853,7 +853,7 @@ void scheduler::Undo()
         updateGUI();
 }
 
-void scheduler::Redo()
+void scheduler::Redo() //@JOHN
 {
     if (eventCalender.redoAction())
         printMessage(MESSAGE_REDO_SUCCESS);
@@ -862,13 +862,13 @@ void scheduler::Redo()
     updateGUI();
 }
 
-void scheduler::Today()
+void scheduler::Today() //@RIANDY
 {
     taskVector = eventCalender.getToday();
     partialUpdateGUI(taskVector);
 }
 
-void scheduler::Find(task thisTask)
+void scheduler::Find(task thisTask) //@RIANDY
 {
     string _dateString = eventCalender.convertToDateNoTime(thisTask.getStartDate());
     //case 1: search by category
@@ -899,7 +899,7 @@ void scheduler::Find(task thisTask)
     }
 }
 
-void scheduler::Mark(task thisTask)
+void scheduler::Mark(task thisTask) //@JOHN
 {
     if (  eventCalender.markTask(thisTask.getEventName()) )
         printMessage(MESSAGE_MARK_SUCCESS);
@@ -908,12 +908,12 @@ void scheduler::Mark(task thisTask)
     updateGUI();
 }
 
-void scheduler::Exit()
+void scheduler::Exit() //@WENBIN
 {
     exit(0);
 }
 
-void scheduler::Todo()
+void scheduler::Todo() //@JOHN
 {
     taskVector = eventCalender.getFloatingEvents();
     partialUpdateGUI(taskVector);
