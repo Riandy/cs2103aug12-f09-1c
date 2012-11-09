@@ -164,12 +164,14 @@ void SeampleView::addTriggered()
 {
     ui->lineEdit->setText(COMMAND_ADD);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::findTriggered()
 {
     ui->lineEdit->setText(COMMAND_FIND);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::findFloatTriggered()
@@ -186,12 +188,14 @@ void SeampleView::deleteTriggered()
 {
     ui->lineEdit->setText(COMMAND_DELETE);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::editTriggered()
 {
     ui->lineEdit->setText(COMMAND_EDIT);
     showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
 }
 
 void SeampleView::clearTriggered()
@@ -229,6 +233,18 @@ void SeampleView::checkShowViewFinished(
                 this,SLOT(checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
         _currentlyChanging = false;
     }
+}
+
+void SeampleView::markTriggered()
+{
+    ui->lineEdit->setText(COMMAND_MARK);
+    showFocusInInputEdit(true);
+    emit relay(ui->lineEdit->text());
+}
+
+void SeampleView::todayTriggered()
+{
+    emit run(COMMAND_TODAY, ui->lineEdit->getFocusInput());
 }
 
 bool SeampleView:: singleInstanceExists()
@@ -333,4 +349,10 @@ void SeampleView:: setSignals()
 
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
+
+    connect(_allShortcuts.getMarkKey(),SIGNAL(triggered()),
+            this,SLOT(markTriggered()));
+
+    connect(_allShortcuts.getTodayKey(),SIGNAL(triggered()),
+            this,SLOT(todayTriggered()));
 }
