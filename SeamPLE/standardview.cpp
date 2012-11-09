@@ -566,11 +566,6 @@ void StandardView::showTodayView()
     emit todayViewTriggered();
 }
 
-void StandardView::displayTodayEvents()
-{
-
-}
-
 void StandardView::showViewWithType(viewType type) throw (string)
 {
     if (!screenCurrentlySliding())
@@ -581,7 +576,6 @@ void StandardView::showViewWithType(viewType type) throw (string)
                 switch (_currentType)
                 {
                     case TODAY_EVENTS:
-                        displayTodayEvents();
                         break;
 
                     case RESULTS_TABLE:
