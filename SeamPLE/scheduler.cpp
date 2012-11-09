@@ -669,12 +669,15 @@ vector<string> scheduler:: getTodayEvents() //@WEIYUAN
                                   threeCountFlag, threeTasks);
 }
 
+//Called by getTodayEvents to retrieve the required parameters for making the returning
+//vector of strings
 void scheduler::getAllRequiredParameters(vector<task>* firstPriority, bool* firstPriorityFound,
                                          int* highPriorityTasks, int* size,
                                          int* threeCountFlag, vector<task>* threeTasks)
 {
     _result.clear();
     vector<task> taskList = eventCalender.getToday();
+    qDebug() << taskList.size() <<" Here";
     *size = taskList.size();
 
     for (int i = 0; i < *size ; i++)
@@ -697,6 +700,7 @@ void scheduler::getAllRequiredParameters(vector<task>* firstPriority, bool* firs
     }
 }
 
+//Function creates a vector of strings according to parameters sent in for today's events
 vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
                                                  int highPriorityTasks, int size,
                                                  int threeCountFlag, vector<task> threeTasks)
