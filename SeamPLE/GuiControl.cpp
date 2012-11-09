@@ -101,7 +101,7 @@ void GuiControl::check(QString input)
         QVector <QString> output =
                 _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
         bool invalidSchedulerReturn = (output.size() < 2);
-        qDebug() << "THIS";
+
         if (invalidSchedulerReturn)
         {
             output.clear();
