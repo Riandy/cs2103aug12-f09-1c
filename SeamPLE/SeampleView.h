@@ -75,6 +75,10 @@ private slots:
 
     void checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State);
 
+    void markTriggered();
+
+    void todayTriggered();
+
 private:
     bool singleInstanceExists();
 
