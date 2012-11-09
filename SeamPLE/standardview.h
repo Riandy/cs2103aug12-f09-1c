@@ -51,13 +51,13 @@ public:
 
     void endInstance();
 
-    void showFeedbackLabel(QString output);
+    void displayFeedbackLabel(QString output);
 
-    void showFeedbackInputEdit(QString output);
+    void displayFeedbackInputEdit(QString output);
 
-    void showFocusInInputEdit (bool focus);
+    void displayFocusInInputEdit (bool focus);
 
-    void showAppropriateColorInputEdit (InputBarFlag color) throw (string);
+    void displayAppropriateColorInputEdit (InputBarFlag color) throw (string);
 
     void instantiateTable(QVector <QString> output) throw (string);
 
@@ -113,7 +113,7 @@ private slots:
 
     void changeDisplayTriggered();
 
-    void changeTableViewKey();
+    void changeViewModeTriggered();
 
     void checkAnimationDone(QAbstractAnimation::State newState,QAbstractAnimation::State oldState);
 
@@ -122,6 +122,10 @@ private slots:
     void screenTwoTriggered();
 
     void screenThreeTriggered();
+
+    void markTriggered();
+
+    void todayTriggered();
 
 public slots:
     void helpTriggered();
@@ -149,6 +153,8 @@ private:
 
     void showResultsTableType();
 
+    void showHelpViewType();
+
     void setFrameAnimationProperties(QFrame* frame, int xCoord, int yCoord);
 
     void showTable();
@@ -159,25 +165,23 @@ private:
 
     void showViewWithType(viewType type) throw (string);
 
-    void displayTodayEvents();
-
     void displayTableResults();
 
     void displayTableNotExpanded();
 
     void displayTableExpanded();
 
-    void showTableExpandedNotes (int reformatIndex , QString result);
+    void displayTableExpandedNotes (int reformatIndex , QString result);
 
-    void showTableEventId(int index, QString id);
+    void displayTableEventId(int index, QString id);
 
-    void showTableEventName(int index, QString name);
+    void displayTableEventName(int index, QString name);
 
-    void showTableStartDate(int index, QString startDate);
+    void displayTableStartDate(int index, QString startDate);
 
-    void showTableEndDate(int index, QString endDate);
+    void displayTableEndDate(int index, QString endDate);
 
-    void showTablePriorityIcon(int index, QString priority);
+    void displayTablePriorityIcon(int index, QString priority);
 
     void informNoDisplayResults();
 
@@ -203,6 +207,8 @@ private:
 
 private:
     bool _resultsTableViewExpanded;
+
+    int _helpPageNo;
 
     ErrorLogger* _faulty;
 
