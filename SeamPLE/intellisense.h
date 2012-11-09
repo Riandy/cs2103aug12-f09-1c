@@ -52,7 +52,7 @@ private:
 
 
     Intellisense(void);
-    static const string months[12];
+    static const string months[24];
 
     //    added array support for commands
 
@@ -212,6 +212,7 @@ private:
     bool processTimeFormat5 (tm &date, string time);
     bool processTimeFormat6 (tm &date, string time);
     bool processTimeFormat7 (tm &date, string time);
+    bool processTimeFormat8 (tm &date, string time);
 
     bool checkImptDate(vector<string>& tokens,tm &date);
 
