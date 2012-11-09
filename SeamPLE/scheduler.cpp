@@ -57,29 +57,26 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
     //convert command to upper case to ensure that it is not case sensitive
     transform(command.begin(), command.end(),command.begin(), ::toupper);
 
-    cout<<"\n\n\n";
-    cout<<newAction.getDateType()<<"\n\n";
 
     //process and package the action into task
     task newTask=processAction(newAction);
-    cout<<newTask.getDateType();
-    cout<<endl;
+
 
     if(command=="ADD")
     {
 
 
-        if (newTask.getEventName() =="")
+  /*      if (newTask.getEventName() =="")
         {
             printMessage(MESSAGE_ADD_NO_NAME);
 
         }
 
-    /*   else if(newTask.getCategory() == "1NVAL1D")
+      else if(newTask.getCategory() == "1NVAL1D")
         {
             printMessage(MESSAGE_ADD_INVALID_DATE);
 
-        }*/
+        }
 
 
 
@@ -97,7 +94,9 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
                printMessage(MESSAGE_ADD_FAILURE);
               }
        }
+*/
 
+        this->Add(newTask);
 
     }
 
@@ -105,7 +104,7 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
 {
         //delete by ID
         //ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
-        if ((newTask.getID() == -1) && (newTask.getEventName() == ""))
+       /* if ((newTask.getID() == -1) && (newTask.getEventName() == ""))
         {
             printMessage(MESSAGE_DELETE_NOT_ENOUGH_INPUT);
         }
@@ -162,6 +161,9 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
         }
         }
         updateGUI();
+        */
+        this->Delete(newTask);
+
     }
 
 
@@ -169,16 +171,18 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
     {
 		// Edit Key press function to partially update GUI
         //if (newTask.getEventName()!="")
-                cout<<"Edit execution with normal keypress"<<endl;
+            /*    cout<<"Edit execution with normal keypress"<<endl;
                 taskVector = eventCalender.SearchByPartialTask(newTask.getEventName());
                 partialUpdateGUI(taskVector);
+                */
+        this->Edit(newTask);
 
     }
     else if(command=="EDITENTER")
     {
 
         // actual edit
-        if (newTask.getEventName()!="")
+      /*  if (newTask.getEventName()!="")
         {
             taskVector = eventCalender.SearchByTask(newTask.getEventName());
             if (taskVector.size() == 0) //if no match found
@@ -194,6 +198,8 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
                  //   partialUpdateGUI(taskVector);
                   }
             }
+
+
         }
 
 
@@ -202,13 +208,13 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
             _faulty->report("Scheduler class: Edit command FAIL");
             printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
         }
-        updateGUI();
-
+        updateGUI();*/
+      this->EditEnter(newTask);
     }
 
     else if(command=="FIND")
     {
-        string _dateString = eventCalender.convertToDateNoTime(newTask.getStartDate());
+        /*string _dateString = eventCalender.convertToDateNoTime(newTask.getStartDate());
         //case 1: search by category
 
 
@@ -234,60 +240,71 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
         {
             printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
             _faulty->report("Scheduler:: Find function fail to find the result");
-        }
+        }*/
+        this->Find(newTask);
     }
     else if (command=="DISPLAY")
     {
-        taskVector=eventCalender.displayDatabase();
-        partialUpdateGUI(taskVector);
+       /* taskVector=eventCalender.displayDatabase();
+        partialUpdateGUI(taskVector);*/
+        this->Display();
     }
 
     else if (command=="UNDO")
     {
-        if (eventCalender.undoAction())
+    /*    if (eventCalender.undoAction())
            printMessage(MESSAGE_UNDO_SUCCESS);
         else if (!eventCalender.undoAction())
            printMessage(MESSAGE_UNDO_FAILURE);
         updateGUI();
+        */
+        this->Undo();
     }
 
     else if (command == "REDO")
     {
-        if (eventCalender.redoAction())
+       /* if (eventCalender.redoAction())
             printMessage(MESSAGE_REDO_SUCCESS);
         else if (!eventCalender.redoAction())
           printMessage(MESSAGE_REDO_FAILURE);
-        updateGUI();
+        updateGUI();*/
+        this->Redo();
     }
 
     else if (command == "TODAY") 
     {
-        taskVector = eventCalender.getToday();
-        partialUpdateGUI(taskVector);
+       /* taskVector = eventCalender.getToday();
+        partialUpdateGUI(taskVector); */
+        this->Today();
     }
 
     else if (command == "MARK")
     {
-        if (  eventCalender.markTask(newTask.getEventName()) )
-            printMessage(MESSAGE_MARK_SUCCESS);
-        else
-            printMessage(MESSAGE_MARK_FAILURE);
-        updateGUI();
+//        if (  eventCalender.markTask(newTask.getEventName()) )
+//            printMessage(MESSAGE_MARK_SUCCESS);
+//        else
+//            printMessage(MESSAGE_MARK_FAILURE);
+//        updateGUI();
+
+        this->Mark(newTask);
     }
 
     else if (command == "TODO")
     {
-        taskVector = eventCalender.getFloatingEvents();
-        partialUpdateGUI(taskVector);
+//        taskVector = eventCalender.getFloatingEvents();
+//        partialUpdateGUI(taskVector);
+        this->Todo();
     }
     else if(command=="EXIT")
     {
-        exit(0);
+        //exit(0);
+        this->Exit();
     }
     else
     {
         _faulty->report("Scheduler class: UNKNOWN COMMAND");
         printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
+
     }
     return _result;
 }
@@ -684,4 +701,220 @@ string scheduler:: getStringFromInt(int subject) //@RIANDY
     stringstream buffer;
     buffer << subject;
     return buffer.str();
+}
+
+void scheduler::Add(task thisTask)
+{
+
+    if (thisTask.getEventName() =="")
+    {
+        printMessage(MESSAGE_ADD_NO_NAME);
+
+    }
+
+/*   else if(newTask.getCategory() == "1NVAL1D")
+    {
+        printMessage(MESSAGE_ADD_INVALID_DATE);
+
+    }*/
+
+
+
+    else
+    {
+
+        if( eventCalender.addItem(thisTask))
+         {
+          printMessage(MESSAGE_ADD_SUCCESS);
+          updateGUI();
+         }
+        else
+          {
+           _faulty->report("Scheduler class: Add command FAIL");
+           printMessage(MESSAGE_ADD_FAILURE);
+          }
+   }
+}
+
+
+void scheduler::Delete(task thisTask)
+{
+    if ((thisTask.getID() == -1) && (thisTask.getEventName() == ""))
+            {
+                printMessage(MESSAGE_DELETE_NOT_ENOUGH_INPUT);
+            }
+            else
+            {
+                ostringstream convert;
+                convert<<thisTask.getID();
+                string _eventName = convert.str();
+            if (thisTask.getEventName() == "all")
+            {
+                 eventCalender.deleteAll();
+                printMessage(MESSAGE_DELETE_ALL_SUCCESS);
+            }
+
+
+           else if (eventCalender.checkNameExists(_eventName) && eventCalender.checkID(thisTask.getID()))
+            {
+                // case whereby user's input is both an event name and valid id.
+                eventCalender.deleteItem(thisTask.getID());
+                printMessage(MESSAGE_DELETE_WARNING);
+
+            }
+
+
+
+            else if(eventCalender.checkID(thisTask.getID()))
+            {
+                eventCalender.deleteItem(thisTask.getID());
+                printMessage(MESSAGE_DELETE_SUCCESS);
+            }
+
+            //delete by event name
+            else if(thisTask.getEventName()!="-" && eventCalender.deleteItem(thisTask.getEventName()))
+            {
+                printMessage(MESSAGE_DELETE_SUCCESS);
+            }
+
+           else if(thisTask.getID()!= NOTFOUND)
+            {
+                // check if user wanted to delete by name, but the name is an integer and was
+                // parsed by intellisense to be an integer.
+
+                if (eventCalender.deleteItem(_eventName))
+                    printMessage(MESSAGE_DELETE_SUCCESS);
+               else
+                    printMessage(MESSAGE_ERROR_NOT_FOUND);
+
+            }
+
+            //error handling
+            else
+            {
+                printMessage(MESSAGE_ERROR_NOT_FOUND);
+            }
+            }
+            updateGUI();
+}
+
+
+
+void scheduler::Edit(task thisTask)
+{
+    cout<<"Edit execution with normal keypress"<<endl;
+    taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
+    partialUpdateGUI(taskVector);
+}
+
+void scheduler::EditEnter(task thisTask)
+{
+    if (thisTask.getEventName()!="")
+           {
+               taskVector = eventCalender.SearchByTask(thisTask.getEventName());
+               if (taskVector.size() == 0) //if no match found
+               {
+                   printMessage(MESSAGE_ERROR_NOT_FOUND);
+               }
+               else
+               {
+                    if(eventCalender.editTask(thisTask))
+                      {
+                  //     taskVector = eventCalender.displayDatabase();
+                       printMessage(MESSAGE_EDIT_SUCCESS);
+                    //   partialUpdateGUI(taskVector);
+                     }
+               }
+
+
+           }
+
+
+           else
+           {
+               _faulty->report("Scheduler class: Edit command FAIL");
+               printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
+           }
+           updateGUI();
+}
+
+void scheduler::Display()
+{
+    taskVector=eventCalender.displayDatabase();
+            partialUpdateGUI(taskVector);
+}
+
+void scheduler::Undo()
+{
+    if (eventCalender.undoAction())
+           printMessage(MESSAGE_UNDO_SUCCESS);
+        else if (!eventCalender.undoAction())
+           printMessage(MESSAGE_UNDO_FAILURE);
+        updateGUI();
+}
+
+void scheduler::Redo()
+{
+    if (eventCalender.redoAction())
+        printMessage(MESSAGE_REDO_SUCCESS);
+    else if (!eventCalender.redoAction())
+      printMessage(MESSAGE_REDO_FAILURE);
+    updateGUI();
+}
+
+void scheduler::Today()
+{
+    taskVector = eventCalender.getToday();
+    partialUpdateGUI(taskVector);
+}
+
+void scheduler::Find(task thisTask)
+{
+    string _dateString = eventCalender.convertToDateNoTime(thisTask.getStartDate());
+    //case 1: search by category
+
+
+    if(thisTask.getCategory()!="#")
+    {
+        taskVector = eventCalender.SearchByCat(thisTask.getCategory());
+
+        partialUpdateGUI(taskVector);
+    }
+    //case 2: search by task
+    else if (thisTask.getEventName()!="")
+    {
+        taskVector = eventCalender.SearchByTask(thisTask.getEventName());
+        partialUpdateGUI(taskVector);
+    }
+     else if (_dateString != "0 / 0 / 0 - 0 : 0 : 0")
+    {
+
+        taskVector = eventCalender.SearchByDate(_dateString);
+        partialUpdateGUI(taskVector);
+    }
+    else
+    {
+        printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
+        _faulty->report("Scheduler:: Find function fail to find the result");
+    }
+}
+
+void scheduler::Mark(task thisTask)
+{
+    if (  eventCalender.markTask(thisTask.getEventName()) )
+        printMessage(MESSAGE_MARK_SUCCESS);
+    else
+        printMessage(MESSAGE_MARK_FAILURE);
+    updateGUI();
+}
+
+void scheduler::Exit()
+{
+    exit(0);
+}
+
+void scheduler::Todo()
+{
+    taskVector = eventCalender.getFloatingEvents();
+    partialUpdateGUI(taskVector);
 }
