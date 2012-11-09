@@ -350,7 +350,7 @@ void StandardView::changeDisplayTriggered()
                 break;
         }
     }
-    catch (string error)
+    catch (string& error)
     {
          _faulty->report(error);
     }
