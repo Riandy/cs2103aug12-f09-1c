@@ -128,6 +128,7 @@ vector<string> task::toString()
     result.push_back("Start_Date : "+_startDate);
     result.push_back("End_Date : "+_endDate);
     result.push_back("Date_Type : "+ convertInt(dateType));
+    cout<<endl;
     result.push_back("Priority : "+getPriority());
     result.push_back("Category : "+getCategory());
     return result;

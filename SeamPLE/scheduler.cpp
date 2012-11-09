@@ -15,7 +15,11 @@ static string MESSAGE_GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
 static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date.";
 static string MESSAGE_ADD_NO_NAME = "You have not entered a valid event description.";
 static string MESSAGE_DELETE_WARNING = "Your input was both an event name as well as a serial number. An entry was deleted by its serial number.";
+static string MESSAGE_MARK_SUCCESS = "Your event was marked.";
+static string MESSAGE_MARK_FAILURE = "There was an error marking your event.";
+static string MESSAGE_DELETE_NOT_ENOUGH_INPUT = "There is too little information to choose a task to delete.";
 bool scheduler::instanceFlag=false;
+static int NOTFOUND = -1;
 scheduler* scheduler::_scheduler=NULL;
 
 scheduler* scheduler::getInstance()
@@ -43,7 +47,7 @@ scheduler::~scheduler()
     _faulty->endInstance();
 }
 
-vector<string> scheduler::executeCommand(Action newAction)
+vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
 {
 
     //get the command type
@@ -55,9 +59,12 @@ vector<string> scheduler::executeCommand(Action newAction)
 
     //process and package the action into task
     task newTask=processAction(newAction);
+    cout<<newTask.getDateType();
+    cout<<endl;
 
     if(command=="ADD")
     {
+
 
         if (newTask.getEventName() =="")
         {
@@ -65,22 +72,11 @@ vector<string> scheduler::executeCommand(Action newAction)
 
         }
 
-       else if(newTask.getCategory() == "1NVAL1D")
+    /*   else if(newTask.getCategory() == "1NVAL1D")
         {
             printMessage(MESSAGE_ADD_INVALID_DATE);
 
-        }
-
-
-
-
-// EXTRA CODE TO BE REMOVED
-        else if (newTask.getEventName() == "RickRoll")
-        {
-            taskVector = eventCalender.rickRoll();
-            partialUpdateGUI(taskVector);
-        }
-// END OF EXTRA CODE TO BE REMOVED
+        }*/
 
 
 
@@ -98,17 +94,23 @@ vector<string> scheduler::executeCommand(Action newAction)
                printMessage(MESSAGE_ADD_FAILURE);
               }
        }
+
+
     }
 
     else if(command=="DELETE")
 {
         //delete by ID
-        ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
-
-        ostringstream convert;
-        convert<<newTask.getID();
-        string _eventName = convert.str();
-
+        //ASSERT((newTask.getID()!=NULL || newTask.getEventName()!="#"),"No parameter passed in to the delete function");
+        if ((newTask.getID() == -1) && (newTask.getEventName() == ""))
+        {
+            printMessage(MESSAGE_DELETE_NOT_ENOUGH_INPUT);
+        }
+        else
+        {
+            ostringstream convert;
+            convert<<newTask.getID();
+            string _eventName = convert.str();
         if (newTask.getEventName() == "all")
         {
              eventCalender.deleteAll();
@@ -138,7 +140,7 @@ vector<string> scheduler::executeCommand(Action newAction)
             printMessage(MESSAGE_DELETE_SUCCESS);
         }
 
-       else if(newTask.getID()!=-1)
+       else if(newTask.getID()!= NOTFOUND)
         {
             // check if user wanted to delete by name, but the name is an integer and was
             // parsed by intellisense to be an integer.
@@ -154,6 +156,7 @@ vector<string> scheduler::executeCommand(Action newAction)
         else
         {
             printMessage(MESSAGE_ERROR_NOT_FOUND);
+        }
         }
         updateGUI();
     }
@@ -256,6 +259,21 @@ vector<string> scheduler::executeCommand(Action newAction)
         taskVector = eventCalender.getToday();
         partialUpdateGUI(taskVector);
     }
+
+    else if (command == "MARK")
+    {
+        if (  eventCalender.markTask(newTask.getEventName()) )
+            printMessage(MESSAGE_MARK_SUCCESS);
+        else
+            printMessage(MESSAGE_MARK_FAILURE);
+        updateGUI();
+    }
+
+    else if (command == "TODO")
+    {
+        taskVector = eventCalender.getFloatingEvents();
+        partialUpdateGUI(taskVector);
+    }
     else if(command=="EXIT")
     {
         exit(0);
@@ -269,7 +287,7 @@ vector<string> scheduler::executeCommand(Action newAction)
 }
 
 
-int scheduler::daysMonth(int year, int month)
+int scheduler::daysMonth(int year, int month) //@RIANDY
 {
     int numberOfDays;
     if (month == 4 || month == 6 || month == 9 || month == 11)
@@ -288,7 +306,7 @@ int scheduler::daysMonth(int year, int month)
 
 }
 
-void scheduler::updateWeeklyTask(tm &_date)
+void scheduler::updateWeeklyTask(tm &_date) //@RIANDY
 {
     int numberOfDays=daysMonth(_date.tm_year,_date.tm_mon);
     _date.tm_mday+=7;
@@ -301,7 +319,7 @@ void scheduler::updateWeeklyTask(tm &_date)
 }
 }
 
-void scheduler::updateFornightlyTask(tm &_date)
+void scheduler::updateFornightlyTask(tm &_date) //@RIANDY
 {
     int numberOfDays=daysMonth(_date.tm_year,_date.tm_mon);
     _date.tm_mday+=14;
@@ -314,7 +332,7 @@ void scheduler::updateFornightlyTask(tm &_date)
 }
 }
 
-void scheduler::updateMonthlyTask(tm &_date)
+void scheduler::updateMonthlyTask(tm &_date) //@RIANDY
 {
     _date.tm_mon += 1;
     if(_date.tm_mon >12)
@@ -325,7 +343,7 @@ void scheduler::updateMonthlyTask(tm &_date)
 
 }
 
-void scheduler::updateTask(task &_task)
+void scheduler::updateTask(task &_task) //@RIANDY
 {
     cout<<"**********start Date  before ********"<<endl;
     cout<<"year : "<<_task.getStartDate().tm_year<<endl;
@@ -375,7 +393,7 @@ void scheduler::updateTask(task &_task)
 
 }
 
-string scheduler::getEventBasedOnTime(int hour, int min)
+string scheduler::getEventBasedOnTime(int hour, int min) //@RIANDY
 {
     std::stringstream feedbackMessage;
     tm eventStart;
@@ -400,7 +418,7 @@ string scheduler::getEventBasedOnTime(int hour, int min)
 }
 
 //Get Event name for any event today ending with the hour and minute
-string scheduler::getEventNameForEnd(int hour, int min)
+string scheduler::getEventNameForEnd(int hour, int min) //@RIANDY
 {
     std::stringstream feedbackMessage;
     tm eventDate;
@@ -421,7 +439,7 @@ string scheduler::getEventNameForEnd(int hour, int min)
 }
 
 //Get Event name for any event today starting with the hour and minute
-string scheduler::getEventNameForStart(int hour, int min)
+string scheduler::getEventNameForStart(int hour, int min) //@RIANDY
 {
     std::stringstream feedbackMessage;
     tm eventDate;
@@ -442,7 +460,7 @@ string scheduler::getEventNameForStart(int hour, int min)
 }
 
 //Function returns a summary of the events occuring today
-vector<string> scheduler:: getTodayEvents()
+vector<string> scheduler:: getTodayEvents() //@RIANDY
 {
     _result.clear();
     vector<task> taskList = eventCalender.getToday();
@@ -494,7 +512,7 @@ vector<string> scheduler:: getTodayEvents()
     return eventsOverview;
 }
 
-task scheduler::processAction(Action newAction)
+task scheduler::processAction(Action newAction) //@RIANDY
 {
     taskVector.clear();
     _result.clear();
@@ -508,7 +526,7 @@ task scheduler::processAction(Action newAction)
     return newTask;
 }
 
-string scheduler::convertToDate(tm _date)
+string scheduler::convertToDate(tm _date) //@RIANDY
 {
     string _result;
     ostringstream convert;
@@ -545,7 +563,7 @@ string scheduler::convertToDate(tm _date)
 
 
 
-void scheduler::updateGUI()
+void scheduler::updateGUI() //@RIANDY
 {
     taskVector = eventCalender.displayDatabase();
     int vectorSize = taskVector.size();
@@ -579,7 +597,7 @@ void scheduler::updateGUI()
      _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
 }
 
-void scheduler::partialUpdateGUI(vector<task> taskVector)
+void scheduler::partialUpdateGUI(vector<task> taskVector) //@JOHN
 {
     updateResultFound(taskVector.size());
     int vectorSize = taskVector.size();
@@ -615,7 +633,7 @@ void scheduler::partialUpdateGUI(vector<task> taskVector)
 
 
 
-void scheduler::updateResultFound(int size)
+void scheduler::updateResultFound(int size) //@RIANDY
 {
     ostringstream tempString;
     tempString << "You have ";
@@ -624,12 +642,12 @@ void scheduler::updateResultFound(int size)
     _result.push_back(tempString.str());
 }
 
-void scheduler::printMessage(string _messageType)
+void scheduler::printMessage(string _messageType) //@JOHN
 {
     _result.push_back(_messageType);
 }
 
-bool scheduler::isTimeZero(tm time)
+bool scheduler::isTimeZero(tm time) //@RIANDY
 {
     if(time.tm_hour==0 && time.tm_mday==0 && time.tm_min==0 && time.tm_mon==0 && time.tm_sec==0 && time.tm_year==0)
         return true;
@@ -654,7 +672,7 @@ vector<string> scheduler:: combineStringVectors(
 }
 
 //Get a string conversion from the integer that is sent in as the parameter
-string scheduler:: getStringFromInt(int subject)
+string scheduler:: getStringFromInt(int subject) //@RIANDY
 {
     stringstream buffer;
     buffer << subject;

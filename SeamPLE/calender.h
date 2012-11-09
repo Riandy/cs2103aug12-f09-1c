@@ -76,10 +76,12 @@ public:
     bool editTask(task _edited);
     bool undoAction();
     bool redoAction();
+    bool markTask(string taskName);
     bool deleteAll();
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
     vector<task> SearchByPartialTask(string searchItem);
+    vector<task> getFloatingEvents();
 
     task* pointerSearchByTask(string searchItem);
     vector<task> SearchByDate(string searchDate);
@@ -97,13 +99,5 @@ public:
 
 
 
-
-
-
-
-
-    // EXTRA CODE TO BE REMOVED
-    vector<task> rickRoll();
-    // END OF EXTRA CODE TO BE REMOVED
 };
 #endif
