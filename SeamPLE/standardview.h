@@ -41,6 +41,10 @@ private:
     const static QString MESSAGE_START_DATE_LABEL;
     const static QString MESSAGE_END_DATE_LABEL;
     const static QString MESSAGE_PRIORITY_LABEL;
+
+    const static QString MESSAGE_FONT_COLOUR_RED;
+    const static QString MESSAGE_FONT_COLOUR_GREEN;
+    const static QString MESSAGE_FONT_END;
     
 private:
     explicit StandardView(QWidget *parent = 0);
