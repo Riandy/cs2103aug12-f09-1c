@@ -570,10 +570,6 @@ vector<task> calender::SearchByDate(string searchDate) //@RIANDY
         ostringstream convert;
         convert<< _date.tm_mday << " / " << _date.tm_mon << " / " << _date.tm_year;
         bufferDate=convert.str();
-        cout<<bufferDate;
-        cout<<endl;
-        cout<<searchDate;
-        cout<<endl;
 
         if(searchDate==bufferDate)
             _bufferStorage.push_back(_storage[i]);
