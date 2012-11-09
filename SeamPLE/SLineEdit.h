@@ -4,7 +4,14 @@
 #include <QLineEdit>
 #include <QFocusEvent>
 
-#define MAX_SIZE 10
+enum LineEdit_Code
+{
+    EMPTY = 0,
+    FULL = 10,
+    ENTER = 16777220,
+    UP = 16777236,
+    DOWN = 16777237
+};
 
 class SLineEdit  : public QLineEdit
 {
@@ -20,11 +27,15 @@ protected:
 
     void focusOutEvent(QFocusEvent *);
 
+    //void keyPressEvent(QKeyEvent *);
+
+    bool positionIsSet();
+
 protected:
     bool _inputBarHasFocus;
 
-    static QVector <QString> commandMem;
+    static QVector <QString> _commandMem;
 
-    static int memPos;
+    static int _memPos;
 };
 #endif // SLINEEDIT_H
