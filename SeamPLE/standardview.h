@@ -163,8 +163,6 @@ private:
 
     void showViewWithType(viewType type) throw (string);
 
-    void displayTodayEvents();
-
     void displayTableResults();
 
     void displayTableNotExpanded();
