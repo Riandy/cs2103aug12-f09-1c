@@ -42,6 +42,7 @@ StandardView::StandardView(QWidget *parent):
 
     resetAllTablesContents();
     _resultsTableViewExpanded = false;
+    _helpPageNo = 1;
 
     setStartView();
     _currentlyChanging = false;
@@ -79,22 +80,22 @@ void StandardView:: endInstance()
     }
 }
 
-void StandardView::showFeedbackLabel(QString output)
+void StandardView::displayFeedbackLabel(QString output)
 {
     ui->label->setText(output);
 }
 
-void StandardView::showFeedbackInputEdit(QString output)
+void StandardView::displayFeedbackInputEdit(QString output)
 {
     ui->lineEdit->setText(output);
 }
 
-void StandardView:: showFocusInInputEdit (bool focus)
+void StandardView:: displayFocusInInputEdit (bool focus)
 {
     ui->lineEdit->setFocusInput(focus);
 }
 
-void StandardView:: showAppropriateColorInputEdit (InputBarFlag color) throw (string)
+void StandardView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (string)
 {
     switch (color)
     {
@@ -226,14 +227,14 @@ void StandardView::redoTriggered()
 void StandardView::addTriggered()
 {
     ui->lineEdit->setText(COMMAND_ADD);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
     emit relay(ui->lineEdit->text());
 }
 
 void StandardView::findTriggered()
 {
     ui->lineEdit->setText(COMMAND_FIND);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
     emit relay(ui->lineEdit->text());
 }
 
@@ -250,21 +251,21 @@ void StandardView::displayTriggered()
 void StandardView::deleteTriggered()
 {
     ui->lineEdit->setText(COMMAND_DELETE);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
     emit relay(ui->lineEdit->text());
 }
 
 void StandardView::editTriggered()
 {
     ui->lineEdit->setText(COMMAND_EDIT);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
     emit relay(ui->lineEdit->text());
 }
 
 void StandardView::clearTriggered()
 {
-    showFocusInInputEdit(true);
-    showFeedbackInputEdit("");
+    displayFocusInInputEdit(true);
+    displayFeedbackInputEdit("");
     emit relay("");
 }
 
@@ -360,13 +361,25 @@ void StandardView::changeDisplayTriggered()
     }
 }
 
-void StandardView::changeTableViewKey()
+void StandardView::changeViewModeTriggered()
 {
-    if (_currentType == RESULTS_TABLE && !screenCurrentlySliding())
+    if (!screenCurrentlySliding())
     {
-        _resultsTableViewExpanded = !_resultsTableViewExpanded;
-        showResultsTableType();
-        displayTableResults();
+        if (_currentType == RESULTS_TABLE)
+        {
+            _resultsTableViewExpanded = !_resultsTableViewExpanded;
+            showResultsTableType();
+            displayTableResults();
+        }
+        else if (_currentType == HELP_VIEW)
+        {
+            _helpPageNo++;
+            if (_helpPageNo == 4)
+            {
+                _helpPageNo = 1;
+            }
+            showHelpViewType();
+        }
     }
 }
 
@@ -404,7 +417,7 @@ void StandardView::screenThreeTriggered()
 void StandardView::markTriggered()
 {
     ui->lineEdit->setText(COMMAND_MARK);
-    showFocusInInputEdit(true);
+    displayFocusInInputEdit(true);
     emit relay(ui->lineEdit->text());
 }
 
@@ -531,6 +544,27 @@ void StandardView::showResultsTableType()
     else
     {
         setFrameAnimationProperties(ui->frame_23, 1480, -437);
+    }
+}
+
+void StandardView::showHelpViewType()
+{
+    switch (_helpPageNo)
+    {
+        case 1:
+            setFrameAnimationProperties(ui->frame_17, 0,0);
+            break;
+
+        case 2:
+            setFrameAnimationProperties(ui->frame_17, 0,-437);
+            break;
+
+        case 3:
+            setFrameAnimationProperties(ui->frame_17, 0,-874);
+            break;
+
+        default:
+            break;
     }
 }
 
@@ -680,11 +714,11 @@ void StandardView::displayTableNotExpanded()
 
     while (stillInResultsRange && stillInTableRange)
     {
-        showTableEventId(i,_tableItems.output[(i*6)]);
-        showTableEventName(i, _tableItems.output[(i*6)+1]);
-        showTableStartDate(i, _tableItems.output[(i*6)+2]);
-        showTableEndDate(i, _tableItems.output[(i*6)+3]);
-        showTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
+        displayTableEventId(i,_tableItems.output[(i*6)]);
+        displayTableEventName(i, _tableItems.output[(i*6)+1]);
+        displayTableStartDate(i, _tableItems.output[(i*6)+2]);
+        displayTableEndDate(i, _tableItems.output[(i*6)+3]);
+        displayTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
 
         i++;
         stillInResultsRange = (i <= _tableItems.endIndex);
@@ -722,7 +756,7 @@ void StandardView:: displayTableExpanded()
                 MESSAGE_PRIORITY_LABEL+
                 _tableItems.output[(i*6)+4];
 
-        showTableExpandedNotes(i-_tableItems.currentIndex,result);
+        displayTableExpandedNotes(i-_tableItems.currentIndex,result);
 
         i++;
         stillInResultsRange = (i <= _tableItems.endIndex);
@@ -738,7 +772,7 @@ void StandardView:: displayTableExpanded()
                           +" results ");
 }
 
-void StandardView::showTableExpandedNotes(int reformatIndex, QString result)
+void StandardView::displayTableExpandedNotes(int reformatIndex, QString result)
 {
     switch (reformatIndex)
     {
@@ -759,7 +793,7 @@ void StandardView::showTableExpandedNotes(int reformatIndex, QString result)
     }
 }
 
-void StandardView:: showTableEventId(int index, QString id)
+void StandardView:: displayTableEventId(int index, QString id)
 {
     int reformatIndex = index%10;
 
@@ -810,7 +844,7 @@ void StandardView:: showTableEventId(int index, QString id)
     }
 }
 
-void StandardView:: showTableEventName(int index, QString name)
+void StandardView:: displayTableEventName(int index, QString name)
 {
     int reformatIndex = index%10;
 
@@ -861,7 +895,7 @@ void StandardView:: showTableEventName(int index, QString name)
     }
 }
 
-void StandardView:: showTableStartDate(int index, QString startDate)
+void StandardView:: displayTableStartDate(int index, QString startDate)
 {
     int reformatIndex = index%10;
 
@@ -912,7 +946,7 @@ void StandardView:: showTableStartDate(int index, QString startDate)
     }
 }
 
-void StandardView:: showTableEndDate(int index, QString endDate)
+void StandardView:: displayTableEndDate(int index, QString endDate)
 {
     int reformatIndex = index%10;
 
@@ -963,7 +997,7 @@ void StandardView:: showTableEndDate(int index, QString endDate)
     }
 }
 
-void StandardView:: showTablePriorityIcon(int index, QString priority)
+void StandardView:: displayTablePriorityIcon(int index, QString priority)
 {
     int reformatIndex = index%10;
 
@@ -1113,7 +1147,7 @@ void StandardView:: setSignals()
     connect(_allShortcuts.getHelpKey(),SIGNAL(triggered()),
             this,SLOT(helpTriggered()));
     connect(_allShortcuts.getChangeTableViewKey(), SIGNAL(triggered()),
-            this, SLOT(changeTableViewKey()));
+            this, SLOT(changeViewModeTriggered()));
     connect(_allShortcuts.getChangeScreenOneViewKey(), SIGNAL(triggered()),
             this, SLOT(helpTriggered()));
     connect(_allShortcuts.getChangeScreenTwoViewKey(), SIGNAL(triggered()),
