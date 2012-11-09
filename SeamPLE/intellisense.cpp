@@ -1723,7 +1723,7 @@ bool Intellisense::isDateValid(Action task)
 
 void Intellisense::handleInvalidDate(Action &task)
 {
-    if(!isDateValid(task) && task.getCategory()== "#")
+    if(!isDateValid(task) && task.getCategory()== "#" && task.getDateType()!=4)
     {
         task.setCategory("1NVAL1D");
     }
