@@ -398,7 +398,8 @@ void scheduler::updateGUI(string command) //@RIANDY
 
 void scheduler::partialUpdateGUI(vector<task> taskVector,string command) //@JOHN
 {
-    updateResultFound(taskVector.size());
+    if(command!="ADD")
+        updateResultFound(taskVector.size());
     int vectorSize = taskVector.size();
     for (int i = 0; i < vectorSize; i++)
 
