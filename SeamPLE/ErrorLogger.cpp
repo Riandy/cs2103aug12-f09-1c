@@ -1,5 +1,6 @@
 #include "ErrorLogger.h"
 
+//@WEIYUAN A0086030R
 //Static pointer containing address of the single instance
 ErrorLogger* ErrorLogger::_logger = NULL;
 
@@ -51,6 +52,8 @@ void ErrorLogger::endInstance()
     }
 }
 
+//Log the error in a text file. Error string is appended to current
+//contents of the file
 void ErrorLogger:: report(string error)
 {
     ofstream write ("ErrorLog.txt", fstream::app);
@@ -61,6 +64,8 @@ void ErrorLogger:: report(string error)
     write.close();
 }
 
+//Reset the entire error log. A date will be indicated at the start
+//of the file to show when the log was resetted
 void ErrorLogger:: resetErrorLog()
 {
     ofstream writeLog ("ErrorLog.txt");

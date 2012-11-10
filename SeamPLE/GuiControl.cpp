@@ -31,21 +31,12 @@ GuiControl::GuiControl()
     setInterfaceShownFlag(true);
     _inputColorFlag = NONE;
     getTodaysEvents();
-    try
-    {
-        createSystemTrayIconIfPossible();
-    }
-    catch (string& error)
-    {
-        _faulty->report(error);
-    }
 }
 
 GuiControl::~GuiControl()
 {
     _seampleGui->endInstance();
     _standardGui->endInstance();
-    _notifyInterface->endInstance();
     _faulty->endInstance();
 }
 
@@ -318,6 +309,11 @@ void GuiControl::setInterfaceShownFlag(bool flag)
     _interfaceShownFlag = flag;
 }
 
+void GuiControl::setInputColourFlag(InputBarFlag flag)
+{
+    _inputColorFlag = flag;
+}
+
 void GuiControl::emptyResponse()
 {
     _inputColorFlag = NONE;
@@ -433,17 +429,6 @@ void GuiControl::setSeampleGuiSignals()
 //            this,SLOT(showHideView()));
 //}
 
-void GuiControl:: createSystemTrayIconIfPossible() throw (string)
-{
-    if (QSystemTrayIcon::isSystemTrayAvailable())
-    {
-        _notifyInterface = _notifyInterface->getInstance();
-        //_notifyInterface->showMessage("SeamPLE", "Welcome to Seample. Press \"F1\" for help menu.", QSystemTrayIcon::Information);
-    }
-    else
-    {
-        throw MESSAGE_CANNOT_CREATE_SYSTEM_TRAY.toStdString();
-    }
-}
+
 
 
