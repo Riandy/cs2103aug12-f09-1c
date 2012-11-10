@@ -1,7 +1,7 @@
 #include "SeampleView.h"
 #include "ui_SeampleView.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 SeampleView* SeampleView::_seampleView = NULL;
 

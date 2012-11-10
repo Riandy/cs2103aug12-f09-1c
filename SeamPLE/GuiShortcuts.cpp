@@ -1,5 +1,10 @@
 #include "GuiShortcuts.h"
 
+//@WEIYUAN A0086030R
+
+//Constructor of class will assign NULL values to all pointers of this
+//class. This is in alignment with efforts of other classes that do not
+//utilise 100% of the shortcuts in this class
 GuiShortcuts::GuiShortcuts()
 {
     _switchView = NULL;
@@ -25,6 +30,8 @@ GuiShortcuts::GuiShortcuts()
     //_showHideView = NULL;
 }
 
+//Destructor of class will ensure that all dynamically allocated memory
+//for shortcuts are removed
 GuiShortcuts::~GuiShortcuts()
 {
     removeSwitchView();
@@ -51,7 +58,7 @@ GuiShortcuts::~GuiShortcuts()
 }
 
 
-
+//Generic function to set shortcuts for all types of interfaces
 void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
 {
     setSwitchView(Gui);
@@ -69,6 +76,7 @@ void GuiShortcuts::setShortcutsTo(QMainWindow *Gui)
     setToday(Gui);
 }
 
+//Generic function to set shortcuts only for standardGui
 void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
 {
     setShortcutsTo(Gui);
@@ -81,14 +89,22 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
     setChangeScreenThreeView(Gui);
 }
 
+////Generic function to set shortcuts only for control classes such as
+////GuiControl
 //void GuiShortcuts::setGlobalShortcuts()
 //{
 //    if (_showHideView == NULL)
 //    {
-//        _showHideView = new QxtGlobalShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S),NULL);
+//        _showHideView = new QxtGlobalShortcut(
+//                                  QKeySequence(
+//                                        Qt::CTRL + Qt::SHIFT + Qt::Key_S),
+//                                          NULL);
 //    }
 //}
 
+
+//Following get____Key functions return the addresses of these objects that
+// will be required to complete the shortcuts
 QAction* GuiShortcuts::getSwitchViewKey()
 {
     return _switchView;
@@ -194,6 +210,9 @@ QAction* GuiShortcuts::getTodayKey()
 //    return _showHideView;
 //}
 
+
+//Following set____ functions create a shortcut entry in the Gui that is sent
+//in as a parameter into the function
 void GuiShortcuts::setSwitchView(QMainWindow* Gui)
 {
     if (_switchView == NULL)
@@ -370,7 +389,8 @@ void GuiShortcuts::setChangeScreenThreeView(QMainWindow* Gui)
     {
         _changeScreenThreeView = new QAction(Gui);
         Gui->addAction(_changeScreenThreeView);
-        _changeScreenThreeView->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
+        _changeScreenThreeView->setShortcut(QKeySequence
+                                            (Qt::CTRL + Qt::Key_3));
     }
 }
 
@@ -394,6 +414,9 @@ void GuiShortcuts::setToday(QMainWindow* Gui)
     }
 }
 
+
+//Following remove_____ functions delete the dynamically allocated memory of
+//the objects used to make the shortcuts
 void GuiShortcuts::removeSwitchView()
 {
     if (_switchView != NULL)

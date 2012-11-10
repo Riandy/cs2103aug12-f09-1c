@@ -6,6 +6,14 @@
 #include <fstream>
 
 //@WEIYUAN A0086030R
+
+//This class is to be used for logging of errors. As this class is a
+//singleton, a pointer is needed to be created for this class. Call
+//getInstance to get address of the instance and endInstance to remove
+//the instance.
+//Important function for reporting error is the report function, where
+//the error is returned as a string for writing into the log.
+
 using namespace std;
 
 class ErrorLogger

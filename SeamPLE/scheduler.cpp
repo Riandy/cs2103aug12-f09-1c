@@ -1,6 +1,6 @@
 #include "scheduler.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 static string MESSAGE_ERROR_NOT_FOUND = "The item does not exist.";
 static string MESSAGE_ERROR_INTELLISENSE_CHECK = "Error - The system failed to process your request. Please try again.";
@@ -178,13 +178,13 @@ void scheduler::updateMonthlyTask(tm &_date) //@RIANDY
 
 void scheduler::updateTask(task &_task) //@RIANDY
 {
-    cout<<"**********start Date  before ********"<<endl;
-    cout<<"year : "<<_task.getStartDate().tm_year<<endl;
-    cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
-    cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
-    cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
-    cout<<"min : "<<_task.getStartDate().tm_min<<endl;
-    cout<<"dateType :"<<_task.getDateType()<<endl;
+    ////cout<<"**********start Date  before ********"<<endl;
+    ////cout<<"year : "<<_task.getStartDate().tm_year<<endl;
+    ////cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
+    ////cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
+    ////cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
+    ////cout<<"min : "<<_task.getStartDate().tm_min<<endl;
+    ////cout<<"dateType :"<<_task.getDateType()<<endl;
 
     Action clone;
     clone.setCommand("DELETE");
@@ -210,13 +210,13 @@ void scheduler::updateTask(task &_task) //@RIANDY
     default:break;
     }
     _task.setStartDate(startdate);
-    cout<<"**********start Date  after ********"<<endl;
-    cout<<"year : "<<_task.getStartDate().tm_year<<endl;
-    cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
-    cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
-    cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
-    cout<<"min : "<<_task.getStartDate().tm_min<<endl;
-    cout<<"dateType :"<<_task.getDateType()<<endl;
+    ////cout<<"**********start Date  after ********"<<endl;
+    ////cout<<"year : "<<_task.getStartDate().tm_year<<endl;
+    ////cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
+    ////cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
+    ////cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
+    ////cout<<"min : "<<_task.getStartDate().tm_min<<endl;
+    ////cout<<"dateType :"<<_task.getDateType()<<endl;
 
     Action _clone;
     task duplicate=_task;
@@ -535,7 +535,7 @@ void scheduler::Delete(task thisTask)
 
 void scheduler::Edit(task thisTask) //@WENREN
 {
-    cout<<"Edit execution with normal keypress"<<endl;
+    ////cout<<"Edit execution with normal keypress"<<endl;
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
     partialUpdateGUI(taskVector);
 }
@@ -711,7 +711,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     {
         partialUpdateGUI(firstPriority);
         _result.erase(_result.begin());
-        _result.erase(_result.end());
+        _result.erase(_result.begin()+(_result.size()-1));
         eventsOverview = combineStringVectors(eventsOverview,_result);
     }
     if (threeCountFlag != 0)
@@ -719,7 +719,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
         _result.clear();
         partialUpdateGUI(threeTasks);
         _result.erase(_result.begin());
-        _result.erase(_result.end());
+        _result.erase(_result.begin()+(_result.size()-1));
         eventsOverview = combineStringVectors(eventsOverview,_result);
     }
     return eventsOverview;

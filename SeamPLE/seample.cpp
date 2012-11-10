@@ -5,27 +5,27 @@ Seample* Seample::seample=NULL;
 
 void DisplayDate(tm date)
 {
-    cout<<string("Date : ")<<date.tm_mday;
-    cout<<string("/")<<date.tm_mon;
-    cout<<string("/")<<date.tm_year;
-    cout<<string(" , ");
-    cout<<date.tm_hour<<string(":")<<date.tm_min<<endl;
+    //cout<<string("Date : ")<<date.tm_mday;
+    //cout<<string("/")<<date.tm_mon;
+    //cout<<string("/")<<date.tm_year;
+    //cout<<string(" , ");
+    //cout<<date.tm_hour<<string(":")<<date.tm_min<<endl;
 }
 
 
 void DisplayEvent(Action task)
 {
-    cout<<string("******************")<<endl;
-    cout<<string("Command : ")<<task.getCommand()<<endl;
+    //cout<<string("******************")<<endl;
+    //cout<<string("Command : ")<<task.getCommand()<<endl;
     DisplayDate(task.getStartDate());
     DisplayDate(task.getEndDate());
-    cout<<string("Priority : ")<<task.getPriority()<<endl;
-    cout<<string("Event Name : ")<<task.getEventName()<<endl;
-    cout<<string("Category : ")<<task.getCategory()<<endl;
-    cout<<string("ID : ")<<task.getID()<<endl;
-    cout<<string("Date Type: ")<<task.getDateType()<<endl;
+    //cout<<string("Priority : ")<<task.getPriority()<<endl;
+    //cout<<string("Event Name : ")<<task.getEventName()<<endl;
+    //cout<<string("Category : ")<<task.getCategory()<<endl;
+    //cout<<string("ID : ")<<task.getID()<<endl;
+    //cout<<string("Date Type: ")<<task.getDateType()<<endl;
 
-    cout<<string("******************")<<endl;
+    //cout<<string("******************")<<endl;
 }
 
 
@@ -71,7 +71,7 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
     userInput = _userInput;
     response = intellisense->check(userInput);
     setShortCutRequirementsMet(_userInput);
-    cout<<"Requirements met:"<<intellisense->getrequirementsMet()<<endl;
+    //cout<<"Requirements met:"<<intellisense->getrequirementsMet()<<endl;
     if (componentType == TO_SCHEDULER_AND_RETURN_RESULTS && intellisense->getrequirementsMet())
         //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
         //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
@@ -100,7 +100,7 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
 //----------------------------------startof adhoc edit code------------------------------------------------------------------
             if( (response.getCommand()) == "EDIT" )
             {
-                cout<<"running la"<<endl;
+                //cout<<"running la"<<endl;
                 feedback += fireAction(); //append the results at the end
 
                 feedback[0] = QString::fromStdString(intellisense->getParameter()) + "<br>" + feedback[0];
@@ -124,12 +124,12 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
             }
             else
             {
-                cout<<"This didnt RUN!!!!!"<<endl;
+                //cout<<"This didnt RUN!!!!!"<<endl;
             }
             //crap
-            cout<<endl<<endl;
+            //cout<<endl<<endl;
             for(int t=0; t<feedback.size();t++)
-            cout<<(feedback.at(t)).toStdString()<<endl;
+            //cout<<(feedback.at(t)).toStdString()<<endl;
                   //end crap
 //--------------------end of adhoc edit code------------------------------------------------------------------
 
@@ -151,7 +151,7 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
 QVector <QString> Seample::fireAction()
 {
     vector <string> result =_scheduler->executeCommand(response);
-//cout<<"i am fin here"<<endl;
+////cout<<"i am fin here"<<endl;
     return convertQString(result);
 }
 

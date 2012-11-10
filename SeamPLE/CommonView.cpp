@@ -35,15 +35,12 @@ const string CommonView:: MESSAGE_ERROR_INVALID_COLOUR =
 const string CommonView:: MESSAGE_ERROR_INCOMPLETE_RESULTS =
         "INCOMPLETE SCHEDULER RESULTS RETURNED";
 
-//Returns a boolean value on whether the Gui interfaces are in the
-//midst of changing
+
 bool CommonView::interfaceCurrentlyChanging()
 {
     return _currentlyChanging;
 }
 
-//Returns a boolean value on whether the intefaces in StandardView
-//are in the midst of a transistion
 bool CommonView::screenCurrentlySliding()
 {
     return _currentlySliding;

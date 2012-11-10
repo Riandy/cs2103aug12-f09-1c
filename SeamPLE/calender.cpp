@@ -224,7 +224,7 @@ bool calender::editTask( task _edited) //@WENREN
         if(startDateentered)
         {
             taskMatch->setStartDate(_edited.getStartDate());
-            cout<<"startdate  entered"<<endl;
+            //cout<<"startdate  entered"<<endl;
         }
 
         bool endDateentered = !(_edited.getEndDate().tm_year == 0 && _edited.getEndDate().tm_mon == 0
@@ -232,7 +232,7 @@ bool calender::editTask( task _edited) //@WENREN
         //if( difftime( mktime(&(_edited.getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)
         if(endDateentered)
         {
-            cout<<"enddate entered"<<endl;
+            //cout<<"enddate entered"<<endl;
             taskMatch->setEndDate(_edited.getEndDate());
         }
 
@@ -308,7 +308,7 @@ vector<task> calender::SearchByPartialTask(string searchItem) //@WHO?
         if(bufferString.length() >= searchItem.length()/*-1*/)//defensive programming
         {
             string compareString = (bufferString.substr(0, searchItem.length()/*-1*/));
-            //cout<<"zzz"<<compareString<<"zzz"<<searchItemBuffer<<"zz"<<endl;
+            ////cout<<"zzz"<<compareString<<"zzz"<<searchItemBuffer<<"zz"<<endl;
             if(compareString == searchItemBuffer) //match exactly
                 _bufferStorage.push_back(_storage[i]);
         }
@@ -807,7 +807,7 @@ bool calender::archivePastEvent() //@RIANDY
 
     pastEvents = SearchPastEvent();
 
-    cout<<pastEvents.size();
+    //cout<<pastEvents.size();
 
 
 // Delete from real storage vector
