@@ -1066,7 +1066,7 @@ void UnitTest::testMark() //@JOHN
     testAction->setTask(*testTask);
 
     vector<string> testVector =testScheduler->executeCommand(*testAction);
-    QCOMPARE(testVector[0], string("Your event was marked."));
+    QCOMPARE(testVector[0], string("Your event was marked as completed."));
     delete testAction;
     delete testTask;
 }
@@ -1082,7 +1082,7 @@ void UnitTest::testMark2() //@JOHN
     testAction->setTask(*testTask);
 
     vector<string> testVector =testScheduler->executeCommand(*testAction);
-    QCOMPARE(testVector[0], string("Your event was marked."));
+    QCOMPARE(testVector[0], string("Your event was marked as completed."));
     delete testAction;
     delete testTask;
 }

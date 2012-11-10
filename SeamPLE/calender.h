@@ -60,6 +60,7 @@ private:
     void redoDelete();
     bool redoEdit();
     void redoDeleteAll();
+    bool archiveEvent(task markedTask);
 
     bool writeFile();
     bool loadFile(char* fileName);
@@ -86,7 +87,7 @@ public:
     bool editTask(task _edited);
     bool undoAction();
     bool redoAction();
-    bool markTask(string taskName);
+    bool markTask(task markedTask);
     bool deleteAll();
     string convertToDateNoTime(tm _date);
     vector<task> SearchByCat(string searchItem);
