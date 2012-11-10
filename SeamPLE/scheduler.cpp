@@ -660,9 +660,9 @@ vector<string> scheduler:: getTodayEvents()
     vector<task> threeTasks;
     int highPriorityTasks = 0;
 
-    getAllRequiredParameters(&firstPriority, &firstPriorityFound,
-                             &highPriorityTasks,&size,
-                             &threeCountFlag, &threeTasks);
+    getAllRequiredParameters(firstPriority, firstPriorityFound,
+                             highPriorityTasks,size,
+                             threeCountFlag, threeTasks);
 
     return makeTodayStringResults(firstPriority, firstPriorityFound,
                                   highPriorityTasks,size,
@@ -671,31 +671,30 @@ vector<string> scheduler:: getTodayEvents()
 
 //Called by getTodayEvents to retrieve the required parameters for making the returning
 //vector of strings
-void scheduler::getAllRequiredParameters(vector<task>* firstPriority, bool* firstPriorityFound,
-                                         int* highPriorityTasks, int* size,
-                                         int* threeCountFlag, vector<task>* threeTasks)
+void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firstPriorityFound,
+                                         int&  highPriorityTasks, int& size,
+                                         int& threeCountFlag, vector<task>& threeTasks)
 {
     _result.clear();
     vector<task> taskList = eventCalender.getToday();
-    *size = taskList.size();
-    cout<<taskList.size();
-    cout<<endl;
-    for (int i = 0; i < *size ; i++)
+    size = taskList.size();
+
+    for (int i = 0; i < size ; i++)
     {
         if (taskList[i].getPriority() == "HIGH")
         {
-            *highPriorityTasks++;
+            highPriorityTasks++;
         }
 
-        if (!*firstPriorityFound && taskList[i].getPriority() == "HIGH")
+        if (!firstPriorityFound && taskList[i].getPriority() == "HIGH")
         {
-            *firstPriorityFound = true;
-            firstPriority->push_back(taskList[i]);
+            firstPriorityFound = true;
+            firstPriority.push_back(taskList[i]);
         }
-        else if (*threeCountFlag < 3)
+        else if (threeCountFlag < 3)
         {
-            *threeCountFlag++;
-            threeTasks->push_back(taskList[i]);
+            threeCountFlag++;
+            threeTasks.push_back(taskList[i]);
         }
     }
 }
