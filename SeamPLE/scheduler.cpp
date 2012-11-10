@@ -14,6 +14,7 @@ static string MESSAGE_UNDO_FAILURE = "There is nothing to undo.";
 static string MESSAGE_REDO_SUCCESS = "Redo operation was successful.";
 static string MESSAGE_REDO_FAILURE = "There is nothing to redo.";
 static string MESSAGE_GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
+static string MESSAGE_GUI_DISPLAY_TABLE_2 = "%987TABLE_SEAMPLE_&123";
 static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date.";
 static string MESSAGE_ADD_NO_NAME = "You have not entered a valid event description.";
 static string MESSAGE_DELETE_WARNING = "Your input was both an event name as well as a serial number. An entry was deleted by its serial number.";
@@ -354,7 +355,7 @@ string scheduler::convertToDate(tm _date)
 //This function is used to update the result to the GUI
 //it will convert the task vector into vector of string which will be used by
 //the GUI to display the result
-void scheduler::updateGUI() //@RIANDY
+void scheduler::updateGUI(string command) //@RIANDY
 {
     taskVector = eventCalender.displayDatabase();
     int vectorSize = taskVector.size();
@@ -384,11 +385,17 @@ void scheduler::updateGUI() //@RIANDY
     }
 
     //decision to either view in standard or simple view
-    if (vectorSize>0)
-     _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+    if (vectorSize>0){
+        if(command=="ADD" || command=="DELETE"){
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
+        }
+        else{
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+        }
+    }
 }
 
-void scheduler::partialUpdateGUI(vector<task> taskVector) //@JOHN
+void scheduler::partialUpdateGUI(vector<task> taskVector,string command) //@JOHN
 {
     updateResultFound(taskVector.size());
     int vectorSize = taskVector.size();
@@ -418,8 +425,14 @@ void scheduler::partialUpdateGUI(vector<task> taskVector) //@JOHN
         _result.push_back(taskVector.at(i).getCategory());
     }
     //decision to either view in standard or simple view
-    if (vectorSize!=0)
-        _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+    if (vectorSize>0){
+        if(command=="ADD" || command=="DELETE"){
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
+        }
+        else{
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+        }
+    }
 }
 
 
@@ -462,7 +475,7 @@ void scheduler::Add(task thisTask) //@JOHN
           printMessage(MESSAGE_ADD_SUCCESS);
           vector<task> temp;
           temp.push_back(thisTask);
-          partialUpdateGUI(temp);
+          partialUpdateGUI(temp,"ADD");
           //updateGUI();
          }
         else
@@ -532,7 +545,7 @@ void scheduler::Delete(task thisTask)
                 printMessage(MESSAGE_ERROR_NOT_FOUND);
             }
             }
-            updateGUI();
+    updateGUI("DELETE");
 }
 
 
@@ -541,7 +554,7 @@ void scheduler::Edit(task thisTask) //@WENREN
 {
     ////cout<<"Edit execution with normal keypress"<<endl;
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
-    partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"EDIT");
 }
 
 
@@ -568,13 +581,13 @@ void scheduler::EditEnter(task thisTask) //@JOHN
                _faulty->report("Scheduler class: Edit command FAIL");
                printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
            }
-           updateGUI();
+    updateGUI("EDIT");
 }
 
 void scheduler::Display() //@JOHN
 {
     taskVector=eventCalender.displayDatabase();
-            partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"DISPLAY");
 }
 
 void scheduler::Undo() //@JOHN
@@ -583,7 +596,7 @@ void scheduler::Undo() //@JOHN
            printMessage(MESSAGE_UNDO_SUCCESS);
         else if (!eventCalender.undoAction())
            printMessage(MESSAGE_UNDO_FAILURE);
-        updateGUI();
+    updateGUI("UNDO");
 }
 
 void scheduler::Redo() //@JOHN
@@ -592,13 +605,13 @@ void scheduler::Redo() //@JOHN
         printMessage(MESSAGE_REDO_SUCCESS);
     else if (!eventCalender.redoAction())
       printMessage(MESSAGE_REDO_FAILURE);
-    updateGUI();
+    updateGUI("REDO");
 }
 
 void scheduler::Today() //@RIANDY
 {
     taskVector = eventCalender.getToday();
-    partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"TODAY");
 }
 
 void scheduler::Find(task thisTask) //@RIANDY
@@ -611,19 +624,19 @@ void scheduler::Find(task thisTask) //@RIANDY
     {
         taskVector = eventCalender.SearchByCat(thisTask.getCategory());
 
-        partialUpdateGUI(taskVector);
+        partialUpdateGUI(taskVector,"FIND");
     }
     //case 2: search by task
     else if (thisTask.getEventName()!="")
     {
         taskVector = eventCalender.SearchByTask(thisTask.getEventName());
-        partialUpdateGUI(taskVector);
+        partialUpdateGUI(taskVector,"FIND");
     }
      else if (_dateString != "0 / 0 / 0 - 0 : 0 : 0")
     {
 
         taskVector = eventCalender.SearchByDate(_dateString);
-        partialUpdateGUI(taskVector);
+        partialUpdateGUI(taskVector,"FIND");
     }
     else
     {
@@ -638,7 +651,7 @@ void scheduler::Mark(task thisTask) //@JOHN
         printMessage(MESSAGE_MARK_SUCCESS);
     else
         printMessage(MESSAGE_MARK_FAILURE);
-    updateGUI();
+    updateGUI("MARK");
 }
 
 void scheduler::Exit() //@WENBIN
@@ -649,7 +662,7 @@ void scheduler::Exit() //@WENBIN
 void scheduler::Todo() //@JOHN
 {
     taskVector = eventCalender.getFloatingEvents();
-    partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"TODO");
 }
 
 
@@ -713,7 +726,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     eventsOverview.push_back(getStringFromInt(highPriorityTasks));
     if (firstPriorityFound)
     {
-        partialUpdateGUI(firstPriority);
+        partialUpdateGUI(firstPriority,"MARKTODAY");
         _result.erase(_result.begin());
         _result.erase(_result.begin()+(_result.size()-1));
         eventsOverview = combineStringVectors(eventsOverview,_result);
@@ -721,7 +734,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     if (threeCountFlag != 0)
     {
         _result.clear();
-        partialUpdateGUI(threeTasks);
+        partialUpdateGUI(threeTasks,"MARKTODAY");
         _result.erase(_result.begin());
         _result.erase(_result.begin()+(_result.size()-1));
         eventsOverview = combineStringVectors(eventsOverview,_result);

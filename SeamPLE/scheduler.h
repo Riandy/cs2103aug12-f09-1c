@@ -19,7 +19,7 @@ private:
     vector<string> _result;
     vector<task> taskVector;
     calender eventCalender;
-    void updateGUI();
+    void updateGUI(string command);
     void updateResultFound(int size);
     string convertToDate(tm _date);
     task processAction(Action newAction);
@@ -29,7 +29,7 @@ private:
     void updateMonthlyTask(tm &_date);
     int daysMonth(int year, int month);
     void printMessage(string _messageType);
-    void partialUpdateGUI(vector<task> taskVector);
+    void partialUpdateGUI(vector<task> taskVector,string command);
     bool isTimeZero(tm time);
 
     void Add(task thisTask);
