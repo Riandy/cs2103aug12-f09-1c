@@ -679,7 +679,8 @@ void scheduler::getAllRequiredParameters(vector<task>* firstPriority, bool* firs
     vector<task> taskList = eventCalender.getToday();
     qDebug() << taskList.size() <<" Here";
     *size = taskList.size();
-
+    cout<<taskList.size();
+    cout<<endl;
     for (int i = 0; i < *size ; i++)
     {
         if (taskList[i].getPriority() == "HIGH")

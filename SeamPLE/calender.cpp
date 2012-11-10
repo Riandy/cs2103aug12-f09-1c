@@ -518,7 +518,7 @@ vector<task> calender::getToday() //@RIANDY
     time_t t = time(0);
     struct tm * now = localtime( & t );
     ostringstream convert;
-    convert << now->tm_mday << '-' << (now->tm_mon + 1) << '-' << (now->tm_year + 1900);
+    convert << now->tm_mday << " / " << (now->tm_mon + 1) << " / " << (now->tm_year + 1900);
     string todayDate=convert.str();
 
     _bufferStorage=SearchByDate(todayDate);
