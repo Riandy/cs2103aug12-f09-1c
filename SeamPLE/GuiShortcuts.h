@@ -15,7 +15,6 @@ class GuiShortcuts
 {
 public:
     GuiShortcuts();
-
     ~GuiShortcuts();
 
     //Generic methods to set the shortcuts into the interfaces

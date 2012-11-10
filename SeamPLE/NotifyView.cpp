@@ -20,6 +20,8 @@ NotifyView::~NotifyView()
     delete _popUp;
 }
 
+//NotifyView is another singleton class. In this function, a bool value is
+//returned based on whether the instance exists or not
 bool NotifyView::singleInstanceExists()
 {
     bool result;
@@ -36,6 +38,8 @@ bool NotifyView::singleInstanceExists()
     return result;
 }
 
+//This function gets the address of the singleton instance that exists
+//for this class
 NotifyView* NotifyView::getInstance()
 {
     if (!singleInstanceExists())
@@ -46,6 +50,7 @@ NotifyView* NotifyView::getInstance()
     return _notificationInterface;
 }
 
+//This function deletes the singleton instance if it still exists
 void NotifyView::endInstance()
 {
     if (singleInstanceExists())
@@ -55,12 +60,15 @@ void NotifyView::endInstance()
     }
 }
 
+//Show message reveals the contents to users in the form of a taskbar
+//notification window
 void NotifyView::showMessage(QString title, QString message,
                              QSystemTrayIcon::MessageIcon icon)
 {
     if (singleInstanceExists())
     {
+        int timeOut = 10000;
         _popUp->show();
-        _popUp->showMessage(title, message, icon, 10000);
+        _popUp->showMessage(title, message, icon, timeOut);
     }
 }

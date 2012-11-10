@@ -1,5 +1,7 @@
 #include "STimeLabel.h"
 
+//@WEIYUAN A0086030R
+
 STimeLabel::STimeLabel(QWidget *parent):
     QLabel(parent)
 {
@@ -13,6 +15,8 @@ STimeLabel::~STimeLabel()
     _dateAndTime->endInstance();
 }
 
+//This function sets the timer and values which is set to trigger every one
+//second, resulting in the update in time every single second.
 void STimeLabel::setAutoDateAndTimeDisplay()
 {
     _dateAndTime = _dateAndTime->getInstance();

@@ -1,5 +1,7 @@
 #include "TimeGetter.h"
 
+//@WEIYUAN A0086030R
+
 TimeGetter* TimeGetter:: _timeGetter = NULL;
 
 const QString TimeGetter:: SET_DATE_FORMAT =
@@ -19,16 +21,6 @@ const QString TimeGetter:: SET_END_FONT_TAG =
         "</font>";
 const QString TimeGetter:: SET_TIME_FONT_FORMAT_AND_TAG =
         "<font size=3 face=\"Cambria\" color = #FCF40D>";
-
-TimeGetter::TimeGetter()
-{
-
-}
-
-TimeGetter::~TimeGetter()
-{
-
-}
 
 QTime TimeGetter:: getTime(QDateTime currDateAndTime)
 {
