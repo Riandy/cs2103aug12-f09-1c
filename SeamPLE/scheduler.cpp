@@ -65,7 +65,6 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
     {
         this->Add(newTask);
     }
-
     else if(command=="DELETE")
     {
         this->Delete(newTask);
@@ -292,7 +291,11 @@ string scheduler::getEventNameForStart(int hour, int min) //@RIANDY
     return feedbackMessage.str();
 }
 
-task scheduler::processAction(Action newAction) //@RIANDY
+//@Riandy A0088392R
+//This function take the action object and extract the required information,
+//package it and store it as a task.
+//Note : If any field need to be added in the future, this part is to be added.
+task scheduler::processAction(Action newAction)
 {
     taskVector.clear();
     _result.clear();
@@ -307,33 +310,37 @@ task scheduler::processAction(Action newAction) //@RIANDY
     return newTask;
 }
 
-string scheduler::convertToDate(tm _date) //@RIANDY
+//@Riandy A0088392R
+//This function takes in the tm date object and convert it to the appropriate format
+//using stringstream to be displayed in the GUI. Done extra checking if the date field is 0 or 1 digit,
+//will append extra 0 into it. so format will always be XX / XX / XXXX
+string scheduler::convertToDate(tm _date)
 {
     string _dateString;
     ostringstream convert;
-    if(_date.tm_mday<10)
+    if(_date.tm_mday<TWODIGIT)
         convert<<"0"<<_date.tm_mday<<" / ";
     else
         convert<<_date.tm_mday<<" / ";
 
-    if(_date.tm_mon<10)
+    if(_date.tm_mon<TWODIGIT)
         convert<<"0"<<_date.tm_mon<<" / ";
     else
         convert<<_date.tm_mon<<" / ";
 
     convert<< _date.tm_year << " - " ;
 
-   if(_date.tm_hour<10)
+   if(_date.tm_hour<TWODIGIT)
         convert<<"0"<<_date.tm_hour<< " : ";
     else
         convert<<_date.tm_hour<< " : ";
 
-    if(_date.tm_min<10)
+    if(_date.tm_min<TWODIGIT)
         convert<<"0"<<_date.tm_min<< " : ";
     else
         convert<<_date.tm_min<< " : ";
 
-    if(_date.tm_sec<10)
+    if(_date.tm_sec<TWODIGIT)
         convert<<"0"<<_date.tm_sec;
     else
         convert<<_date.tm_sec;
@@ -343,7 +350,10 @@ string scheduler::convertToDate(tm _date) //@RIANDY
 }
 
 
-
+//@Riandy A0088392R
+//This function is used to update the result to the GUI
+//it will convert the task vector into vector of string which will be used by
+//the GUI to display the result
 void scheduler::updateGUI() //@RIANDY
 {
     taskVector = eventCalender.displayDatabase();
@@ -444,22 +454,16 @@ void scheduler::Add(task thisTask) //@JOHN
         printMessage(MESSAGE_ADD_NO_NAME);
 
     }
-
-/*   else if(newTask.getCategory() == "1NVAL1D")
-    {
-        printMessage(MESSAGE_ADD_INVALID_DATE);
-
-    }*/
-
-
-
     else
     {
 
         if( eventCalender.addItem(thisTask))
          {
           printMessage(MESSAGE_ADD_SUCCESS);
-          updateGUI();
+          vector<task> temp;
+          temp.push_back(thisTask);
+          partialUpdateGUI(temp);
+          //updateGUI();
          }
         else
           {

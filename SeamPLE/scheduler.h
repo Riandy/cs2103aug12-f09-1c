@@ -8,7 +8,7 @@
 #include "Action.h"
 #include "ErrorLogger.h"
 
-
+#define TWODIGIT 10
 
 class scheduler
 {
