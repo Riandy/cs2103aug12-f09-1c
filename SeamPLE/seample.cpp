@@ -5,27 +5,27 @@ Seample* Seample::seample=NULL;
 
 void DisplayDate(tm date)
 {
-    //cout<<string("Date : ")<<date.tm_mday;
-    //cout<<string("/")<<date.tm_mon;
-    //cout<<string("/")<<date.tm_year;
-    //cout<<string(" , ");
-    //cout<<date.tm_hour<<string(":")<<date.tm_min<<endl;
+    cout<<string("Date : ")<<date.tm_mday;
+    cout<<string("/")<<date.tm_mon;
+    cout<<string("/")<<date.tm_year;
+    cout<<string(" , ");
+    cout<<date.tm_hour<<string(":")<<date.tm_min<<endl;
 }
 
 
 void DisplayEvent(Action task)
 {
-    //cout<<string("******************")<<endl;
-    //cout<<string("Command : ")<<task.getCommand()<<endl;
+    cout<<string("******************")<<endl;
+    cout<<string("Command : ")<<task.getCommand()<<endl;
     DisplayDate(task.getStartDate());
     DisplayDate(task.getEndDate());
-    //cout<<string("Priority : ")<<task.getPriority()<<endl;
-    //cout<<string("Event Name : ")<<task.getEventName()<<endl;
-    //cout<<string("Category : ")<<task.getCategory()<<endl;
-    //cout<<string("ID : ")<<task.getID()<<endl;
-    //cout<<string("Date Type: ")<<task.getDateType()<<endl;
+    cout<<string("Priority : ")<<task.getPriority()<<endl;
+    cout<<string("Event Name : ")<<task.getEventName()<<endl;
+    cout<<string("Category : ")<<task.getCategory()<<endl;
+    cout<<string("ID : ")<<task.getID()<<endl;
+    cout<<string("Date Type: ")<<task.getDateType()<<endl;
 
-    //cout<<string("******************")<<endl;
+    cout<<string("******************")<<endl;
 }
 
 
