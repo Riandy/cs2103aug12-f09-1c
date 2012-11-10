@@ -104,12 +104,5 @@ public:
     void SortByDate();
     vector<task> SortByCategory();
     string convertToDate(tm _date);
-
-
-
-
-
-
-
 };
 #endif
