@@ -24,16 +24,12 @@ private:
 
 private:
     NotifyView();
-
     ~NotifyView();
-
     bool singleInstanceExists();
 
 public:
     NotifyView* getInstance();
-
     void endInstance();
-
     void showMessage(QString title, QString message, QSystemTrayIcon::MessageIcon icon);
 
 };

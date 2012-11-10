@@ -21,9 +21,6 @@ private:
     const static QString SET_TIME_FONT_FORMAT_AND_TAG;
 
 private:
-    TimeGetter();
-
-    ~TimeGetter();
 
     QTime getTime(QDateTime currDateAndTime);
 
