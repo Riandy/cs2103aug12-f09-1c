@@ -388,6 +388,7 @@ void scheduler::updateGUI(string command) //@RIANDY
     if (vectorSize>0){
         if(command=="ADD" || command=="DELETE"){
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
+            cout<<"This is pushed"<<endl;
         }
         else{
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
@@ -428,6 +429,7 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command) //@JOHN
     if (vectorSize>0){
         if(command=="ADD" || command=="DELETE"){
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
+            cout<<"this is pushed"<<endl;
         }
         else{
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
