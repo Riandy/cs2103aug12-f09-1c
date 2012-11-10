@@ -109,7 +109,19 @@ private slots:
     void testMark4();
     void testMark5();
 #pragma endregion Scheduler UnitTesting
+#pragma region Calender UnitTesting
 
+    void testCheckNameExists();
+    void testCheckNameExists2();
+
+    void testCalenderAdd();
+
+    void testCalenderDelete();
+
+    void testCalenderCheckFileExists();
+
+    void testCalenderConvertDateNoTime();
+#pragma endregion Calender UnitTesting
 };
 
 #endif // UNITTEST_H
