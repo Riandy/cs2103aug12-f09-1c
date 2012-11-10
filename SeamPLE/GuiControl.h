@@ -37,62 +37,37 @@ public:
 
 private slots:
     void check(QString input);
-
     void passScheduler(QString input, bool inputBarHasFocus);
-
     void changeView(QString input, QString inputChecked, bool inputBarHasFocus);
-
-    void showHideView();
-
+    //void showHideView();
     void showHelpView();
-
     void getTodaysEvents();
 
 private:
-
     bool singleInstanceExists();
-
     bool implementInputColorFlagFailure(QCharRef colorFlag) throw (string);
-
     bool interfaceIsStandardView();
-
-    bool interfaceIsCurrentlyShown();
-
-    void setInterfaceShownFlag(bool flag);
-
+    //bool interfaceIsCurrentlyShown();
+    //void setInterfaceShownFlag(bool flag);
     void setInputColourFlag(InputBarFlag flag);
-
     void emptyResponse();
-
     void send(QString feedback);
-
     void sendWithInputEditItem (QString input, QString feedback);
-
     void sendWithInputEditAndFocus (bool inputBarHasFocus, QString input, QString feedback);
-
     void setStandardGuiSignals();
-
     void setSeampleGuiSignals();
-
     void setTimedSignals();
-
     //void setGlobalSignals();
 
 
 private:
-
+    //Flags ===========================
     bool _standardViewFlag;
-
-    bool _interfaceShownFlag;
-
+    //bool _interfaceShownFlag;
     InputBarFlag _inputColorFlag;
-
-    //Control class that controls the input sent in and send the appropriate
-    //results back to be printed
-    Seample *_inputProcessor;
+    //=================================
 
     Timekeeper _timeControl;
-
     //GuiShortcuts _allShortcuts;
 
     //GUI interfaces ==================
@@ -104,6 +79,9 @@ private:
     ErrorLogger* _faulty;
     //=================================
 
+    //Control Class ===================
+    Seample *_inputProcessor;
+    //=================================
 
 };
 #endif // GUICONTROL_H
