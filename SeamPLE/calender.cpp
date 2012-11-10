@@ -130,8 +130,6 @@ bool calender::markTask(task markedTask)
 
 }
 
-
-
 vector<task> calender::getFloatingEvents()
 {
     vector<task> _bufferStorage;
@@ -212,7 +210,7 @@ bool calender::checkID(int taskID)
 }
 
 
-bool calender::editTask( task _edited) //@WENREN
+bool calender::editTask( task _edited)
 {
     task* taskMatch = pointerSearchByTask( _edited.getEventName());
     if (taskMatch == NULL)// no match found
@@ -223,22 +221,26 @@ bool calender::editTask( task _edited) //@WENREN
         lastCommandUndo = false;
         task _original = *taskMatch;
         undoOriginalEdits(_original);
+
         bool startDateentered = !(_edited.getStartDate().tm_year == 0 && _edited.getStartDate().tm_mon == 0
                                   && _edited.getStartDate().tm_mday ==0);
         // if( difftime( mktime(&(_edited.getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
+
         if(startDateentered)
         {
+            // check if floating event, to set to non-float
+            if (taskMatch->getDateType() == F10AT)
+                taskMatch->setDateType(0);
             taskMatch->setStartDate(_edited.getStartDate());
-            //cout<<"startdate  entered"<<endl;
+
         }
 
         bool endDateentered = !(_edited.getEndDate().tm_year == 0 && _edited.getEndDate().tm_mon == 0
+
                                 && _edited.getEndDate().tm_mday ==0);
-        //if( difftime( mktime(&(_edited.getEndDate())),mktime(&task::getEmptyDateTm()) ) != 0)
-        if(endDateentered)
+          if(endDateentered)
         {
-            //cout<<"enddate entered"<<endl;
-            taskMatch->setEndDate(_edited.getEndDate());
+             taskMatch->setEndDate(_edited.getEndDate());
         }
 
         if(_edited.getPriority() !="" )
