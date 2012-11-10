@@ -26,8 +26,8 @@ calender::~calender()
 
     _faulty->endInstance();
 }
-
-string calender::convertToDate(tm _date) //@RIANDY
+//@Riandy A0088392R
+string calender::convertToDate(tm _date)
 {
     string _dateString;
     ostringstream convert;
@@ -38,7 +38,7 @@ string calender::convertToDate(tm _date) //@RIANDY
 
 }
 
-string calender::convertToDateNoTime(tm _date) //@RIANDY
+string calender::convertToDateNoTime(tm _date)
 {
     string _dateString;
     ostringstream convert;
@@ -48,8 +48,8 @@ string calender::convertToDateNoTime(tm _date) //@RIANDY
 }
 
 
-
-bool calender::addItem(task currentTask) //@JOHN
+//@John A0069517W
+bool calender::addItem(task currentTask)
 {
     ASSERT(currentTask.getEventName() !="","Fail to add, task doesn't contain event name");
     string _currentName = currentTask.getEventName();
@@ -63,7 +63,7 @@ bool calender::addItem(task currentTask) //@JOHN
 
     saveAdd(currentTask.getEventName());
     saveHistory(_ADDITION);
-
+    lastCommandUndo = false;
     _storage.push_back(currentTask);
     if(writeFile())
         return true;
@@ -75,7 +75,7 @@ bool calender::addItem(task currentTask) //@JOHN
 }
 
 
-string calender::ensureUniqueName(string _name) //@JOHN
+string calender::ensureUniqueName(string _name)
 {
     if (!checkNameExists(_name))
         return _name;
@@ -108,7 +108,7 @@ string calender::ensureUniqueName(string _name) //@JOHN
 }
 
 
-bool calender::checkNameExists(string _name) //@JOHN
+bool calender::checkNameExists(string _name)
 {
     for (int i = 0; i < _storage.size(); i++)
     {
@@ -118,7 +118,7 @@ bool calender::checkNameExists(string _name) //@JOHN
     return false;
 }
 
-bool calender::markTask(task markedTask) //@JOHN
+bool calender::markTask(task markedTask)
 {
     if(this->deleteItem(markedTask.getEventName()))
  {
@@ -132,7 +132,7 @@ bool calender::markTask(task markedTask) //@JOHN
 
 
 
-vector<task> calender::getFloatingEvents() //@JOHN
+vector<task> calender::getFloatingEvents()
 {
     vector<task> _bufferStorage;
     for (int i = 0; i < _storage.size(); i++)
@@ -143,30 +143,34 @@ vector<task> calender::getFloatingEvents() //@JOHN
     return _bufferStorage;
 }
 
-bool calender::deleteItem(int taskID) //@JOHN
+bool calender::deleteItem(int taskID)
 {
     saveHistory(_DELETE);
+    lastCommandUndo = false;
     saveDeletedTask(taskID-1);
     _storage.erase(_storage.begin()+taskID-1);
     writeFile();
     return true;
 }
 
-bool calender::deleteAll() //@JOHN
+bool calender::deleteAll()
 {
     writeBackupFile();
     _storage.clear();
     saveHistory(_DELETEALL);
+    lastCommandUndo = false;
     writeFile();
     return true;
 }
 
-bool calender::deleteItem(string eventName) //@RIANDY
+//@Riandy A0088392R
+bool calender::deleteItem(string eventName)
 {
     for(int i=0 ; i<_storage.size() ; i++)
         if(_storage[i].getEventName()==eventName)
         {
             saveHistory(_DELETE);
+            lastCommandUndo = false;
             saveDeletedTask(i);
 
             _storage.erase(_storage.begin()+i);
@@ -176,7 +180,7 @@ bool calender::deleteItem(string eventName) //@RIANDY
     return false;
 }
 
-bool calender::writeFile() //@RIANDY
+bool calender::writeFile()
 {
     calender::SortByDate();
     ofstream writeFile(STORAGE_FILENAME);
@@ -191,15 +195,15 @@ bool calender::writeFile() //@RIANDY
 
     return true;
 }
-
-void calender::writeBackupFile() //@JOHN
+//@JOHN A0069517W
+void calender::writeBackupFile()
 {
         std::ifstream    inFile(STORAGE_FILENAME);
         std::ofstream    outFile(BACKUP_FILENAME);
         outFile << inFile.rdbuf();
 }
 
-bool calender::checkID(int taskID) //@JOHN
+bool calender::checkID(int taskID)
 {
     if (taskID > int(_storage.size()) || taskID<1)     
         return false;
@@ -216,6 +220,7 @@ bool calender::editTask( task _edited) //@WENREN
     else
     {
         saveHistory(_EDIT);
+        lastCommandUndo = false;
         task _original = *taskMatch;
         undoOriginalEdits(_original);
         bool startDateentered = !(_edited.getStartDate().tm_year == 0 && _edited.getStartDate().tm_mon == 0
@@ -252,8 +257,8 @@ bool calender::editTask( task _edited) //@WENREN
 
 
 }
-
-vector<task> calender::SearchByCat(string searchItem) //@RIANDY
+//@Riandy A0088392R
+vector<task> calender::SearchByCat(string searchItem)
 {
     vector<task> _bufferStorage;
     cout<<searchItem;
@@ -270,7 +275,7 @@ vector<task> calender::SearchByCat(string searchItem) //@RIANDY
     return _bufferStorage;
 }
 
-vector<task> calender::SearchByTask(string searchItem) //@RIANDY
+vector<task> calender::SearchByTask(string searchItem)
 {
     vector<task> _bufferStorage;
     for (int i = 0; i < int(_storage.size()); i++)
@@ -300,7 +305,20 @@ task* calender::pointerSearchByTask(string searchItem) //@WENREN
     return match;
 
 }
-vector<task> calender::SearchByPartialTask(string searchItem) //@WHO?
+
+
+//@JOHN A0069517W
+int calender::getTaskID(string searchItem)
+{
+    int taskID = NOTFOUND;
+    for (int i=0; i< int(_storage.size()); i++)
+    {
+        if (_storage[i].getEventName() == searchItem)
+            taskID = i;
+    }
+    return taskID;
+}
+vector<task> calender::SearchByPartialTask(string searchItem)
 {
     string searchItemBuffer = searchItem.substr(0,searchItem.length()/*-1*/);//remove the null charcter at the end of string
     vector<task> _bufferStorage;
@@ -317,28 +335,15 @@ vector<task> calender::SearchByPartialTask(string searchItem) //@WHO?
     }
     return _bufferStorage;
 }
-
-
-int calender::getTaskID(string searchItem) //@JOHN
-{
-    int taskID = NOTFOUND;
-    for (int i=0; i< int(_storage.size()); i++)
-    {
-        if (_storage[i].getEventName() == searchItem)
-            taskID = i;
-    }
-    return taskID;
-}
-
-vector<task> calender::displayDatabase() //@JOHN
+vector<task> calender::displayDatabase()
 {
     return _storage;
 }
 
 
 
-
-bool calender::loadFile(char* fileName) //@RIANDY
+//@Riandy A0088392R
+bool calender::loadFile(char* fileName)
 {
 
     _storage.clear();
@@ -421,14 +426,15 @@ bool calender::loadFile(char* fileName) //@RIANDY
     return true;
 }
 
-
-bool calender::undoAction() //@JOHN
+//@JOHN A0069517W
+bool calender::undoAction()
 {
     if (_commandHistory.size() == 0)
         return false;
     else
     {
         string lastCommand = _commandHistory.top();
+        lastCommandUndo = true;
         if (lastCommand == _ADDITION)
         {
 
@@ -459,9 +465,9 @@ bool calender::undoAction() //@JOHN
     return true;
 }
 
-bool calender::redoAction() //@JOHN
+bool calender::redoAction()
 {
-    if (_undoHistory.size() == 0)
+    if (_undoHistory.size() == 0 || lastCommandUndo == false)
         return false;
     else
     {
@@ -494,8 +500,8 @@ bool calender::redoAction() //@JOHN
     return true;
 }
 
-
-vector<task> calender::SearchByDate(string searchDate) //@RIANDY
+//@Riandy A0088392R
+vector<task> calender::SearchByDate(string searchDate)
 {
 
     vector<task> _bufferStorage;
@@ -513,7 +519,7 @@ vector<task> calender::SearchByDate(string searchDate) //@RIANDY
     return _bufferStorage;
 }
 
-vector<task> calender::getToday() //@RIANDY
+vector<task> calender::getToday()
 {
     vector<task> _bufferStorage;
 
@@ -529,10 +535,10 @@ vector<task> calender::getToday() //@RIANDY
     return _bufferStorage;
 }
 
-
+//@JOHN A0069517W
 // Following method saves the deleted task in a temporary stack, such that
 // we can call an undo later on to restore the task.
-void calender::saveDeletedTask(int taskID) //@JOHN
+void calender::saveDeletedTask(int taskID)
 {
     task temp = _storage[taskID];
     if (_deletedTasks.size() < 3)
@@ -559,7 +565,7 @@ void calender::saveDeletedTask(int taskID) //@JOHN
 
 // Following method saves latest command in a temporary stack, such that
 // we can call an undo later on based on the most recent command.
-void calender::saveHistory(string command) //@JOHN
+void calender::saveHistory(string command)
 {
     if (_commandHistory.size() < 3)
         _commandHistory.push(command);
@@ -585,7 +591,7 @@ void calender::saveHistory(string command) //@JOHN
 
 // Following method saves the name of added tasks in a temporary stack, such that
 // we can search the storage based on the unique name to delete it during undo.
-void calender::saveAdd(string Item) //@JOHN
+void calender::saveAdd(string Item)
 {
     if (_addHistory.size() < 3)
         _addHistory.push(Item);
@@ -611,7 +617,7 @@ void calender::saveAdd(string Item) //@JOHN
 
 // Following method saves the name of an undone deleted task in a temporary stack, such that
 // we can find it and and delete it when redo is called.
-void calender::saveUndoneDelete(string Item) //@JOHN
+void calender::saveUndoneDelete(string Item)
 {
     if (_deleteHistory.size() < 3)
         _deleteHistory.push(Item);
@@ -639,7 +645,7 @@ void calender::saveUndoneDelete(string Item) //@JOHN
 
 // Following method saves the original task before it is being edited, such that
 // we can restore it when undo is called.
-void calender::undoOriginalEdits(task _oldTask) //@JOHN
+void calender::undoOriginalEdits(task _oldTask)
 {
     if (_undoOriginalEdits.size() < 3)
         _undoOriginalEdits.push(_oldTask);
@@ -664,7 +670,7 @@ void calender::undoOriginalEdits(task _oldTask) //@JOHN
 
 // Following method saves newly edited task in a temporary stack,
 // so that we know which task was most recently undone when redo is called
-void calender::undoNewEdits(task _newTask) //@JOHN
+void calender::undoNewEdits(task _newTask)
 {
     if (_undoNewEdits.size() < 3)
         _undoNewEdits.push(_newTask);
@@ -688,7 +694,7 @@ void calender::undoNewEdits(task _newTask) //@JOHN
 
 // Following method is an opposite of the previous methods regarding edit,
 // so that we can call undo 3 times then call redo 3 times.
-void calender::redoOriginalEdits(task _oldTask) //@JOHN
+void calender::redoOriginalEdits(task _oldTask)
 {
     if (_redoOriginalEdits.size() < 3)
         _redoOriginalEdits.push(_oldTask);
@@ -713,7 +719,7 @@ void calender::redoOriginalEdits(task _oldTask) //@JOHN
 
 // Following method is an opposite of the previous methods regarding edit,
 // so that we can call undo 3 times then call redo 3 times.
-void calender::redoNewEdits(task _newTask) //@JOHN
+void calender::redoNewEdits(task _newTask)
 {
     if (_redoNewEdits.size() < 3)
         _redoNewEdits.push(_newTask);
@@ -734,20 +740,20 @@ void calender::redoNewEdits(task _newTask) //@JOHN
         _redoNewEdits.push(_newTask);
     }
 }
-
-void calender::SortByDate() //@RIANDY
+//@Riandy A0088392R
+void calender::SortByDate()
 {
     sort(_storage.begin(),_storage.end(),taskDateComparator);
 }
 
-bool calender::taskDateComparator(task task1,task task2) //@RIANDY
+bool calender::taskDateComparator(task task1,task task2)
 {
     tm date1=task1.getStartDate();
     tm date2=task2.getStartDate();
     return calender::dateComparator(date1,date2);
 }
 
-bool calender::dateComparator(tm date1,tm date2) //@RIANDY
+bool calender::dateComparator(tm date1,tm date2)
 {
     //check in the sequence of
     //year,month,day,hour,min,sec
@@ -786,7 +792,7 @@ bool calender::dateComparator(tm date1,tm date2) //@RIANDY
 
 }
 
-vector<task> calender::SearchPastEvent() //@RIANDY
+vector<task> calender::SearchPastEvent()
 {
     time_t t = time(0);   // get time now
     tm  now = *localtime( & t );
@@ -803,11 +809,14 @@ vector<task> calender::SearchPastEvent() //@RIANDY
     return bufferStorage;
 }
 
-bool calender::archivePastEvent() //@RIANDY
+bool calender::archivePastEvent()
 {
     vector<task> pastEvents;
 
     pastEvents = SearchPastEvent();
+
+    //cout<<pastEvents.size();
+
 
 // Delete from real storage vector
     for (int i = 0; i< pastEvents.size(); i++)
@@ -839,7 +848,8 @@ bool calender::archivePastEvent() //@RIANDY
 return true;
 }
 
-bool calender::archiveEvent(task markedTask) //@JOHN
+//@JOHN A0069517W
+bool calender::archiveEvent(task markedTask)
 {
     ofstream write (ARCHIVE_FILENAME, fstream::app);
     vector<string> temp =markedTask.toString();
@@ -852,7 +862,7 @@ bool calender::archiveEvent(task markedTask) //@JOHN
 }
 
 
-bool calender::fileExists(const char *fileName) //@JOHN
+bool calender::fileExists(const char *fileName)
 {
 
   ifstream ifile(fileName);
@@ -865,7 +875,7 @@ bool calender::fileExists(const char *fileName) //@JOHN
 
 
 
-void calender::undoAdd() //@JOHN
+void calender::undoAdd()
 {
     _undoHistory.push(_ADDITION);
     int ID = getTaskID(_addHistory.top());
@@ -874,7 +884,7 @@ void calender::undoAdd() //@JOHN
     _addHistory.pop();
 }
 
-void calender::undoDelete() //@JOHN
+void calender::undoDelete()
 {
     ASSERT(_deletedTasks.size() != 0,"Nothing in deleted tasks stack");
     _undoHistory.push(_DELETE);
@@ -883,7 +893,7 @@ void calender::undoDelete() //@JOHN
     saveUndoneDelete(tempTask.getEventName());
     _deletedTasks.pop();
 }
-bool calender::undoEdit() //@JOHN
+bool calender::undoEdit()
 {
     ASSERT(_undoNewEdits.size() != 0, "Nothing in undo stack");
     _undoHistory.push(_EDIT);
@@ -902,7 +912,7 @@ bool calender::undoEdit() //@JOHN
     else if (position == NOTFOUND)
         return false;
 }
-void calender::undoDeleteAll() //@JOHN
+void calender::undoDeleteAll()
 {
     loadFile(BACKUP_FILENAME);
 
@@ -912,7 +922,7 @@ void calender::undoDeleteAll() //@JOHN
 }
 
 
-void calender::redoAdd() //@JOHN
+void calender::redoAdd()
 {
     task lastUndo =  _undoneAddTasks.top();
     _storage.push_back(lastUndo);
@@ -921,7 +931,7 @@ void calender::redoAdd() //@JOHN
      _undoneAddTasks.pop();
 }
 
-void calender::redoDelete() //@JOHN
+void calender::redoDelete()
 {
     saveHistory(_DELETE);
     int ID = getTaskID(_deleteHistory.top());
@@ -930,7 +940,7 @@ void calender::redoDelete() //@JOHN
     _deleteHistory.pop();
 }
 
-bool calender::redoEdit() //@JOHN
+bool calender::redoEdit()
 {
     task tempTask = _redoNewEdits.top();
     int position = getTaskID(tempTask.getEventName());
@@ -948,7 +958,7 @@ bool calender::redoEdit() //@JOHN
         return false;
 }
 
-void calender::redoDeleteAll() //@JOHN
+void calender::redoDeleteAll()
 {
     writeBackupFile();
     _storage.clear();
