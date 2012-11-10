@@ -114,22 +114,18 @@ private slots:
 
     void testAddItem();
     void testDeleteItemByID();
-    //void testDeleteItemByID2();
     void testDeleteItemByEventName();
     void testDeleteItemByEventName2();
-    void checkID();
-    void checkID2();
-    void deleteAll();
-    void searchByCat();
-    void searchByCat2();
-    void searchByTask();
-    void searchByTask2();
-//    void searchByPartialTask();
-//    void searchByDate();
-//    void convertToDate();
-//    void getToday();
-//    void displayDatabase();
-//    void getFloatingEvents();
+    void testcheckID();
+    void testcheckID2();
+    void testdeleteAll();
+    void testsearchByCat();
+    void testsearchByCat2();
+    void testsearchByTask();
+    void testsearchByTask2();
+    void testsearchByDate();
+    void testconvertToDate();
+    void testconvertToDateWithoutTime();
 
 #pragma endregion Calender Unit Testing
 

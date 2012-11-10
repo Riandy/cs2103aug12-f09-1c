@@ -1140,6 +1140,8 @@ void UnitTest::testMark5() //@JOHN
 
 #pragma region Calender Unit Testing
 
+//@Riandy A0088392R
+//testing to add an event
 void UnitTest::testAddItem()
 {
     calender testCalender;
@@ -1149,6 +1151,8 @@ void UnitTest::testAddItem()
     QCOMPARE(testCalender.addItem(testTask),true);
 }
 
+//@Riandy A0088392R
+//testing to delete item ID that exist
 void UnitTest::testDeleteItemByID()
 {
     calender testCalender;
@@ -1167,26 +1171,7 @@ void UnitTest::testDeleteItemByID()
     QCOMPARE(testCalender.deleteItem(1),true);
 }
 
-//this is to test to delete the ID that does not exist.
-/*void UnitTest::testDeleteItemByID2()
-{
-    calender testCalender;
-    task testTask;
-    testTask.setEventName("This is to test Delete by ID");
-    tm startDate;
-    startDate.tm_mday=12;
-    startDate.tm_hour=10;
-    startDate.tm_min=55;
-    startDate.tm_mon=4;
-    startDate.tm_sec=1;
-    startDate.tm_year=2012;
-    testTask.setStartDate(startDate);
-    //can only be tested if the addItem is correct.
-    testCalender.addItem(testTask);
-    QCOMPARE(testCalender.deleteItem(1),false);
-}
-*/
-
+//@Riandy A0088392R
 //test for the event name that does not exist
 void UnitTest::testDeleteItemByEventName()
 {
@@ -1206,6 +1191,7 @@ void UnitTest::testDeleteItemByEventName()
     QCOMPARE(testCalender.deleteItem("Hello"),false);
 }
 
+//@Riandy A0088392R
 //test for the event name that exist
 void UnitTest::testDeleteItemByEventName2()
 {
@@ -1225,8 +1211,9 @@ void UnitTest::testDeleteItemByEventName2()
     QCOMPARE(testCalender.deleteItem("This is to test Delete by EventName"),true);
 }
 
+//@Riandy A0088392R
 //check for non existence ID
-void UnitTest::checkID()
+void UnitTest::testcheckID()
 {
     calender testCalender;
     task testTask;
@@ -1254,8 +1241,9 @@ void UnitTest::checkID()
     QCOMPARE(testCalender.checkID(11),false);
 }
 
+//@Riandy A0088392R
 //check for existence ID
-void UnitTest::checkID2()
+void UnitTest::testcheckID2()
 {
     calender testCalender;
     task testTask;
@@ -1284,7 +1272,9 @@ void UnitTest::checkID2()
     QCOMPARE(testCalender.checkID(1),true);
 }
 
-void UnitTest::deleteAll()
+//@Riandy A0088392R
+//this unit test try to delete all the database
+void UnitTest::testdeleteAll()
 {
     calender testCalender;
     task testTask;
@@ -1310,7 +1300,8 @@ void UnitTest::deleteAll()
     QCOMPARE(testCalender.displayDatabase().size()==0,true);
 }
 
-void UnitTest::searchByCat()
+//@Riandy A0088392R
+void UnitTest::testsearchByCat()
 {
     calender testCalender;
     task testTask;
@@ -1322,7 +1313,8 @@ void UnitTest::searchByCat()
     QCOMPARE(testCalender.SearchByCat("MEME").size()==0,true);
 }
 
-void UnitTest::searchByCat2()
+//@Riandy A0088392R
+void UnitTest::testsearchByCat2()
 {
     calender testCalender;
     task testTask;
@@ -1336,7 +1328,8 @@ void UnitTest::searchByCat2()
     QCOMPARE(testCalender.SearchByCat("meeting").size()==1,true);
 }
 
-void UnitTest::searchByTask()
+//@Riandy A0088392R
+void UnitTest::testsearchByTask()
 {
     calender taskCalender;
     task testTask;
@@ -1352,7 +1345,8 @@ void UnitTest::searchByTask()
     QCOMPARE(taskCalender.SearchByTask("test").size()==0,false);
 }
 
-void UnitTest::searchByTask2()
+//@Riandy A0088392R
+void UnitTest::testsearchByTask2()
 {
     calender taskCalender;
     task testTask;
@@ -1366,9 +1360,60 @@ void UnitTest::searchByTask2()
     taskCalender.addItem(testTask);
     taskCalender.addItem(testTask);
     taskCalender.addItem(testTask);
-    cout<<"This is the result"<<taskCalender.SearchByTask("test").size()<<endl;
     QCOMPARE(taskCalender.SearchByTask("test").size()==resultBefore+5,true);
 }
 
+//@Riandy A0088392R
+void UnitTest::testsearchByDate()
+{
+    calender taskCalender;
+    task testTask;
+    tm date;
+    date.tm_hour=20;
+    date.tm_mday=12;
+    date.tm_min=10;
+    date.tm_mon=1;
+    date.tm_sec=0;
+    date.tm_year=2012;
+    testTask.setStartDate(date);
+    taskCalender.addItem(testTask);
+    date.tm_year=2011;
+    testTask.setStartDate(date);
+    taskCalender.addItem(testTask);
+    date.tm_hour=20;
+    date.tm_mday=12;
+    date.tm_min=10;
+    date.tm_mon=11;
+    date.tm_sec=0;
+    date.tm_year=2014;
+    testTask.setStartDate(date);
+    taskCalender.addItem(testTask);
+    QCOMPARE(taskCalender.SearchByDate("12 / 1 / 2012").size()==1,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testconvertToDate()
+{
+    calender taskCalender;
+    tm date;
+    date.tm_hour=20;
+    date.tm_mday=11;
+    date.tm_min=10;
+    date.tm_mon=11;
+    date.tm_sec=0;
+    date.tm_year=2012;
+    QCOMPARE(taskCalender.convertToDate(date).compare("11 / 11 / 2012 - 20 : 10 : 0")==0,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testconvertToDateWithoutTime()
+{
+    calender taskCalender;
+    tm date;
+    date.tm_mday=11;
+    date.tm_mon=11;
+    date.tm_year=2012;
+    QCOMPARE(taskCalender.convertToDateNoTime(date).compare("11 / 11 / 2012")==0,true);
+}
 
 #pragma endregion Calender Unit Testing
