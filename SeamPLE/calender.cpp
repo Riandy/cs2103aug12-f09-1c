@@ -863,7 +863,7 @@ vector<task> calender::SearchPastEvent() //@RIANDY
     vector<task> bufferStorage;
 
     for(int i=0;i<_storage.size();i++)
-        if(dateComparator(_storage[i].getStartDate(),now)==true && _storage[i].getCategory()!="F10AT")
+        if(dateComparator(_storage[i].getEndDate(),now)==true && _storage[i].getDateType()!=4)
             bufferStorage.push_back(_storage[i]);
 
     return bufferStorage;

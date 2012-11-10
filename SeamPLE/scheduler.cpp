@@ -20,6 +20,7 @@ static string MESSAGE_MARK_FAILURE = "There was an error marking your event.";
 static string MESSAGE_DELETE_NOT_ENOUGH_INPUT = "There is too little information to choose a task to delete.";
 bool scheduler::instanceFlag=false;
 static int NOTFOUND = -1;
+
 scheduler* scheduler::_scheduler=NULL;
 
 scheduler* scheduler::getInstance()
@@ -518,7 +519,11 @@ vector<string> scheduler:: getTodayEvents() //@RIANDY
     return eventsOverview;
 }
 
-task scheduler::processAction(Action newAction) //@RIANDY
+//@author A0088392R
+//This function take the action object and extract the required information,
+//package it and store it as a task.
+//Note : If any field need to be added in the future, this part is to be added.
+task scheduler::processAction(Action &newAction) //@RIANDY
 {
     taskVector.clear();
     _result.clear();
@@ -533,33 +538,38 @@ task scheduler::processAction(Action newAction) //@RIANDY
     return newTask;
 }
 
+//@author A0088392R
+//This function takes in the tm date object and convert it to the appropriate format
+//using stringstream to be displayed in the GUI. Done extra checking if the date field is 0 or 1 digit,
+//will append extra 0 into it. so format will always be XX / XX / XXXX
 string scheduler::convertToDate(tm _date) //@RIANDY
 {
     string _dateString;
     ostringstream convert;
-    if(_date.tm_mday<10)
+
+    if(_date.tm_mday<TWODIGIT)
         convert<<"0"<<_date.tm_mday<<" / ";
     else
         convert<<_date.tm_mday<<" / ";
 
-    if(_date.tm_mon<10)
+    if(_date.tm_mon<TWODIGIT)
         convert<<"0"<<_date.tm_mon<<" / ";
     else
         convert<<_date.tm_mon<<" / ";
 
     convert<< _date.tm_year << " - " ;
 
-   if(_date.tm_hour<10)
+   if(_date.tm_hour<TWODIGIT)
         convert<<"0"<<_date.tm_hour<< " : ";
     else
         convert<<_date.tm_hour<< " : ";
 
-    if(_date.tm_min<10)
+    if(_date.tm_min<TWODIGIT)
         convert<<"0"<<_date.tm_min<< " : ";
     else
         convert<<_date.tm_min<< " : ";
 
-    if(_date.tm_sec<10)
+    if(_date.tm_sec<TWODIGIT)
         convert<<"0"<<_date.tm_sec;
     else
         convert<<_date.tm_sec;
@@ -568,8 +578,10 @@ string scheduler::convertToDate(tm _date) //@RIANDY
     return _dateString;
 }
 
-
-
+//@author A0088392R
+//This function is used to update the result to the GUI
+//it will convert the task vector into vector of string which will be used by
+//the GUI to display the result
 void scheduler::updateGUI() //@RIANDY
 {
     taskVector = eventCalender.displayDatabase();
@@ -577,6 +589,8 @@ void scheduler::updateGUI() //@RIANDY
     for (int i = 0; i < vectorSize; i++)
     {
         string _startDate,_endDate;
+        //check whether the given date is all zero
+        //if the field is zero than change the display to "-" instead of 0:0:0:0:0
         if(isTimeZero(taskVector[i].getStartDate()))
             _startDate="-";
         else
@@ -588,8 +602,7 @@ void scheduler::updateGUI() //@RIANDY
             _endDate = convertToDate(taskVector[i].getEndDate());
 
         ostringstream convert;
-        //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
-        convert << i+1;//i added this as a temporary replacement for the id above,remove this when u updated ur code
+        convert << i+1;
         string id= convert.str();
         _result.push_back(id);
         _result.push_back(taskVector.at(i).getEventName());
@@ -599,7 +612,8 @@ void scheduler::updateGUI() //@RIANDY
         _result.push_back(taskVector.at(i).getCategory());
     }
 
-    //decision to either view in standard or simple view
+    //decision to either view in standard or simple view by checking the vector size
+    //since if the size is <0, GUI shouldn't change to the standard view
     if (vectorSize>0)
      _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
 }
@@ -639,7 +653,7 @@ void scheduler::partialUpdateGUI(vector<task> taskVector) //@JOHN
 }
 
 
-
+//
 void scheduler::updateResultFound(int size) //@RIANDY
 {
     ostringstream tempString;

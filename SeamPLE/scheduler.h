@@ -8,7 +8,7 @@
 #include "Action.h"
 #include "ErrorLogger.h"
 
-
+#define TWODIGIT 10
 
 class scheduler
 {
@@ -22,7 +22,7 @@ private:
     void updateGUI();
     void updateResultFound(int size);
     string convertToDate(tm _date);
-    task processAction(Action newAction);
+    task processAction(Action &newAction);
     void updateTask(task &_task);
     void updateWeeklyTask(tm &_date);
     void updateFornightlyTask(tm &_date);
