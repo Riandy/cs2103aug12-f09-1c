@@ -649,9 +649,9 @@ void scheduler::Todo() //@JOHN
 }
 
 
-
+//@WEIYUAN A0086030R
 //Get a list of today's events for StandardView
-vector<string> scheduler:: getTodayEvents() //@WEIYUAN
+vector<string> scheduler:: getTodayEvents()
 {
     int size;
     vector<task> firstPriority;
@@ -663,7 +663,7 @@ vector<string> scheduler:: getTodayEvents() //@WEIYUAN
     getAllRequiredParameters(&firstPriority, &firstPriorityFound,
                              &highPriorityTasks,&size,
                              &threeCountFlag, &threeTasks);
-    qDebug() << highPriorityTasks;
+
     return makeTodayStringResults(firstPriority, firstPriorityFound,
                                   highPriorityTasks,size,
                                   threeCountFlag, threeTasks);
@@ -729,7 +729,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
 //Take the content of both vectors and return as a single
 //vector of strings
 vector<string> scheduler:: combineStringVectors(
-        vector<string> first, vector<string> second) //@WEIYUAN
+        vector<string> first, vector<string> second)
 {
     vector<string> combined = first;
 
@@ -743,7 +743,7 @@ vector<string> scheduler:: combineStringVectors(
 }
 
 //Get a string conversion from the integer that is sent in as the parameter
-string scheduler:: getStringFromInt(int subject) //@WEIYUAN
+string scheduler:: getStringFromInt(int subject)
 {
     stringstream buffer;
     buffer << subject;
