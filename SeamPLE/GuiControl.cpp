@@ -17,6 +17,9 @@ const QString GuiControl:: MESSAGE_CANNOT_CREATE_SYSTEM_TRAY =
         "SYSTEM TRAY NOT CREATED";
 const QString GuiControl:: MESSAGE_GUI_DISPLAY =
         "%123TABLE_SEAMPLE_&987";
+const QString GuiControl:: MESSAGE_ONLY_STAN_GUI_DISPLAY =
+        "%987TABLE_SEAMPLE_&123";
+
 const QString GuiControl:: MESSAGE_EMPTY = "";
 
 //Constructor is used to set several default signals as well as to
@@ -171,7 +174,9 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         {
             int capacity = output.size();
             bool needStandardView =
-                    (output[output.size()-1] == (MESSAGE_GUI_DISPLAY));
+                    (output[output.size()-1] == MESSAGE_GUI_DISPLAY) ||
+                    (output[output.size()-1] == MESSAGE_ONLY_STAN_GUI_DISPLAY
+                     && interfaceIsStandardView());
             setInputColourFlag(NONE);
 
             if (needStandardView)

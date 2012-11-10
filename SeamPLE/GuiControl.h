@@ -11,7 +11,7 @@
 
 //GuiControl class is the control class for GUIs in this application.
 //Both SeampleView and StandardView are accessed only through this class
-//Information is sent from the GUIs to the processor via the exe method
+//Information is sent from the GUIs to the processor via the run method
 
 class GuiControl: public QObject
 {
@@ -26,6 +26,7 @@ private:
     const static QString MESSAGE_SCHEDULER_INVALID_RETURN;
     const static QString MESSAGE_CANNOT_CREATE_SYSTEM_TRAY;
     const static QString MESSAGE_GUI_DISPLAY;
+    const static QString MESSAGE_ONLY_STAN_GUI_DISPLAY;
     const static QString MESSAGE_EMPTY;
 
 private:
