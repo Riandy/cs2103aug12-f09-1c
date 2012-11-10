@@ -1,5 +1,6 @@
 #include "CommonView.h"
 
+//@WEIYUAN A0086030R
 const QString CommonView::STYLESHEET_INPUT_LINE_BORDER_RADIUS =
         "border-radius: 10px;";
 const QString CommonView::STYLESHEET_INPUT_LINE_BORDER_STYLE =
@@ -27,9 +28,9 @@ const string CommonView:: MESSAGE_ERROR_INVALID_COLOUR =
 const string CommonView:: MESSAGE_ERROR_INCOMPLETE_RESULTS =
         "INCOMPLETE SCHEDULER RESULTS RETURNED";
 
-CommonView::CommonView()
-{
-}
+//CommonView::CommonView()
+//{
+//}
 
 bool CommonView::interfaceCurrentlyChanging()
 {
