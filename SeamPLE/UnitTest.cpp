@@ -285,7 +285,7 @@ void UnitTest::testIntellisenseRedo()
 
 
 #pragma region Scheduler UnitTesting
-
+//@JOHN A0069517W
 void UnitTest::testSchedulerAdd() //@JOHN
 {
     scheduler *testScheduler;
@@ -1139,7 +1139,7 @@ void UnitTest::testMark5() //@JOHN
 #pragma endregion Scheduler UnitTesting
 
 #pragma region Calender Unit Testing
-
+//@Riandy A0088392R
 void UnitTest::testAddItem()
 {
     calender testCalender;
