@@ -7,6 +7,7 @@
 #include "seample.h"
 #include "timekeeper.h"
 
+
 class GuiControl: public QObject
 {
     Q_OBJECT
@@ -62,6 +63,8 @@ private:
 
     void setInterfaceShownFlag(bool flag);
 
+    void setInputColourFlag(InputBarFlag flag);
+
     void emptyResponse();
 
     void send(QString feedback);
@@ -75,8 +78,6 @@ private:
     void setSeampleGuiSignals();
 
     //void setGlobalSignals();
-
-    void createSystemTrayIconIfPossible() throw (string);
 
 
 private:
@@ -98,7 +99,6 @@ private:
     //GUI interfaces ==================
     SeampleView* _seampleGui;
     StandardView* _standardGui;
-    NotifyView* _notifyInterface;
     //=================================
 
     //Error Logger ====================
