@@ -14,6 +14,7 @@ static string MESSAGE_UNDO_FAILURE = "There is nothing to undo.";
 static string MESSAGE_REDO_SUCCESS = "Redo operation was successful.";
 static string MESSAGE_REDO_FAILURE = "There is nothing to redo.";
 static string MESSAGE_GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
+static string MESSAGE_GUI_DISPLAY_TABLE_2 = "%987TABLE_SEAMPLE_&123";
 static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date.";
 static string MESSAGE_ADD_NO_NAME = "You have not entered a valid event description.";
 static string MESSAGE_DELETE_WARNING = "Your input was both an event name as well as a serial number. An entry was deleted by its serial number.";
@@ -65,7 +66,6 @@ vector<string> scheduler::executeCommand(Action newAction) //@RIANDY & @JOHN
     {
         this->Add(newTask);
     }
-
     else if(command=="DELETE")
     {
         this->Delete(newTask);
@@ -292,7 +292,11 @@ string scheduler::getEventNameForStart(int hour, int min) //@RIANDY
     return feedbackMessage.str();
 }
 
-task scheduler::processAction(Action newAction) //@RIANDY
+//@Riandy A0088392R
+//This function take the action object and extract the required information,
+//package it and store it as a task.
+//Note : If any field need to be added in the future, this part is to be added.
+task scheduler::processAction(Action newAction)
 {
     taskVector.clear();
     _result.clear();
@@ -307,33 +311,37 @@ task scheduler::processAction(Action newAction) //@RIANDY
     return newTask;
 }
 
-string scheduler::convertToDate(tm _date) //@RIANDY
+//@Riandy A0088392R
+//This function takes in the tm date object and convert it to the appropriate format
+//using stringstream to be displayed in the GUI. Done extra checking if the date field is 0 or 1 digit,
+//will append extra 0 into it. so format will always be XX / XX / XXXX
+string scheduler::convertToDate(tm _date)
 {
     string _dateString;
     ostringstream convert;
-    if(_date.tm_mday<10)
+    if(_date.tm_mday<TWODIGIT)
         convert<<"0"<<_date.tm_mday<<" / ";
     else
         convert<<_date.tm_mday<<" / ";
 
-    if(_date.tm_mon<10)
+    if(_date.tm_mon<TWODIGIT)
         convert<<"0"<<_date.tm_mon<<" / ";
     else
         convert<<_date.tm_mon<<" / ";
 
     convert<< _date.tm_year << " - " ;
 
-   if(_date.tm_hour<10)
+   if(_date.tm_hour<TWODIGIT)
         convert<<"0"<<_date.tm_hour<< " : ";
     else
         convert<<_date.tm_hour<< " : ";
 
-    if(_date.tm_min<10)
+    if(_date.tm_min<TWODIGIT)
         convert<<"0"<<_date.tm_min<< " : ";
     else
         convert<<_date.tm_min<< " : ";
 
-    if(_date.tm_sec<10)
+    if(_date.tm_sec<TWODIGIT)
         convert<<"0"<<_date.tm_sec;
     else
         convert<<_date.tm_sec;
@@ -343,8 +351,11 @@ string scheduler::convertToDate(tm _date) //@RIANDY
 }
 
 
-
-void scheduler::updateGUI() //@RIANDY
+//@Riandy A0088392R
+//This function is used to update the result to the GUI
+//it will convert the task vector into vector of string which will be used by
+//the GUI to display the result
+void scheduler::updateGUI(string command) //@RIANDY
 {
     taskVector = eventCalender.displayDatabase();
     int vectorSize = taskVector.size();
@@ -374,11 +385,18 @@ void scheduler::updateGUI() //@RIANDY
     }
 
     //decision to either view in standard or simple view
-    if (vectorSize>0)
-     _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+    if (vectorSize>0){
+        if(command=="ADD" || command=="DELETE"){
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
+            cout<<"This is pushed"<<endl;
+        }
+        else{
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+        }
+    }
 }
 
-void scheduler::partialUpdateGUI(vector<task> taskVector) //@JOHN
+void scheduler::partialUpdateGUI(vector<task> taskVector,string command) //@JOHN
 {
     updateResultFound(taskVector.size());
     int vectorSize = taskVector.size();
@@ -408,8 +426,15 @@ void scheduler::partialUpdateGUI(vector<task> taskVector) //@JOHN
         _result.push_back(taskVector.at(i).getCategory());
     }
     //decision to either view in standard or simple view
-    if (vectorSize!=0)
-        _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+    if (vectorSize>0){
+        if(command=="ADD" || command=="DELETE"){
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
+            cout<<"this is pushed"<<endl;
+        }
+        else{
+            _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
+        }
+    }
 }
 
 
@@ -444,22 +469,16 @@ void scheduler::Add(task thisTask) //@JOHN
         printMessage(MESSAGE_ADD_NO_NAME);
 
     }
-
-/*   else if(newTask.getCategory() == "1NVAL1D")
-    {
-        printMessage(MESSAGE_ADD_INVALID_DATE);
-
-    }*/
-
-
-
     else
     {
 
         if( eventCalender.addItem(thisTask))
          {
           printMessage(MESSAGE_ADD_SUCCESS);
-          updateGUI();
+          vector<task> temp;
+          temp.push_back(thisTask);
+          partialUpdateGUI(temp,"ADD");
+          //updateGUI();
          }
         else
           {
@@ -528,7 +547,7 @@ void scheduler::Delete(task thisTask)
                 printMessage(MESSAGE_ERROR_NOT_FOUND);
             }
             }
-            updateGUI();
+    updateGUI("DELETE");
 }
 
 
@@ -537,7 +556,7 @@ void scheduler::Edit(task thisTask) //@WENREN
 {
     ////cout<<"Edit execution with normal keypress"<<endl;
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
-    partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"EDIT");
 }
 
 
@@ -564,13 +583,13 @@ void scheduler::EditEnter(task thisTask) //@JOHN
                _faulty->report("Scheduler class: Edit command FAIL");
                printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
            }
-           updateGUI();
+    updateGUI("EDIT");
 }
 
 void scheduler::Display() //@JOHN
 {
     taskVector=eventCalender.displayDatabase();
-            partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"DISPLAY");
 }
 
 void scheduler::Undo() //@JOHN
@@ -579,7 +598,7 @@ void scheduler::Undo() //@JOHN
            printMessage(MESSAGE_UNDO_SUCCESS);
         else if (!eventCalender.undoAction())
            printMessage(MESSAGE_UNDO_FAILURE);
-        updateGUI();
+    updateGUI("UNDO");
 }
 
 void scheduler::Redo() //@JOHN
@@ -588,13 +607,13 @@ void scheduler::Redo() //@JOHN
         printMessage(MESSAGE_REDO_SUCCESS);
     else if (!eventCalender.redoAction())
       printMessage(MESSAGE_REDO_FAILURE);
-    updateGUI();
+    updateGUI("REDO");
 }
 
 void scheduler::Today() //@RIANDY
 {
     taskVector = eventCalender.getToday();
-    partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"TODAY");
 }
 
 void scheduler::Find(task thisTask) //@RIANDY
@@ -607,19 +626,19 @@ void scheduler::Find(task thisTask) //@RIANDY
     {
         taskVector = eventCalender.SearchByCat(thisTask.getCategory());
 
-        partialUpdateGUI(taskVector);
+        partialUpdateGUI(taskVector,"FIND");
     }
     //case 2: search by task
     else if (thisTask.getEventName()!="")
     {
         taskVector = eventCalender.SearchByTask(thisTask.getEventName());
-        partialUpdateGUI(taskVector);
+        partialUpdateGUI(taskVector,"FIND");
     }
      else if (_dateString != "0 / 0 / 0 - 0 : 0 : 0")
     {
 
         taskVector = eventCalender.SearchByDate(_dateString);
-        partialUpdateGUI(taskVector);
+        partialUpdateGUI(taskVector,"FIND");
     }
     else
     {
@@ -634,7 +653,7 @@ void scheduler::Mark(task thisTask) //@JOHN
         printMessage(MESSAGE_MARK_SUCCESS);
     else
         printMessage(MESSAGE_MARK_FAILURE);
-    updateGUI();
+    updateGUI("MARK");
 }
 
 void scheduler::Exit() //@WENBIN
@@ -645,7 +664,7 @@ void scheduler::Exit() //@WENBIN
 void scheduler::Todo() //@JOHN
 {
     taskVector = eventCalender.getFloatingEvents();
-    partialUpdateGUI(taskVector);
+    partialUpdateGUI(taskVector,"TODO");
 }
 
 
@@ -709,7 +728,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     eventsOverview.push_back(getStringFromInt(highPriorityTasks));
     if (firstPriorityFound)
     {
-        partialUpdateGUI(firstPriority);
+        partialUpdateGUI(firstPriority,"MARKTODAY");
         _result.erase(_result.begin());
         _result.erase(_result.begin()+(_result.size()-1));
         eventsOverview = combineStringVectors(eventsOverview,_result);
@@ -717,7 +736,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     if (threeCountFlag != 0)
     {
         _result.clear();
-        partialUpdateGUI(threeTasks);
+        partialUpdateGUI(threeTasks,"MARKTODAY");
         _result.erase(_result.begin());
         _result.erase(_result.begin()+(_result.size()-1));
         eventsOverview = combineStringVectors(eventsOverview,_result);
