@@ -677,7 +677,6 @@ void scheduler::getAllRequiredParameters(vector<task>* firstPriority, bool* firs
 {
     _result.clear();
     vector<task> taskList = eventCalender.getToday();
-    qDebug() << taskList.size() <<" Here";
     *size = taskList.size();
 
     for (int i = 0; i < *size ; i++)
