@@ -1,11 +1,12 @@
 #include "GuiControl.h"
 
+//@WEIYUAN A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
         "<font size=3 face=\"Gill Sans Ultra Bold Condensed\" color = \"orange\">"
         "Available Commands: add, delete, mark, unmark, "
-        "edit,<br>      find, undo, redo , display </font>";
+        "edit,<br>find, undo, redo , display </font>";
 const QString GuiControl:: MESSAGE_INTELLISENSE_INVALID_RETURN =
         "INTELLISENSE IS NOT WORKING";
 const QString GuiControl:: MESSAGE_INVALID_COLOUR_FLAG_RETURN =
@@ -16,23 +17,26 @@ const QString GuiControl:: MESSAGE_CANNOT_CREATE_SYSTEM_TRAY =
         "SYSTEM TRAY NOT CREATED";
 const QString GuiControl:: MESSAGE_GUI_DISPLAY =
         "%123TABLE_SEAMPLE_&987";
+const QString GuiControl:: MESSAGE_EMPTY = "";
 
-
-
+//Constructor is used to set several default signals as well as to
+//get the singleton instances of different classes
 GuiControl::GuiControl()
 {
     _standardGui = _standardGui->getInstance();
     _seampleGui = _seampleGui->getInstance();
     setStandardGuiSignals();
     setSeampleGuiSignals();
+    setTimedSignals();
     //setGlobalSignals();
     _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
     setInterfaceShownFlag(true);
-    _inputColorFlag = NONE;
+    setInputColourFlag(NONE);
     getTodaysEvents();
 }
 
+//Destructor is called to end the instances of the singletons
 GuiControl::~GuiControl()
 {
     _seampleGui->endInstance();
@@ -40,6 +44,9 @@ GuiControl::~GuiControl()
     _faulty->endInstance();
 }
 
+//This function supports this class as a singleton. Creates only a
+//dynamically allocated version of itself if it has not been created
+//yet
 GuiControl* GuiControl::getInstance()
 {
     if (!singleInstanceExists())
@@ -50,6 +57,8 @@ GuiControl* GuiControl::getInstance()
     return _guiControl;
 }
 
+//This function supports the class as a singleton which assist in the
+//removal of the dynamically allocated singleton
 void GuiControl::endInstance()
 {
     if (singleInstanceExists())
@@ -59,6 +68,7 @@ void GuiControl::endInstance()
     }
 }
 
+//Function reveals the Gui to the user
 void GuiControl:: showGui()
 {   
     if (interfaceIsStandardView())
@@ -82,7 +92,6 @@ void GuiControl::setStandardViewFlag (bool flag)
 void GuiControl::check(QString input)
 {
     bool emptyInput = (input.size() == 0);
-
     if (emptyInput)
     {
         emptyResponse();
@@ -98,17 +107,20 @@ void GuiControl::check(QString input)
             output.clear();
             output.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
             _faulty->report(MESSAGE_INTELLISENSE_INVALID_RETURN.toStdString());
-            _inputColorFlag = NONE;
+            setInputColourFlag(NONE);
         }
         else
         {
-            //Minus 2 because last string holds the colour flag
+            //Minus 2 because last string holds the colour flag, and the
+            //second last flag is the code for parser to request Gui to display
+            //the contents in a table
             bool needStandardView =
                     (output[output.size()-2] == (MESSAGE_GUI_DISPLAY));
 
             try
             {
-                if (implementInputColorFlagFailure((output[output.size()-1])[0]))
+                QCharRef flag = ((output[output.size()-1])[0]);
+                if (implementInputColorFlagFailure(flag))
                 {
                     output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
                 }
@@ -122,11 +134,13 @@ void GuiControl::check(QString input)
             {
                 if (!interfaceIsStandardView())
                 {
-                    changeView(input,"",true);
+                    bool inputBarFocus = true;
+                    changeView(input,MESSAGE_EMPTY,inputBarFocus);
                 }
                 try
                 {
-                    _standardGui->instantiateTable(output.mid(1,output.size() - 3));
+                    QVector <QString> results = output.mid(1,output.size() - 3);
+                    _standardGui->instantiateTable(results);
                 }
                 catch (string& error)
                 {
@@ -156,7 +170,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             int capacity = output.size();
             bool needStandardView =
                     (output[output.size()-1] == (MESSAGE_GUI_DISPLAY));
-            _inputColorFlag = NONE;
+            setInputColourFlag(NONE);
 
             if (needStandardView)
             {
@@ -281,12 +295,12 @@ bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag) throw (strin
 
     if (colorFlag.isDigit())
     {
-        _inputColorFlag = (InputBarFlag) colorFlag.digitValue();
+        setInputColourFlag( (InputBarFlag) colorFlag.digitValue());
         result = false;
     }
     else
     {
-        _inputColorFlag = NONE;
+        setInputColourFlag(NONE);
         result = true;
         throw MESSAGE_INVALID_COLOUR_FLAG_RETURN.toStdString();
     }
@@ -316,7 +330,7 @@ void GuiControl::setInputColourFlag(InputBarFlag flag)
 
 void GuiControl::emptyResponse()
 {
-    _inputColorFlag = NONE;
+    setInputColourFlag(NONE);
 
     if (interfaceIsStandardView())
     {
@@ -397,7 +411,6 @@ void GuiControl::setStandardGuiSignals()
 
     connect(_standardGui,SIGNAL(todayViewTriggered()),
             this, SLOT(getTodaysEvents()));
-
 }
 
 void GuiControl::setSeampleGuiSignals()
@@ -419,6 +432,12 @@ void GuiControl::setSeampleGuiSignals()
     //Recieve signal from standardGui to run slot for changing views
     connect(_seampleGui,SIGNAL(getHelpView()),
             this,SLOT(showHelpView()));
+}
+
+void GuiControl:: setTimedSignals()
+{
+    connect(&_timeControl,SIGNAL(oneMinuteTrigger()),
+            this, SLOT(getTodaysEvents()));
 }
 
 //void GuiControl:: setGlobalSignals()
