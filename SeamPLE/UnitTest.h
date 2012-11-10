@@ -110,6 +110,29 @@ private slots:
     void testMark5();
 #pragma endregion Scheduler UnitTesting
 
+#pragma region Calender Unit Testing
+
+    void testAddItem();
+    void testDeleteItemByID();
+    //void testDeleteItemByID2();
+    void testDeleteItemByEventName();
+    void testDeleteItemByEventName2();
+    void checkID();
+    void checkID2();
+    void deleteAll();
+    void searchByCat();
+    void searchByCat2();
+    void searchByTask();
+    void searchByTask2();
+//    void searchByPartialTask();
+//    void searchByDate();
+//    void convertToDate();
+//    void getToday();
+//    void displayDatabase();
+//    void getFloatingEvents();
+
+#pragma endregion Calender Unit Testing
+
 };
 
 #endif // UNITTEST_H
