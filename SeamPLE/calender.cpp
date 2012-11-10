@@ -809,9 +809,6 @@ bool calender::archivePastEvent() //@RIANDY
 
     pastEvents = SearchPastEvent();
 
-    //cout<<pastEvents.size();
-
-
 // Delete from real storage vector
     for (int i = 0; i< pastEvents.size(); i++)
     {
