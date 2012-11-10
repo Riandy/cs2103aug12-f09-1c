@@ -8,6 +8,11 @@
 #include "timekeeper.h"
 
 //@WEIYUAN A0086030R
+
+//GuiControl class is the control class for GUIs in this application.
+//Both SeampleView and StandardView are accessed only through this class
+//Information is sent from the GUIs to the processor via the exe method
+
 class GuiControl: public QObject
 {
     Q_OBJECT

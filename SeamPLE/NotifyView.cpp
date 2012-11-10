@@ -1,13 +1,17 @@
 #include "NotifyView.h"
-#include <QDebug>
+
+//@WEIYUAN A0086030R
+
+const QString NotifyView:: SYSTEM_ICON_LOCATION = ":/bg/pin icon.gif";
+const QString NotifyView:: SYSTEM_ICON_TOOLTIP = "SeamPLE";
 
 NotifyView* NotifyView::_notificationInterface = NULL;
 
 NotifyView::NotifyView()
 {
     _popUp = new QSystemTrayIcon();
-    _popUp->setIcon(QIcon(QPixmap(":/bg/pin icon.gif")));
-    _popUp->setToolTip("SeamPLE");
+    _popUp->setIcon(QIcon(QPixmap(SYSTEM_ICON_LOCATION)));
+    _popUp->setToolTip(SYSTEM_ICON_TOOLTIP);
     _popUp->show();
 }
 
@@ -51,7 +55,8 @@ void NotifyView::endInstance()
     }
 }
 
-void NotifyView::showMessage(QString title, QString message, QSystemTrayIcon::MessageIcon icon)
+void NotifyView::showMessage(QString title, QString message,
+                             QSystemTrayIcon::MessageIcon icon)
 {
     if (singleInstanceExists())
     {

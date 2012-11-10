@@ -6,9 +6,9 @@
 //#include <QxtGlobalShortcut>
 #include <QApplication>
 
+//@WEIYUAN A0086030R
 class GuiShortcuts
 {
-
 public:
     GuiShortcuts();
 

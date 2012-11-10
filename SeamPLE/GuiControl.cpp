@@ -68,7 +68,6 @@ void GuiControl::endInstance()
     }
 }
 
-//Function reveals the Gui to the user
 void GuiControl:: showGui()
 {   
     if (interfaceIsStandardView())
@@ -285,8 +284,6 @@ void GuiControl::getTodaysEvents()
                 _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,""));
 }
 
-//Function returns a bool value on whether this class exists currently as a
-//singleton
 bool GuiControl:: singleInstanceExists()
 {
     bool result;
@@ -326,8 +323,6 @@ bool GuiControl::implementInputColorFlagFailure(
     return result;
 }
 
-//Function returns a bool value on whether current interface shown is
-//standardView
 bool GuiControl::interfaceIsStandardView()
 {
     return _standardViewFlag;
@@ -346,8 +341,6 @@ bool GuiControl::interfaceIsStandardView()
 //    _interfaceShownFlag = flag;
 //}
 
-//Function sets the type of flag for the input colour of the text input bars
-//for both of the GUIs
 void GuiControl::setInputColourFlag(InputBarFlag flag)
 {
     _inputColorFlag = flag;

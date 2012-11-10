@@ -8,6 +8,11 @@
 #include "SLineEdit.h"
 
 //@WEIYUAN A0086030R
+
+//This class contains the shared GUI items between SeampleView and
+//StandardView. Items seen here are meant to be used by both user interfaces
+//stated above
+
 enum InputBarFlag
 {
     NONE,
