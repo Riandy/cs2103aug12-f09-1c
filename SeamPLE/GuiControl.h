@@ -7,7 +7,7 @@
 #include "seample.h"
 #include "timekeeper.h"
 
-
+//@WEIYUAN A0086030R
 class GuiControl: public QObject
 {
     Q_OBJECT
@@ -21,19 +21,16 @@ private:
     const static QString MESSAGE_SCHEDULER_INVALID_RETURN;
     const static QString MESSAGE_CANNOT_CREATE_SYSTEM_TRAY;
     const static QString MESSAGE_GUI_DISPLAY;
+    const static QString MESSAGE_EMPTY;
 
 private:
     GuiControl();
-
     ~GuiControl();
 
 public:
     GuiControl* getInstance();
-
     void endInstance();
-
     void showGui();
-
     void setStandardViewFlag (bool flag);
 
 
@@ -76,6 +73,8 @@ private:
     void setStandardGuiSignals();
 
     void setSeampleGuiSignals();
+
+    void setTimedSignals();
 
     //void setGlobalSignals();
 
