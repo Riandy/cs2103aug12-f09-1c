@@ -7,6 +7,7 @@
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
+//@WEIYUAN A0086030R
 enum InputBarFlag
 {
     NONE,
@@ -42,21 +43,14 @@ protected:
     const static string MESSAGE_ERROR_INVALID_COLOUR;
     const static string MESSAGE_ERROR_INCOMPLETE_RESULTS;
 
-    GuiShortcuts _allShortcuts;
-
-protected:
-    CommonView();
-
 public:
     bool interfaceCurrentlyChanging();
-
     bool screenCurrentlySliding();
 
 protected:
+    GuiShortcuts _allShortcuts;
     QPropertyAnimation *_animation;
-
     bool _currentlyChanging;
-
     bool _currentlySliding;
 };
 
