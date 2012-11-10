@@ -117,6 +117,7 @@ private:
     const static string REDIDTEXT;
     const static char CATEGORYRECOGNISER;
         //end of added array support for commands
+
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
     string _feedback;
@@ -125,21 +126,13 @@ private:
 
 public:
     static Intellisense* getInstance();
-
-
     ~Intellisense(void);
+
+    //checks user input
     Action check(string query);
-    string getOperation(vector<string>& tokens);
-    tm getDate(vector<string>& tokens);
-    tm getEndOfDay(Action &task);
-    void getImptDate(string _date, tm &date);
-    string getEventName(vector<string>& tokens);
-    int getID(vector<string>& tokens);
-    string getCommand(vector<string>& tokens, string _command);
-    string getCategory(vector<string>& tokens);
-    string getPriority(vector<string>& tokens);
-    int getDateType(vector<string>& tokens);
-    tm getTime(vector<string>& tokens, tm &date);
+
+
+    //Intellisense Feedback
     string getAddFeedBack();
     string getEditFeedBack();
     string getDeleteFeedBack();
@@ -153,32 +146,23 @@ public:
     string getFeedback();
     void setFeedback(string);
 
+    //Parameter checking
     string getParameter();
     void setParameter(string);
-
-
-
-
-    bool getrequirementsMet();
     void setRequirementsMet(bool);
+    bool getrequirementsMet();
+
 
 
 
 private:
-    vector<string> tokenize(string command);
+
     ErrorLogger *logger;
-    bool isAllInt(const string& s );
-    int checkDateString(string token);
-    operation determinOperation(vector<string>& tokens);
-    string getfirst_Word(string command);
+
+    //parsing execution functions
     bool checkString(const string& input, const string& command);
     bool checkCommandArray(const string& input, const string command[], int arraySize);
-    int checkMonthByString(string token);
-    string removeChar(string s,char chars[]);
-    string& trim(string& s , const string& delimiters = " \f\r\t\v");
-    string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
-    string& trim_left_inplace( string& s,  const string& delimiters=" \f\r\t\v");
-    string toLowerString(string);
+    operation determinOperation(vector<string>& tokens);
     Action addOperation(vector<string>& tokens);
     Action deleteOperation(vector<string>& tokens);
     Action exitOperation(vector<string>& tokens);
@@ -193,19 +177,40 @@ private:
     Action todoOperation(vector<string>& tokens);
     Action todayOperation(vector<string>& tokens);
 
+    //Getters
+    string getOperation(vector<string>& tokens);
+    string getEventName(vector<string>& tokens);
+    string getCommand(vector<string>& tokens, string _command);
+    string getCategory(vector<string>& tokens);
+    string getPriority(vector<string>& tokens);
+    tm getDate(vector<string>& tokens);
+    tm getEndOfDay(Action &task);
+    tm getTime(vector<string>& tokens, tm &date);
+    int getDateType(vector<string>& tokens);
+    int getID(vector<string>& tokens);
+    void getImptDate(string _date, tm &date);
 
+    //Date checking functions
     bool checkDateNumericalFormat(vector<string>& tokens, tm &date);
+    bool checkDateStringFormat(vector<string>& tokens, tm &date);
     bool checkDateFormat1(string checkString, tm &date);
     bool checkDateFormat2(string checkString, tm &date);
     bool checkDateFormat3(string checkString, tm &date);
     bool checkDateFormat4(string checkString, tm &date);
     bool checkDateFormat5(string checkString, tm &date);
-
-    bool checkDateStringFormat(vector<string>& tokens, tm &date);
+    bool checkImptDate(vector<string>& tokens,tm &date);
     bool isDateNotentered(Action _task);
     bool isDateOver(Action _task);
+    bool isDateValid(Action task);
+    int daysMonth(int year, int month);
+    int checkMonthByString(string token);
+    int checkDateString(string token);
+
+    void handleInvalidDate(Action &task);
+    void smartAutoFill(Action &task);
 
 
+    //Time checking functions
     bool processTimeFormat1 (tm &date, string time);
     bool processTimeFormat2 (tm &date, string time);
     bool processTimeFormat3 (tm &date, string time);
@@ -215,15 +220,22 @@ private:
     bool processTimeFormat7 (tm &date, string time);
     bool processTimeFormat8 (tm &date, string time);
 
-    bool checkImptDate(vector<string>& tokens,tm &date);
+    //Text manupilation functions
+    vector<string> tokenize(string command);
+    string getfirst_Word(string command);
+    string removeChar(string s,char chars[]);
+    string& trim(string& s , const string& delimiters = " \f\r\t\v");
+    string& trim_right_inplace( string& s, const string& delimiters=" \f\r\t\v");
+    string& trim_left_inplace( string& s,  const string& delimiters=" \f\r\t\v");
+    string toLowerString(string);
+    bool isAllInt(const string& s );
 
-
-
-    bool getStatusFlagAt(int);
+    //User input checking
     void setStatusFlagAt(int,bool);
-
     void setAllStatusFlag(Action task); //this is based on the task that is passed in
     void getAllStatusFlag(bool *);//change the actual flag array passed in
+    bool isValidParaForCmd(int,int);
+    bool getStatusFlagAt(int);
 
     //check whether parameters supplied met the minimum requirement for command to be valid
     void checkAddReq();
@@ -234,17 +246,6 @@ private:
     void checkEditReq();
     void checkExitReq();
     void initFlags();
-
-
-
-
-
-
-    bool isValidParaForCmd(int,int);
-    void smartAutoFill(Action &task);
-    bool isDateValid(Action task);
-    void handleInvalidDate(Action &task);
-    int daysMonth(int year, int month);
 
 
 };
