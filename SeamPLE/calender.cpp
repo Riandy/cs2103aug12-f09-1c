@@ -256,9 +256,11 @@ bool calender::editTask( task _edited) //@WENREN
 vector<task> calender::SearchByCat(string searchItem) //@RIANDY
 {
     vector<task> _bufferStorage;
+    cout<<searchItem;
     for (int i = 0; i < int(_storage.size()); i++)
     {
         string  bufferString = _storage[i].getCategory();
+        cout<<_storage[i].getCategory();
         if (bufferString.compare(searchItem)==0)
         {
             _bufferStorage.push_back(_storage[i]);
