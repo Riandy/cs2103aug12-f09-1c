@@ -355,13 +355,15 @@ string scheduler::convertToDate(tm _date)
 //This function is used to update the result to the GUI
 //it will convert the task vector into vector of string which will be used by
 //the GUI to display the result
-void scheduler::updateGUI(string command) //@RIANDY
+void scheduler::updateGUI(string command)
 {
     taskVector = eventCalender.displayDatabase();
     int vectorSize = taskVector.size();
     for (int i = 0; i < vectorSize; i++)
     {
         string _startDate,_endDate;
+              //check whether the startDate or endDate is zero.
+              //if yes, change it to "-"
         if(isTimeZero(taskVector[i].getStartDate()))
             _startDate="-";
         else
@@ -373,8 +375,8 @@ void scheduler::updateGUI(string command) //@RIANDY
             _endDate = convertToDate(taskVector[i].getEndDate());
 
         ostringstream convert;
-        //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
-        convert << i+1;//i added this as a temporary replacement for the id above,remove this when u updated ur code
+
+        convert << i+1;
         string id= convert.str();
         _result.push_back(id);
         _result.push_back(taskVector.at(i).getEventName());
@@ -384,18 +386,19 @@ void scheduler::updateGUI(string command) //@RIANDY
         _result.push_back(taskVector.at(i).getCategory());
     }
 
-    //decision to either view in standard or simple view
-    if (vectorSize>0){
-        if(command=="ADD" || command=="DELETE"){
+    //decision to either view in standard or simple view in the GUI
+    if (vectorSize>0)
+    {
+        if(command=="ADD" || command=="DELETE")
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
-            cout<<"This is pushed"<<endl;
-        }
-        else{
+         else
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
-        }
+
     }
 }
 
+//This function is used to update the number of results found to the _result vector
+//which will be used by the GUI to display
 void scheduler::updateResultFound(int size)
 {
     ostringstream tempString;
@@ -404,6 +407,8 @@ void scheduler::updateResultFound(int size)
     tempString << " results found.";
     _result.push_back(tempString.str());
 }
+//This function check whether the field in the given tm struct
+//is all zero. if yes, return true, otherwise return false.
 bool scheduler::isTimeZero(tm time)
 {
     if(time.tm_hour==0 && time.tm_mday==0 && time.tm_min==0 && time.tm_mon==0 && time.tm_sec==0 && time.tm_year==0)
@@ -614,12 +619,16 @@ void scheduler::Redo()
     updateGUI("REDO");
 }
 //@Riandy A0088392R
+//This function is to find the today's event and
+//update the result to _result through partialUpdateGui function
 void scheduler::Today()
 {
     taskVector = eventCalender.getToday();
     partialUpdateGUI(taskVector,"TODAY");
 }
-
+//This function is used to find a specific task in the database.
+//User can either find by category,eventName,date.
+//either than that 3 type, error message will be generated.
 void scheduler::Find(task thisTask)
 {
     string _dateString = eventCalender.convertToDateNoTime(thisTask.getStartDate());
@@ -646,6 +655,7 @@ void scheduler::Find(task thisTask)
     }
     else
     {
+        //display error message and log the error in a txt file
         printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
         _faulty->report("Scheduler:: Find function fail to find the result");
     }
