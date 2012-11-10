@@ -17,7 +17,7 @@ static string MESSAGE_GUI_DISPLAY_TABLE = "%123TABLE_SEAMPLE_&987";
 static string MESSAGE_ADD_INVALID_DATE = "You have entered an invalid date.";
 static string MESSAGE_ADD_NO_NAME = "You have not entered a valid event description.";
 static string MESSAGE_DELETE_WARNING = "Your input was both an event name as well as a serial number. An entry was deleted by its serial number.";
-static string MESSAGE_MARK_SUCCESS = "Your event was marked.";
+static string MESSAGE_MARK_SUCCESS = "Your event was marked as completed.";
 static string MESSAGE_MARK_FAILURE = "There was an error marking your event.";
 static string MESSAGE_DELETE_NOT_ENOUGH_INPUT = "There is too little information to choose a task to delete.";
 bool scheduler::instanceFlag=false;
@@ -630,7 +630,7 @@ void scheduler::Find(task thisTask) //@RIANDY
 
 void scheduler::Mark(task thisTask) //@JOHN
 {
-    if (  eventCalender.markTask(thisTask.getEventName()) )
+    if (  eventCalender.markTask(thisTask) )
         printMessage(MESSAGE_MARK_SUCCESS);
     else
         printMessage(MESSAGE_MARK_FAILURE);

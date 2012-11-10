@@ -118,15 +118,16 @@ bool calender::checkNameExists(string _name) //@JOHN
     return false;
 }
 
-bool calender::markTask(string taskName) //@JOHN
+bool calender::markTask(task markedTask) //@JOHN
 {
-    if(this->deleteItem(taskName))
+    if(this->deleteItem(markedTask.getEventName()))
+ {
+        this->archiveEvent(markedTask);
         return true;
+}
     else
         return false;
-    /*
-      HAVE TO ARCHIVE
-      */
+
 }
 
 
@@ -837,6 +838,18 @@ bool calender::archivePastEvent() //@RIANDY
 
 
 return true;
+}
+
+bool calender::archiveEvent(task markedTask) //@JOHN
+{
+    ofstream write (ARCHIVE_FILENAME, fstream::app);
+    vector<string> temp =markedTask.toString();
+    for (int j=1; j<int(temp.size());j++)
+        write<<temp[j]<<endl;
+    write<<endl;
+    temp.clear();
+    write.close();
+    return true;
 }
 
 
