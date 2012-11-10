@@ -371,22 +371,23 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
 
     vector<string>::iterator it=tokens.begin();
-    while (it++!=tokens.end())
+    while (it!=tokens.end())
     {
         time=it->c_str();
         switch(time.size())
         {
 
         case 3:   if( processTimeFormat1(date, time))
-            {it=tokens.erase(it);}
-            return date;
+            {it=tokens.erase(it);
+            return date;}
             break;
 
         case 4:   if(processTimeFormat2(date, time))
-            {it=tokens.erase(it);}
+            {it=tokens.erase(it);
+             return date;}
             if(processTimeFormat8(date, time))
-            {it=tokens.erase(it);}
-            return date;
+            {it=tokens.erase(it);
+            return date;}
             break;
 
         case 5: if(processTimeFormat3(date, time))
