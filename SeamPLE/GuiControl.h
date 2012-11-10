@@ -38,7 +38,8 @@ public:
 private slots:
     void check(QString input);
     void passScheduler(QString input, bool inputBarHasFocus);
-    void changeView(QString input, QString inputChecked, bool inputBarHasFocus);
+    void changeView(QString input, QString inputChecked,
+                    bool inputBarHasFocus);
     //void showHideView();
     void showHelpView();
     void getTodaysEvents();
@@ -53,7 +54,8 @@ private:
     void emptyResponse();
     void send(QString feedback);
     void sendWithInputEditItem (QString input, QString feedback);
-    void sendWithInputEditAndFocus (bool inputBarHasFocus, QString input, QString feedback);
+    void sendWithInputEditAndFocus (bool inputBarHasFocus, QString input,
+                                    QString feedback);
     void setStandardGuiSignals();
     void setSeampleGuiSignals();
     void setTimedSignals();
@@ -61,27 +63,15 @@ private:
 
 
 private:
-    //Flags ===========================
     bool _standardViewFlag;
     //bool _interfaceShownFlag;
     InputBarFlag _inputColorFlag;
-    //=================================
-
-    Timekeeper _timeControl;
+    Timekeeper _timeControl; 
     //GuiShortcuts _allShortcuts;
-
-    //GUI interfaces ==================
     SeampleView* _seampleGui;
     StandardView* _standardGui;
-    //=================================
-
-    //Error Logger ====================
     ErrorLogger* _faulty;
-    //=================================
-
-    //Control Class ===================
     Seample *_inputProcessor;
-    //=================================
 
 };
 #endif // GUICONTROL_H

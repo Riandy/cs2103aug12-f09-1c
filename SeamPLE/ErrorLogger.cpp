@@ -4,6 +4,15 @@
 //Static pointer containing address of the single instance
 ErrorLogger* ErrorLogger::_logger = NULL;
 
+//The following string holds the name of the text file for writing the error
+//log to. Change the string to redirect the logging to another file
+const string ErrorLogger::ERROR_TEXT_FILE = "ErrorLog.txt";
+
+//The following strings holds portions of messages that are logged into the
+//error text file
+const string ErrorLogger::ERROR_LOG_PRE_MESSAGE = "Error Log Resetted on : ";
+const string ErrorLogger::ERROR_TEXT_BARRIERS = " | ";
+
 //Check if Singleton of ErrorLogger has been created yet
 bool ErrorLogger::singleInstanceExists()
 {
@@ -42,7 +51,7 @@ ErrorLogger* ErrorLogger::getInstance()
     return _logger;
 }
 
-//Delete the single instance of the class
+//Delete the single instance of this class
 void ErrorLogger::endInstance()
 {
     if (singleInstanceExists())
@@ -56,22 +65,20 @@ void ErrorLogger::endInstance()
 //contents of the file
 void ErrorLogger:: report(string error)
 {
-    ofstream write ("ErrorLog.txt", fstream::app);
-
-    write << getDateTime();
-    write << "| " << error << " |" << endl << endl;
-
-    write.close();
+    ofstream errorLog (ERROR_TEXT_FILE, fstream::app);
+    errorLog << getDateTime();
+    errorLog << ERROR_TEXT_BARRIERS << error << ERROR_TEXT_BARRIERS;
+    errorLog << endl << endl;
+    errorLog.close();
 }
 
 //Reset the entire error log. A date will be indicated at the start
 //of the file to show when the log was resetted
 void ErrorLogger:: resetErrorLog()
 {
-    ofstream writeLog ("ErrorLog.txt");
-
-    writeLog << "Error Log Resetted on : " << getDateTime();
-    writeLog << endl << endl;
-
-    writeLog.close();
+    ofstream errorLog (ERROR_TEXT_FILE);
+    errorLog << ERROR_LOG_PRE_MESSAGE << getDateTime();
+    errorLog << endl << endl;
+    errorLog.close();
 }
+
