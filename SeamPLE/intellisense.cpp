@@ -371,7 +371,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
 
     vector<string>::iterator it=tokens.begin();
-    while (it!=tokens.end())
+    while (it++!=tokens.end())
     {
         time=it->c_str();
         switch(time.size())
