@@ -60,9 +60,9 @@ public:
     vector<string> getTodayEvents();
 
 private:
-    void getAllRequiredParameters(vector<task>* firstPriority, bool* firstPriorityFound,
-                                  int* highPriorityTasks, int* size,
-                                  int* threeCountFlag, vector<task>* threeTasks);
+    void getAllRequiredParameters(vector<task>& firstPriority, bool& firstPriorityFound,
+                                  int& highPriorityTasks, int& size,
+                                  int& threeCountFlag, vector<task>& threeTasks);
     vector<string> makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
                                           int highPriorityTasks, int size,
                                           int threeCountFlag, vector<task> threeTasks);
