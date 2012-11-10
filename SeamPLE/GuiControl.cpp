@@ -4,8 +4,8 @@
 GuiControl* GuiControl::_guiControl = NULL;
 
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
-        "<font size=3 face=\"Gill Sans Ultra Bold Condensed\" color = \"orange\">"
-        "Available Commands: add, delete, mark, unmark, "
+        "<font size=3 face=\"Gill Sans Ultra Bold Condensed\" color ="
+        "\"orange\"> Available Commands: add, delete, mark, unmark, "
         "edit,<br>find, undo, redo , display </font>";
 const QString GuiControl:: MESSAGE_INTELLISENSE_INVALID_RETURN =
         "INTELLISENSE IS NOT WORKING";
@@ -31,7 +31,7 @@ GuiControl::GuiControl()
     //setGlobalSignals();
     _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
-    setInterfaceShownFlag(true);
+    //setInterfaceShownFlag(true);
     setInputColourFlag(NONE);
     getTodaysEvents();
 }
@@ -139,7 +139,7 @@ void GuiControl::check(QString input)
                 }
                 try
                 {
-                    QVector <QString> results = output.mid(1,output.size() - 3);
+                    QVector <QString> results = output.mid(1,output.size()-3);
                     _standardGui->instantiateTable(results);
                 }
                 catch (string& error)
@@ -152,6 +152,8 @@ void GuiControl::check(QString input)
     }
 }
 
+//This function generates the result from passing a command into the scheduler
+//and relays this result to the Gui for display purposes
 void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 {
     //Code to be implemented here to be sent into  scheduler classes
@@ -163,8 +165,9 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     }
     else
     {
-        QVector <QString> output =
-                _inputProcessor->run(TO_SCHEDULER_AND_RETURN_RESULTS,input.toStdString());
+        QVector <QString> output = _inputProcessor->run(
+                    TO_SCHEDULER_AND_RETURN_RESULTS,
+                    input.toStdString());
         if (_inputProcessor->requirementsMet())
         {
             int capacity = output.size();
@@ -176,15 +179,17 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
             {
                 if (!interfaceIsStandardView())
                 {
-                    changeView("",output[0], inputBarHasFocus);
+                    changeView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
                 }
                 else
                 {
-                    sendWithInputEditAndFocus(inputBarHasFocus,"",output[0]);
+                    sendWithInputEditAndFocus(inputBarHasFocus,MESSAGE_EMPTY,
+                                              output[0]);
                 }
                 try
                 {
-                    _standardGui->instantiateTable(output.mid(1,capacity - 2));
+                    QVector <QString> results = output.mid(1,capacity - 2);
+                    _standardGui->instantiateTable(results);
                 }
                 catch (string& error)
                 {
@@ -196,24 +201,27 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                 //Scheduler must send results back. If not, we error handle it
                 //to produce an output that informs that no output is returned
                 bool invalidSchedulerReturn = (output.size() == 0);
-
                 if (invalidSchedulerReturn)
                 {
                     output.push_front(MESSAGE_SCHEDULER_INVALID_RETURN);
-                    _faulty->report(MESSAGE_SCHEDULER_INVALID_RETURN.toStdString());
+                    _faulty->report(
+                                MESSAGE_SCHEDULER_INVALID_RETURN.
+                                toStdString());
                 }
 
                 if (interfaceIsStandardView())
                 {
                     _standardGui->resetAllTablesContents();
                 }
-                sendWithInputEditItem("",output[0]);
+                sendWithInputEditItem(MESSAGE_EMPTY,output[0]);
             }
         }
     }
 }
 
-void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHasFocus)
+//Function to change the GUI interface being displayed
+void GuiControl::changeView(QString input, QString inputChecked,
+                            bool inputBarHasFocus)
 {
     if (!(_standardGui->interfaceCurrentlyChanging())&&
             !(_seampleGui->interfaceCurrentlyChanging()))
@@ -235,44 +243,50 @@ void GuiControl::changeView(QString input, QString inputChecked, bool inputBarHa
     }
 }
 
-void GuiControl::showHideView()
-{
-    QMainWindow* currentInterface;
+////Function toggles between whether the application is minimised through a
+////shortcut orcurrently shown.
+//void GuiControl::showHideView()
+//{
+//    QMainWindow* currentInterface;
 
-    if (interfaceIsStandardView())
-    {
-        currentInterface = _standardGui;
-    }
-    else
-    {
-        currentInterface = _seampleGui;
-    }
+//    if (interfaceIsStandardView())
+//    {
+//        currentInterface = _standardGui;
+//    }
+//    else
+//    {
+//        currentInterface = _seampleGui;
+//    }
 
-    if(interfaceIsCurrentlyShown())
-    {
-        currentInterface->hide();
-        setInterfaceShownFlag(false);
-    }
-    else
-    {
-        currentInterface->show();
-        currentInterface->activateWindow();
-        setInterfaceShownFlag(true);
-    }
-}
+//    if(interfaceIsCurrentlyShown())
+//    {
+//        currentInterface->hide();
+//        setInterfaceShownFlag(false);
+//    }
+//    else
+//    {
+//        currentInterface->show();
+//        currentInterface->activateWindow();
+//        setInterfaceShownFlag(true);
+//    }
+//}
 
+//Function is called by _seampleGui when f1 or ctrl-1 shortcuts are entered.
+//Triggers help interface to appear
 void GuiControl::showHelpView()
 {
     _standardGui->helpTriggered();
 }
-
+\
+//Function displays the day's events through _standardGui
 void GuiControl::getTodaysEvents()
 {
     _standardGui->displayTodayView(
                 _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,""));
-    qDebug() << _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
 }
 
+//Function returns a bool value on whether this class exists currently as a
+//singleton
 bool GuiControl:: singleInstanceExists()
 {
     bool result;
@@ -289,7 +303,11 @@ bool GuiControl:: singleInstanceExists()
     return result;
 }
 
-bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag) throw (string)
+//Function checks if the flag sent in to implement the text bar colour is valid
+//A bool value corresponding to the validity is sent back and the colour is
+//resetted to NONE for invalid colour flags
+bool GuiControl::implementInputColorFlagFailure(
+        QCharRef colorFlag) throw (string)
 {
     bool result;
 
@@ -308,26 +326,36 @@ bool GuiControl::implementInputColorFlagFailure(QCharRef colorFlag) throw (strin
     return result;
 }
 
+//Function returns a bool value on whether current interface shown is
+//standardView
 bool GuiControl::interfaceIsStandardView()
 {
     return _standardViewFlag;
 }
 
-bool GuiControl::interfaceIsCurrentlyShown()
-{
-    return _interfaceShownFlag;
-}
+////Function returns a bool value on whether interface is minimised or running
+//bool GuiControl::interfaceIsCurrentlyShown()
+//{
+//    return _interfaceShownFlag;
+//}
 
-void GuiControl::setInterfaceShownFlag(bool flag)
-{
-    _interfaceShownFlag = flag;
-}
+////Function sets the boolean value for _interfaceShownFlag given a boolean
+////parameter
+//void GuiControl::setInterfaceShownFlag(bool flag)
+//{
+//    _interfaceShownFlag = flag;
+//}
 
+//Function sets the type of flag for the input colour of the text input bars
+//for both of the GUIs
 void GuiControl::setInputColourFlag(InputBarFlag flag)
 {
     _inputColorFlag = flag;
 }
 
+//Function returns a "empty response", which is basically what is displayed
+//to the user when nothing is typed in the text input bar. It comprises of
+//an advisory message to guide the user in using the program
 void GuiControl::emptyResponse()
 {
     setInputColourFlag(NONE);
@@ -344,6 +372,8 @@ void GuiControl::emptyResponse()
     }
 }
 
+//Function sends logic components' feedback to the GUI that is currently
+//displayed so that it can be shown to the user
 void GuiControl::send(QString feedback)
 {
     try
@@ -365,6 +395,9 @@ void GuiControl::send(QString feedback)
     }
 }
 
+//Function is an advanced form of the send function. It includes the showing
+//of feedback in the input bar of the GUIs. This is normally used for flushing
+//the input bars
 void GuiControl:: sendWithInputEditItem(QString input,QString feedback)
 {
     send(feedback);
@@ -379,7 +412,10 @@ void GuiControl:: sendWithInputEditItem(QString input,QString feedback)
     }
 }
 
-void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus, QString input, QString feedback)
+//Function is an advanced form of sendWithInputEditItem with the addition of
+//the overwritting of focus for the input bar of both GUIs.
+void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus,
+                                            QString input, QString feedback)
 {
     sendWithInputEditItem(input,feedback);
 
@@ -393,19 +429,16 @@ void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus, QString input
     }
 }
 
+//Function set all required signals from _standardGui to local slots in
+//this class
 void GuiControl::setStandardGuiSignals()
 {
-    //Recieve signal from standardGui to run slot for checking
-    //intellisense
     connect(_standardGui,SIGNAL(relay(QString)),
             this,SLOT(check(QString)));
 
-    //Recieve signal from standardGui to run slot for checking
-    //scheduler
     connect(_standardGui,SIGNAL(run(QString, bool)),
             this,SLOT(passScheduler(QString, bool)));
 
-    //Recieve signal from standardGui to run slot for changing views
     connect(_standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
 
@@ -413,33 +446,33 @@ void GuiControl::setStandardGuiSignals()
             this, SLOT(getTodaysEvents()));
 }
 
+//Function set all required signals from _seampleGui to local slots in
+//this class
 void GuiControl::setSeampleGuiSignals()
 {
-    //Recieve signal from seampleGui to run slot for checking
-    //intellisense
     connect(_seampleGui,SIGNAL(relay(QString)),
             this,SLOT(check(QString)));
 
-    //Recieve signal from standardGui to run slot for checking
-    //scheduler
     connect(_seampleGui,SIGNAL(run(QString, bool)),
             this,SLOT(passScheduler(QString, bool)));
 
-    //Recieve signal from standardGui to run slot for changing views
     connect(_seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
 
-    //Recieve signal from standardGui to run slot for changing views
     connect(_seampleGui,SIGNAL(getHelpView()),
             this,SLOT(showHelpView()));
 }
 
+//Function set all required signals from the time tracker the slots there are
+//supposed to run periodically
 void GuiControl:: setTimedSignals()
 {
     connect(&_timeControl,SIGNAL(oneMinuteTrigger()),
             this, SLOT(getTodaysEvents()));
 }
 
+////Function set global shortcut signals from shortcuts class to local slots in
+////this class
 //void GuiControl:: setGlobalSignals()
 //{
 //    _allShortcuts.setGlobalShortcuts();
