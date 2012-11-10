@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 
+//@WEIYUAN A0086030R
 using namespace std;
 
 class ErrorLogger
@@ -13,10 +14,6 @@ private:
     static ErrorLogger* _logger;
 
 private:
-    ErrorLogger();
-
-    ~ErrorLogger();
-
     bool singleInstanceExists();
 
     string getDateTime();

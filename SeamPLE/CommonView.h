@@ -43,9 +43,6 @@ protected:
     const static string MESSAGE_ERROR_INVALID_COLOUR;
     const static string MESSAGE_ERROR_INCOMPLETE_RESULTS;
 
-protected:
-    //CommonView();
-
 public:
     bool interfaceCurrentlyChanging();
     bool screenCurrentlySliding();

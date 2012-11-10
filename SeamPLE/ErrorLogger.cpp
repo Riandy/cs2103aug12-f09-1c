@@ -3,15 +3,6 @@
 //Static pointer containing address of the single instance
 ErrorLogger* ErrorLogger::_logger = NULL;
 
-ErrorLogger::ErrorLogger()
-{
-}
-
-ErrorLogger::~ErrorLogger()
-{
-}
-
-
 //Check if Singleton of ErrorLogger has been created yet
 bool ErrorLogger::singleInstanceExists()
 {
