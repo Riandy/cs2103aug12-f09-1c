@@ -414,7 +414,8 @@ void GuiControl:: sendWithInputEditItem(QString input,QString feedback)
 
 //Function is an advanced form of sendWithInputEditItem with the addition of
 //the overwritting of focus for the input bar of both GUIs.
-void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus, QString input, QString feedback)
+void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus,
+                                            QString input, QString feedback)
 {
     sendWithInputEditItem(input,feedback);
 
@@ -432,17 +433,12 @@ void GuiControl:: sendWithInputEditAndFocus(bool inputBarHasFocus, QString input
 //this class
 void GuiControl::setStandardGuiSignals()
 {
-    //Recieve signal from standardGui to run slot for checking
-    //intellisense
     connect(_standardGui,SIGNAL(relay(QString)),
             this,SLOT(check(QString)));
 
-    //Recieve signal from standardGui to run slot for checking
-    //scheduler
     connect(_standardGui,SIGNAL(run(QString, bool)),
             this,SLOT(passScheduler(QString, bool)));
 
-    //Recieve signal from standardGui to run slot for changing views
     connect(_standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
             this,SLOT(changeView(QString, QString, bool)));
 
@@ -467,12 +463,16 @@ void GuiControl::setSeampleGuiSignals()
             this,SLOT(showHelpView()));
 }
 
+//Function set all required signals from the time tracker the slots there are
+//supposed to run periodically
 void GuiControl:: setTimedSignals()
 {
     connect(&_timeControl,SIGNAL(oneMinuteTrigger()),
             this, SLOT(getTodaysEvents()));
 }
 
+////Function set global shortcut signals from shortcuts class to local slots in
+////this class
 //void GuiControl:: setGlobalSignals()
 //{
 //    _allShortcuts.setGlobalShortcuts();
