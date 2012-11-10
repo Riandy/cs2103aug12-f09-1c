@@ -210,7 +210,7 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     }else if(checkCommandArray(commandword,deleteCommandArray,sizeof(deleteCommandArray)/sizeof(string)))
     {
         return DELETE;
-    }else if(checkCommandArray(commandword,todayCommandArray,sizeof(deleteCommandArray)/sizeof(string)))
+    }else if(checkCommandArray(commandword,todayCommandArray,sizeof(todayCommandArray)/sizeof(string)))
     {
         return TODAY;
     }else if(checkCommandArray(commandword,editCommandArray,sizeof(editCommandArray)/sizeof(string)))
@@ -1779,6 +1779,7 @@ void Intellisense::smartAutoFill(Action &task)
      timeinfo.tm_mon= startDate.tm_mon;
      timeinfo.tm_hour=23;
      timeinfo.tm_min=59;
+     timeinfo.tm_sec=0;
       return timeinfo;
      }else
      {return endDate;}
