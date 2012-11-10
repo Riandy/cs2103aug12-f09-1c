@@ -65,7 +65,7 @@ void ErrorLogger::endInstance()
 //contents of the file
 void ErrorLogger:: report(string error)
 {
-    ofstream errorLog (ERROR_TEXT_FILE, fstream::app);
+    ofstream errorLog (ERROR_TEXT_FILE.c_str(), fstream::app);
     errorLog << getDateTime();
     errorLog << ERROR_TEXT_BARRIERS << error << ERROR_TEXT_BARRIERS;
     errorLog << endl << endl;
@@ -76,7 +76,7 @@ void ErrorLogger:: report(string error)
 //of the file to show when the log was resetted
 void ErrorLogger:: resetErrorLog()
 {
-    ofstream errorLog (ERROR_TEXT_FILE);
+    ofstream errorLog (ERROR_TEXT_FILE.c_str());
     errorLog << ERROR_LOG_PRE_MESSAGE << getDateTime();
     errorLog << endl << endl;
     errorLog.close();
