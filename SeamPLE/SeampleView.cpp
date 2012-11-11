@@ -60,8 +60,10 @@ void SeampleView:: endInstance()
 //shown. Call QMainWindow::show() to invoke the original show function
 void SeampleView::show()
 {
-  connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
-          this,SLOT(checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
+  connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,
+                                         QAbstractAnimation::State)),
+          this,SLOT(checkShowViewFinished(QAbstractAnimation::State,
+                                          QAbstractAnimation::State)));
 
     _currentlyChanging = true;
     _animation->setEasingCurve(QEasingCurve::OutQuart);
@@ -77,8 +79,10 @@ void SeampleView::show()
 //going to hide. Call QMainWindow::hide() to invoke the original hide function
 void SeampleView::hide()
 {
-    connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
-            this,SLOT(checkHideViewFinished(QAbstractAnimation::State,QAbstractAnimation::State)));
+    connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,
+                                           QAbstractAnimation::State)),
+            this,SLOT(checkHideViewFinished(QAbstractAnimation::State,
+                                            QAbstractAnimation::State)));
 
     _currentlyChanging = true;
     _animation->setEasingCurve(QEasingCurve::Linear);
@@ -109,7 +113,8 @@ void SeampleView:: displayFocusInInputEdit (bool focus)
 
 //Function to display the colour of the input edit bar given the bool
 //value returned from intellisense through seample control class
-void SeampleView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (string)
+void SeampleView:: displayAppropriateColorInputEdit (
+        InputBarFlag color) throw (string)
 {
     switch (color)
     {
@@ -119,7 +124,6 @@ void SeampleView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (
                                         STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                         STYLESHEET_INPUT_LINE_BORDER_COLOR+
                                         "background-color: rgb(50,205,50);");
-
             break;
 
         case UNOPERATIVE:
@@ -128,7 +132,6 @@ void SeampleView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (
                                         STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                         STYLESHEET_INPUT_LINE_BORDER_COLOR+
                                         "background-color: rgb(255,99,71);");
-
             break;
 
         case NONE:
@@ -136,7 +139,7 @@ void SeampleView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (
                                         STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                         STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                         STYLESHEET_INPUT_LINE_BORDER_COLOR+
-                                        STYLESHEET_INPUT_LINE_BACKGROUND_COLOR);
+                                        STYLESHEET_INPUT_LINE_BACKGRD_COLOR);
             break;
 
         default:
@@ -164,7 +167,8 @@ void SeampleView::enterTriggered()
 //must be connected to this slot for this slot function to be triggered
 void SeampleView::changeViewTriggered()
 {
-    emit toStandardView(ui->lineEdit->text(), ui->label->text(), ui->lineEdit->getFocusInput());
+    emit toStandardView(ui->lineEdit->text(), ui->label->text(),
+                        ui->lineEdit->getFocusInput());
 }
 
 //This function is a slot function that will emit a signal for the undo

@@ -27,7 +27,7 @@ protected:
     const static QString STYLESHEET_INPUT_LINE_BORDER_STYLE;
     const static QString STYLESHEET_INPUT_LINE_BORDER_WIDTH;
     const static QString STYLESHEET_INPUT_LINE_BORDER_COLOR;
-    const static QString STYLESHEET_INPUT_LINE_BACKGROUND_COLOR;
+    const static QString STYLESHEET_INPUT_LINE_BACKGRD_COLOR;
     const static QString COMMAND_UNDO;
     const static QString COMMAND_REDO;
     const static QString COMMAND_ADD;
