@@ -1,6 +1,6 @@
 #include "GuiShortcuts.h"
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN A0086030R
 
 //Constructor of class will assign NULL values to all pointers of this
 //class. This is in alignment with efforts of other classes that do not

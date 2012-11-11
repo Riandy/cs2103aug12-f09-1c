@@ -1,7 +1,7 @@
 #include "SeampleView.h"
 #include "ui_SeampleView.h"
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN A0086030R
 
 SeampleView* SeampleView::_seampleView = NULL;
 
@@ -123,7 +123,7 @@ void SeampleView:: displayAppropriateColorInputEdit (
                                         STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                         STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                         STYLESHEET_INPUT_LINE_BORDER_COLOR+
-                                        "background-color: rgb(50,205,50);");
+                                        STYLESHEET_INPUT_LINE_LOGICAL_COLOR);
             break;
 
         case UNOPERATIVE:
@@ -131,7 +131,7 @@ void SeampleView:: displayAppropriateColorInputEdit (
                                         STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                         STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                         STYLESHEET_INPUT_LINE_BORDER_COLOR+
-                                        "background-color: rgb(255,99,71);");
+                                        STYLESHEET_INPUT_LINE_UNOPERATIVE_COLOR);
             break;
 
         case NONE:
