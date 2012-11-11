@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'standardview.ui'
+** Form generated from reading UI file 'StandardView.ui'
 **
-** Created: Sat Nov 10 10:01:48 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Sun Nov 11 16:44:26 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
