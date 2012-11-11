@@ -20,6 +20,7 @@ static string MESSAGE_MARK_SUCCESS = "Your event was marked as completed.";
 static string MESSAGE_MARK_FAILURE = "There was an error marking your event.";
 static string MESSAGE_DELETE_NOT_ENOUGH_INPUT = "There is too little information to choose a task to delete.";
 static string MESSAGE_INVALID = "INVALID DATE, please enter a valid date";
+static string MESSAGE_DELETE_ALL_FAIL = "There was nothing to delete.";
 static string EMPTY_DATE = "0 / 0 / 0 - 0 : 0 : 0";
 bool scheduler::instanceFlag=false;
 static int NOTFOUND = -1;
@@ -523,8 +524,10 @@ void scheduler::Delete(task thisTask)
                 string _eventName = convert.str();
             if (thisTask.getEventName() == "all")
             {
-                 eventCalender.deleteAll();
+                  if (eventCalender.deleteAll())
                 printMessage(MESSAGE_DELETE_ALL_SUCCESS);
+                  else
+                      printMessage(MESSAGE_DELETE_ALL_FAIL);
             }
 
 
