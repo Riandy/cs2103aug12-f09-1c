@@ -64,7 +64,7 @@ private:
     bool archiveEvent(task markedTask);
 
     bool writeFile();
-    bool loadFile(char* fileName);
+    vector<task> loadFile(char* fileName);
     bool fileExists(const char* fileName);
 
     bool archivePastEvent();
@@ -80,6 +80,12 @@ public:
 
     calender();
     ~calender();
+
+    const static int DATENORMAL;
+    const static int DATEWEEKLY;
+    const static int DATEFORTNIGHTLY;
+    const static int DATEMONTHLY;
+
     bool checkNameExists(string _name);
     int getTaskID(string searchItem);
     bool addItem(task currentTask);
@@ -91,20 +97,28 @@ public:
     bool redoAction();
     bool markTask(task markedTask);
     bool deleteAll();
+
     string convertToDateNoTime(tm _date);
     vector<task> SearchByCat(string searchItem);
     vector<task> SearchByTask(string searchItem);
     vector<task> SearchByPartialTask(string searchItem);
     vector<task> getFloatingEvents();
-
     task* pointerSearchByTask(string searchItem);
     vector<task> SearchByDate(string searchDate);
 
     vector<task> displayDatabase();
+    vector<task> displayArchiveEvent();
     vector<task> getToday();
     vector<task> SortByEvent();
     void SortByDate();
     vector<task> SortByCategory();
     string convertToDate(tm _date);
+    bool updateRecurringEvents();
+    int daysInAMonth(int year,int month);
+    void updateDate(int num,tm &date);
+    void updateMonth(int num,tm &date);
+    void updateWeekly(task &event);
+    void updateFortnightly(task &event);
+    void updateMonthly(task &event);
 };
 #endif
