@@ -229,6 +229,7 @@ bool calender::editTask( task _edited)
 
         bool startDateentered = !(_edited.getStartDate().tm_year == 0 && _edited.getStartDate().tm_mon == 0
                                   && _edited.getStartDate().tm_mday ==0);
+        // if( difftime( mktime(&(_edited.getStartDate())),mktime(&task::getEmptyDateTm()) ) != 0)
 
         if(startDateentered)
         {
@@ -294,8 +295,8 @@ vector<task> calender::SearchByTask(string searchItem)
     return _bufferStorage;
 }
 
-//@PAN WENREN A0083711L
-task* calender::pointerSearchByTask(string searchItem)
+//@Riandy A0088392R
+task* calender::pointerSearchByTask(string searchItem) //@WENREN
 // only return first match
 {
     task *match = NULL;
@@ -305,7 +306,7 @@ task* calender::pointerSearchByTask(string searchItem)
         if (bufferString.find(searchItem,0)!=string::npos)
         {
             return&(_storage[i]);
-        }
+        }//this part can add defensive programming and assertion,exception handling if detected more than 1 exact match
     }
     return match;
 
