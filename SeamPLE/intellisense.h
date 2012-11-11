@@ -202,12 +202,14 @@ private:
     bool isDateNotentered(Action _task);
     bool isDateOver(Action _task);
     bool isDateValid(Action task);
+    tm isTimeValid(tm date,vector<string>& tokens );
+    bool isTimeEmpty(tm date);
     int daysMonth(int year, int month);
     int checkMonthByString(string token);
     int checkDateString(string token);
 
     void handleInvalidDate(Action &task);
-    void smartAutoFill(Action &task);
+    void smartAutoFill(Action &task,vector<string>& tokens);
 
 
     //Time checking functions

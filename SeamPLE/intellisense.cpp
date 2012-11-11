@@ -378,15 +378,16 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
         {
 
         case 3:   if( processTimeFormat1(date, time))
-            {it=tokens.erase(it);}
-            return date;
+            {it=tokens.erase(it);
+            return date;}
             break;
 
         case 4:   if(processTimeFormat2(date, time))
-            {it=tokens.erase(it);}
+            {it=tokens.erase(it);
+             return date;}
             if(processTimeFormat8(date, time))
-            {it=tokens.erase(it);}
-            return date;
+            {it=tokens.erase(it);
+            return date;}
             break;
 
         case 5: if(processTimeFormat3(date, time))
@@ -1034,7 +1035,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkAddReq();
-    smartAutoFill(task);//auto fill some of the fields that are unentered
+    smartAutoFill(task,tokens);//auto fill some of the fields that are unentered
 
     return task;
 }
@@ -1105,7 +1106,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkAddReq();
-    smartAutoFill(task);//auto fill some of the fields that are unentered
+    smartAutoFill(task,tokens);//auto fill some of the fields that are unentered
 
     return task;
 }
@@ -1648,7 +1649,8 @@ void Intellisense::setParameter(string newParameter)
 bool Intellisense::isDateNotentered(Action _task)
 {
     return (_task.getStartDate().tm_year == 0 && _task.getStartDate().tm_mon == 0
-            && _task.getStartDate().tm_mday ==0 );
+            && _task.getStartDate().tm_mday ==0 && _task.getStartDate().tm_hour == 0
+            && _task.getStartDate().tm_min == 0);
 }
 
 bool Intellisense::isDateOver(Action _task)
@@ -1723,7 +1725,7 @@ bool Intellisense::isDateValid(Action task)
 
 void Intellisense::handleInvalidDate(Action &task)
 {
-    if(!isDateValid(task) && task.getCategory()== "#" && task.getDateType()!=4)
+    if(!isDateValid(task) && task.getCategory()== "#" && task.getDateType()!=4 && isTimeEmpty(task.getStartDate()))
     {
         task.setCategory("1NVAL1D");
     }
@@ -1731,14 +1733,14 @@ void Intellisense::handleInvalidDate(Action &task)
 
 
 
-void Intellisense::smartAutoFill(Action &task)
+void Intellisense::smartAutoFill(Action &task,vector<string>& tokens)
 {
     ASSERT(&task!=NULL,"ACTION OBJECT CANNOT BE reference to null");
 
 
     tm emptyDate ={0,0,0,0,0,0,0,0,0};
-
-    if (isDateNotentered(task))
+    task.setStartDate( isTimeValid(task.getStartDate(),tokens ));
+    if (isDateNotentered(task) )
     {//we identify this task as a floating task since no date is stated
 
         task.setDateType(4);
@@ -1746,8 +1748,9 @@ void Intellisense::smartAutoFill(Action &task)
         task.setEndDate(emptyDate);
 
     }
+
     handleInvalidDate(task);
-    if (isDateOver(task))
+    if (isDateOver(task) && isTimeEmpty(task.getStartDate()))
     {//we identify this task as a floating task since no date is stated
 
         task.setDateType(4);
@@ -1762,6 +1765,34 @@ void Intellisense::smartAutoFill(Action &task)
     }
 
 }
+
+bool Intellisense::isTimeEmpty(tm date)
+{
+    if(date.tm_hour == 0 && date.tm_min == 0)
+    { return true;}
+
+    return false;
+}
+
+tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
+{
+    tm now ={0,0,0,0,0,0,0,0,0};
+    if(!isTimeEmpty(date) && date.tm_year == 0)
+    {
+    time_t t = time(0);   // get time now
+    now = *localtime( & t );
+    now.tm_year +=1900;
+    now.tm_mday +=1;
+    now.tm_hour = date.tm_hour;
+    now.tm_min  = date.tm_min;
+    return now;
+    }
+    else
+    {return date;}
+
+
+}
+
 
  tm Intellisense::getEndOfDay(Action &task)
  {

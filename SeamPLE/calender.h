@@ -39,6 +39,7 @@ private:
     stack<task> _redoNewEdits;
     stack<task> _redoOriginalEdits;
     stack <task> _undoNewEdits;
+    bool lastCommandUndo;
 
 
     void saveDeletedTask(int taskID);
@@ -67,6 +68,7 @@ private:
     bool fileExists(const char* fileName);
 
     bool archivePastEvent();
+
 
     static bool taskDateComparator(task task1,task task2);
     static bool dateComparator(tm date1,tm date2);
@@ -104,12 +106,5 @@ public:
     void SortByDate();
     vector<task> SortByCategory();
     string convertToDate(tm _date);
-
-
-
-
-
-
-
 };
 #endif

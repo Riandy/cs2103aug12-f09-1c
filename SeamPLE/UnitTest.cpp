@@ -26,6 +26,7 @@ void UnitTest::testIntellisenseAdd()
     QCOMPARE(commandword ,string("ADD"));
     QCOMPARE(eventName, string("birthday"));
 }
+
 void UnitTest::testIntellisenseAdd2()
 {
     Intellisense *intellisense;
@@ -284,7 +285,7 @@ void UnitTest::testIntellisenseRedo()
 
 
 #pragma region Scheduler UnitTesting
-
+//@JOHN A0069517W
 void UnitTest::testSchedulerAdd() //@JOHN
 {
     scheduler *testScheduler;
@@ -1136,3 +1137,283 @@ void UnitTest::testMark5() //@JOHN
 }
 
 #pragma endregion Scheduler UnitTesting
+
+#pragma region Calender Unit Testing
+
+//@Riandy A0088392R
+//testing to add an event
+void UnitTest::testAddItem()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("Going for meeting");
+    testTask.setPriority("HIGH");
+    QCOMPARE(testCalender.addItem(testTask),true);
+}
+
+//@Riandy A0088392R
+//testing to delete item ID that exist
+void UnitTest::testDeleteItemByID()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("This is to test Delete by ID");
+    tm startDate;
+    startDate.tm_mday=12;
+    startDate.tm_hour=10;
+    startDate.tm_min=55;
+    startDate.tm_mon=4;
+    startDate.tm_sec=1;
+    startDate.tm_year=2012;
+    testTask.setStartDate(startDate);
+    //can only be tested if the addItem is correct.
+    testCalender.addItem(testTask);
+    QCOMPARE(testCalender.deleteItem(1),true);
+}
+
+//@Riandy A0088392R
+//test for the event name that does not exist
+void UnitTest::testDeleteItemByEventName()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("This is to test Delete by EventName");
+    tm startDate;
+    startDate.tm_mday=12;
+    startDate.tm_hour=10;
+    startDate.tm_min=55;
+    startDate.tm_mon=4;
+    startDate.tm_sec=1;
+    startDate.tm_year=2012;
+    testTask.setStartDate(startDate);
+    //can only be tested if the addItem is correct.
+    testCalender.addItem(testTask);
+    QCOMPARE(testCalender.deleteItem("Hello"),false);
+}
+
+//@Riandy A0088392R
+//test for the event name that exist
+void UnitTest::testDeleteItemByEventName2()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("This is to test Delete by EventName");
+    tm startDate;
+    startDate.tm_mday=2;
+    startDate.tm_hour=10;
+    startDate.tm_min=5;
+    startDate.tm_mon=4;
+    startDate.tm_sec=11;
+    startDate.tm_year=2013;
+    testTask.setStartDate(startDate);
+    //can only be tested if the addItem is correct.
+    testCalender.addItem(testTask);
+    QCOMPARE(testCalender.deleteItem("This is to test Delete by EventName"),true);
+}
+
+//@Riandy A0088392R
+//check for non existence ID
+void UnitTest::testcheckID()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("Checking the existence of ID");
+    tm startDate;
+    startDate.tm_mday=2;
+    startDate.tm_hour=10;
+    startDate.tm_min=5;
+    startDate.tm_mon=4;
+    startDate.tm_sec=11;
+    startDate.tm_year=2013;
+    testTask.setStartDate(startDate);
+    task testTask2;
+    testTask.setEventName("Checking ID 2");
+    tm startDate2;
+    startDate2.tm_mday=2;
+    startDate2.tm_hour=10;
+    startDate2.tm_min=5;
+    startDate2.tm_mon=4;
+    startDate2.tm_sec=11;
+    startDate2.tm_year=2013;
+    testTask2.setStartDate(startDate2);
+    //can only be tested if the addItem is correct.
+    testCalender.addItem(testTask2);
+    QCOMPARE(testCalender.checkID(11),false);
+}
+
+//@Riandy A0088392R
+//check for existence ID
+void UnitTest::testcheckID2()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("Checking the existence of ID");
+    tm startDate;
+    startDate.tm_mday=12;
+    startDate.tm_hour=10;
+    startDate.tm_min=15;
+    startDate.tm_mon=9;
+    startDate.tm_sec=11;
+    startDate.tm_year=2013;
+    testTask.setStartDate(startDate);
+    task testTask2;
+    testTask.setEventName("Checking ID 2");
+    tm startDate2;
+    startDate2.tm_mday=2;
+    startDate2.tm_hour=10;
+    startDate2.tm_min=5;
+    startDate2.tm_mon=4;
+    startDate2.tm_sec=11;
+    startDate2.tm_year=2013;
+    testTask2.setStartDate(startDate2);
+    //can only be tested if the addItem is correct.
+    testCalender.addItem(testTask);
+    testCalender.addItem(testTask2);
+    QCOMPARE(testCalender.checkID(1),true);
+}
+
+//@Riandy A0088392R
+//this unit test try to delete all the database
+void UnitTest::testdeleteAll()
+{
+    calender testCalender;
+    task testTask;
+    int size=testCalender.displayDatabase().size();
+    testTask.setEventName("Adding task 1 to test delete");
+    testTask.setCategory("Testing only");
+    testTask.setID(100);
+    testTask.setDateType(4);
+    task testTask2;
+    testTask.setEventName("Checking ID 2");
+    tm startDate2;
+    startDate2.tm_mday=2;
+    startDate2.tm_hour=10;
+    startDate2.tm_min=5;
+    startDate2.tm_mon=4;
+    startDate2.tm_sec=11;
+    startDate2.tm_year=2013;
+    testTask2.setStartDate(startDate2);
+    testCalender.addItem(testTask);
+    testCalender.addItem(testTask2);
+    QCOMPARE(testCalender.displayDatabase().size()==size+2,true);
+    QCOMPARE(testCalender.deleteAll(),true);
+    QCOMPARE(testCalender.displayDatabase().size()==0,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testsearchByCat()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("Adding task 1 to test delete");
+    testTask.setCategory("Testing only");
+    testTask.setID(100);
+    testTask.setDateType(4);
+    testCalender.addItem(testTask);
+    QCOMPARE(testCalender.SearchByCat("MEME").size()==0,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testsearchByCat2()
+{
+    calender testCalender;
+    task testTask;
+    testTask.setEventName("How if item not exist??");
+    testTask.setCategory("Testing only");
+    testTask.setID(34);
+    testTask.setPriority("LOW");
+    testTask.setDateType(1);
+    testTask.setCategory("meeting");
+    testCalender.addItem(testTask);
+    QCOMPARE(testCalender.SearchByCat("meeting").size()==1,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testsearchByTask()
+{
+    calender taskCalender;
+    task testTask;
+    //adding 5 tasks to test the searching
+    testTask.setEventName("test1");
+    taskCalender.addItem(testTask);
+    testTask.setEventName("test2");
+    taskCalender.addItem(testTask);
+    testTask.setEventName("test");
+    taskCalender.addItem(testTask);
+    taskCalender.addItem(testTask);
+    taskCalender.addItem(testTask);
+    QCOMPARE(taskCalender.SearchByTask("test").size()==0,false);
+}
+
+//@Riandy A0088392R
+void UnitTest::testsearchByTask2()
+{
+    calender taskCalender;
+    task testTask;
+    int resultBefore= taskCalender.SearchByTask("test").size();
+    //adding 5 tasks to test the searching
+    testTask.setEventName("test1");
+    taskCalender.addItem(testTask);
+    testTask.setEventName("test2");
+    taskCalender.addItem(testTask);
+    testTask.setEventName("test");
+    taskCalender.addItem(testTask);
+    taskCalender.addItem(testTask);
+    taskCalender.addItem(testTask);
+    QCOMPARE(taskCalender.SearchByTask("test").size()==resultBefore+5,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testsearchByDate()
+{
+    calender taskCalender;
+    task testTask;
+    tm date;
+    date.tm_hour=20;
+    date.tm_mday=12;
+    date.tm_min=10;
+    date.tm_mon=1;
+    date.tm_sec=0;
+    date.tm_year=2012;
+    testTask.setStartDate(date);
+    taskCalender.addItem(testTask);
+    date.tm_year=2011;
+    testTask.setStartDate(date);
+    taskCalender.addItem(testTask);
+    date.tm_hour=20;
+    date.tm_mday=12;
+    date.tm_min=10;
+    date.tm_mon=11;
+    date.tm_sec=0;
+    date.tm_year=2014;
+    testTask.setStartDate(date);
+    taskCalender.addItem(testTask);
+    QCOMPARE(taskCalender.SearchByDate("12 / 1 / 2012").size()==1,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testconvertToDate()
+{
+    calender taskCalender;
+    tm date;
+    date.tm_hour=20;
+    date.tm_mday=11;
+    date.tm_min=10;
+    date.tm_mon=11;
+    date.tm_sec=0;
+    date.tm_year=2012;
+    QCOMPARE(taskCalender.convertToDate(date).compare("11 / 11 / 2012 - 20 : 10 : 0")==0,true);
+}
+
+//@Riandy A0088392R
+void UnitTest::testconvertToDateWithoutTime()
+{
+    calender taskCalender;
+    tm date;
+    date.tm_mday=11;
+    date.tm_mon=11;
+    date.tm_year=2012;
+    QCOMPARE(taskCalender.convertToDateNoTime(date).compare("11 / 11 / 2012")==0,true);
+}
+
+#pragma endregion Calender Unit Testing
