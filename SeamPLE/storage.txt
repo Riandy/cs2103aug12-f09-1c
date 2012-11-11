@@ -1,0 +1,7 @@
+Description : swimming
+Start_Date : 10 / 13 / 2012 - 0 : 0 : 0
+End_Date : 10 / 13 / 2012 - 23 : 59 : 0
+Date_Type : 0
+Priority : LOW
+Category : 1NVAL1D
+

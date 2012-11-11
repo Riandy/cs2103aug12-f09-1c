@@ -6,6 +6,7 @@ const int  task::DATEWEEKLY         = 1;
 const int  task::DATEFORTNIGHTLY     = 2;
 const int  task::DATEMONTHLY         = 3;
 
+//@CHAM WEN BIN U094659H
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
     //the get category and get functions have to change since they default indicator is set by all the getter functions
@@ -128,19 +129,19 @@ vector<string> task::toString()
     result.push_back("Start_Date : "+_startDate);
     result.push_back("End_Date : "+_endDate);
     result.push_back("Date_Type : "+ convertInt(dateType));
-    //cout<<endl;
     result.push_back("Priority : "+getPriority());
     result.push_back("Category : "+getCategory());
     return result;
 }
-
+//@CHAM WEN BIN U094659H
+//returns from int to string
 string task:: convertInt(int number)
 {
    stringstream ss;//create a stringstream
    ss << number;//add number to the stream
    return ss.str();//return a string with the contents of the stream
 }
-
+//@CHAM WEN BIN U094659H
 tm  task::getEmptyDateTm()
 {
 

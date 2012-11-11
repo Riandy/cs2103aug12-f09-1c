@@ -36,7 +36,8 @@ enum operation{
     REDO,
     EDITENTER,
     TODO,
-    TODAY
+    TODAY,
+    DISPLAYARCHIVE
 };
 
 
@@ -68,6 +69,7 @@ private:
     const static string redoCommandArray[];
     const static string todoCommandArray[];
     const static string todayCommandArray[];
+    const static string displayarchiveCommandArray[];
 
     const static string EMPTYCATEGORY;
     const static string EMPTYEVENT;
@@ -176,6 +178,7 @@ private:
     Action redoOperation(vector<string>& tokens);
     Action todoOperation(vector<string>& tokens);
     Action todayOperation(vector<string>& tokens);
+    Action displayarchiveOperation(vector<string>& tokens);
 
     //Getters
     string getOperation(vector<string>& tokens);
@@ -209,6 +212,9 @@ private:
     int checkDateString(string token);
 
     void handleInvalidDate(Action &task);
+    void handleNoDateEntered(Action &task);
+    void handleDateOver(Action &task);
+    void handleNoEndDate(Action &task);
     void smartAutoFill(Action &task,vector<string>& tokens);
 
 
