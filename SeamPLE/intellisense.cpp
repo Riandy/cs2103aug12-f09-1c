@@ -283,7 +283,7 @@ bool Intellisense::checkString(const string& input, const string& command)
     }
     return true;
 }
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //returns a string to lower casing
 string Intellisense::toLowerString(string input)
 {
@@ -291,7 +291,7 @@ string Intellisense::toLowerString(string input)
      return input;
 }
 
-//@PAN WENREN
+//@PAN WENREN A0083711L
 bool Intellisense::checkCommandArray(const string& input, const string command[],int arraySize)
 {
     ASSERT(arraySize!= 0,"Available command cannot be 0.");
@@ -350,7 +350,7 @@ int Intellisense::getID(vector<string>& tokens)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //returns HIGH or LOW if keyword "HIGH" or "LOW" is detected at the head or end of token
 string Intellisense::getPriority(vector<string>& tokens)
 {
@@ -643,7 +643,7 @@ bool Intellisense::processTimeFormat1 (tm &date, string time)
 return false;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //returns a string contain the category
 //fucntion parsers the token for category word based on identifier
 string Intellisense::getCategory(vector<string>& tokens)
@@ -999,7 +999,7 @@ int Intellisense::checkMonthByString(string token)
     return -1;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //returns the string containing event description
 string Intellisense::getEventName(vector<string>& tokens)
 {
@@ -1019,7 +1019,7 @@ string Intellisense::getEventName(vector<string>& tokens)
     return ss.str();
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //returns the datetype indicated by user
 int Intellisense::getDateType(vector<string>& tokens)
 {
@@ -1089,7 +1089,7 @@ vector<string> Intellisense::tokenize(string command)
     return token;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "add" command
 //returns an Action package containin user input and fields
 Action Intellisense::addOperation(vector<string>& tokens)
@@ -1108,7 +1108,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 
     return task;
 }
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "delete" command
 //returns an Action package containin user input and fields
 Action Intellisense::deleteOperation(vector<string>& tokens)
@@ -1131,7 +1131,7 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "exit" command
 //returns an Action package containin user input and fields
 Action Intellisense::exitOperation(vector<string>& tokens)
@@ -1144,7 +1144,7 @@ Action Intellisense::exitOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "display" command
 //returns an Action package containin user input and fields
 Action Intellisense::displayOperation(vector<string>& tokens)
@@ -1158,7 +1158,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 
     return task;
 }
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "mark" command
 //returns an Action package containin user input and fields
 Action Intellisense::markOperation(vector<string>& tokens)
@@ -1173,7 +1173,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
     return task;
 }
 
-//@PAN WEN REN
+//@PAN WENREN A0083711L
 //Performs quickadd operation
 //returns an Action package containin user input and fields
 Action Intellisense::quickAddOperation(vector<string>& tokens)
@@ -1193,7 +1193,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "undo" command
 //returns an Action package containin user input and fields
 Action Intellisense::undoOperation(vector<string>& tokens)
@@ -1258,7 +1258,7 @@ Action Intellisense::redoOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "sort" command
 //returns an Action package containin user input and fields
 Action Intellisense::sortOperation(vector<string>& tokens)
@@ -1270,7 +1270,7 @@ Action Intellisense::sortOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "find" command
 //returns an Action package containin user input and fields
 Action Intellisense::findOperation(vector<string>& tokens)
@@ -1426,7 +1426,7 @@ void Intellisense::handleNoEndDate(Action &task)
     }
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //function ensures that date has got Enddate and classifies events into floating task
 void Intellisense::smartAutoFill(Action &task,vector<string>& tokens)
 {
@@ -1497,7 +1497,7 @@ tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
  }
 
 
-//@PAN WENREN
+//@PAN WENREN A0083711L
 //Performs operation "edit" command
 //returns an Action package containin user input and fields
 Action Intellisense::editOperation(vector<string>& tokens)
@@ -1517,7 +1517,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 }
 
 
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::setAllStatusFlag(Action task)
 {
 
@@ -1561,7 +1561,7 @@ void Intellisense::setAllStatusFlag(Action task)
         setStatusFlagAt(IID,true);
 }
 
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void  Intellisense::getAllStatusFlag(bool *flags)
 {
     ASSERT(flags!=NULL,"flags pointer cannot be NULL");
@@ -1570,29 +1570,29 @@ void  Intellisense::getAllStatusFlag(bool *flags)
         flags[i] = statusFlags[i];;
     }
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 bool Intellisense::getStatusFlagAt(int index)
 {
     ASSERT(index>=0,"flag index canot be less than 0");
     return statusFlags[index];
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::setStatusFlagAt(int index,bool flag)
 {
     ASSERT(index>=0,"flag index canot be less than 0");
     statusFlags[index] = flag;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 bool Intellisense::getrequirementsMet()
 {
     return requirementsMet;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::setRequirementsMet(bool req)
 {
     requirementsMet = req;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::checkAddReq()
 {
     bool addReqMet = false;
@@ -1602,13 +1602,13 @@ void Intellisense::checkAddReq()
     }
     requirementsMet = addReqMet;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::checkExitReq()
 {
     bool exitReq = true;//no condition to quit
     requirementsMet = exitReq;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::checkDelReq()
 {// need at least an ID to delete
     bool checkReqMet = false;
@@ -1622,7 +1622,7 @@ void Intellisense::checkDelReq()
     }
     requirementsMet = checkReqMet;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::checkDspReq()
 {
     bool dspReqMet = false;
@@ -1640,7 +1640,7 @@ void Intellisense::checkDspReq()
     requirementsMet = dspReqMet;
 
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::checkMarkReq()
 {
     bool markReqMet = false;
@@ -1654,7 +1654,7 @@ void Intellisense::checkMarkReq()
     }
     requirementsMet = markReqMet;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::checkFindReq()
 {
     bool findReqMet = false;
@@ -1673,7 +1673,7 @@ void Intellisense::checkFindReq()
     requirementsMet = findReqMet;
 
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::checkEditReq()
 {
     bool editReqMet = false;
@@ -1683,7 +1683,7 @@ void Intellisense::checkEditReq()
     }
     requirementsMet = editReqMet;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getAddFeedBack()
 {
     if(getrequirementsMet())
@@ -1693,7 +1693,7 @@ string Intellisense::getAddFeedBack()
 
  return ADDFEEDBACK_2 ;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getEditFeedBack()
 {
     if(getrequirementsMet())
@@ -1703,7 +1703,7 @@ string Intellisense::getEditFeedBack()
 
       return EDITFEEDBACK_2 ;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getDeleteFeedBack()
 {
 
@@ -1715,14 +1715,14 @@ string Intellisense::getDeleteFeedBack()
             return DELFEEDBACK_2;
 
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getExitFeedBack()
 {
 
     return EXITFEEDBACK_1;
 
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getDisplayFeedBack()
 {
 
@@ -1734,7 +1734,7 @@ string Intellisense::getDisplayFeedBack()
         return DISPLAYFEEDBACK_2;
 
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getFindFeedBack()
 {
     if(getrequirementsMet())
@@ -1744,7 +1744,7 @@ string Intellisense::getFindFeedBack()
 
         return FINDFEEDBACK_2;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getSortFeedBack()
 {
 
@@ -1756,21 +1756,21 @@ string Intellisense::getSortFeedBack()
         return SORTFEEDBACK_2;
 
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getRedoFeedBack()
 {
     string feedback;
     feedback = REDOFEEDBACK_1 ;
     return feedback;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getUndoFeedBack()
 {
     string feedback;
     feedback = UNDOFEEDBACK_1 ;
     return feedback;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getMarkFeedBack()
 {
     if(getrequirementsMet())
@@ -1780,7 +1780,7 @@ string Intellisense::getMarkFeedBack()
 
             return MARKFEEDBACK_2 ;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getFeedback()
 {//later refactor this into functions
     if(currentCommand == ADD)
@@ -1828,12 +1828,12 @@ string Intellisense::getFeedback()
 
     return _feedback;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::setFeedback(string newFeedback)
 {
     _feedback=newFeedback;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 bool Intellisense::isValidParaForCmd(int cmd,int parameter)
 {//this determines if the parameter is valid to work with the command
     ASSERT(cmd>=0,"COMMAND CODE CANNOT BE LESS THAN ZERO");
@@ -1880,7 +1880,7 @@ bool Intellisense::isValidParaForCmd(int cmd,int parameter)
     }
     return valid;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 string Intellisense::getParameter()
 {// output the string based on the flags set
     //refactor into many small functions
@@ -1958,12 +1958,12 @@ string Intellisense::getParameter()
     _parameter = _parameter + "<br>" + getFeedback();
     return _parameter;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 void Intellisense::setParameter(string newParameter)
 {
     _parameter = newParameter;
 }
-//@PAN WENREN
+//@PAN WENREN A0083711L
 bool Intellisense::isDateNotentered(Action _task)
 {
     return (_task.getStartDate().tm_year == 0 && _task.getStartDate().tm_mon == 0

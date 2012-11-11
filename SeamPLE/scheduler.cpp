@@ -568,7 +568,7 @@ void scheduler::Delete(task thisTask)
 }
 
 
- //@JOHN A0069517W
+//@PAN WENREN A0083711L
 void scheduler::Edit(task thisTask) //@WENREN
 {
     ////cout<<"Edit execution with normal keypress"<<endl;
@@ -576,7 +576,7 @@ void scheduler::Edit(task thisTask) //@WENREN
     partialUpdateGUI(taskVector,"EDIT");
 }
 
-//@John A0069517W
+//@PAN WENREN A0083711L
 void scheduler::EditEnter(task thisTask)
 {
     if (thisTask.getEventName()!="")
