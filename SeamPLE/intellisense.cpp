@@ -24,6 +24,7 @@ const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
 const string Intellisense::redoCommandArray[] = {"redo","-r"};
 const string Intellisense::todoCommandArray[] = {"todo"};
 const string Intellisense::todayCommandArray[] = {"today"};
+const string Intellisense::displayarchiveCommandArray[] = {"displayarchive"};
 
 
 const string Intellisense::EMPTYCATEGORY = "#";
@@ -187,6 +188,9 @@ Action Intellisense::check(string query)
     case TODAY:
         task= todayOperation(buffer);
         break;
+    case DISPLAYARCHIVE:
+        task= displayarchiveOperation(buffer);
+        break;
 
     default:
         logger->report("@Intellisense -> Unexpected command received" + determinOperation(buffer));    //logging the unexpected command
@@ -246,6 +250,9 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     else if(checkCommandArray(commandword,redoCommandArray,sizeof(redoCommandArray)/sizeof(string)))
     {
         return REDO;
+    }else if(checkCommandArray(commandword,displayarchiveCommandArray,sizeof(displayarchiveCommandArray)/sizeof(string)))
+    {
+        return DISPLAYARCHIVE;
     }
     else if(checkCommandArray(commandword,todoCommandArray,sizeof(todoCommandArray)/sizeof(string)))
     {
@@ -1276,6 +1283,20 @@ Action Intellisense::findOperation(vector<string>& tokens)
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkFindReq();
+
+    return task;
+}
+
+//@CHAM WEN BIN U094659H
+//Performs operation "displayarchive" command
+//returns an Action package containin user input and fields
+Action Intellisense::displayarchiveOperation(vector<string>& tokens)
+{
+    currentCommand = DISPLAYARCHIVE;
+    Action task;
+    task.setCommand(getCommand(tokens,"DISPLAYARCHIVE"));
+    setAllStatusFlag(task);
+    smartAutoFill(task,tokens);//auto fill some of the fields that are unentered
 
     return task;
 }

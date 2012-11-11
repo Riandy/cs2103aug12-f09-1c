@@ -1011,6 +1011,8 @@ bool calender::updateRecurringEvents()
             }
         }
     }
+
+    return true;
 }
 
 //@Riandy A0088392R
