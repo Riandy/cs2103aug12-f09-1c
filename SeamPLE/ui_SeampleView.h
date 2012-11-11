@@ -1,8 +1,8 @@
 /********************************************************************************
-** Form generated from reading UI file 'seampleview.ui'
+** Form generated from reading UI file 'SeampleView.ui'
 **
-** Created: Sun Nov 11 19:34:22 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Sun 11. Nov 23:34:41 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

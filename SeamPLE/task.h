@@ -28,7 +28,10 @@ public:
     const static int DATEWEEKLY;
     const static int DATEFORTNIGHTLY;
     const static int DATEMONTHLY;
-
+    const static string DEFAULTPRIORITY;
+    const static string DEFAULTCATEGORY;
+    const static string DEFAULTEVENT;
+    const static int DEFAULTID;
     task();
     ~task();
 

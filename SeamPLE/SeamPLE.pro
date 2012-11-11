@@ -7,6 +7,7 @@
 QT       += core gui\
             testlib
 
+CONFIG += static
 TARGET = SeamPLE
 TEMPLATE = app
 

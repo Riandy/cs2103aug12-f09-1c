@@ -228,7 +228,7 @@ private:
     bool processTimeFormat7 (tm &date, string time);
     bool processTimeFormat8 (tm &date, string time);
 
-    //Text manupilation functions
+    //Text manipulation functions
     vector<string> tokenize(string command);
     string getfirst_Word(string command);
     string removeChar(string s,char chars[]);
@@ -240,6 +240,7 @@ private:
 
     //User input checking
     void setStatusFlagAt(int,bool);
+    void setNameFlag(Action task);
     void setAllStatusFlag(Action task); //this is based on the task that is passed in
     void getAllStatusFlag(bool *);//change the actual flag array passed in
     bool isValidParaForCmd(int,int);

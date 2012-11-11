@@ -1,16 +1,18 @@
 #include "task.h"
 
 
-const int  task::DATENORMAL         = 0;
-const int  task::DATEWEEKLY         = 1;
+const int  task::DATENORMAL          = 0;
+const int  task::DATEWEEKLY          = 1;
 const int  task::DATEFORTNIGHTLY     = 2;
 const int  task::DATEMONTHLY         = 3;
-
+const string task::DEFAULTPRIORITY   = "";
+const string task::DEFAULTCATEGORY   = "#";
+const string task::DEFAULTEVENT      = "-";
+const int task::DEFAULTID            = -1;
 //@PAN WENREN A0083711L
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
     //the get category and get functions have to change since they default indicator is set by all the getter functions
-    _description="";
     _startDate.tm_year = 0 ;
     _startDate.tm_mon	= 0;
     _startDate.tm_mday = 0;
@@ -23,10 +25,10 @@ task::task(void)
     _endDate.tm_hour=0;
     _endDate.tm_min=0;
     _endDate.tm_sec=0;
-    _priority = "LOW";
-    _category = "#";
-    _description = "-";
-    _id=-1;
+    _priority = DEFAULTPRIORITY;
+    _category = DEFAULTCATEGORY;
+    _description = DEFAULTEVENT;
+    _id=DEFAULTID;
     dateType = DATENORMAL;//normal mode
 }
 
