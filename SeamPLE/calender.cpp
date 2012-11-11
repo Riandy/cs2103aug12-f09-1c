@@ -324,6 +324,7 @@ int calender::getTaskID(string searchItem)
     }
     return taskID;
 }
+//@PAN WENREN A0083711L
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
     string searchItemBuffer = searchItem.substr(0,searchItem.length()/*-1*/);//remove the null charcter at the end of string
