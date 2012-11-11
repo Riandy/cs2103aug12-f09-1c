@@ -4,6 +4,12 @@
 #include <QObject>
 #include <QDateTime>
 
+//@WEIYUAN A0086030R
+
+//This class is for getting the time and date to be implemented
+//in objects that is displayed in the UI as a clock. A ui object
+//can contain an instance of this class and call its functions
+//to get the time
 class TimeGetter : public QObject
 {
     Q_OBJECT
@@ -21,14 +27,11 @@ private:
     const static QString SET_TIME_FONT_FORMAT_AND_TAG;
 
 private:
-
     QTime getTime(QDateTime currDateAndTime);
-
     bool singleInstanceExist();
 
 public:
     TimeGetter* getInstance();
-
     void endInstance();
 
 public slots:

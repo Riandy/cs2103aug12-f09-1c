@@ -4,6 +4,9 @@
 
 TimeGetter* TimeGetter:: _timeGetter = NULL;
 
+//Following strings contain the format for items that will be displayed
+//to the users. For example, SET_TIME_FORMAT_TICK and TICKLESS are to
+//show the ticking motion of a digital clock
 const QString TimeGetter:: SET_DATE_FORMAT =
         "dddd dd-MM-yy";
 const QString TimeGetter:: SET_TIME_FORMAT_TICK =
@@ -27,6 +30,8 @@ QTime TimeGetter:: getTime(QDateTime currDateAndTime)
     return currDateAndTime.time();
 }
 
+//Function returns a boolean value on whether the singleton for this
+//class exists or not.
 bool TimeGetter::singleInstanceExist()
 {
     bool result;
@@ -43,6 +48,7 @@ bool TimeGetter::singleInstanceExist()
     return result;
 }
 
+//This function returns the address of the singleton existence of this class
 TimeGetter* TimeGetter::getInstance()
 {
     if (!singleInstanceExist())
@@ -53,6 +59,7 @@ TimeGetter* TimeGetter::getInstance()
     return _timeGetter;
 }
 
+//This function deletes the singleton existence of this class
 void TimeGetter:: endInstance()
 {
     if (singleInstanceExist())
@@ -62,6 +69,8 @@ void TimeGetter:: endInstance()
     }
 }
 
+//Function emits a signal of the string date and time every second
+//to the slot functions connected to it
 void TimeGetter::getStringDateAndTime()
 {
     QDateTime currDateAndTime = QDateTime::currentDateTime();
@@ -71,6 +80,8 @@ void TimeGetter::getStringDateAndTime()
     bool currSecondIsEvenNumber = getTime(currDateAndTime).second() % 2 == 0;
 
     QString time;
+
+    //Following if-else conditions are to show the ticking motion of a clock
     if (currSecondIsEvenNumber)
     {
         time = currDateAndTime.toString(SET_TIME_FORMAT_TICK);
