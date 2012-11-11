@@ -1246,7 +1246,7 @@ Action Intellisense::todoOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@PAN WENREN A0083711L
 //Performs operation "redo" command
 //returns an Action package containin user input and fields
 Action Intellisense::redoOperation(vector<string>& tokens)
@@ -1625,18 +1625,7 @@ void Intellisense::checkDelReq()
 //@PAN WENREN A0083711L
 void Intellisense::checkDspReq()
 {
-    bool dspReqMet = false;
-
-    /*if (statusFlags[ICATEGORY] )
-    {
-        dspReqMet = true;
-    }
-    if (statusFlags[IDATE] )
-    {
-        dspReqMet = true;
-    }
-    */
-    dspReqMet = true;//removed the requirements for display command without any parameters
+    bool dspReqMet = true;
     requirementsMet = dspReqMet;
 
 }
