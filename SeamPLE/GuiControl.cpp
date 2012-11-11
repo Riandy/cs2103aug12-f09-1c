@@ -170,6 +170,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         QVector <QString> output = _inputProcessor->run(
                     TO_SCHEDULER_AND_RETURN_RESULTS,
                     input.toStdString());
+
         if (_inputProcessor->requirementsMet())
         {
             int capacity = output.size();
@@ -177,6 +178,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                     (output[output.size()-1] == MESSAGE_GUI_DISPLAY) ||
                     (output[output.size()-1] == MESSAGE_ONLY_STAN_GUI_DISPLAY
                      && interfaceIsStandardView());
+
             setInputColourFlag(NONE);
 
             if (needStandardView)
