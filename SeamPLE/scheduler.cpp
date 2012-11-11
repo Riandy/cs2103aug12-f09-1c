@@ -253,7 +253,7 @@ string scheduler::getEventBasedOnTime(int hour, int min)
     return feedbackMessage.str();
 }
 
-
+//@Riandy A0088392R
 //Get Event name for any event today ending with the hour and minute
 string scheduler::getEventNameForEnd(int hour, int min)
 {
@@ -274,7 +274,7 @@ string scheduler::getEventNameForEnd(int hour, int min)
     }
     return feedbackMessage.str();
 }
-
+//@Riandy A0088392R
 //Get Event name for any event today starting with the hour and minute
 string scheduler::getEventNameForStart(int hour, int min)
 {
@@ -468,14 +468,14 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
 }
 
 
-
+ //@JOHN A0069517W
 void scheduler::printMessage(string _messageType)
 {
     _result.push_back(_messageType);
 }
 
 
-
+ //@JOHN A0069517W
 void scheduler::Add(task thisTask)
 {
     if(thisTask.getCategory() == "1NVAL1D")
@@ -508,7 +508,7 @@ void scheduler::Add(task thisTask)
    }
 }
 
-
+ //@JOHN A0069517W
 void scheduler::Delete(task thisTask)
 {
     if ((thisTask.getID() == -1) && (thisTask.getEventName() == ""))
@@ -568,7 +568,7 @@ void scheduler::Delete(task thisTask)
 }
 
 
-
+ //@JOHN A0069517W
 void scheduler::Edit(task thisTask) //@WENREN
 {
     ////cout<<"Edit execution with normal keypress"<<endl;
@@ -602,13 +602,13 @@ void scheduler::EditEnter(task thisTask)
            }
     updateGUI("EDIT");
 }
-
+ //@JOHN A0069517W
 void scheduler::Display()
 {
     taskVector=eventCalender.displayDatabase();
     partialUpdateGUI(taskVector,"DISPLAY");
 }
-
+ //@JOHN A0069517W
 void scheduler::Undo()
 {
     if (eventCalender.undoAction())
@@ -617,7 +617,7 @@ void scheduler::Undo()
            printMessage(MESSAGE_UNDO_FAILURE);
     updateGUI("UNDO");
 }
-
+ //@JOHN A0069517W
 void scheduler::Redo()
 {
     if (eventCalender.redoAction())
@@ -665,7 +665,7 @@ void scheduler::Find(task thisTask)
         _faulty->report("Scheduler:: Find function fail to find the result");
     }
 }
-
+ //@JOHN A0069517W
 void scheduler::Exit()
 {
     exit(0);
@@ -708,7 +708,7 @@ vector<string> scheduler:: getTodayEvents()
                                   highPriorityTasks,size,
                                   threeCountFlag, threeTasks);
 }
-
+//@WEIYUAN A0086030R
 //Called by getTodayEvents to retrieve the required parameters for making the returning
 //vector of strings
 void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firstPriorityFound,
@@ -738,7 +738,7 @@ void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firs
         }
     }
 }
-
+//@WEIYUAN A0086030R
 //Function creates a vector of strings according to parameters sent in for today's events
 vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
                                                  int highPriorityTasks, int size,
@@ -764,7 +764,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     }
     return eventsOverview;
 }
-
+//@WEIYUAN A0086030R
 //Take the content of both vectors and return as a single
 //vector of strings
 vector<string> scheduler:: combineStringVectors(
@@ -780,7 +780,7 @@ vector<string> scheduler:: combineStringVectors(
 
     return combined;
 }
-
+//@WEIYUAN A0086030R
 //Get a string conversion from the integer that is sent in as the parameter
 string scheduler:: getStringFromInt(int subject)
 {
