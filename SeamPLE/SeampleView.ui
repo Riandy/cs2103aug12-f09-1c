@@ -267,8 +267,8 @@ p, li { white-space: pre-wrap; }
      <widget class="STimeLabel" name="label_2" native="true">
       <property name="geometry">
        <rect>
-        <x>236</x>
-        <y>3</y>
+        <x>131</x>
+        <y>1</y>
         <width>231</width>
         <height>56</height>
        </rect>
@@ -294,6 +294,25 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'AR JULIAN'; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_130">
+      <property name="geometry">
+       <rect>
+        <x>424</x>
+        <y>7</y>
+        <width>46</width>
+        <height>48</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#label_130
+{
+	background-image: url(:/bg/Help_sign.gif);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>

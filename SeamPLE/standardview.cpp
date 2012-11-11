@@ -1,14 +1,17 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
+#include <QDebug>
+
 //@LIU WEIYUAN A0086030R
 
 StandardView* StandardView::_standardView = NULL;
 
+const double StandardView:: OPACITY_INTERVAL = 0.01;
+
 //The following strings are for the displaying of certain user elements
 //in the user interface
 
-const QString StandardView::MESSAGE_NIL = "";
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
         "No Search Results Available";
 const QString StandardView::MESSAGE_VIEW_TYPE_WRONG =
@@ -31,6 +34,12 @@ const QString StandardView::MESSAGE_FONT_COLOUR_RED =
 const QString StandardView::MESSAGE_FONT_COLOUR_GREEN =
         "<font color = \"#0F6A0D\">";
 const QString StandardView::MESSAGE_FONT_END = "</font>";
+const QString StandardView::MESSAGE_ZERO = "0";
+const QString StandardView::MESSAGE_HIGH = "HIGH";
+const QString StandardView::MESSAGE_BLANK = "    ";
+const QString StandardView::MESSAGE_TO = " to ";
+const QString StandardView::MESSAGE_OF = " of ";
+const QString StandardView::MESSAGE_RESULTS = " results ";
 
 StandardView::StandardView(QWidget *parent):
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
@@ -150,11 +159,11 @@ void StandardView:: displayAppropriateColorInputEdit (
 void StandardView:: instantiateTable(QVector <QString> output) throw (string)
 {
     //Defensive coding: output must be a factor of 6
-    if(output.size() % 6 == 0)
+    if(output.size() % TABLE_ENTRY_SIZE == EMPTY)
     {
         _tableItems.output = output;
-        _tableItems.currentIndex = 0;
-        _tableItems.endIndex = ((output.size()-1)/6);
+        _tableItems.currentIndex = EMPTY;
+        _tableItems.endIndex = ((output.size()-1)/TABLE_ENTRY_SIZE);
     }
     else
     {
@@ -169,8 +178,8 @@ void StandardView::resetAllTablesContents()
     resetTableContents();
     resetTableExpandedContents();
     _tableItems.output.clear();
-    _tableItems.currentIndex = 0;
-    _tableItems.endIndex = 0;
+    _tableItems.currentIndex = EMPTY;
+    _tableItems.endIndex = EMPTY;
 }
 
 //Information on displaying on today's summary (today view) is passed into
@@ -185,10 +194,10 @@ void StandardView::displayTodayView(QVector<QString> info)
     ui->label_71->setText(MESSAGE_FONT_COLOUR_RED+priorityEvents
                           +MESSAGE_FONT_END);
 
-    if (priorityEvents != "0")
+    if (priorityEvents != MESSAGE_ZERO)
     {
-        displayTodayViewPriority(info.mid(2,6));
-        displayTodayViewNotes(info.mid(8,info.size()-8));
+        displayTodayViewPriority(info.mid(2,TABLE_ENTRY_SIZE));
+        displayTodayViewNotes(info.mid(8,info.size()-2-TABLE_ENTRY_SIZE));
     }
     else
     {
@@ -206,11 +215,11 @@ void StandardView::show()
     //Reset interface to original position
     setDefaultGeometry();
 
-    _opacityLvl = 0;
-    setWindowOpacity(NONE);
+    _opacityLvl = OPACITY_EMPTY;
+    setWindowOpacity(OPACITY_EMPTY);
     QMainWindow::show();
     connect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
-    _fadeTimer.start(1);
+    _fadeTimer.start(TIMING);
 }
 
 //This function is the overwritten shide function from QMainWindow to show
@@ -218,10 +227,10 @@ void StandardView::show()
 void StandardView::hide()
 {
     _currentlyChanging = true;
-    _opacityLvl = 1;
-    setWindowOpacity(LOGICAL);
+    _opacityLvl = OPACITY_FULL;
+    setWindowOpacity(OPACITY_FULL);
     connect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
-    _fadeTimer.start(1);
+    _fadeTimer.start(TIMING);
 }
 
 //This function is a slot function  to send a signal when input from the user
@@ -334,13 +343,13 @@ void StandardView::clearTriggered()
 //to be shown
 void StandardView::fadeInChange()
 {
-    _opacityLvl += 0.08;
+    _opacityLvl += OPACITY_INTERVAL;
 
     setWindowOpacity(_opacityLvl);
 
-    if (_opacityLvl >= LOGICAL)
+    if (_opacityLvl >= OPACITY_FULL)
     {
-        _opacityLvl = 1;
+        _opacityLvl = OPACITY_FULL;
         _fadeTimer.stop();
         disconnect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeInChange()));
         _currentlyChanging = false;
@@ -352,13 +361,13 @@ void StandardView::fadeInChange()
 //to be hidden
 void StandardView::fadeOutChange()
 {
-    _opacityLvl -= 0.08;
+    _opacityLvl -= OPACITY_INTERVAL;
 
     setWindowOpacity(_opacityLvl);
 
     if (_opacityLvl <= NONE)
     {
-        _opacityLvl = 0;
+        _opacityLvl = OPACITY_EMPTY;
         _fadeTimer.stop();
         QMainWindow::hide();
         disconnect(&_fadeTimer,SIGNAL(timeout()), this, SLOT(fadeOutChange()));
@@ -371,13 +380,14 @@ void StandardView::fadeOutChange()
 //users to go through different pages of results shown on the table
 void StandardView::pageUpTriggered()
 {
-    int varyAmount = (_resultsTableViewExpanded ? 3 : 10);
+    int varyAmount = (_resultsTableViewExpanded ? EXPANDED_SIZE : NORMAL_SIZE);
 
     bool currInputAtFrontDisplayExcept1stIndex =
-            (_tableItems.currentIndex < 3 && _tableItems.currentIndex > 0);
+            (_tableItems.currentIndex < EXPANDED_SIZE &&
+             _tableItems.currentIndex > EMPTY);
     if (currInputAtFrontDisplayExcept1stIndex)
     {
-        _tableItems.currentIndex = 3;
+        _tableItems.currentIndex = EXPANDED_SIZE;
     }
 
     bool currInputNotAtFrontDisplay =(_tableItems.currentIndex >= varyAmount);
@@ -396,7 +406,7 @@ void StandardView::pageUpTriggered()
 //users to go through different pages of results shown on the table
 void StandardView::pageDownTriggered()
 {
-    int varyAmount = (_resultsTableViewExpanded ? 3 : 10);
+    int varyAmount = (_resultsTableViewExpanded ? EXPANDED_SIZE : NORMAL_SIZE);
 
     bool currInputNotAtLastDisplay =
             (_tableItems.endIndex - _tableItems.currentIndex >= varyAmount);
@@ -451,9 +461,9 @@ void StandardView::changeViewModeTriggered()
         else if (_currentType == HELP_VIEW)
         {
             _helpPageNo++;
-            if (_helpPageNo == 4)
+            if (_helpPageNo == LAST_PAGE)
             {
-                _helpPageNo = 1;
+                _helpPageNo = FIRST_PAGE;
             }
             showHelpViewMode();
         }
@@ -649,11 +659,13 @@ void StandardView::showResultsTableMode()
 {
     if (_resultsTableViewExpanded)
     {
-        setFrameAnimationProperties(ui->frame_23, 1480,0);
+        setFrameAnimationProperties(ui->frame_23, RESULTS_DEFAULT_X_COORD,
+                                    RESULTS_EXPANDED_Y_COORD);
     }
     else
     {
-        setFrameAnimationProperties(ui->frame_23, 1480, -437);
+        setFrameAnimationProperties(ui->frame_23, RESULTS_DEFAULT_X_COORD,
+                                    RESULTS_NORMAL_Y_COORD);
     }
 }
 
@@ -665,15 +677,18 @@ void StandardView::showHelpViewMode()
     switch (_helpPageNo)
     {
         case 1:
-            setFrameAnimationProperties(ui->frame_17, 0,0);
+            setFrameAnimationProperties(ui->frame_17, HELP_DEFAULT_X_COORD,
+                                        HELP_PAGE_ONE_Y_COORD);
             break;
 
         case 2:
-            setFrameAnimationProperties(ui->frame_17, 0,-437);
+            setFrameAnimationProperties(ui->frame_17, HELP_DEFAULT_X_COORD,
+                                        HELP_PAGE_TWO_Y_COORD);
             break;
 
         case 3:
-            setFrameAnimationProperties(ui->frame_17, 0,-874);
+            setFrameAnimationProperties(ui->frame_17, HELP_DEFAULT_X_COORD,
+                                        HELP_PAGE_THREE_Y_COORD);
             break;
 
         default:
@@ -687,8 +702,7 @@ void StandardView::setFrameAnimationProperties(QFrame* frame, int xCoord,
                                                int yCoord)
 {
     _currentlySliding = true;
-
-    _animation = new QPropertyAnimation(frame, "geometry");
+    _animation = new QPropertyAnimation(frame, ANIMATION_ATTRIBUTE.c_str());
 
     connect(_animation,
             SIGNAL(stateChanged(
@@ -706,17 +720,20 @@ void StandardView::setFrameAnimationProperties(QFrame* frame, int xCoord,
 
 void StandardView::showTable()
 {
-    setFrameAnimationProperties(ui->frame_22, -1464,14);
+    setFrameAnimationProperties(ui->frame_22, RESULTS_VIEW_X_COORD,
+                                DEFAULT_VIEW_Y_COORD);
 }
 
 void StandardView::showHelp()
 {
-    setFrameAnimationProperties(ui->frame_22, 16,14);
+    setFrameAnimationProperties(ui->frame_22, HELP_VIEW_X_COORD,
+                                DEFAULT_VIEW_Y_COORD);
 }
 
 void StandardView::showTodayView()
 {
-    setFrameAnimationProperties(ui->frame_22, -723,14);
+    setFrameAnimationProperties(ui->frame_22, TODAY_VIEW_X_COORD,
+                                DEFAULT_VIEW_Y_COORD);
 
     //Emit signal so that results in today view can be updated
     emit todayViewTriggered();
@@ -724,7 +741,7 @@ void StandardView::showTodayView()
 
 //This function allocates the type of view to be shown based on
 //the type of view required that is sent in as the parameter
-void StandardView::showViewWithType(viewType type) throw (string)
+void StandardView::showViewWithType(ViewType type) throw (string)
 {
     //Condition to prevent possible acculmulation of changeview
     //commands
@@ -841,19 +858,20 @@ void StandardView::displayTableNotExpanded()
 {
     int i = _tableItems.currentIndex;
     bool stillInResultsRange = (i <= _tableItems.endIndex);
-    bool stillInTableRange = (i-_tableItems.currentIndex < 10);
+    bool stillInTableRange = (i-_tableItems.currentIndex < NORMAL_SIZE);
 
     while (stillInResultsRange && stillInTableRange)
     {
-        displayTableEventId(i,_tableItems.output[(i*6)]);
-        displayTableEventName(i, _tableItems.output[(i*6)+1]);
-        displayTableStartDate(i, _tableItems.output[(i*6)+2]);
-        displayTableEndDate(i, _tableItems.output[(i*6)+3]);
-        displayTablePriorityIcon(i, _tableItems.output[(i*6)+4]);
+        displayTableEventId(i,_tableItems.output[(i*TABLE_ENTRY_SIZE)]);
+        displayTableEventName(i, _tableItems.output[(i*TABLE_ENTRY_SIZE)+1]);
+        displayTableStartDate(i, _tableItems.output[(i*TABLE_ENTRY_SIZE)+2]);
+        displayTableEndDate(i, _tableItems.output[(i*TABLE_ENTRY_SIZE)+3]);
+        displayTablePriorityIcon(i,
+                                 _tableItems.output[(i*TABLE_ENTRY_SIZE)+4]);
 
         i++;
         stillInResultsRange = (i <= _tableItems.endIndex);
-        stillInTableRange = (i-_tableItems.currentIndex < 10);
+        stillInTableRange = (i-_tableItems.currentIndex < NORMAL_SIZE);
     }
 
     displayTableRangeResultLabel(ui->label_27,i,_tableItems.currentIndex+1,
@@ -866,29 +884,29 @@ void StandardView:: displayTableExpanded()
 {
     int i = _tableItems.currentIndex;
     bool stillInResultsRange = (i <= _tableItems.endIndex);
-    bool stillInNotesRange = (i-_tableItems.currentIndex < 3);
+    bool stillInNotesRange = (i-_tableItems.currentIndex < EXPANDED_SIZE);
 
     while (stillInResultsRange && stillInNotesRange)
     {
         QString result =
                 MESSAGE_EVENT_NAME_LABEL+
-                _tableItems.output[(i*6)+1]+
+                _tableItems.output[(i*TABLE_ENTRY_SIZE)+1]+
                 MESSAGE_EVENT_ID_LABEL+
-                _tableItems.output[(i*6)]+
+                _tableItems.output[(i*TABLE_ENTRY_SIZE)]+
                 MESSAGE_CATEGORY_LABEL+
-                _tableItems.output[(i*6)+5]+
+                _tableItems.output[(i*TABLE_ENTRY_SIZE)+5]+
                 MESSAGE_START_DATE_LABEL+
-                _tableItems.output[(i*6)+2]+
+                _tableItems.output[(i*TABLE_ENTRY_SIZE)+2]+
                 MESSAGE_END_DATE_LABEL+
-                _tableItems.output[(i*6)+3]+
+                _tableItems.output[(i*TABLE_ENTRY_SIZE)+3]+
                 MESSAGE_PRIORITY_LABEL+
-                _tableItems.output[(i*6)+4];
+                _tableItems.output[(i*TABLE_ENTRY_SIZE)+4];
 
         displayTableExpandedNotes(i-_tableItems.currentIndex,result);
 
         i++;
         stillInResultsRange = (i <= _tableItems.endIndex);
-        stillInNotesRange = (i-_tableItems.currentIndex < 3);
+        stillInNotesRange = (i-_tableItems.currentIndex < EXPANDED_SIZE);
     }
 
     displayTableRangeResultLabel(ui->label_74,i,_tableItems.currentIndex+1,
@@ -900,13 +918,13 @@ void StandardView:: displayTableExpanded()
 void StandardView:: displayTableRangeResultLabel(QLabel* label,int to,
                                                   int from,int total)
 {
-    label->setText("    "
+    label->setText(MESSAGE_BLANK
                    +QString::number(from)
-                   +" to "
+                   +MESSAGE_TO
                    +QString::number(to)
-                   +" of "
+                   +MESSAGE_OF
                    +QString::number(total)
-                   +" results ");
+                   +MESSAGE_RESULTS);
 }
 
 //This function is for choosing 1 of the 3 notes to display the task as only
@@ -937,7 +955,7 @@ void StandardView::displayTableExpandedNotes(int reformatIndex, QString result)
 //labels
 void StandardView:: displayTableEventId(int index, QString id)
 {
-    int reformatIndex = index%10;
+    int reformatIndex = index%NORMAL_SIZE;
 
     switch (reformatIndex)
     {
@@ -991,7 +1009,7 @@ void StandardView:: displayTableEventId(int index, QString id)
 //labels
 void StandardView:: displayTableEventName(int index, QString name)
 {
-    int reformatIndex = index%10;
+    int reformatIndex = index%NORMAL_SIZE;
 
     switch (reformatIndex)
     {
@@ -1045,7 +1063,7 @@ void StandardView:: displayTableEventName(int index, QString name)
 //labels
 void StandardView:: displayTableStartDate(int index, QString startDate)
 {
-    int reformatIndex = index%10;
+    int reformatIndex = index%NORMAL_SIZE;
 
     switch (reformatIndex)
     {
@@ -1098,7 +1116,7 @@ void StandardView:: displayTableStartDate(int index, QString startDate)
 //It allows the qlabels to react as an array of (of size 10) end date labels
 void StandardView:: displayTableEndDate(int index, QString endDate)
 {
-    int reformatIndex = index%10;
+    int reformatIndex = index%NORMAL_SIZE;
 
     switch (reformatIndex)
     {
@@ -1151,9 +1169,9 @@ void StandardView:: displayTableEndDate(int index, QString endDate)
 //It allows the qlabels to react as an array of icons (of size 10) displayed
 void StandardView:: displayTablePriorityIcon(int index, QString priority)
 {
-    int reformatIndex = index%10;
+    int reformatIndex = index%NORMAL_SIZE;
 
-    if (priority == "HIGH")
+    if (priority == MESSAGE_HIGH)
     {
         switch (reformatIndex)
         {
@@ -1219,7 +1237,7 @@ void StandardView:: informNoDisplayResults()
 //list size after possible changes made from expanded view
 void StandardView::calibrateTableIndex()
 {
-    _tableItems.currentIndex -= (_tableItems.currentIndex%10);
+    _tableItems.currentIndex -= (_tableItems.currentIndex%NORMAL_SIZE);
 }
 
 //Function for returning a boolean value on whether the singleton class exists
@@ -1322,7 +1340,7 @@ void StandardView:: setSignals()
 
 bool StandardView::tableIsEmpty()
 {
-    return (_tableItems.output.size() == 0);
+    return (_tableItems.output.size() == EMPTY);
 }
 
 //Function displays the closest highest priority event in the high priority
@@ -1347,11 +1365,11 @@ void StandardView::displayTodayViewNotes (QVector<QString> notes)
 
     for(count = 0; count < 3 ; count++)
     {
-        if (count < (size/6))
+        if (count < (size/TABLE_ENTRY_SIZE))
         {
-            event = MESSAGE_EVENT_NAME_LABEL+notes[(count*6)+1]+
-                    MESSAGE_START_DATE_LABEL+notes[(count*6)+2]+
-                    MESSAGE_END_DATE_LABEL+notes[(count*6)+3];
+            event = MESSAGE_EVENT_NAME_LABEL+notes[(count*TABLE_ENTRY_SIZE)+1]+
+                    MESSAGE_START_DATE_LABEL+notes[(count*TABLE_ENTRY_SIZE)+2]+
+                    MESSAGE_END_DATE_LABEL+notes[(count*TABLE_ENTRY_SIZE)+3];
         }
         else
         {

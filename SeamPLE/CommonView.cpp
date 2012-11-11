@@ -31,6 +31,12 @@ const QString CommonView:: COMMAND_FIND_FLOAT = "todo";
 const QString CommonView:: COMMAND_MARK = "mark ";
 const QString CommonView:: COMMAND_TODAY = "today";
 
+//Following strings are common strings to output to user
+const QString CommonView::MESSAGE_NIL = "";
+
+//Following string contains attribute string for the animation
+const string CommonView:: ANIMATION_ATTRIBUTE = "geometry";
+
 //Following will contain strings corresponding to error reports of both user
 //interfaces. Note that the data type is string and not QString as the
 //errorlogger class utilise strings to write into the error text file

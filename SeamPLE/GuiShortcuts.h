@@ -3,7 +3,6 @@
 
 #include <QAction>
 #include <QMainWindow>
-//#include <QxtGlobalShortcut>
 #include <QApplication>
 
 //@LIU WEIYUAN A0086030R
@@ -20,7 +19,6 @@ public:
     //Generic methods to set the shortcuts into the interfaces
     void setShortcutsTo(QMainWindow* Gui);
     void setStandardShortcutsTo(QMainWindow* Gui);
-    //void setGlobalShortcuts();
 
     //Methods to obtain the key for the shortcut
     QAction* getSwitchViewKey();
@@ -43,7 +41,6 @@ public:
     QAction* getChangeScreenThreeViewKey();
     QAction* getMarkKey();
     QAction* getTodayKey();
-    //QxtGlobalShortcut* getShowHideViewKey();
 
 private:
     //Methods to create the different shortcuts and integrate
@@ -114,7 +111,6 @@ private:
     QAction* _changeScreenThreeView;
     QAction* _mark;
     QAction* _today;
-    //QxtGlobalShortcut * _showHideView;
 };
 
 #endif // GUISHORTCUTS_H

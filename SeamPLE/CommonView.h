@@ -40,6 +40,8 @@ protected:
     const static QString COMMAND_FIND_FLOAT;
     const static QString COMMAND_MARK;
     const static QString COMMAND_TODAY;
+    const static QString MESSAGE_NIL;
+    const static string ANIMATION_ATTRIBUTE;
     const static string MESSAGE_ERROR_INVALID_COLOUR;
     const static string MESSAGE_ERROR_INCOMPLETE_RESULTS;
 

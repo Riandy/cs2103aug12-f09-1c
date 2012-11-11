@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'standardview.ui'
 **
-** Created: Sun Nov 11 19:34:15 2012
+** Created: Sun Nov 11 22:37:34 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -203,6 +203,7 @@ public:
     QLabel *label_145;
     QLabel *label_157;
     QLabel *label_3;
+    QLabel *label_130;
     QLabel *label_4;
     QPushButton *pushButton_2;
     QPushButton *pushButton;
@@ -1485,6 +1486,13 @@ public:
 "{\n"
 "	background-image:url(:/bg/inapplogo.gif)\n"
 "}"));
+        label_130 = new QLabel(frame_2);
+        label_130->setObjectName(QString::fromUtf8("label_130"));
+        label_130->setGeometry(QRect(749, 6, 46, 48));
+        label_130->setStyleSheet(QString::fromUtf8("#label_130\n"
+"{\n"
+"	background-image: url(:/bg/Help_sign.gif);\n"
+"}"));
         label_4 = new QLabel(frame);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(-10, -4, 821, 51));
@@ -1552,8 +1560,6 @@ public:
         pushButton->setAutoDefault(false);
         pushButton->setDefault(false);
         pushButton->setFlat(false);
-        frame->raise();
-        frame_3->raise();
 
         retranslateUi(StandardView);
 
@@ -2071,6 +2077,7 @@ public:
 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-weight:600;\">PRESS &quot;TAB&quot;</span></p></body></html>", 0, QApplication::UnicodeUTF8));
         label_3->setText(QString());
+        label_130->setText(QString());
         label_4->setText(QString());
         pushButton_2->setText(QString());
         pushButton->setText(QString());

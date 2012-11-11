@@ -38,5 +38,6 @@
         <file>inapplogo.gif</file>
         <file>Info_label.gif</file>
         <file>Next_label.gif</file>
+        <file>Help_sign.gif</file>
     </qresource>
 </RCC>

@@ -3,6 +3,8 @@
 //@LIU WEIYUAN A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
+int GuiControl::MINIMUM_SIZE = 2;
+
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
         "<font size=3 face=\"Gill Sans Ultra Bold Condensed\" color ="
         "\"orange\"> Available Commands: add, delete, mark, unmark, "
@@ -31,10 +33,8 @@ GuiControl::GuiControl()
     setStandardGuiSignals();
     setSeampleGuiSignals();
     setTimedSignals();
-    //setGlobalSignals();
     _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
-    //setInterfaceShownFlag(true);
     setInputColourFlag(NONE);
     getTodaysEvents();
 }
@@ -102,7 +102,7 @@ void GuiControl::check(QString input)
     {
         QVector <QString> output =
                 _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
-        bool invalidSchedulerReturn = (output.size() < 2);
+        bool invalidSchedulerReturn = (output.size() < MINIMUM_SIZE);
 
         if (invalidSchedulerReturn)
         {
@@ -117,7 +117,8 @@ void GuiControl::check(QString input)
             //second last flag is the code for parser to request Gui to display
             //the contents in a table
             bool needStandardView =
-                    (output[output.size()-2] == (MESSAGE_GUI_DISPLAY));
+                    (output[output.size()-MINIMUM_SIZE]
+                     == (MESSAGE_GUI_DISPLAY));
 
             try
             {
@@ -141,6 +142,11 @@ void GuiControl::check(QString input)
                 }
                 try
                 {
+                    //Start from position one as the feedback for the user is
+                    //at position 0. Amount to copy has a deduction of 3 as
+                    //the last position is the colour flag, the second last
+                    //position is the code flag, andalso of the feedback being
+                    //in the first position
                     QVector <QString> results = output.mid(1,output.size()-3);
                     _standardGui->instantiateTable(results);
                 }
@@ -194,6 +200,10 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                 }
                 try
                 {
+                    //Start from position one as the feedback for the user is
+                    //at position 0. Amount to copy has a deduction of 2 as
+                    //the last position is the code flag, and the feedback
+                    //position is not included for the copy
                     QVector <QString> results = output.mid(1,capacity - 2);
                     _standardGui->instantiateTable(results);
                 }
@@ -248,34 +258,6 @@ void GuiControl::changeView(QString input, QString inputChecked,
         }
     }
 }
-
-////Function toggles between whether the application is minimised through a
-////shortcut orcurrently shown.
-//void GuiControl::showHideView()
-//{
-//    QMainWindow* currentInterface;
-
-//    if (interfaceIsStandardView())
-//    {
-//        currentInterface = _standardGui;
-//    }
-//    else
-//    {
-//        currentInterface = _seampleGui;
-//    }
-
-//    if(interfaceIsCurrentlyShown())
-//    {
-//        currentInterface->hide();
-//        setInterfaceShownFlag(false);
-//    }
-//    else
-//    {
-//        currentInterface->show();
-//        currentInterface->activateWindow();
-//        setInterfaceShownFlag(true);
-//    }
-//}
 
 //Function is called by _seampleGui when f1 or ctrl-1 shortcuts are entered.
 //Triggers help interface to appear
@@ -334,19 +316,6 @@ bool GuiControl::interfaceIsStandardView()
 {
     return _standardViewFlag;
 }
-
-////Function returns a bool value on whether interface is minimised or running
-//bool GuiControl::interfaceIsCurrentlyShown()
-//{
-//    return _interfaceShownFlag;
-//}
-
-////Function sets the boolean value for _interfaceShownFlag given a boolean
-////parameter
-//void GuiControl::setInterfaceShownFlag(bool flag)
-//{
-//    _interfaceShownFlag = flag;
-//}
 
 void GuiControl::setInputColourFlag(InputBarFlag flag)
 {
@@ -470,16 +439,6 @@ void GuiControl:: setTimedSignals()
     connect(&_timeControl,SIGNAL(oneMinuteTrigger()),
             this, SLOT(getTodaysEvents()));
 }
-
-////Function set global shortcut signals from shortcuts class to local slots in
-////this class
-//void GuiControl:: setGlobalSignals()
-//{
-//    _allShortcuts.setGlobalShortcuts();
-
-//    connect(_allShortcuts.getShowHideViewKey(),SIGNAL(activated()),
-//            this,SLOT(showHideView()));
-//}
 
 
 

@@ -15,6 +15,7 @@
 //In this class, display___ and show___ functions are used. Display functions
 //are generally to display content to user, while show functions are to
 //show the UI element itself to the user (for example, changing to help view)
+
 namespace Ui {
 class StandardView;
 }
@@ -24,11 +25,49 @@ class StandardView : public QMainWindow, public CommonView
     Q_OBJECT
 
 private:
-    enum viewType
+    enum ViewType
     {
         TODAY_EVENTS,
         RESULTS_TABLE,
         HELP_VIEW
+    };
+
+    enum ResultsViewCode
+    {
+        EMPTY = 0,
+        TABLE_ENTRY_SIZE = 6,
+        EXPANDED_SIZE = 3,
+        NORMAL_SIZE = 10
+    };
+
+    enum OpacityCode
+    {
+        OPACITY_EMPTY = 0,
+        OPACITY_FULL = 1,
+        TIMING = 1
+    };
+
+    enum HelpCode
+    {
+        LAST_PAGE = 4,
+        FIRST_PAGE = 1
+    };
+
+    enum AnimationCoordinates
+    {
+        RESULTS_DEFAULT_X_COORD = 1480,
+        RESULTS_NORMAL_Y_COORD = -437,
+        RESULTS_EXPANDED_Y_COORD = 0,
+
+        HELP_DEFAULT_X_COORD = 0,
+        HELP_PAGE_ONE_Y_COORD = 0,
+        HELP_PAGE_TWO_Y_COORD = -437,
+        HELP_PAGE_THREE_Y_COORD = -874,
+
+        RESULTS_VIEW_X_COORD = -1464,
+        TODAY_VIEW_X_COORD = -723,
+        HELP_VIEW_X_COORD = 16,
+        DEFAULT_VIEW_Y_COORD = 14
     };
 
     struct table
@@ -41,7 +80,8 @@ private:
 private:
     static StandardView* _standardView;
 
-    const static QString MESSAGE_NIL;
+    const static double OPACITY_INTERVAL;
+
     const static QString MESSAGE_NO_CURRENT_RESULTS;
     const static QString MESSAGE_VIEW_TYPE_WRONG;
     const static QString MESSAGE_EVENT_NAME_LABEL;
@@ -53,6 +93,12 @@ private:
     const static QString MESSAGE_FONT_COLOUR_RED;
     const static QString MESSAGE_FONT_COLOUR_GREEN;
     const static QString MESSAGE_FONT_END;
+    const static QString MESSAGE_ZERO;
+    const static QString MESSAGE_HIGH;
+    const static QString MESSAGE_BLANK;
+    const static QString MESSAGE_TO;
+    const static QString MESSAGE_OF;
+    const static QString MESSAGE_RESULTS;
     
 private:
     explicit StandardView(QWidget *parent = 0);
@@ -125,7 +171,7 @@ private:
     void showTable();
     void showHelp();
     void showTodayView();
-    void showViewWithType(viewType type) throw (string);
+    void showViewWithType(ViewType type) throw (string);
     void displayTableResults();
     void displayTableNotExpanded();
     void displayTableExpanded();
@@ -153,7 +199,7 @@ private:
     bool _resultsTableViewExpanded;
     int _helpPageNo;
     ErrorLogger* _faulty;
-    viewType _currentType;
+    ViewType _currentType;
     table _tableItems;
     double _opacityLvl;
     QTimer _fadeTimer;

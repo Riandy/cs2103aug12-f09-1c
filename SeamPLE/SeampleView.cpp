@@ -5,6 +5,8 @@
 
 SeampleView* SeampleView::_seampleView = NULL;
 
+int SeampleView::ANIMATION_TIMING = 200;
+
 SeampleView::SeampleView(QWidget *parent) :
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
     ui(new Ui::SeampleView)
@@ -17,7 +19,7 @@ SeampleView::SeampleView(QWidget *parent) :
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    _animation = new QPropertyAnimation(ui->frame, "geometry");
+    _animation = new QPropertyAnimation(ui->frame, ANIMATION_ATTRIBUTE.c_str());
     _allShortcuts.setShortcutsTo(this);
     setSignals();
 
@@ -67,7 +69,7 @@ void SeampleView::show()
 
     _currentlyChanging = true;
     _animation->setEasingCurve(QEasingCurve::OutQuart);
-    _animation->setDuration(200);
+    _animation->setDuration(ANIMATION_TIMING);
     _animation->setStartValue(getHiddenGeometry());
     _animation->setEndValue(getDefaultGeometry());
 
@@ -86,7 +88,7 @@ void SeampleView::hide()
 
     _currentlyChanging = true;
     _animation->setEasingCurve(QEasingCurve::Linear);
-    _animation->setDuration(200);
+    _animation->setDuration(ANIMATION_TIMING);
     _animation->setStartValue(getDefaultGeometry());
     _animation->setEndValue(getHiddenGeometry());
 
@@ -249,8 +251,8 @@ void SeampleView::editTriggered()
 void SeampleView::clearTriggered()
 {
     displayFocusInInputEdit(true);
-    displayFeedbackInputEdit("");
-    emit relay("");
+    displayFeedbackInputEdit(MESSAGE_NIL);
+    emit relay(MESSAGE_NIL);
 }
 
 //This function is a slot function that triggers a signal to ask for the
