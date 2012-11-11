@@ -54,8 +54,6 @@ private:
     bool singleInstanceExists();
     bool implementInputColorFlagFailure(QCharRef colorFlag) throw (string);
     bool interfaceIsStandardView();
-    //bool interfaceIsCurrentlyShown();
-    //void setInterfaceShownFlag(bool flag);
     void setInputColourFlag(InputBarFlag flag);
     void emptyResponse();
     void send(QString feedback);
@@ -65,15 +63,12 @@ private:
     void setStandardGuiSignals();
     void setSeampleGuiSignals();
     void setTimedSignals();
-    //void setGlobalSignals();
 
 
 private:
     bool _standardViewFlag;
-    //bool _interfaceShownFlag;
     InputBarFlag _inputColorFlag;
     Timekeeper _timeControl; 
-    //GuiShortcuts _allShortcuts;
     SeampleView* _seampleGui;
     StandardView* _standardGui;
     ErrorLogger* _faulty;

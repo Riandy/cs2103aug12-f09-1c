@@ -89,20 +89,6 @@ void GuiShortcuts::setStandardShortcutsTo(QMainWindow* Gui)
     setChangeScreenThreeView(Gui);
 }
 
-////Generic function to set shortcuts only for control classes such as
-////GuiControl
-//void GuiShortcuts::setGlobalShortcuts()
-//{
-//    if (_showHideView == NULL)
-//    {
-//        _showHideView = new QxtGlobalShortcut(
-//                                  QKeySequence(
-//                                        Qt::CTRL + Qt::SHIFT + Qt::Key_S),
-//                                          NULL);
-//    }
-//}
-
-
 //Following get____Key functions return the addresses of these objects that
 // will be required to complete the shortcuts
 QAction* GuiShortcuts::getSwitchViewKey()

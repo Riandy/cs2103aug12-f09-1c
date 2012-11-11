@@ -31,10 +31,8 @@ GuiControl::GuiControl()
     setStandardGuiSignals();
     setSeampleGuiSignals();
     setTimedSignals();
-    //setGlobalSignals();
     _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
-    //setInterfaceShownFlag(true);
     setInputColourFlag(NONE);
     getTodaysEvents();
 }
@@ -249,34 +247,6 @@ void GuiControl::changeView(QString input, QString inputChecked,
     }
 }
 
-////Function toggles between whether the application is minimised through a
-////shortcut orcurrently shown.
-//void GuiControl::showHideView()
-//{
-//    QMainWindow* currentInterface;
-
-//    if (interfaceIsStandardView())
-//    {
-//        currentInterface = _standardGui;
-//    }
-//    else
-//    {
-//        currentInterface = _seampleGui;
-//    }
-
-//    if(interfaceIsCurrentlyShown())
-//    {
-//        currentInterface->hide();
-//        setInterfaceShownFlag(false);
-//    }
-//    else
-//    {
-//        currentInterface->show();
-//        currentInterface->activateWindow();
-//        setInterfaceShownFlag(true);
-//    }
-//}
-
 //Function is called by _seampleGui when f1 or ctrl-1 shortcuts are entered.
 //Triggers help interface to appear
 void GuiControl::showHelpView()
@@ -334,19 +304,6 @@ bool GuiControl::interfaceIsStandardView()
 {
     return _standardViewFlag;
 }
-
-////Function returns a bool value on whether interface is minimised or running
-//bool GuiControl::interfaceIsCurrentlyShown()
-//{
-//    return _interfaceShownFlag;
-//}
-
-////Function sets the boolean value for _interfaceShownFlag given a boolean
-////parameter
-//void GuiControl::setInterfaceShownFlag(bool flag)
-//{
-//    _interfaceShownFlag = flag;
-//}
 
 void GuiControl::setInputColourFlag(InputBarFlag flag)
 {
@@ -470,16 +427,6 @@ void GuiControl:: setTimedSignals()
     connect(&_timeControl,SIGNAL(oneMinuteTrigger()),
             this, SLOT(getTodaysEvents()));
 }
-
-////Function set global shortcut signals from shortcuts class to local slots in
-////this class
-//void GuiControl:: setGlobalSignals()
-//{
-//    _allShortcuts.setGlobalShortcuts();
-
-//    connect(_allShortcuts.getShowHideViewKey(),SIGNAL(activated()),
-//            this,SLOT(showHideView()));
-//}
 
 
 
