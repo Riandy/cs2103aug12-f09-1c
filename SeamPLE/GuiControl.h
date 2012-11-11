@@ -19,6 +19,7 @@ class GuiControl: public QObject
 
 private:
     static GuiControl* _guiControl;
+    static int MINIMUM_SIZE;
 
     const static QString MESSAGE_AVAILABLE_COMMANDS;
     const static QString MESSAGE_INTELLISENSE_INVALID_RETURN;

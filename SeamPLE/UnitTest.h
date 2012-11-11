@@ -108,6 +108,11 @@ private slots:
     void testMark3();
     void testMark4();
     void testMark5();
+
+    void testTodayEventNoEvent();
+    void testTodayEventNoEvent2();
+    void testTodayEventNoEvent3();
+
 #pragma endregion Scheduler UnitTesting
 
 #pragma region Calender Unit Testing
