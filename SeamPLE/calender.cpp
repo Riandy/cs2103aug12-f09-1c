@@ -32,6 +32,8 @@ calender::~calender()
     _faulty->endInstance();
 }
 //@Riandy A0088392R
+//this function converts the given time to this format "dd / mm / yyyy - HH : MM : SS"
+//and return it as a string
 string calender::convertToDate(tm _date)
 {
     string _dateString;
@@ -43,6 +45,8 @@ string calender::convertToDate(tm _date)
 
 }
 //@Riandy A0088392R
+//this function converts the given time to this format "dd / mm / yyyy"
+//and return it as a string
 string calender::convertToDateNoTime(tm _date)
 {
     string _dateString;
@@ -167,6 +171,9 @@ bool calender::deleteAll()
 }
 
 //@Riandy A0088392R
+//this function delete an event based on the eventName provided
+//return true if delete is successful, else return false
+//it will also update the History if successful in deleting
 bool calender::deleteItem(string eventName)
 {
     for(int i=0 ; i<_storage.size() ; i++)
@@ -182,7 +189,10 @@ bool calender::deleteItem(string eventName)
         }
     return false;
 }
+
 //@Riandy A0088392R
+//this function is used to write _storage (vector of task)
+//to STORAGE_FILENAME (storage.txt)
 bool calender::writeFile()
 {
     calender::SortByDate();
@@ -198,6 +208,7 @@ bool calender::writeFile()
 
     return true;
 }
+
 //@JOHN A0069517W
 void calender::writeBackupFile()
 {
@@ -280,7 +291,10 @@ vector<task> calender::SearchByCat(string searchItem)
     }
     return _bufferStorage;
 }
+
 //@Riandy A0088392R
+//this function search the database based on the string provided and return
+//all the results in vector<task>.
 vector<task> calender::SearchByTask(string searchItem)
 {
     vector<task> _bufferStorage;
@@ -295,7 +309,6 @@ vector<task> calender::SearchByTask(string searchItem)
     return _bufferStorage;
 }
 
-//@Riandy A0088392R
 task* calender::pointerSearchByTask(string searchItem) //@WENREN
 // only return first match
 {
@@ -350,6 +363,8 @@ vector<task> calender::displayDatabase()
 
 
 //@Riandy A0088392R
+//This function loads the data to vector<task> based on the filename provided
+//The format in the txt file is fixed.
 vector<task> calender::loadFile(char* fileName)
 {
     vector<task> list;
