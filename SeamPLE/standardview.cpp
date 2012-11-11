@@ -38,7 +38,7 @@ StandardView::StandardView(QWidget *parent):
 {
     //Default settings according to UI form
     ui->setupUi(this);
-    changeGeometry();
+    setDefaultGeometry();
 
     //To make pri window transparent as focus is on
     //sec window
@@ -55,7 +55,7 @@ StandardView::StandardView(QWidget *parent):
     _resultsTableViewExpanded = false;
     _helpPageNo = 1;
 
-    setStartView();
+    setStartViewAsTodayView();
     _currentlyChanging = false;
     _currentlySliding = false;
     _animation = NULL;
@@ -173,7 +173,7 @@ void StandardView::resetAllTablesContents()
     _tableItems.endIndex = 0;
 }
 
-//Information on displaying on today's summary (todayView) is passed into
+//Information on displaying on today's summary (today view) is passed into
 //this function and is displayed
 void StandardView::displayTodayView(QVector<QString> info)
 {
@@ -204,7 +204,7 @@ void StandardView::show()
     _currentlyChanging = true;
 
     //Reset interface to original position
-    changeGeometry();
+    setDefaultGeometry();
 
     _opacityLvl = 0;
     setWindowOpacity(NONE);
@@ -409,6 +409,8 @@ void StandardView::pageDownTriggered()
     }
 }
 
+//This slot function controls the type of view displayed when the
+//shortcut to trigger to change view is triggered
 void StandardView::changeDisplayTriggered()
 {
     try
@@ -434,6 +436,8 @@ void StandardView::changeDisplayTriggered()
     }
 }
 
+//This slot function controls the mode for the different types of view
+//when the shortcut that trigger the change in mode is triggered
 void StandardView::changeViewModeTriggered()
 {
     if (!screenCurrentlySliding())
@@ -441,7 +445,7 @@ void StandardView::changeViewModeTriggered()
         if (_currentType == RESULTS_TABLE)
         {
             _resultsTableViewExpanded = !_resultsTableViewExpanded;
-            showResultsTableType();
+            showResultsTableMode();
             displayTableResults();
         }
         else if (_currentType == HELP_VIEW)
@@ -451,24 +455,40 @@ void StandardView::changeViewModeTriggered()
             {
                 _helpPageNo = 1;
             }
-            showHelpViewType();
+            showHelpViewMode();
         }
     }
 }
 
+//This function is a slot function that is triggered when the animation mode
+//for changing the views in this interface has changed. With the appropriate
+//changes that indicate the end of the animation, the items related to the
+//animation will be removed
 void StandardView::checkAnimationDone(
         QAbstractAnimation::State newState,QAbstractAnimation::State oldState)
 {
-    if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
+    bool animationEnded =
+            (oldState == QAbstractAnimation::Running
+             && newState == QAbstractAnimation::Stopped);
+
+    if (animationEnded)
     {
-        disconnect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
-                this,SLOT(checkAnimationDone(QAbstractAnimation::State,QAbstractAnimation::State)));
+        disconnect(_animation,
+                   SIGNAL(stateChanged(QAbstractAnimation::State,
+                                       QAbstractAnimation::State)),
+                   this,
+                   SLOT(checkAnimationDone(QAbstractAnimation::State,
+                                           QAbstractAnimation::State)));
+
         delete _animation;
         _animation = NULL;
         _currentlySliding = false;
     }
 }
 
+//This slot function ensures that the close option to end this program
+//is not triggered while the animation to take place. This prevents any bugs
+//from occuring
 void StandardView::calibrateCloseMechanism()
 {
     if (!screenCurrentlySliding() && !interfaceCurrentlyChanging())
@@ -477,16 +497,23 @@ void StandardView::calibrateCloseMechanism()
     }
 }
 
+//This slot function triggers the change to view two, which is today view
+//(for summary of today's event) when its shortcut is triggered
 void StandardView::screenTwoTriggered()
 {
     showViewWithType(TODAY_EVENTS);
 }
 
+//This slot function triggers the change to view three, which is results
+//(for all search results of logic) when its shortcut is triggered
 void StandardView::screenThreeTriggered()
 {
     showViewWithType(RESULTS_TABLE);
 }
 
+//This function is a slot function that will add the "mark" command text
+//when the mark shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::markTriggered()
 {
     ui->lineEdit->setText(COMMAND_MARK);
@@ -494,6 +521,10 @@ void StandardView::markTriggered()
     emit relay(ui->lineEdit->text());
 }
 
+
+//This function is a slot function that will emit a signal for the today
+//command when the today shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::todayTriggered()
 {
     emit run(COMMAND_TODAY, ui->lineEdit->getFocusInput());
@@ -514,6 +545,9 @@ void StandardView:: resetTableContents()
     informNoDisplayResults();
 }
 
+//Difference between this function and resetTableContents is that this
+//function is for the 2nd view mode of results, which is the expanded
+//tables
 void StandardView:: resetTableExpandedContents()
 {
     resetTableExpandedNotes();
@@ -603,12 +637,15 @@ void StandardView::resetTableExpandedCounter()
     ui->label_74->setText(MESSAGE_NIL);
 }
 
-void StandardView::setStartView()
+void StandardView::setStartViewAsTodayView()
 {
     _currentType = TODAY_EVENTS;
 }
 
-void StandardView::showResultsTableType()
+//Function switches the view type mode of the results table. As the frame
+//animated is in the base frame frame_22, the corrdinates are adjusted
+//according to frame_23's position in frame_22
+void StandardView::showResultsTableMode()
 {
     if (_resultsTableViewExpanded)
     {
@@ -620,7 +657,10 @@ void StandardView::showResultsTableType()
     }
 }
 
-void StandardView::showHelpViewType()
+//Function switches the view type mode of the help view. As the frame
+//animated is in the base frame frame_22, the corrdinates are adjusted
+//according to frame_17's position in frame_22
+void StandardView::showHelpViewMode()
 {
     switch (_helpPageNo)
     {
@@ -641,14 +681,21 @@ void StandardView::showHelpViewType()
     }
 }
 
-void StandardView::setFrameAnimationProperties(QFrame* frame, int xCoord, int yCoord)
+//Function is the generic function for showing frame animations, based on the
+//ui frame address sent in, and coordinates to animate to
+void StandardView::setFrameAnimationProperties(QFrame* frame, int xCoord,
+                                               int yCoord)
 {
     _currentlySliding = true;
 
     _animation = new QPropertyAnimation(frame, "geometry");
 
-    connect(_animation,SIGNAL(stateChanged(QAbstractAnimation::State,QAbstractAnimation::State)),
-            this,SLOT(checkAnimationDone(QAbstractAnimation::State,QAbstractAnimation::State)));
+    connect(_animation,
+            SIGNAL(stateChanged(
+                       QAbstractAnimation::State,QAbstractAnimation::State)),
+            this,
+            SLOT(checkAnimationDone(
+                     QAbstractAnimation::State,QAbstractAnimation::State)));
 
     _animation->setEasingCurve(QEasingCurve::OutQuart);
     _animation->setDuration(500);
@@ -670,11 +717,17 @@ void StandardView::showHelp()
 void StandardView::showTodayView()
 {
     setFrameAnimationProperties(ui->frame_22, -723,14);
+
+    //Emit signal so that results in today view can be updated
     emit todayViewTriggered();
 }
 
+//This function allocates the type of view to be shown based on
+//the type of view required that is sent in as the parameter
 void StandardView::showViewWithType(viewType type) throw (string)
 {
+    //Condition to prevent possible acculmulation of changeview
+    //commands
     if (!screenCurrentlySliding())
     {
         switch (type)
@@ -751,6 +804,9 @@ void StandardView::displayTableResults()
     {
         resetTableExpandedContents();
 
+        //Only can be done after the appropriate table reset. Hence,
+        //condition and implemented code is the same as condition
+        //for not expanded results
         if (tableIsEmpty())
         {
             informNoDisplayResults();
@@ -762,11 +818,11 @@ void StandardView::displayTableResults()
     }
     else
     {
-        //Make sure all contents for last showing is removed and replaced
-        //with the current content
         resetTableContents();
 
-        //Condition is repeated as it must be after the appropriate reset
+        //Only can be done after the appropriate table reset. Hence,
+        //condition and implemented code is the same as condition
+        //for expanded results
         if (tableIsEmpty())
         {
             informNoDisplayResults();
@@ -845,6 +901,8 @@ void StandardView:: displayTableExpanded()
                           +" results ");
 }
 
+//This function is for choosing 1 of the 3 notes to display the task as only
+// a maximum of 3 results can be shown on the interface
 void StandardView::displayTableExpandedNotes(int reformatIndex, QString result)
 {
     switch (reformatIndex)
@@ -866,6 +924,9 @@ void StandardView::displayTableExpandedNotes(int reformatIndex, QString result)
     }
 }
 
+//This function is for displaying event id for different tasks displayed.
+//It allows the qlabels to react as an array (of size 10) of event id
+//labels
 void StandardView:: displayTableEventId(int index, QString id)
 {
     int reformatIndex = index%10;
@@ -917,6 +978,9 @@ void StandardView:: displayTableEventId(int index, QString id)
     }
 }
 
+//This function is for displaying event names for different tasks displayed.
+//It allows the qlabels to react as an array (of size 10) of event name
+//labels
 void StandardView:: displayTableEventName(int index, QString name)
 {
     int reformatIndex = index%10;
@@ -968,6 +1032,9 @@ void StandardView:: displayTableEventName(int index, QString name)
     }
 }
 
+//This function is for displaying start dates for different tasks displayed.
+//It allows the qlabels to react as an array (of size 10) of start date
+//labels
 void StandardView:: displayTableStartDate(int index, QString startDate)
 {
     int reformatIndex = index%10;
@@ -1019,6 +1086,8 @@ void StandardView:: displayTableStartDate(int index, QString startDate)
     }
 }
 
+//This function is for displaying end dates for different tasks displayed.
+//It allows the qlabels to react as an array of (of size 10) end date labels
 void StandardView:: displayTableEndDate(int index, QString endDate)
 {
     int reformatIndex = index%10;
@@ -1070,6 +1139,8 @@ void StandardView:: displayTableEndDate(int index, QString endDate)
     }
 }
 
+//This function is for displaying icons for different tasks displayed.
+//It allows the qlabels to react as an array of icons (of size 10) displayed
 void StandardView:: displayTablePriorityIcon(int index, QString priority)
 {
     int reformatIndex = index%10;
@@ -1143,6 +1214,8 @@ void StandardView::calibrateTableIndex()
     _tableItems.currentIndex -= (_tableItems.currentIndex%10);
 }
 
+//Function for returning a boolean value on whether the singleton class exists
+//at the point of this function call
 bool StandardView:: singleInstanceExists()
 {
     bool result;
@@ -1159,7 +1232,7 @@ bool StandardView:: singleInstanceExists()
     return result;
 }
 
-void StandardView:: changeGeometry()
+void StandardView:: setDefaultGeometry()
 {
     this->setWindowState(Qt::WindowMaximized);
     QDesktopWidget screen;
@@ -1171,16 +1244,22 @@ void StandardView:: changeGeometry()
                                  this->ui->frame->height());
 }
 
+//Function gets the integer x coordinate to place for a frame in the bottom
+//left given the maximum width allowed
 int StandardView:: getPosX(int maxX)
 {
     return maxX - this->ui->frame->width();
 }
 
+//Function gets the integer y coordinate to place for a frame in the bottom
+//left given the maximum height allowed
 int StandardView:: getPosY(int maxY)
 {
     return maxY - this->ui->frame->height();
 }
 
+//This function connects all the signals from different classes to slot
+//functions declared within the class
 void StandardView:: setSignals()
 {
     connect(ui->pushButton,SIGNAL(clicked()),
@@ -1238,6 +1317,8 @@ bool StandardView::tableIsEmpty()
     return (_tableItems.output.size() == 0);
 }
 
+//Function displays the closest highest priority event in the high priority
+//ui label
 void StandardView::displayTodayViewPriority (QVector <QString> priority)
 {
     QString result = MESSAGE_FONT_COLOUR_RED+
@@ -1249,6 +1330,8 @@ void StandardView::displayTodayViewPriority (QVector <QString> priority)
     ui->label_70->setText(result);
 }
 
+//Function decides the contents to be displayed on the event notes of
+//today view
 void StandardView::displayTodayViewNotes (QVector<QString> notes)
 {
     int count, size = notes.size();
@@ -1270,6 +1353,8 @@ void StandardView::displayTodayViewNotes (QVector<QString> notes)
     }
 }
 
+//Display the contents of today view in the selection of 3 notes to the user
+//This function allows the notes to act like an array of ui label elements
 void StandardView::displayTodayViewNotesIndividual(QString event, int flag)
 {
     switch (flag)

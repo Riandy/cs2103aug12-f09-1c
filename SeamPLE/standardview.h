@@ -63,7 +63,8 @@ public:
     void displayFeedbackLabel(QString output);
     void displayFeedbackInputEdit(QString output);
     void displayFocusInInputEdit (bool focus);
-    void displayAppropriateColorInputEdit (InputBarFlag color) throw (string);
+    void displayAppropriateColorInputEdit (
+            InputBarFlag color) throw (string);
     void instantiateTable(QVector <QString> output) throw (string);
     void resetAllTablesContents();
     void displayTodayView(QVector<QString> info);
@@ -95,7 +96,8 @@ private slots:
     void pageDownTriggered();
     void changeDisplayTriggered();
     void changeViewModeTriggered();
-    void checkAnimationDone(QAbstractAnimation::State newState,QAbstractAnimation::State oldState);
+    void checkAnimationDone(QAbstractAnimation::State newState,
+                            QAbstractAnimation::State oldState);
     void calibrateCloseMechanism();
     void screenTwoTriggered();
     void screenThreeTriggered();
@@ -115,9 +117,9 @@ private:
     void hideTableAllPriority();
     void resetTableExpandedNotes();
     void resetTableExpandedCounter();
-    void setStartView();
-    void showResultsTableType();
-    void showHelpViewType();
+    void setStartViewAsTodayView();
+    void showResultsTableMode();
+    void showHelpViewMode();
     void setFrameAnimationProperties(QFrame* frame, int xCoord, int yCoord);
     void showTable();
     void showHelp();
@@ -135,7 +137,7 @@ private:
     void informNoDisplayResults();
     void calibrateTableIndex();
     bool singleInstanceExists();
-    void changeGeometry();
+    void setDefaultGeometry();
     int getPosX(int maxX);
     int getPosY(int maxY);
     void setSignals();

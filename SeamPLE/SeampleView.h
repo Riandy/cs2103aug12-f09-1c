@@ -30,7 +30,8 @@ public:
     void displayFeedbackLabel(QString output);
     void displayFeedbackInputEdit(QString output);
     void displayFocusInInputEdit (bool focus);
-    void displayAppropriateColorInputEdit (InputBarFlag color) throw (string);
+    void displayAppropriateColorInputEdit (
+            InputBarFlag color) throw (string);
 
 signals:
     void relay(QString input);
@@ -52,8 +53,10 @@ private slots:
     void editTriggered();
     void clearTriggered();
     void helpTriggered();
-    void checkHideViewFinished(QAbstractAnimation::State,QAbstractAnimation::State);
-    void checkShowViewFinished(QAbstractAnimation::State,QAbstractAnimation::State);
+    void checkHideViewFinished(QAbstractAnimation::State,
+                               QAbstractAnimation::State);
+    void checkShowViewFinished(QAbstractAnimation::State,
+                               QAbstractAnimation::State);
     void markTriggered();
     void todayTriggered();
 
