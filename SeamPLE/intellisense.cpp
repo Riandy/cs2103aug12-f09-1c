@@ -291,6 +291,7 @@ string Intellisense::toLowerString(string input)
      return input;
 }
 
+//@PAN WENREN
 bool Intellisense::checkCommandArray(const string& input, const string command[],int arraySize)
 {
     ASSERT(arraySize!= 0,"Available command cannot be 0.");
@@ -1350,6 +1351,34 @@ bool Intellisense::isDateValid(Action task)
 
 }
 
+//@CHAM WEN BIN
+//returns true if date has pass, checks if startDate with today's date
+bool Intellisense::isDateOver(Action _task)
+{
+
+    time_t t = time(0);
+    struct tm * now = localtime( & t );
+    now->tm_year += 1900;
+    now->tm_mon +=1;
+    tm toCompare = _task.getStartDate();
+
+    if(now->tm_year>toCompare.tm_year )
+    {return true;}
+
+    if(now->tm_year == toCompare.tm_year && now->tm_mon > toCompare.tm_mon)
+    {return true;}
+
+
+
+    if(now->tm_year == toCompare.tm_year && now->tm_mon == toCompare.tm_mon && now->tm_mday > toCompare.tm_mday)
+    {return true;}
+
+
+    return false;
+}
+
+
+
 //@CHAM WEN BIN U094659H
 //updates category field in task to be invalid if an invalid date is detected
 void Intellisense::handleInvalidDate(Action &task)
@@ -1941,31 +1970,6 @@ bool Intellisense::isDateNotentered(Action _task)
             && _task.getStartDate().tm_mday ==0 && _task.getStartDate().tm_hour == 0
             && _task.getStartDate().tm_min == 0);
 }
-//@PAN WENREN
-bool Intellisense::isDateOver(Action _task)
-{
-
-    time_t t = time(0);
-    struct tm * now = localtime( & t );
-    now->tm_year += 1900;
-    now->tm_mon +=1;
-    tm toCompare = _task.getStartDate();
-
-    if(now->tm_year>toCompare.tm_year )
-    {return true;}
-
-    if(now->tm_year == toCompare.tm_year && now->tm_mon > toCompare.tm_mon)
-    {return true;}
-
-
-
-    if(now->tm_year == toCompare.tm_year && now->tm_mon == toCompare.tm_mon && now->tm_mday > toCompare.tm_mday)
-    {return true;}
-
-
-    return false;
-}
-
 
 
 
