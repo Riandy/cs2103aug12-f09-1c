@@ -15,6 +15,7 @@ void UnitTest::dummyTest1() {
 
 #pragma region Intellisense UnitTesting
 
+//@CHAM WEN BIN U094659H
 void UnitTest::testIntellisenseAdd()
 {//basic add
     Intellisense *intellisense;
@@ -26,7 +27,7 @@ void UnitTest::testIntellisenseAdd()
     QCOMPARE(commandword ,string("ADD"));
     QCOMPARE(eventName, string("birthday"));
 }
-
+//@CHAM WEN BIN U094659H
 void UnitTest::testIntellisenseAdd2()
 {
     Intellisense *intellisense;
@@ -41,6 +42,7 @@ void UnitTest::testIntellisenseAdd2()
     QCOMPARE(eventName, string("soccer match"));
     QCOMPARE(priority, string("HIGH"));
 }
+//@CHAM WEN BIN U094659H
 void UnitTest::testIntellisenseAdd3()
 {
     Intellisense *intellisense;
@@ -55,6 +57,7 @@ void UnitTest::testIntellisenseAdd3()
     QCOMPARE(eventName, string("soccer match"));
     QCOMPARE(category, string("SPORTS"));
 }
+//@CHAM WEN BIN U094659H
 void UnitTest::testIntellisenseAdd4()
 {
     Intellisense *intellisense;
@@ -71,7 +74,7 @@ void UnitTest::testIntellisenseAdd4()
     QCOMPARE( date.tm_min,  int(0));
     QCOMPARE( date.tm_hour, int(9));
 }
-
+//@CHAM WEN BIN U094659H
 void UnitTest::testIntellisenseAdd5()
 {
     Intellisense *intellisense;
@@ -88,7 +91,7 @@ void UnitTest::testIntellisenseAdd5()
     QCOMPARE( date.tm_min,  int(0));
     QCOMPARE( date.tm_hour, int(21));
 }
-
+//@CHAM WEN BIN U094659H
 void UnitTest::testIntellisenseDel()
 {
     Intellisense *intellisense;
@@ -105,7 +108,7 @@ void UnitTest::testIntellisenseDel()
     QCOMPARE(eventName, string("birthday"));//got space at the end
 
 }
-
+//@CHAM WEN BIN U094659H
 void UnitTest::testIntellisenseDel2()
 {//test delete by id
     Intellisense *intellisense;
@@ -120,7 +123,7 @@ void UnitTest::testIntellisenseDel2()
     QCOMPARE(id, 2);
 
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseDEL3()
  {
       Intellisense *intellisense;
@@ -139,7 +142,7 @@ void UnitTest::testIntellisenseDEL3()
       QCOMPARE( category , string("#"));
 
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseEdit()
 {
     Intellisense *intellisense;
@@ -150,6 +153,7 @@ void UnitTest::testIntellisenseEdit()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("EDIT"));
 }
+//@PAN WENREN
 void UnitTest::testIntellisenseEdit2()
 {
     Intellisense *intellisense;
@@ -163,7 +167,7 @@ void UnitTest::testIntellisenseEdit2()
     QCOMPARE(eventName,string("birthday"));
     QCOMPARE(category,string("celebration"));
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseExit()
 {
     Intellisense *intellisense;
@@ -174,7 +178,7 @@ void UnitTest::testIntellisenseExit()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("EXIT"));
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseDisplay()
 {
     Intellisense *intellisense;
@@ -185,6 +189,7 @@ void UnitTest::testIntellisenseDisplay()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("DISPLAY"));
 }
+//@PAN WENREN
 void UnitTest::testIntellisenseMark()
 {
     Intellisense *intellisense;
@@ -195,6 +200,7 @@ void UnitTest::testIntellisenseMark()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("MARK"));
 }
+//@PAN WENREN
 void UnitTest::testIntellisenseQuickAdd()
 {
     Intellisense *intellisense;
@@ -213,7 +219,7 @@ void UnitTest::testIntellisenseQuickAdd()
     QCOMPARE(category, string("family"));
     QCOMPARE( dateType, task::DATENORMAL );
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseQuickAdd2()
 {
     Intellisense *intellisense;
@@ -235,7 +241,7 @@ void UnitTest::testIntellisenseQuickAdd2()
 
 
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseSort()
 {
     Intellisense *intellisense;
@@ -247,7 +253,7 @@ void UnitTest::testIntellisenseSort()
     QCOMPARE(commandword,string("SORT"));
 
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseFind()
 {
     Intellisense *intellisense;
@@ -258,6 +264,7 @@ void UnitTest::testIntellisenseFind()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("FIND"));
 }
+//@PAN WENREN
 void UnitTest::testIntellisenseUndo()
 {
     Intellisense *intellisense;
@@ -268,7 +275,7 @@ void UnitTest::testIntellisenseUndo()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("UNDO"));
 }
-
+//@PAN WENREN
 void UnitTest::testIntellisenseRedo()
 {
     Intellisense *intellisense;

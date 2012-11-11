@@ -28,19 +28,20 @@ void DisplayEvent(Action task)
     cout<<string("******************")<<endl;
 }
 
-
+//@CHAM WEN BIN U094659H
+//singleton constructor
 Seample::Seample()
 {
     intellisense=Intellisense::getInstance();
     _scheduler=scheduler::getInstance();
 
 }
-
+//@CHAM WEN BIN U094659H
 Seample::~Seample()
 {
     instanceFlag = false;
 }
-
+//@CHAM WEN BIN U094659H
 Seample* Seample::getInstance()
 {
     if(!instanceFlag)
@@ -147,11 +148,11 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
 
     return result;
 }
-
+//@CHAM WEN BIN U094659H
+//scheduler to perform a task and return feedback
 QVector <QString> Seample::fireAction()
 {
     vector <string> result =_scheduler->executeCommand(response);
-////cout<<"i am fin here"<<endl;
     return convertQString(result);
 }
 

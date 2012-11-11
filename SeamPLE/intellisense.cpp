@@ -84,15 +84,17 @@ const char Intellisense::CATEGORYRECOGNISER = '#' ;
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
 
-//miscellaneous function
+//@CHAM WEN BIN U094659H
+//returns a char in lower case
 char toLower(char in){
     if(in<='Z' && in>='A')
        { return in-('Z'-'z');}
     return in;
 }
-//end of miscellaneous
 
 
+//@CHAM WEN BIN U094659H
+//singleton pattern instance
 Intellisense* Intellisense::getInstance()
 {
     if(!instanceFlag)
@@ -107,7 +109,8 @@ Intellisense* Intellisense::getInstance()
     }
 
 }
-
+//@CHAM WEN BIN U094659H
+//singleton constructor
 Intellisense::Intellisense(void)
 {
     initFlags();
@@ -125,13 +128,16 @@ void Intellisense::initFlags()
 }
 
 
-
+//@CHAM WEN BIN U094659H
 Intellisense::~Intellisense(void)
 {
     instanceFlag=false;
     logger->endInstance();
 }
 
+//@CHAM WEN BIN U094659H
+//parses string input and perfom task according the command word detected
+//return a action class containing the parsed information in each fields
 Action Intellisense::check(string query)
 {
     Action task;
@@ -194,7 +200,8 @@ Action Intellisense::check(string query)
 
 
 
-
+//@CHAM WEN BIN U094659H
+//returns operation type based on the first string token
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
 
@@ -250,7 +257,9 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     }
 }
 
-
+//@CHAM WEN BIN U094659H
+//compares 2 strings words irregardless of upper/lower casing
+//returns true if both strings are the same, false otherwise
 bool Intellisense::checkString(const string& input, const string& command)
 {
     if(input.size() != command.size())
@@ -267,7 +276,8 @@ bool Intellisense::checkString(const string& input, const string& command)
     }
     return true;
 }
-
+//@CHAM WEN BIN U094659H
+//returns a string to lower casing
 string Intellisense::toLowerString(string input)
 {
      transform(input.begin(), input.end(), input.begin(),toLower);
@@ -300,13 +310,15 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
     }
 
 }
-
+//@CHAM WEN BIN U094659H
+//returns the first string token
 string Intellisense::getfirst_Word(string command)
 {
     return tokenize(command)[0];
 }
 
-
+//@CHAM WEN BIN U094659H
+//returns the command word from string tokens
 string Intellisense::getCommand(vector<string>& tokens,string _command)
 {
     vector<string>::iterator it=tokens.begin();
@@ -315,7 +327,8 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 
     return command;
 }
-
+//@CHAM WEN BIN U094659H
+//returns an int representing an ID
 int Intellisense::getID(vector<string>& tokens)
 {
     if(tokens.size()==0 || isAllInt(tokens.front())== false || tokens.size()>2)
@@ -329,10 +342,11 @@ int Intellisense::getID(vector<string>& tokens)
 
 }
 
-
+//@CHAM WEN BIN U094659H
+//returns HIGH or LOW if keyword "HIGH" or "LOW" is detected at the head or end of token
 string Intellisense::getPriority(vector<string>& tokens)
 {
-    if(tokens.size()>0)
+    if(tokens.size()>0) //defensive
     {
         string checkHeadString =  tokens.front();    //check the first word in string
         string checkTailString =  tokens.back();     //check the last word in string
@@ -365,13 +379,15 @@ string Intellisense::getPriority(vector<string>& tokens)
     return string("");
 }
 
+//@CHAM WEN BIN U094659H
+//returns a struct tm which contains the date and time after parsing through the tokens
+//different processing is performed based on the size of string
 tm Intellisense::getTime(vector<string>& tokens,tm &date)
 {
     string time;
 
-
     vector<string>::iterator it=tokens.begin();
-    while (it!=tokens.end())
+    while (it!=tokens.end())  //defensive, better than "for loop", ensures that will not get out of range
     {
         time=it->c_str();
         switch(time.size())
@@ -420,10 +436,12 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
             ++it;//only increment if it is not the last position
     }
 
-
     return date;
 }
 
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
+//function checks for time format "x:xx"
 bool Intellisense::processTimeFormat8 (tm &date, string time)
 {
     if(time.at(1) == ':' )
@@ -444,7 +462,8 @@ bool Intellisense::processTimeFormat8 (tm &date, string time)
     return false;
 }
 
-
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "12:xxPM"
 bool Intellisense::processTimeFormat7 (tm &date, string checkString)
 {
@@ -458,6 +477,8 @@ bool Intellisense::processTimeFormat7 (tm &date, string checkString)
     return false;
 }
 
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "12xxPM"
 bool Intellisense::processTimeFormat6 (tm &date, string time)
 {
@@ -487,6 +508,8 @@ bool Intellisense::processTimeFormat6 (tm &date, string time)
     return false;
 }
 
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "9xxPM"
 bool Intellisense::processTimeFormat5 (tm &date, string time)
 {
@@ -515,7 +538,8 @@ bool Intellisense::processTimeFormat5 (tm &date, string time)
 
      return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "9:xxPM"
 bool Intellisense::processTimeFormat4 (tm &date, string checkString)
 {
@@ -528,7 +552,9 @@ bool Intellisense::processTimeFormat4 (tm &date, string checkString)
 
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
+//function checks for time format "xx:xx"
 bool Intellisense::processTimeFormat3 (tm &date, string time)
 {
     if(time.at(2) == ':' )
@@ -549,8 +575,9 @@ bool Intellisense::processTimeFormat3 (tm &date, string time)
     return false;
 }
 
-
-
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
+//function checks for time format "XXPM" . e.g. 12PM
 bool Intellisense::processTimeFormat2 (tm &date, string time)
 {
     if(checkString("PM",time.substr(2,2))|| checkString("AM",time.substr(2,2)))
@@ -576,7 +603,9 @@ bool Intellisense::processTimeFormat2 (tm &date, string time)
 
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if time is detected, date.tm_hour & date.tm_min is updated
+//function checks for time format "XPM" . e.g. 1PM
 bool Intellisense::processTimeFormat1 (tm &date, string time)
 {
 
@@ -606,7 +635,9 @@ bool Intellisense::processTimeFormat1 (tm &date, string time)
 return false;
 }
 
-
+//@CHAM WEN BIN U094659H
+//returns a string contain the category
+//fucntion parsers the token for category word based on identifier
 string Intellisense::getCategory(vector<string>& tokens)
 {
     string category = EMPTYCATEGORY;
@@ -628,6 +659,8 @@ string Intellisense::getCategory(vector<string>& tokens)
     return category;
 }
 
+//@CHAM WEN BIN U094659H
+//removes characters from string as indicated
 string Intellisense::removeChar(string s,char chars[])
 {
     for (unsigned int i = 0; i < sizeof(chars); ++i)
@@ -636,29 +669,29 @@ string Intellisense::removeChar(string s,char chars[])
     }
     return s;
 }
-
+//@CHAM WEN BIN U094659H
+//removes blank spaces from the front of the string
 string& Intellisense::trim_left_inplace( string& s,  const string& delimiters)
 {
     return s.erase(  0, s.find_first_not_of( delimiters ) );
 }
-
+//@CHAM WEN BIN U094659H
 //removes blank spaces from back of string
 string& Intellisense::trim_right_inplace( string& s, const string& delimiters)
 {
     return s.erase( s.find_last_not_of( delimiters ) + 1 );
 }
-
+//@CHAM WEN BIN U094659H
 //removes blank spaces from front and back of string
 string& Intellisense::trim(string& s ,const string& delimiters )
 {
     return trim_left_inplace( trim_right_inplace( s, delimiters ), delimiters );
 }
 
-
+//@CHAM WEN BIN U094659H
+//checks for the string idenifier and returns the date for the holiday event
 void Intellisense::getImptDate(string _date, tm &date)
 {
-
-
     time_t timeNow;
     struct tm * timeinfo;
     time (&timeNow);
@@ -673,6 +706,9 @@ return ;
 }
 
 
+//@CHAM WEN BIN U094659H
+//retrieve date holiday event keywords such as "CHRISTMAS" & "NEWYEAR"
+//functions updates the date with the occasion
 bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
 {
     string checkString;
@@ -696,6 +732,9 @@ bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
 
     return false;
 }
+
+//@CHAM WEN BIN U094659H
+//returns true if date format is identified
 // function checks for date format in the form "DDMMYYYY"
 bool Intellisense::checkDateFormat1(string checkString, tm &date)
 {
@@ -710,7 +749,8 @@ bool Intellisense::checkDateFormat1(string checkString, tm &date)
 
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if date format is identified
 // function checks for date format in the form "DD/MM/YYYY"
 bool Intellisense::checkDateFormat2(string checkString, tm &date)
 {
@@ -729,7 +769,8 @@ bool Intellisense::checkDateFormat2(string checkString, tm &date)
 
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if date format is identified
 // function checks for date format in the form "D/M/YYYY"
 bool Intellisense::checkDateFormat3(string checkString, tm &date)
 {
@@ -748,7 +789,8 @@ bool Intellisense::checkDateFormat3(string checkString, tm &date)
 
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if date format is identified
 // function checks for date format in the form "DD/M/YYYY"
 bool Intellisense::checkDateFormat4(string checkString, tm &date)
 {
@@ -767,7 +809,8 @@ bool Intellisense::checkDateFormat4(string checkString, tm &date)
 
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if date format is identified
 // function checks for date format in the form "D/MM/YYYY"
 bool Intellisense::checkDateFormat5(string checkString, tm &date)
 {
@@ -786,7 +829,10 @@ bool Intellisense::checkDateFormat5(string checkString, tm &date)
 
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if date format is identified
+//functions checks for date in numerical entered by user and updates the fields in structure date
+//string format example " 16/5/2013 "
 bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
 {
     string checkString;
@@ -828,7 +874,10 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
     }
     return false;
 }
-
+//@CHAM WEN BIN U094659H
+//returns true if date format is identified
+//functions checks for date in string entered by user and updates the fields in structure date
+//string format example " 16 may 2013 "
  bool Intellisense::checkDateStringFormat(vector<string>& tokens, tm &date)
  {
       string checkString;
@@ -895,7 +944,8 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
          return false;
  }
 
-
+//@CHAM WEN BIN U094659H
+//returns a tm struct containing date which user entered
  tm Intellisense::getDate(vector<string>& tokens)
  {
 
@@ -925,7 +975,9 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
  }
 
 
-
+//@CHAM WEN BIN U094659H
+//returns an int representative of month
+//example. march = 3
 int Intellisense::checkMonthByString(string token)
 {
     for(int i=0;i<=11;++i)
@@ -939,7 +991,8 @@ int Intellisense::checkMonthByString(string token)
     return -1;
 }
 
-
+//@CHAM WEN BIN U094659H
+//returns the string containing event description
 string Intellisense::getEventName(vector<string>& tokens)
 {
     stringstream ss;
@@ -958,6 +1011,8 @@ string Intellisense::getEventName(vector<string>& tokens)
     return ss.str();
 }
 
+//@CHAM WEN BIN U094659H
+//returns the datetype indicated by user
 int Intellisense::getDateType(vector<string>& tokens)
 {
     int dType = task::DATENORMAL;      //Defensive coding: default normal if cant find other date types
@@ -989,7 +1044,8 @@ int Intellisense::getDateType(vector<string>& tokens)
 
 }
 
-
+//@CHAM WEN BIN U094659H
+//returns true if string input only contains integer
 bool Intellisense::isAllInt(const string& s)
 {
     for(int i = 0; i < s.length(); i++)
@@ -1002,6 +1058,9 @@ bool Intellisense::isAllInt(const string& s)
     return true;
 }
 
+//@CHAM WEN BIN U094659H
+//string tokenizer
+//returns a vector of tokens
 vector<string> Intellisense::tokenize(string command)
 {
     vector<string> token;
@@ -1019,10 +1078,12 @@ vector<string> Intellisense::tokenize(string command)
     }
     delete[] cstr;
 
-
     return token;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "add" command
+//returns an Action package containin user input and fields
 Action Intellisense::addOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
@@ -1039,7 +1100,9 @@ Action Intellisense::addOperation(vector<string>& tokens)
 
     return task;
 }
-
+//@CHAM WEN BIN U094659H
+//Performs operation "delete" command
+//returns an Action package containin user input and fields
 Action Intellisense::deleteOperation(vector<string>& tokens)
 {
     currentCommand = DELETE;
@@ -1060,6 +1123,9 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "exit" command
+//returns an Action package containin user input and fields
 Action Intellisense::exitOperation(vector<string>& tokens)
 {
     currentCommand = EXIT;
@@ -1070,6 +1136,9 @@ Action Intellisense::exitOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "display" command
+//returns an Action package containin user input and fields
 Action Intellisense::displayOperation(vector<string>& tokens)
 {
     currentCommand = DISPLAY;
@@ -1081,7 +1150,9 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 
     return task;
 }
-
+//@CHAM WEN BIN U094659H
+//Performs operation "mark" command
+//returns an Action package containin user input and fields
 Action Intellisense::markOperation(vector<string>& tokens)
 {
     currentCommand = MARK;
@@ -1094,6 +1165,9 @@ Action Intellisense::markOperation(vector<string>& tokens)
     return task;
 }
 
+//@PAN WEN REN
+//Performs quickadd operation
+//returns an Action package containin user input and fields
 Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
@@ -1111,6 +1185,9 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "undo" command
+//returns an Action package containin user input and fields
 Action Intellisense::undoOperation(vector<string>& tokens)
 {
     currentCommand = UNDO;
@@ -1120,6 +1197,8 @@ Action Intellisense::undoOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//returns int representative of the month entered
 int Intellisense::checkDateString(string token)
 {
 
@@ -1134,6 +1213,9 @@ int Intellisense::checkDateString(string token)
     return -1;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "today" command
+//returns an Action package containin user input and fields
 Action Intellisense::todayOperation(vector<string>& tokens)
 {
     currentCommand = TODAY;
@@ -1143,6 +1225,9 @@ Action Intellisense::todayOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "todo" command
+//returns an Action package containin user input and fields
 Action Intellisense::todoOperation(vector<string>& tokens)
 {
     currentCommand = TODO;
@@ -1153,6 +1238,9 @@ Action Intellisense::todoOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "redo" command
+//returns an Action package containin user input and fields
 Action Intellisense::redoOperation(vector<string>& tokens)
 {
     currentCommand = REDO;
@@ -1162,6 +1250,9 @@ Action Intellisense::redoOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "sort" command
+//returns an Action package containin user input and fields
 Action Intellisense::sortOperation(vector<string>& tokens)
 {
     currentCommand = SORT;
@@ -1171,6 +1262,9 @@ Action Intellisense::sortOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//Performs operation "find" command
+//returns an Action package containin user input and fields
 Action Intellisense::findOperation(vector<string>& tokens)
 {
     currentCommand = FIND;
@@ -1186,6 +1280,176 @@ Action Intellisense::findOperation(vector<string>& tokens)
     return task;
 }
 
+//@CHAM WEN BIN U094659H
+//returns the maximum number of days in that month
+int Intellisense::daysMonth(int year, int month)
+{
+    int numberOfDays;
+    if (month == 4 || month == 6 || month == 9 || month == 11)
+      {numberOfDays = 30;}
+    else if (month == 2)
+    { bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+      if (isLeapYear)
+       { numberOfDays = 29;}
+      else
+       { numberOfDays = 28;}
+    }
+    else
+     { numberOfDays = 31;}
+
+    return numberOfDays;
+}
+//@CHAM WEN BIN U094659H
+//returns true if date is valid, eg. number of days does not exist 32, there is no month with 32 days
+bool Intellisense::isDateValid(Action task)
+{
+    int day=task.getStartDate().tm_mday;
+    int month = task.getStartDate().tm_mon;
+    int numberOfDaysInMonth = daysMonth(task.getStartDate().tm_year,month);
+    int hour = task.getStartDate().tm_hour;
+    int min = task.getStartDate().tm_min;
+
+
+    if(day<=0 || day>numberOfDaysInMonth)
+    {
+        return false;
+    }
+
+    if(month<=0 || month >12)
+    {return false;}
+
+    if(hour<0 || hour>=24)
+    {return false;}
+
+    if(min<0 || min >=60)
+    {return false;}
+
+
+    return true;
+
+}
+
+//@CHAM WEN BIN U094659H
+//updates category field in task to be invalid if an invalid date is detected
+void Intellisense::handleInvalidDate(Action &task)
+{
+    if(!isDateValid(task) && task.getCategory()== "#" && task.getDateType()!=4 && isTimeEmpty(task.getStartDate()))
+    {
+        task.setCategory("1NVAL1D");
+    }
+}
+
+//@CHAM WEN BIN U094659H
+//function marks the task as floating task if no date is entered
+void Intellisense::handleNoDateEntered(Action &task)
+{  tm emptyDate ={0,0,0,0,0,0,0,0,0};
+    if (isDateNotentered(task) )
+    {//we identify this task as a floating task since no date is stated
+
+        task.setDateType(4);
+        task.setStartDate(emptyDate);
+        task.setEndDate(emptyDate);
+
+    }
+}
+//@CHAM WEN BIN U094659H
+//function marks the task as floating task if date has passed
+void Intellisense::handleDateOver(Action &task)
+{  tm emptyDate ={0,0,0,0,0,0,0,0,0};
+    if (isDateOver(task) && isTimeEmpty(task.getStartDate()))
+    {//we identify this task as a floating task since no date is stated
+
+        task.setDateType(4);
+        task.setStartDate(emptyDate);
+        task.setEndDate(emptyDate);
+
+    }
+}
+
+//@CHAM WEN BIN U094659H
+//function sets the EndDate to expire at 23:59 if not enddate is specified
+void Intellisense::handleNoEndDate(Action &task)
+{
+    if(task.getDateType()!=4)
+    {
+        task.setEndDate(getEndOfDay(task));
+    }
+}
+
+//@CHAM WEN BIN U094659H
+//function ensures that date has got Enddate and classifies events into floating task
+void Intellisense::smartAutoFill(Action &task,vector<string>& tokens)
+{
+    ASSERT(&task!=NULL,"ACTION OBJECT CANNOT BE reference to null");
+
+    task.setStartDate( isTimeValid(task.getStartDate(),tokens ));
+
+    handleNoDateEntered(task);
+    handleInvalidDate(task);
+    handleDateOver(task);
+    handleNoEndDate(task);
+
+
+}
+//@CHAM WEN BIN U094659H
+//returns true if startDate time is empty
+bool Intellisense::isTimeEmpty(tm date)
+{
+    if(date.tm_hour == 0 && date.tm_min == 0)
+    { return true;}
+
+    return false;
+}
+//@CHAM WEN BIN U094659H
+//returns tm struct autofill date input, time is left untouched
+tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
+{
+    tm now ={0,0,0,0,0,0,0,0,0};
+    if(!isTimeEmpty(date) && date.tm_year == 0)
+    {
+    time_t t = time(0);   // get time now
+    now = *localtime( & t );
+    now.tm_year +=1900;
+    now.tm_mon +=1;
+    now.tm_hour = date.tm_hour;
+    now.tm_min  = date.tm_min;
+    return now;
+    }
+    else
+    {return date;}
+
+
+}
+
+//@CHAM WEN BIN U094659H
+//returns tm struct autofill EndDate to be same as startDate, time is 23:59
+ tm Intellisense::getEndOfDay(Action &task)
+ {
+     tm  timeinfo;
+     tm  endDate = task.getEndDate();
+     if(endDate.tm_year == 0
+             && endDate.tm_mon == 0
+             && endDate.tm_mday == 0
+             && endDate.tm_hour == 0
+             && endDate.tm_min ==0 )
+     {
+     tm startDate = task.getStartDate();
+     timeinfo.tm_year = startDate.tm_year;
+     timeinfo.tm_mday = startDate.tm_mday;
+     timeinfo.tm_mon= startDate.tm_mon;
+     timeinfo.tm_hour=23;
+     timeinfo.tm_min=59;
+     timeinfo.tm_sec=0;
+      return timeinfo;
+     }else
+     {return endDate;}
+
+ }
+
+
+//@PAN WENREN
+//Performs operation "edit" command
+//returns an Action package containin user input and fields
 Action Intellisense::editOperation(vector<string>& tokens)
 {
     currentCommand = EDIT;
@@ -1203,7 +1467,7 @@ Action Intellisense::editOperation(vector<string>& tokens)
 }
 
 
-
+//@PAN WENREN
 void Intellisense::setAllStatusFlag(Action task)
 {
 
@@ -1247,7 +1511,7 @@ void Intellisense::setAllStatusFlag(Action task)
         setStatusFlagAt(IID,true);
 }
 
-
+//@PAN WENREN
 void  Intellisense::getAllStatusFlag(bool *flags)
 {
     ASSERT(flags!=NULL,"flags pointer cannot be NULL");
@@ -1256,29 +1520,29 @@ void  Intellisense::getAllStatusFlag(bool *flags)
         flags[i] = statusFlags[i];;
     }
 }
-
+//@PAN WENREN
 bool Intellisense::getStatusFlagAt(int index)
 {
     ASSERT(index>=0,"flag index canot be less than 0");
     return statusFlags[index];
 }
-
+//@PAN WENREN
 void Intellisense::setStatusFlagAt(int index,bool flag)
 {
     ASSERT(index>=0,"flag index canot be less than 0");
     statusFlags[index] = flag;
 }
-
+//@PAN WENREN
 bool Intellisense::getrequirementsMet()
 {
     return requirementsMet;
 }
-
+//@PAN WENREN
 void Intellisense::setRequirementsMet(bool req)
 {
     requirementsMet = req;
 }
-
+//@PAN WENREN
 void Intellisense::checkAddReq()
 {
     bool addReqMet = false;
@@ -1288,13 +1552,13 @@ void Intellisense::checkAddReq()
     }
     requirementsMet = addReqMet;
 }
-
+//@PAN WENREN
 void Intellisense::checkExitReq()
 {
     bool exitReq = true;//no condition to quit
     requirementsMet = exitReq;
 }
-
+//@PAN WENREN
 void Intellisense::checkDelReq()
 {// need at least an ID to delete
     bool checkReqMet = false;
@@ -1308,7 +1572,7 @@ void Intellisense::checkDelReq()
     }
     requirementsMet = checkReqMet;
 }
-
+//@PAN WENREN
 void Intellisense::checkDspReq()
 {
     bool dspReqMet = false;
@@ -1326,7 +1590,7 @@ void Intellisense::checkDspReq()
     requirementsMet = dspReqMet;
 
 }
-
+//@PAN WENREN
 void Intellisense::checkMarkReq()
 {
     bool markReqMet = false;
@@ -1340,7 +1604,7 @@ void Intellisense::checkMarkReq()
     }
     requirementsMet = markReqMet;
 }
-
+//@PAN WENREN
 void Intellisense::checkFindReq()
 {
     bool findReqMet = false;
@@ -1359,7 +1623,7 @@ void Intellisense::checkFindReq()
     requirementsMet = findReqMet;
 
 }
-
+//@PAN WENREN
 void Intellisense::checkEditReq()
 {
     bool editReqMet = false;
@@ -1369,7 +1633,7 @@ void Intellisense::checkEditReq()
     }
     requirementsMet = editReqMet;
 }
-
+//@PAN WENREN
 string Intellisense::getAddFeedBack()
 {
     if(getrequirementsMet())
@@ -1379,7 +1643,7 @@ string Intellisense::getAddFeedBack()
 
  return ADDFEEDBACK_2 ;
 }
-
+//@PAN WENREN
 string Intellisense::getEditFeedBack()
 {
     if(getrequirementsMet())
@@ -1389,7 +1653,7 @@ string Intellisense::getEditFeedBack()
 
       return EDITFEEDBACK_2 ;
 }
-
+//@PAN WENREN
 string Intellisense::getDeleteFeedBack()
 {
 
@@ -1401,14 +1665,14 @@ string Intellisense::getDeleteFeedBack()
             return DELFEEDBACK_2;
 
 }
-
+//@PAN WENREN
 string Intellisense::getExitFeedBack()
 {
 
     return EXITFEEDBACK_1;
 
 }
-
+//@PAN WENREN
 string Intellisense::getDisplayFeedBack()
 {
 
@@ -1420,7 +1684,7 @@ string Intellisense::getDisplayFeedBack()
         return DISPLAYFEEDBACK_2;
 
 }
-
+//@PAN WENREN
 string Intellisense::getFindFeedBack()
 {
     if(getrequirementsMet())
@@ -1430,7 +1694,7 @@ string Intellisense::getFindFeedBack()
 
         return FINDFEEDBACK_2;
 }
-
+//@PAN WENREN
 string Intellisense::getSortFeedBack()
 {
 
@@ -1442,21 +1706,21 @@ string Intellisense::getSortFeedBack()
         return SORTFEEDBACK_2;
 
 }
-
+//@PAN WENREN
 string Intellisense::getRedoFeedBack()
 {
     string feedback;
     feedback = REDOFEEDBACK_1 ;
     return feedback;
 }
-
+//@PAN WENREN
 string Intellisense::getUndoFeedBack()
 {
     string feedback;
     feedback = UNDOFEEDBACK_1 ;
     return feedback;
 }
-
+//@PAN WENREN
 string Intellisense::getMarkFeedBack()
 {
     if(getrequirementsMet())
@@ -1466,7 +1730,7 @@ string Intellisense::getMarkFeedBack()
 
             return MARKFEEDBACK_2 ;
 }
-
+//@PAN WENREN
 string Intellisense::getFeedback()
 {//later refactor this into functions
     if(currentCommand == ADD)
@@ -1514,10 +1778,12 @@ string Intellisense::getFeedback()
 
     return _feedback;
 }
+//@PAN WENREN
 void Intellisense::setFeedback(string newFeedback)
 {
     _feedback=newFeedback;
 }
+//@PAN WENREN
 bool Intellisense::isValidParaForCmd(int cmd,int parameter)
 {//this determines if the parameter is valid to work with the command
     ASSERT(cmd>=0,"COMMAND CODE CANNOT BE LESS THAN ZERO");
@@ -1564,6 +1830,7 @@ bool Intellisense::isValidParaForCmd(int cmd,int parameter)
     }
     return valid;
 }
+//@PAN WENREN
 string Intellisense::getParameter()
 {// output the string based on the flags set
     //refactor into many small functions
@@ -1641,18 +1908,19 @@ string Intellisense::getParameter()
     _parameter = _parameter + "<br>" + getFeedback();
     return _parameter;
 }
+//@PAN WENREN
 void Intellisense::setParameter(string newParameter)
 {
     _parameter = newParameter;
 }
-
+//@PAN WENREN
 bool Intellisense::isDateNotentered(Action _task)
 {
     return (_task.getStartDate().tm_year == 0 && _task.getStartDate().tm_mon == 0
             && _task.getStartDate().tm_mday ==0 && _task.getStartDate().tm_hour == 0
             && _task.getStartDate().tm_min == 0);
 }
-
+//@PAN WENREN
 bool Intellisense::isDateOver(Action _task)
 {
 
@@ -1677,144 +1945,6 @@ bool Intellisense::isDateOver(Action _task)
     return false;
 }
 
-int Intellisense::daysMonth(int year, int month)
-{
-    int numberOfDays;
-    if (month == 4 || month == 6 || month == 9 || month == 11)
-      {numberOfDays = 30;}
-    else if (month == 2)
-    { bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-      if (isLeapYear)
-       { numberOfDays = 29;}
-      else
-       { numberOfDays = 28;}
-    }
-    else
-     { numberOfDays = 31;}
 
-    return numberOfDays;
-}
-
-bool Intellisense::isDateValid(Action task)
-{
-    int day=task.getStartDate().tm_mday;
-    int month = task.getStartDate().tm_mon;
-    int numberOfDaysInMonth = daysMonth(task.getStartDate().tm_year,month);
-    int hour = task.getStartDate().tm_hour;
-    int min = task.getStartDate().tm_min;
-
-
-    if(day<=0 || day>numberOfDaysInMonth)
-    {
-        return false;
-    }
-
-    if(month<=0 || month >12)
-    {return false;}
-
-    if(hour<0 || hour>=24)
-    {return false;}
-
-    if(min<0 || min >=60)
-    {return false;}
-
-
-    return true;
-
-}
-
-void Intellisense::handleInvalidDate(Action &task)
-{
-    if(!isDateValid(task) && task.getCategory()== "#" && task.getDateType()!=4 && isTimeEmpty(task.getStartDate()))
-    {
-        task.setCategory("1NVAL1D");
-    }
-}
-
-
-
-void Intellisense::smartAutoFill(Action &task,vector<string>& tokens)
-{
-    ASSERT(&task!=NULL,"ACTION OBJECT CANNOT BE reference to null");
-
-
-    tm emptyDate ={0,0,0,0,0,0,0,0,0};
-    task.setStartDate( isTimeValid(task.getStartDate(),tokens ));
-    if (isDateNotentered(task) )
-    {//we identify this task as a floating task since no date is stated
-
-        task.setDateType(4);
-        task.setStartDate(emptyDate);
-        task.setEndDate(emptyDate);
-
-    }
-
-    handleInvalidDate(task);
-    if (isDateOver(task) && isTimeEmpty(task.getStartDate()))
-    {//we identify this task as a floating task since no date is stated
-
-        task.setDateType(4);
-        task.setStartDate(emptyDate);
-        task.setEndDate(emptyDate);
-
-    }
-
-    if(task.getDateType()!=4)
-    {
-        task.setEndDate(getEndOfDay(task));
-    }
-
-}
-
-bool Intellisense::isTimeEmpty(tm date)
-{
-    if(date.tm_hour == 0 && date.tm_min == 0)
-    { return true;}
-
-    return false;
-}
-
-tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
-{
-    tm now ={0,0,0,0,0,0,0,0,0};
-    if(!isTimeEmpty(date) && date.tm_year == 0)
-    {
-    time_t t = time(0);   // get time now
-    now = *localtime( & t );
-    now.tm_year +=1900;
-    now.tm_mday +=1;
-    now.tm_hour = date.tm_hour;
-    now.tm_min  = date.tm_min;
-    return now;
-    }
-    else
-    {return date;}
-
-
-}
-
-
- tm Intellisense::getEndOfDay(Action &task)
- {
-     tm  timeinfo;
-     tm  endDate = task.getEndDate();
-     if(endDate.tm_year == 0
-             && endDate.tm_mon == 0
-             && endDate.tm_mday == 0
-             && endDate.tm_hour == 0
-             && endDate.tm_min ==0 )
-     {
-     tm startDate = task.getStartDate();
-     timeinfo.tm_year = startDate.tm_year;
-     timeinfo.tm_mday = startDate.tm_mday;
-     timeinfo.tm_mon= startDate.tm_mon;
-     timeinfo.tm_hour=23;
-     timeinfo.tm_min=59;
-     timeinfo.tm_sec=0;
-      return timeinfo;
-     }else
-     {return endDate;}
-
- }
 
 
