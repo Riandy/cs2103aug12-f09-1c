@@ -62,6 +62,7 @@ RESOURCES += \
 
 OTHER_FILES +=
 
+#CONFIG += static
 
 #CONFIG  += qxt
 #QXT     += core gui
