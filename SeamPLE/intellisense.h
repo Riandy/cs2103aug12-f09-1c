@@ -118,6 +118,7 @@ private:
     const static string REDCATEGORYTEXT;
     const static string REDIDTEXT;
     const static char CATEGORYRECOGNISER;
+    const static string LINEBREAK;
         //end of added array support for commands
 
     bool statusFlags[MAXNOOFPARAMETERS];
@@ -150,6 +151,15 @@ public:
 
     //Parameter checking
     string getParameter();
+    void clearPara();
+    void updateNameInPara();
+    void updateDateInPara();
+    void updateEndDateInPara();
+    void updatePriorityInPara();
+    void updateCategoryInPara();
+    void updateIDInPara();
+
+
     void setParameter(string);
     void setRequirementsMet(bool);
     bool getrequirementsMet();
@@ -202,6 +212,7 @@ private:
     bool checkDateFormat4(string checkString, tm &date);
     bool checkDateFormat5(string checkString, tm &date);
     bool checkImptDate(vector<string>& tokens,tm &date);
+    int  checkDateType(string lowerString);
     bool isDateNotentered(Action _task);
     bool isDateOver(Action _task);
     bool isDateValid(Action task);
@@ -239,6 +250,12 @@ private:
     bool isAllInt(const string& s );
 
     //User input checking
+    void setNameFlag(Action task);
+    void setStartDateFlag(Action task);
+    void setEndDateFlag(Action task);
+    void setPriorityFlag(Action task);
+    void setIDFlag(Action task);
+    void setCategoryFlag(Action task);
     void setStatusFlagAt(int,bool);
     void setAllStatusFlag(Action task); //this is based on the task that is passed in
     void getAllStatusFlag(bool *);//change the actual flag array passed in
@@ -254,6 +271,7 @@ private:
     void checkEditReq();
     void checkExitReq();
     void initFlags();
+
 
 
 };
