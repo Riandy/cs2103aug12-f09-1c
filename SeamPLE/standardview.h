@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QTimer>
+#include <QLabel>
 #include "CommonView.h"
 
 //@WEIYUAN A0086030R
@@ -129,6 +130,8 @@ private:
     void displayTableNotExpanded();
     void displayTableExpanded();
     void displayTableExpandedNotes (int reformatIndex , QString result);
+    void displayTableRangeResultLabel(QLabel* label,int to, int from,
+                                       int total);
     void displayTableEventId(int index, QString id);
     void displayTableEventName(int index, QString name);
     void displayTableStartDate(int index, QString startDate);

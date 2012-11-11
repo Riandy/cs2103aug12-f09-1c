@@ -835,6 +835,8 @@ void StandardView::displayTableResults()
     }
 }
 
+//Display results for a table that is not expanded. Precondition
+//is that instantiateTable must have been called before this
 void StandardView::displayTableNotExpanded()
 {
     int i = _tableItems.currentIndex;
@@ -854,15 +856,12 @@ void StandardView::displayTableNotExpanded()
         stillInTableRange = (i-_tableItems.currentIndex < 10);
     }
 
-    ui->label_27->setText("    "
-                          +QString::number(_tableItems.currentIndex+1)
-                          +" to "
-                          +QString::number(i)
-                          +" of "
-                          +QString::number(_tableItems.endIndex+1)
-                          +" results ");
+    displayTableRangeResultLabel(ui->label_27,i,_tableItems.currentIndex+1,
+                                  _tableItems.endIndex+1);
 }
 
+//Display results for a table that is expanded. Precondition
+//is that instantiateTable must have been called before this
 void StandardView:: displayTableExpanded()
 {
     int i = _tableItems.currentIndex;
@@ -892,13 +891,22 @@ void StandardView:: displayTableExpanded()
         stillInNotesRange = (i-_tableItems.currentIndex < 3);
     }
 
-    ui->label_74->setText("    "
-                          +QString::number(_tableItems.currentIndex+1)
-                          +" to "
-                          +QString::number(i)
-                          +" of "
-                          +QString::number(_tableItems.endIndex+1)
-                          +" results ");
+    displayTableRangeResultLabel(ui->label_74,i,_tableItems.currentIndex+1,
+                                  _tableItems.endIndex+1);
+}
+
+//Function displays the current range of results displayed, whether the
+//results mode is expanded or not
+void StandardView:: displayTableRangeResultLabel(QLabel* label,int to,
+                                                  int from,int total)
+{
+    label->setText("    "
+                   +QString::number(from)
+                   +" to "
+                   +QString::number(to)
+                   +" of "
+                   +QString::number(total)
+                   +" results ");
 }
 
 //This function is for choosing 1 of the 3 notes to display the task as only
