@@ -1,7 +1,12 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
+//@WEIYUAN A0086030R
+
 StandardView* StandardView::_standardView = NULL;
+
+//The following strings are for the displaying of certain user elements
+//in the user interface
 
 const QString StandardView::MESSAGE_NIL = "";
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
@@ -67,6 +72,7 @@ StandardView::~StandardView()
     delete ui;
 }
 
+//This function returns the address of the singleton for this class
 StandardView* StandardView:: getInstance()
 {
     if (!singleInstanceExists())
@@ -77,6 +83,7 @@ StandardView* StandardView:: getInstance()
     return _standardView;
 }
 
+//This function deletes the singleton for this class
 void StandardView:: endInstance()
 {
     if (singleInstanceExists())
@@ -101,7 +108,10 @@ void StandardView:: displayFocusInInputEdit (bool focus)
     ui->lineEdit->setFocusInput(focus);
 }
 
-void StandardView:: displayAppropriateColorInputEdit (InputBarFlag color) throw (string)
+//Function to display the colour of the input edit bar given the bool
+//value returned from intellisense through seample control class
+void StandardView:: displayAppropriateColorInputEdit (
+        InputBarFlag color) throw (string)
 {
     switch (color)
     {
@@ -111,7 +121,6 @@ void StandardView:: displayAppropriateColorInputEdit (InputBarFlag color) throw 
                                     STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                     STYLESHEET_INPUT_LINE_BORDER_COLOR+
                                     "background-color: rgb(50,205,50);");
-
             break;
 
         case UNOPERATIVE:
@@ -120,7 +129,6 @@ void StandardView:: displayAppropriateColorInputEdit (InputBarFlag color) throw 
                                     STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                     STYLESHEET_INPUT_LINE_BORDER_COLOR+
                                     "background-color: rgb(255,99,71);");
-
             break;
 
         case NONE:
@@ -128,7 +136,7 @@ void StandardView:: displayAppropriateColorInputEdit (InputBarFlag color) throw 
                                     STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                     STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                     STYLESHEET_INPUT_LINE_BORDER_COLOR+
-                                    STYLESHEET_INPUT_LINE_BACKGROUND_COLOR);
+                                    STYLESHEET_INPUT_LINE_BACKGRD_COLOR);
             break;
 
         default:
@@ -137,6 +145,8 @@ void StandardView:: displayAppropriateColorInputEdit (InputBarFlag color) throw 
     }
 }
 
+//This function is called with the results from seample-scheduler logic
+//components. It keeps the results for display purposes of the user
 void StandardView:: instantiateTable(QVector <QString> output) throw (string)
 {
     //Defensive coding: output must be a factor of 6
@@ -153,6 +163,7 @@ void StandardView:: instantiateTable(QVector <QString> output) throw (string)
     displayTableResults();
 }
 
+//Remove all contents from the tables in this interface
 void StandardView::resetAllTablesContents()
 {
     resetTableContents();
@@ -162,6 +173,8 @@ void StandardView::resetAllTablesContents()
     _tableItems.endIndex = 0;
 }
 
+//Information on displaying on today's summary (todayView) is passed into
+//this function and is displayed
 void StandardView::displayTodayView(QVector<QString> info)
 {
     QString outstandingEvents = info[0];
@@ -184,6 +197,8 @@ void StandardView::displayTodayView(QVector<QString> info)
     }
 }
 
+//This function is the overwritten show function from QMainWindow to show
+//the opacity change effects when the window is shown
 void StandardView::show()
 {
     _currentlyChanging = true;
@@ -198,6 +213,8 @@ void StandardView::show()
     _fadeTimer.start(1);
 }
 
+//This function is the overwritten shide function from QMainWindow to show
+//the opacity change effects when the window is hidden.
 void StandardView::hide()
 {
     _currentlyChanging = true;
@@ -207,31 +224,48 @@ void StandardView::hide()
     _fadeTimer.start(1);
 }
 
+//This function is a slot function  to send a signal when input from the user
+//is changed
 void StandardView::recieve(QString input)
 {
     emit relay(input);
 }
 
+//This function is a slot function  to send a signal when user enters the
+//"enter" key
 void StandardView::enterTriggered()
 {
     emit run(ui->lineEdit->text(), ui->lineEdit->getFocusInput());
 }
 
+//This function is a slot function that will emit a signal for changing of
+//user interfaces when the shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::changeViewTriggered()
 {
-    emit toSeampleView(ui->lineEdit->text(),ui->label->text(), ui->lineEdit->getFocusInput());
+    emit toSeampleView(ui->lineEdit->text(),ui->label->text(),
+                       ui->lineEdit->getFocusInput());
 }
 
+//This function is a slot function that will emit a signal for the undo
+//command when the undo shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::undoTriggered()
 {
     emit run(COMMAND_UNDO, ui->lineEdit->getFocusInput());
 }
 
+//This function is a slot function that will emit a signal for the redo
+//command when the redo shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::redoTriggered()
 {
     emit run(COMMAND_REDO, ui->lineEdit->getFocusInput());
 }
 
+//This function is a slot function that will add the "add" command text
+//when the add shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::addTriggered()
 {
     ui->lineEdit->setText(COMMAND_ADD);
@@ -239,6 +273,9 @@ void StandardView::addTriggered()
     emit relay(ui->lineEdit->text());
 }
 
+//This function is a slot function that will add the "find" command text
+//when the find shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::findTriggered()
 {
     ui->lineEdit->setText(COMMAND_FIND);
@@ -246,16 +283,25 @@ void StandardView::findTriggered()
     emit relay(ui->lineEdit->text());
 }
 
+//This function is a slot function that will emit a signal for the find float
+//option when the float shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::findFloatTriggered()
 {
     emit run(COMMAND_FIND_FLOAT, ui->lineEdit->getFocusInput());
 }
 
+//This function is a slot function that will emit a signal for the display
+//command when the display shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::displayTriggered()
 {
     emit run(COMMAND_DISPLAY, ui->lineEdit->getFocusInput());
 }
 
+//This function is a slot function that will add the "delete" command text
+//when the delete shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::deleteTriggered()
 {
     ui->lineEdit->setText(COMMAND_DELETE);
@@ -263,6 +309,9 @@ void StandardView::deleteTriggered()
     emit relay(ui->lineEdit->text());
 }
 
+//This function is a slot function that will add the "edit" command text
+//when the edit shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::editTriggered()
 {
     ui->lineEdit->setText(COMMAND_EDIT);
@@ -270,6 +319,9 @@ void StandardView::editTriggered()
     emit relay(ui->lineEdit->text());
 }
 
+//This function is a slot function that will remove all text from the input
+//when the clear shortcut is triggered. The signal to the shortcut
+//must be connected to this slot for this slot function to be triggered
 void StandardView::clearTriggered()
 {
     displayFocusInInputEdit(true);
@@ -277,6 +329,9 @@ void StandardView::clearTriggered()
     emit relay("");
 }
 
+//This function is the slot function that is triggered to measure the degree
+//of opacity of the GUI interface to be displayed when the application is
+//to be shown
 void StandardView::fadeInChange()
 {
     _opacityLvl += 0.08;
@@ -292,6 +347,9 @@ void StandardView::fadeInChange()
     }
 }
 
+//This function is the slot function that is triggered to measure the degree
+//of opacity of the GUI interface to be displayed when the application is
+//to be hidden
 void StandardView::fadeOutChange()
 {
     _opacityLvl -= 0.08;
@@ -308,17 +366,21 @@ void StandardView::fadeOutChange()
     }
 }
 
+//This function is a slot function that triggers when the signal
+//for the page up shortcut is triggered. It allows page indexing and
+//users to go through different pages of results shown on the table
 void StandardView::pageUpTriggered()
 {
     int varyAmount = (_resultsTableViewExpanded ? 3 : 10);
 
-    bool currInputAtFrontDisplayExcept1stIndex = (_tableItems.currentIndex < 3 && _tableItems.currentIndex > 0);
+    bool currInputAtFrontDisplayExcept1stIndex =
+            (_tableItems.currentIndex < 3 && _tableItems.currentIndex > 0);
     if (currInputAtFrontDisplayExcept1stIndex)
     {
         _tableItems.currentIndex = 3;
     }
 
-    bool currInputNotAtFrontDisplay = (_tableItems.currentIndex >= varyAmount);
+    bool currInputNotAtFrontDisplay =(_tableItems.currentIndex >= varyAmount);
     bool currViewTypeIsTable = (_currentType == RESULTS_TABLE);
 
     if (!tableIsEmpty() && currInputNotAtFrontDisplay && currViewTypeIsTable)
@@ -329,6 +391,9 @@ void StandardView::pageUpTriggered()
     }
 }
 
+//This function is a slot function that triggers when the signal
+//for the page down shortcut is triggered. It allows page indexing and
+//users to go through different pages of results shown on the table
 void StandardView::pageDownTriggered()
 {
     int varyAmount = (_resultsTableViewExpanded ? 3 : 10);

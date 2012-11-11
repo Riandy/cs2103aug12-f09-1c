@@ -5,7 +5,11 @@
 #include <QMouseEvent>
 #include <QApplication>
 
+//@WEIYUAN A0086030R
 
+//This class is for the customization of a frame element to allow
+//the frame to be controlled and be moved around by the user. It is
+//an overwritten class of QFrame
 class Sframe : public QFrame
 {
 public:
