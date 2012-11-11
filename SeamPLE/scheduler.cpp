@@ -21,6 +21,7 @@ static string MESSAGE_DELETE_WARNING = "Your input was both an event name as wel
 static string MESSAGE_MARK_SUCCESS = "Your event was marked as completed.";
 static string MESSAGE_MARK_FAILURE = "There was an error marking your event.";
 static string MESSAGE_DELETE_NOT_ENOUGH_INPUT = "There is too little information to choose a task to delete.";
+static string MESSAGE_INVALID = "INVALID DATE, please enter a valid date";
 bool scheduler::instanceFlag=false;
 static int NOTFOUND = -1;
 scheduler* scheduler::_scheduler=NULL;
@@ -119,7 +120,8 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
-
+//@CHAM WEN BIN U094659H
+//returns the number of days in the month
 int scheduler::daysMonth(int year, int month)
 {
     int numberOfDays;
@@ -139,6 +141,8 @@ int scheduler::daysMonth(int year, int month)
 
 }
 
+//@CHAM WEN BIN U094659H
+//updates the date to a week later
 void scheduler::updateWeeklyTask(tm &_date)
 {
     int numberOfDays=daysMonth(_date.tm_year,_date.tm_mon);
@@ -152,6 +156,8 @@ void scheduler::updateWeeklyTask(tm &_date)
 }
 }
 
+//@CHAM WEN BIN U094659H
+//updates the date to 2 week later
 void scheduler::updateFornightlyTask(tm &_date)
 {
     int numberOfDays=daysMonth(_date.tm_year,_date.tm_mon);
@@ -165,6 +171,8 @@ void scheduler::updateFornightlyTask(tm &_date)
 }
 }
 
+//@CHAM WEN BIN U094659H
+//updates the date to a month later
 void scheduler::updateMonthlyTask(tm &_date)
 {
     _date.tm_mon += 1;
@@ -176,15 +184,10 @@ void scheduler::updateMonthlyTask(tm &_date)
 
 }
 
+//@CHAM WEN BIN U094659H
+//updates a task based on dateType, namely: weekly,monthly,fortnightly
 void scheduler::updateTask(task &_task)
 {
-    ////cout<<"**********start Date  before ********"<<endl;
-    ////cout<<"year : "<<_task.getStartDate().tm_year<<endl;
-    ////cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
-    ////cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
-    ////cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
-    ////cout<<"min : "<<_task.getStartDate().tm_min<<endl;
-    ////cout<<"dateType :"<<_task.getDateType()<<endl;
 
     Action clone;
     clone.setCommand("DELETE");
@@ -210,13 +213,6 @@ void scheduler::updateTask(task &_task)
     default:break;
     }
     _task.setStartDate(startdate);
-    ////cout<<"**********start Date  after ********"<<endl;
-    ////cout<<"year : "<<_task.getStartDate().tm_year<<endl;
-    ////cout<<"month : "<<_task.getStartDate().tm_mon<<endl;
-    ////cout<<"day : "<<_task.getStartDate().tm_mday<<endl;
-    ////cout<<"hour : "<<_task.getStartDate().tm_hour<<endl;
-    ////cout<<"min : "<<_task.getStartDate().tm_min<<endl;
-    ////cout<<"dateType :"<<_task.getDateType()<<endl;
 
     Action _clone;
     task duplicate=_task;
@@ -226,6 +222,8 @@ void scheduler::updateTask(task &_task)
 
 }
 
+//@CHAM WEN BIN U094659H
+//transvers throught the array to retrieve events that are going to occur
 string scheduler::getEventBasedOnTime(int hour, int min)
 {
     std::stringstream feedbackMessage;
@@ -249,6 +247,7 @@ string scheduler::getEventBasedOnTime(int hour, int min)
 
     return feedbackMessage.str();
 }
+
 
 //Get Event name for any event today ending with the hour and minute
 string scheduler::getEventNameForEnd(int hour, int min)
@@ -472,6 +471,11 @@ void scheduler::printMessage(string _messageType)
 
 void scheduler::Add(task thisTask)
 {
+    if(thisTask.getCategory() == "1NVAL1D")
+    {
+       printMessage(MESSAGE_INVALID);
+       return;
+    }
 
     if (thisTask.getEventName() =="")
     {

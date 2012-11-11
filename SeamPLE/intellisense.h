@@ -209,6 +209,9 @@ private:
     int checkDateString(string token);
 
     void handleInvalidDate(Action &task);
+    void handleNoDateEntered(Action &task);
+    void handleDateOver(Action &task);
+    void handleNoEndDate(Action &task);
     void smartAutoFill(Action &task,vector<string>& tokens);
 
 
