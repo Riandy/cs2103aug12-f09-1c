@@ -362,6 +362,7 @@ string scheduler::convertToDate(tm _date)
 void scheduler::updateGUI(string command)
 {
     taskVector = eventCalender.displayDatabase();
+
     int vectorSize = taskVector.size();
     for (int i = 0; i < vectorSize; i++)
     {
