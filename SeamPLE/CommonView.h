@@ -7,7 +7,7 @@
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN A0086030R
 
 //This class contains the shared GUI items between SeampleView and
 //StandardView. Items seen here are meant to be used by both user interfaces
@@ -28,6 +28,8 @@ protected:
     const static QString STYLESHEET_INPUT_LINE_BORDER_WIDTH;
     const static QString STYLESHEET_INPUT_LINE_BORDER_COLOR;
     const static QString STYLESHEET_INPUT_LINE_BACKGRD_COLOR;
+    const static QString STYLESHEET_INPUT_LINE_LOGICAL_COLOR;
+    const static QString STYLESHEET_INPUT_LINE_UNOPERATIVE_COLOR;
     const static QString COMMAND_UNDO;
     const static QString COMMAND_REDO;
     const static QString COMMAND_ADD;

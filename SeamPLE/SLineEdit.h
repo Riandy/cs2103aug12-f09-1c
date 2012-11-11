@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <QFocusEvent>
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN A0086030R
 
 //This class is an overwritten class for the line edit component of the
 //GUI class. It has additional functions to assist the focus setting

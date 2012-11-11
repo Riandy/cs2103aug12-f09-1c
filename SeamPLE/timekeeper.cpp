@@ -117,6 +117,7 @@ void Timekeeper:: getEventForPopUp()
     evaluateResults(result, flag);
 }
 
+//Following function configure one minute timer to start at one minut mark
 void Timekeeper::configureDone()
 {
     disconnect(_timerConfigure,SIGNAL(timeout()),this,SLOT(configureDone()));
@@ -126,6 +127,7 @@ void Timekeeper::configureDone()
     setOneMinuteTimer();
 }
 
+//This function does the adding of minutes and hour
 void Timekeeper::countMinutesLater(int &hour, int &min, int count)
 {
     min+=count;
@@ -136,6 +138,7 @@ void Timekeeper::countMinutesLater(int &hour, int &min, int count)
     }
 }
 
+//Setting the one minute timer configuration to be triggered once a minute
 void Timekeeper::setOneMinuteTimer()
 {
     _oneMinute = new QTimer;
@@ -145,6 +148,7 @@ void Timekeeper::setOneMinuteTimer()
     _oneMinute->start(60000);
 }
 
+//Function to display a message to user via the notification balloon
 void Timekeeper::displayToTrayIcon(string message)
 {
     if (_popUp != NULL && isAppropriate(message))
@@ -155,11 +159,14 @@ void Timekeeper::displayToTrayIcon(string message)
     }
 }
 
+//Check if a string sent in is empty or not
 bool Timekeeper::isAppropriate(string result)
 {
     return (result != "");
 }
 
+//Function evaluates the result of based on a flag sent in to show
+//the timing towards where an event is expiring or starting
 void Timekeeper::evaluateResults (string result, int flag)
 {
     switch (flag)
@@ -201,6 +208,7 @@ void Timekeeper::evaluateResults (string result, int flag)
     displayToTrayIcon(result);
 }
 
+//Function is to configure the configurating timer at the start of the program
 void Timekeeper::setUpConfigure()
 {
     _timerConfigure = new QTimer;
