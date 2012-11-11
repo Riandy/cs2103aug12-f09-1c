@@ -1,6 +1,6 @@
 #include "GuiControl.h"
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =

@@ -1,6 +1,6 @@
 #include "NotifyView.h"
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN A0086030R
 
 const QString NotifyView:: SYSTEM_ICON_LOCATION = ":/bg/pin icon.gif";
 const QString NotifyView:: SYSTEM_ICON_TOOLTIP = "SeamPLE";

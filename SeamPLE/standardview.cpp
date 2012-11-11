@@ -1,7 +1,7 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN A0086030R
 
 StandardView* StandardView::_standardView = NULL;
 
@@ -120,7 +120,7 @@ void StandardView:: displayAppropriateColorInputEdit (
                                     STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                     STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                     STYLESHEET_INPUT_LINE_BORDER_COLOR+
-                                    "background-color: rgb(50,205,50);");
+                                    STYLESHEET_INPUT_LINE_LOGICAL_COLOR);
             break;
 
         case UNOPERATIVE:
@@ -128,7 +128,7 @@ void StandardView:: displayAppropriateColorInputEdit (
                                     STYLESHEET_INPUT_LINE_BORDER_STYLE+
                                     STYLESHEET_INPUT_LINE_BORDER_WIDTH+
                                     STYLESHEET_INPUT_LINE_BORDER_COLOR+
-                                    "background-color: rgb(255,99,71);");
+                                    STYLESHEET_INPUT_LINE_UNOPERATIVE_COLOR);
             break;
 
         case NONE:
@@ -192,7 +192,7 @@ void StandardView::displayTodayView(QVector<QString> info)
     }
     else
     {
-        ui->label_70->setText("");
+        ui->label_70->setText(MESSAGE_NIL);
         displayTodayViewNotes(info.mid(2,info.size()-2));
     }
 }
@@ -325,8 +325,8 @@ void StandardView::editTriggered()
 void StandardView::clearTriggered()
 {
     displayFocusInInputEdit(true);
-    displayFeedbackInputEdit("");
-    emit relay("");
+    displayFeedbackInputEdit(MESSAGE_NIL);
+    emit relay(MESSAGE_NIL);
 }
 
 //This function is the slot function that is triggered to measure the degree
@@ -1355,7 +1355,7 @@ void StandardView::displayTodayViewNotes (QVector<QString> notes)
         }
         else
         {
-            event = "";
+            event = MESSAGE_NIL;
         }
         displayTodayViewNotesIndividual(event,count);
     }
