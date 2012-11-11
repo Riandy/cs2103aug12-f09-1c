@@ -17,6 +17,7 @@ class SeampleView : public QMainWindow, public CommonView
 
 public:
     static SeampleView* _seampleView;
+    static int ANIMATION_TIMING;
 
 private:
     explicit SeampleView(QWidget *parent = 0);

@@ -3,6 +3,8 @@
 //@LIU WEIYUAN A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
+int GuiControl::MINIMUM_SIZE = 2;
+
 const QString GuiControl::MESSAGE_AVAILABLE_COMMANDS =
         "<font size=3 face=\"Gill Sans Ultra Bold Condensed\" color ="
         "\"orange\"> Available Commands: add, delete, mark, unmark, "
@@ -100,7 +102,7 @@ void GuiControl::check(QString input)
     {
         QVector <QString> output =
                 _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
-        bool invalidSchedulerReturn = (output.size() < 2);
+        bool invalidSchedulerReturn = (output.size() < MINIMUM_SIZE);
 
         if (invalidSchedulerReturn)
         {
@@ -115,7 +117,8 @@ void GuiControl::check(QString input)
             //second last flag is the code for parser to request Gui to display
             //the contents in a table
             bool needStandardView =
-                    (output[output.size()-2] == (MESSAGE_GUI_DISPLAY));
+                    (output[output.size()-MINIMUM_SIZE]
+                     == (MESSAGE_GUI_DISPLAY));
 
             try
             {
@@ -139,6 +142,11 @@ void GuiControl::check(QString input)
                 }
                 try
                 {
+                    //Start from position one as the feedback for the user is
+                    //at position 0. Amount to copy has a deduction of 3 as
+                    //the last position is the colour flag, the second last
+                    //position is the code flag, andalso of the feedback being
+                    //in the first position
                     QVector <QString> results = output.mid(1,output.size()-3);
                     _standardGui->instantiateTable(results);
                 }
@@ -192,6 +200,10 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                 }
                 try
                 {
+                    //Start from position one as the feedback for the user is
+                    //at position 0. Amount to copy has a deduction of 2 as
+                    //the last position is the code flag, and the feedback
+                    //position is not included for the copy
                     QVector <QString> results = output.mid(1,capacity - 2);
                     _standardGui->instantiateTable(results);
                 }

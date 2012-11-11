@@ -47,15 +47,27 @@ private:
         TIMING = 1
     };
 
+    enum HelpCode
+    {
+        LAST_PAGE = 4,
+        FIRST_PAGE = 1
+    };
+
     enum AnimationCoordinates
     {
         RESULTS_DEFAULT_X_COORD = 1480,
         RESULTS_NORMAL_Y_COORD = -437,
         RESULTS_EXPANDED_Y_COORD = 0,
+
         HELP_DEFAULT_X_COORD = 0,
         HELP_PAGE_ONE_Y_COORD = 0,
         HELP_PAGE_TWO_Y_COORD = -437,
-        HELP_PAGE_THREE_Y_COORD = -874
+        HELP_PAGE_THREE_Y_COORD = -874,
+
+        RESULTS_VIEW_X_COORD = -1464,
+        TODAY_VIEW_X_COORD = -723,
+        HELP_VIEW_X_COORD = 16,
+        DEFAULT_VIEW_Y_COORD = 14
     };
 
     struct table
@@ -70,7 +82,6 @@ private:
 
     const static double OPACITY_INTERVAL;
 
-    const static QString MESSAGE_NIL;
     const static QString MESSAGE_NO_CURRENT_RESULTS;
     const static QString MESSAGE_VIEW_TYPE_WRONG;
     const static QString MESSAGE_EVENT_NAME_LABEL;
@@ -84,6 +95,10 @@ private:
     const static QString MESSAGE_FONT_END;
     const static QString MESSAGE_ZERO;
     const static QString MESSAGE_HIGH;
+    const static QString MESSAGE_BLANK;
+    const static QString MESSAGE_TO;
+    const static QString MESSAGE_OF;
+    const static QString MESSAGE_RESULTS;
     
 private:
     explicit StandardView(QWidget *parent = 0);

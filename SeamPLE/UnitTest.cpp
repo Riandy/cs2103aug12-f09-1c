@@ -1143,6 +1143,48 @@ void UnitTest::testMark5() //@JOHN
     delete testTask;
 }
 
+//@LIU WEIYUAN A0086030R
+//Test size of vector returned when no events for today
+void UnitTest::testTodayEventNoEvent()
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    vector<string> testVector = testScheduler->getTodayEvents();
+    int size = testVector.size();
+    QCOMPARE(size,2);
+
+    delete testScheduler;
+}
+
+//@LIU WEIYUAN A0086030R
+//Test for number of outstanding events returned when no events for today
+void UnitTest::testTodayEventNoEvent2()
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    vector<string> testVector = testScheduler->getTodayEvents();
+    string result = testVector[0];
+    QCOMPARE(result,string("0"));
+
+    delete testScheduler;
+}
+
+//@LIU WEIYUAN A0086030R
+//Test for number of priority events returned when no events for today
+void UnitTest::testTodayEventNoEvent3()
+{
+    scheduler *testScheduler;
+    testScheduler = scheduler::getInstance();
+
+    vector<string> testVector = testScheduler->getTodayEvents();
+    string result = testVector[1];
+    QCOMPARE(result,string("0"));
+
+    delete testScheduler;
+}
+
 #pragma endregion Scheduler UnitTesting
 
 #pragma region Calender Unit Testing

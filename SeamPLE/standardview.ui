@@ -4182,6 +4182,25 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
     </widget>
+    <widget class="QLabel" name="label_130">
+     <property name="geometry">
+      <rect>
+       <x>749</x>
+       <y>6</y>
+       <width>46</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#label_130
+{
+	background-image: url(:/bg/Help_sign.gif);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
@@ -4297,8 +4316,6 @@ p, li { white-space: pre-wrap; }
     </property>
    </widget>
   </widget>
-  <zorder>frame</zorder>
-  <zorder>frame_3</zorder>
  </widget>
  <customwidgets>
   <customwidget>

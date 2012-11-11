@@ -12,7 +12,6 @@ const double StandardView:: OPACITY_INTERVAL = 0.01;
 //The following strings are for the displaying of certain user elements
 //in the user interface
 
-const QString StandardView::MESSAGE_NIL = "";
 const QString StandardView::MESSAGE_NO_CURRENT_RESULTS =
         "No Search Results Available";
 const QString StandardView::MESSAGE_VIEW_TYPE_WRONG =
@@ -37,6 +36,10 @@ const QString StandardView::MESSAGE_FONT_COLOUR_GREEN =
 const QString StandardView::MESSAGE_FONT_END = "</font>";
 const QString StandardView::MESSAGE_ZERO = "0";
 const QString StandardView::MESSAGE_HIGH = "HIGH";
+const QString StandardView::MESSAGE_BLANK = "    ";
+const QString StandardView::MESSAGE_TO = " to ";
+const QString StandardView::MESSAGE_OF = " of ";
+const QString StandardView::MESSAGE_RESULTS = " results ";
 
 StandardView::StandardView(QWidget *parent):
     QMainWindow(parent, Qt::FramelessWindowHint),CommonView(),
@@ -458,9 +461,9 @@ void StandardView::changeViewModeTriggered()
         else if (_currentType == HELP_VIEW)
         {
             _helpPageNo++;
-            if (_helpPageNo == 4)
+            if (_helpPageNo == LAST_PAGE)
             {
-                _helpPageNo = 1;
+                _helpPageNo = FIRST_PAGE;
             }
             showHelpViewMode();
         }
@@ -717,17 +720,20 @@ void StandardView::setFrameAnimationProperties(QFrame* frame, int xCoord,
 
 void StandardView::showTable()
 {
-    setFrameAnimationProperties(ui->frame_22, -1464,14);
+    setFrameAnimationProperties(ui->frame_22, RESULTS_VIEW_X_COORD,
+                                DEFAULT_VIEW_Y_COORD);
 }
 
 void StandardView::showHelp()
 {
-    setFrameAnimationProperties(ui->frame_22, 16,14);
+    setFrameAnimationProperties(ui->frame_22, HELP_VIEW_X_COORD,
+                                DEFAULT_VIEW_Y_COORD);
 }
 
 void StandardView::showTodayView()
 {
-    setFrameAnimationProperties(ui->frame_22, -723,14);
+    setFrameAnimationProperties(ui->frame_22, TODAY_VIEW_X_COORD,
+                                DEFAULT_VIEW_Y_COORD);
 
     //Emit signal so that results in today view can be updated
     emit todayViewTriggered();
@@ -912,13 +918,13 @@ void StandardView:: displayTableExpanded()
 void StandardView:: displayTableRangeResultLabel(QLabel* label,int to,
                                                   int from,int total)
 {
-    label->setText("    "
+    label->setText(MESSAGE_BLANK
                    +QString::number(from)
-                   +" to "
+                   +MESSAGE_TO
                    +QString::number(to)
-                   +" of "
+                   +MESSAGE_OF
                    +QString::number(total)
-                   +" results ");
+                   +MESSAGE_RESULTS);
 }
 
 //This function is for choosing 1 of the 3 notes to display the task as only

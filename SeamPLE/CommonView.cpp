@@ -31,6 +31,9 @@ const QString CommonView:: COMMAND_FIND_FLOAT = "todo";
 const QString CommonView:: COMMAND_MARK = "mark ";
 const QString CommonView:: COMMAND_TODAY = "today";
 
+//Following strings are common strings to output to user
+const QString CommonView::MESSAGE_NIL = "";
+
 //Following string contains attribute string for the animation
 const string CommonView:: ANIMATION_ATTRIBUTE = "geometry";
 

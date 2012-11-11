@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'seampleview.ui'
 **
-** Created: Sun Nov 11 19:34:22 2012
+** Created: Sun Nov 11 22:37:29 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,6 +38,7 @@ public:
     SLineEdit *lineEdit;
     QLabel *label;
     STimeLabel *label_2;
+    QLabel *label_130;
     QPushButton *pushButton_2;
 
     void setupUi(QMainWindow *SeampleView)
@@ -169,7 +170,7 @@ public:
         label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
         label_2 = new STimeLabel(frame_2);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(236, 3, 231, 56));
+        label_2->setGeometry(QRect(131, 1, 231, 56));
         QFont font2;
         font2.setFamily(QString::fromUtf8("AR JULIAN"));
         font2.setPointSize(16);
@@ -180,6 +181,13 @@ public:
 "{\n"
 "	\n"
 "\n"
+"}"));
+        label_130 = new QLabel(frame_2);
+        label_130->setObjectName(QString::fromUtf8("label_130"));
+        label_130->setGeometry(QRect(424, 7, 46, 48));
+        label_130->setStyleSheet(QString::fromUtf8("#label_130\n"
+"{\n"
+"	background-image: url(:/bg/Help_sign.gif);\n"
 "}"));
         pushButton_2 = new QPushButton(frame);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
@@ -240,6 +248,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'AR JULIAN'; font-size:16pt; font-weight:600;\"></p></body></html>", 0, QApplication::UnicodeUTF8)));
+        label_130->setText(QString());
         pushButton_2->setText(QString());
     } // retranslateUi
 
