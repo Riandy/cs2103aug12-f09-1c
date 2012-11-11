@@ -789,7 +789,8 @@ string scheduler:: getStringFromInt(int subject)
     return buffer.str();
 }
 
-//Riandy A0088392R
+//@Riandy A0088392R
+//display the archive file to the GUI
 void scheduler::DisplayArchive()
 {
     taskVector=eventCalender.displayArchiveEvent();
