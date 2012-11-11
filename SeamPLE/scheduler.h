@@ -38,6 +38,7 @@ private:
     void EditEnter(task thisTask);
     void Find(task thisTask);
     void Display();
+    void DisplayArchive();
     void Undo();
     void Redo();
     void Today();
