@@ -162,12 +162,17 @@ bool calender::deleteItem(int taskID)
 //@John A0069517W
 bool calender::deleteAll()
 {
+    if (_storage.size() != 0)
+    {
     writeBackupFile();
     _storage.clear();
     saveHistory(_DELETEALL);
     lastCommandUndo = false;
     writeFile();
     return true;
+    }
+    else
+        return false;
 }
 
 //@Riandy A0088392R
@@ -477,7 +482,7 @@ bool calender::undoAction()
         }
         else if (lastCommand == _DELETEALL)
         {
-            this->undoDeleteAll();
+         this->undoDeleteAll();
         }
         else
             _faulty->report("Calender class: Unknown undo command");

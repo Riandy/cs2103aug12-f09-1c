@@ -131,6 +131,10 @@ private slots:
     void testsearchByDate();
     void testconvertToDate();
     void testconvertToDateWithoutTime();
+    void testDeleteAll2();
+    void testDeleteAll3();
+
+
 
 #pragma endregion Calender Unit Testing
 
