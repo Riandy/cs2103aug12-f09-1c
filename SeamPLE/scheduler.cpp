@@ -1,7 +1,5 @@
 #include "scheduler.h"
 
-//#include <QDebug>
-
 static string MESSAGE_ERROR_NOT_FOUND = "The item does not exist.";
 static string MESSAGE_ERROR_INTELLISENSE_CHECK = "Error - The system failed to process your request. Please try again.";
 static string MESSAGE_ADD_SUCCESS = "Your event was added successfully.";
@@ -22,9 +20,11 @@ static string MESSAGE_MARK_SUCCESS = "Your event was marked as completed.";
 static string MESSAGE_MARK_FAILURE = "There was an error marking your event.";
 static string MESSAGE_DELETE_NOT_ENOUGH_INPUT = "There is too little information to choose a task to delete.";
 static string MESSAGE_INVALID = "INVALID DATE, please enter a valid date";
+static string EMPTY_DATE = "0 / 0 / 0 - 0 : 0 : 0";
 bool scheduler::instanceFlag=false;
 static int NOTFOUND = -1;
 scheduler* scheduler::_scheduler=NULL;
+
 
 scheduler* scheduler::getInstance()
 {
@@ -50,18 +50,19 @@ scheduler::~scheduler()
     instanceFlag = false;
     _faulty->endInstance();
 }
+
 //@Riandy A0088392R
 vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
     string command=newAction.getCommand();
     ASSERT(command!="","Command is NULL");
+
     /*defensive coding*/
     //convert command to upper case to ensure that it is not case sensitive
     transform(command.begin(), command.end(),command.begin(), ::toupper);
     //process and package the action into task
     task newTask=processAction(newAction);
-
 
     if(command=="ADD")
     {
@@ -106,6 +107,10 @@ vector<string> scheduler::executeCommand(Action newAction)
     else if (command == "TODO")
     {
        this->Todo();
+    }
+    else if (command == "DISPLAYARCHIVE")
+    {
+        this->DisplayArchive();
     }
     else if(command=="EXIT")
     {
@@ -291,7 +296,7 @@ string scheduler::getEventNameForStart(int hour, int min)
     return feedbackMessage.str();
 }
 
-
+//@Riandy A0088392R
 //This function take the action object and extract the required information,
 //package it and store it as a task.
 //Note : If any field need to be added in the future, this part is to be added.
@@ -350,7 +355,7 @@ string scheduler::convertToDate(tm _date)
 }
 
 
-
+//@Riandy A0088392R
 //This function is used to update the result to the GUI
 //it will convert the task vector into vector of string which will be used by
 //the GUI to display the result
@@ -361,8 +366,8 @@ void scheduler::updateGUI(string command)
     for (int i = 0; i < vectorSize; i++)
     {
         string _startDate,_endDate;
-              //check whether the startDate or endDate is zero.
-              //if yes, change it to "-"
+        //check whether the startDate or endDate is zero.
+        //if yes, change it to "-"
         if(isTimeZero(taskVector[i].getStartDate()))
             _startDate="-";
         else
@@ -396,6 +401,7 @@ void scheduler::updateGUI(string command)
     }
 }
 
+//@Riandy A0088392R
 //This function is used to update the number of results found to the _result vector
 //which will be used by the GUI to display
 void scheduler::updateResultFound(int size)
@@ -406,6 +412,8 @@ void scheduler::updateResultFound(int size)
     tempString << " results found.";
     _result.push_back(tempString.str());
 }
+
+//@Riandy A0088392R
 //This function check whether the field in the given tm struct
 //is all zero. if yes, return true, otherwise return false.
 bool scheduler::isTimeZero(tm time)
@@ -458,7 +466,6 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
         }
     }
 }
-
 
 
 
@@ -527,9 +534,6 @@ void scheduler::Delete(task thisTask)
                 printMessage(MESSAGE_DELETE_WARNING);
 
             }
-
-
-
             else if(eventCalender.checkID(thisTask.getID()))
             {
                 eventCalender.deleteItem(thisTask.getID());
@@ -622,6 +626,7 @@ void scheduler::Redo()
       printMessage(MESSAGE_REDO_FAILURE);
     updateGUI("REDO");
 }
+
 //@Riandy A0088392R
 //This function is to find the today's event and
 //update the result to _result through partialUpdateGui function
@@ -630,40 +635,42 @@ void scheduler::Today()
     taskVector = eventCalender.getToday();
     partialUpdateGUI(taskVector,"TODAY");
 }
+
+//@Riandy A0088392R
 //This function is used to find a specific task in the database.
 //User can either find by category,eventName,date.
 //either than that 3 type, error message will be generated.
 void scheduler::Find(task thisTask)
 {
     string _dateString = eventCalender.convertToDateNoTime(thisTask.getStartDate());
+
     //case 1: search by category
-
-
-    if(thisTask.getCategory()!="#")
-    {
+    if(thisTask.getCategory()!="#"){
         taskVector = eventCalender.SearchByCat(thisTask.getCategory());
-
         partialUpdateGUI(taskVector,"FIND");
     }
     //case 2: search by task
-    else if (thisTask.getEventName()!="")
-    {
+    else if (thisTask.getEventName()!=""){
         taskVector = eventCalender.SearchByTask(thisTask.getEventName());
         partialUpdateGUI(taskVector,"FIND");
     }
-     else if (_dateString != "0 / 0 / 0 - 0 : 0 : 0")
-    {
-
+    else if (_dateString != EMPTY_DATE){
         taskVector = eventCalender.SearchByDate(_dateString);
         partialUpdateGUI(taskVector,"FIND");
     }
-    else
-    {
+    else{
         //display error message and log the error in a txt file
         printMessage(MESSAGE_ERROR_INTELLISENSE_CHECK);
+        //error logging
         _faulty->report("Scheduler:: Find function fail to find the result");
     }
 }
+
+void scheduler::Exit()
+{
+    exit(0);
+}
+
 //@John A0069517W
 void scheduler::Mark(task thisTask)
 {
@@ -674,10 +681,6 @@ void scheduler::Mark(task thisTask)
     updateGUI("MARK");
 }
 
-void scheduler::Exit() //@WENBIN
-{
-    exit(0);
-}
 //@John A0069517W
 void scheduler::Todo()
 {
@@ -784,4 +787,11 @@ string scheduler:: getStringFromInt(int subject)
     stringstream buffer;
     buffer << subject;
     return buffer.str();
+}
+
+//Riandy A0088392R
+void scheduler::DisplayArchive()
+{
+    taskVector=eventCalender.displayArchiveEvent();
+    partialUpdateGUI(taskVector,"DISPLAYARCHIVE");
 }
