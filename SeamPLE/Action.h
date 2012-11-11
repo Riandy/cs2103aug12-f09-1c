@@ -7,7 +7,7 @@
 using namespace std;
 
 //if we want to extend to more fields we have to add in here
-#define MAXNOOFPARAMETERS 6 // NAME,DATE,PRIORITY,CATEGORY,
+#define MAXNOOFPARAMETERS 6
 #define INAME       0	//INDEX OF NAME IN THE FLAG ARRAY
 #define IDATE       1
 #define IPRIORITY   2

@@ -302,14 +302,14 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
     inputBuffer = toLowerString(input);
     try
     {
-    for (int i = 0 ; i < arraySize; i++)
-    {
-        commandBuffer = toLowerString(command[i]);
-        if(inputBuffer == commandBuffer)
-            isCommandFound = true;
-    }
+        for (int i = 0 ; i < arraySize; i++)
+        {
+            commandBuffer = toLowerString(command[i]);
+            if(inputBuffer == commandBuffer)
+                isCommandFound = true;
+        }
 
-     return isCommandFound;
+        return isCommandFound;
     }
     catch(exception& e)
     {
@@ -366,17 +366,17 @@ string Intellisense::getPriority(vector<string>& tokens)
             tokens.erase(tokens.begin());
             return HIGHPRIORITY;
         }
-
-        if((checkTailString.compare(HIGHPRIORITY)==0)|| checkTailString.compare(HIGHPRIORITY_L)==0)
-        {
-            tokens.pop_back();
-            return HIGHPRIORITY;
-        }
         if((checkHeadString.compare(LOWPRIORITY)==0)|| checkHeadString.compare(LOWPRIORITY_L)==0)
         {
             tokens.erase(tokens.begin());
             return LOWPRIORITY;
         }
+        if((checkTailString.compare(HIGHPRIORITY)==0)|| checkTailString.compare(HIGHPRIORITY_L)==0)
+        {
+            tokens.pop_back();
+            return HIGHPRIORITY;
+        }
+
         if((checkTailString.compare(LOWPRIORITY)==0)|| checkTailString.compare(LOWPRIORITY_L)==0)
         {
             tokens.pop_back();
@@ -384,7 +384,7 @@ string Intellisense::getPriority(vector<string>& tokens)
         }
 
     }
-    return string("");
+    return EMPTYPRIORITY;
 }
 
 //@CHAM WEN BIN U094659H
@@ -657,6 +657,7 @@ string Intellisense::getCategory(vector<string>& tokens)
             category = it->substr(1,it->size()-1);
             it = tokens.erase(it);
             return category;
+            //break;
         }
 
         if(it != tokens.end())
@@ -1029,7 +1030,7 @@ int Intellisense::getDateType(vector<string>& tokens)
     {
         string lowerString = toLowerString(*it);
         if( lowerString == WEEKLY )
-        {//may have to add more checks if weekly is used in event name
+        {
             dType = task::DATEWEEKLY;
             it = tokens.erase(it);
         }
@@ -1516,15 +1517,17 @@ Action Intellisense::editOperation(vector<string>& tokens)
     return task;
 }
 
-
-//@PAN WENREN A0083711L
-void Intellisense::setAllStatusFlag(Action task)
+void Intellisense::setNameFlag(Action task)
 {
-
     if(task.getEventName() == EMPTYEVENT )
         setStatusFlagAt(INAME,false);
     else
         setStatusFlagAt(INAME,true);
+}
+//@PAN WENREN A0083711L
+void Intellisense::setAllStatusFlag(Action task)
+{
+    setNameFlag(task);
 
     bool isDateNotSet;
     isDateNotSet = (task.getStartDate().tm_year == 0	&&
