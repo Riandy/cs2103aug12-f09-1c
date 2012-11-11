@@ -4,6 +4,12 @@
 #include <QLineEdit>
 #include <QFocusEvent>
 
+//@WEIYUAN A0086030R
+
+//This class is an overwritten class for the line edit component of the
+//GUI class. It has additional functions to assist the focus setting
+//and getting of the input bar. It also has additional functions to imitate
+//the CLI with the access of past commands by pressing up or down
 enum LineEdit_Code
 {
     NON_EXISTENT = -2,
