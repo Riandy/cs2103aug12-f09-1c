@@ -77,6 +77,8 @@ const  string Intellisense::REDCATEGORYTEXT = "<font color=Salmon >[CATEGORY] </
 const  string Intellisense::GREENIDTEXT = "<font color=Chartreuse>[ID] </font>";
 const  string Intellisense::REDIDTEXT = "<font color=Salmon>[ID] </font>";
 
+const string Intellisense::LINEBREAK = "<br>";
+
 const char Intellisense::CATEGORYRECOGNISER = '#' ;
 
 
@@ -89,7 +91,7 @@ Intellisense* Intellisense::intellisense = NULL;
 //returns a char in lower case
 char toLower(char in){
     if(in<='Z' && in>='A')
-       { return in-('Z'-'z');}
+    { return in-('Z'-'z');}
     return in;
 }
 
@@ -150,46 +152,46 @@ Action Intellisense::check(string query)
     switch(determinOperation(buffer))
     {
     case ADD:
-        task=addOperation(buffer);
+        task = addOperation(buffer);
         break;
     case DELETE:
-        task=deleteOperation(buffer);
+        task = deleteOperation(buffer);
         break;
     case DISPLAY:
-        task=displayOperation(buffer);
+        task = displayOperation(buffer);
         break;
     case MARK:
-        task=markOperation(buffer);
+        task = markOperation(buffer);
         break;
     case SORT:
-        task=sortOperation(buffer);
+        task = sortOperation(buffer);
         break;
     case FIND:
-        task=findOperation(buffer);
+        task = findOperation(buffer);
         break;
     case EDIT:
-        task=editOperation(buffer);
+        task = editOperation(buffer);
         break;
     case EXIT:
-        task=exitOperation(buffer);
+        task = exitOperation(buffer);
         break;
     case INVALID:
-        task=quickAddOperation(buffer);
+        task = quickAddOperation(buffer);
         break;
     case UNDO:
-        task=undoOperation(buffer);
+        task = undoOperation(buffer);
         break;
     case REDO:
-        task=redoOperation(buffer);
+        task = redoOperation(buffer);
         break;
     case TODO:
-        task= todoOperation(buffer);
+        task = todoOperation(buffer);
         break;
     case TODAY:
-        task= todayOperation(buffer);
+        task = todayOperation(buffer);
         break;
     case DISPLAYARCHIVE:
-        task= displayarchiveOperation(buffer);
+        task = displayarchiveOperation(buffer);
         break;
 
     default:
@@ -209,7 +211,7 @@ Action Intellisense::check(string query)
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
 
-    if(tokens.size()==0)
+    if(tokens.size() == 0)
     {
         return INVALID;    //Defensive coding: prevents empty input to pass through
     }
@@ -287,8 +289,8 @@ bool Intellisense::checkString(const string& input, const string& command)
 //returns a string to lower casing
 string Intellisense::toLowerString(string input)
 {
-     transform(input.begin(), input.end(), input.begin(),toLower);
-     return input;
+    transform(input.begin(), input.end(), input.begin(),toLower);
+    return input;
 }
 
 //@PAN WENREN A0083711L
@@ -302,14 +304,14 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
     inputBuffer = toLowerString(input);
     try
     {
-    for (int i = 0 ; i < arraySize; i++)
-    {
-        commandBuffer = toLowerString(command[i]);
-        if(inputBuffer == commandBuffer)
-            isCommandFound = true;
-    }
+        for (int i = 0 ; i < arraySize; i++)
+        {
+            commandBuffer = toLowerString(command[i]);
+            if(inputBuffer == commandBuffer)
+                isCommandFound = true;
+        }
 
-     return isCommandFound;
+        return isCommandFound;
     }
     catch(exception& e)
     {
@@ -350,7 +352,7 @@ int Intellisense::getID(vector<string>& tokens)
 
 }
 
-//@PAN WENREN A0083711L
+//@CHAM WEN BIN U094659H
 //returns HIGH or LOW if keyword "HIGH" or "LOW" is detected at the head or end of token
 string Intellisense::getPriority(vector<string>& tokens)
 {
@@ -384,7 +386,7 @@ string Intellisense::getPriority(vector<string>& tokens)
         }
 
     }
-    return string("");
+    return EMPTYPRIORITY;
 }
 
 //@CHAM WEN BIN U094659H
@@ -403,15 +405,15 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 
         case 3:   if( processTimeFormat1(date, time))
             {it=tokens.erase(it);
-            return date;}
+                return date;}
             break;
 
         case 4:   if(processTimeFormat2(date, time))
             {it=tokens.erase(it);
-             return date;}
+                return date;}
             if(processTimeFormat8(date, time))
             {it=tokens.erase(it);
-            return date;}
+                return date;}
             break;
 
         case 5: if(processTimeFormat3(date, time))
@@ -453,20 +455,20 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
 bool Intellisense::processTimeFormat8 (tm &date, string time)
 {
     if(time.at(1) == ':' )
-                {
-                    if(time.size()==4)
-                    {
-                        time=removeChar(time,":");
-                        if(isAllInt(time))
-                        {
+    {
+        if(time.size()==4)
+        {
+            time=removeChar(time,":");
+            if(isAllInt(time))
+            {
 
-                            date.tm_hour=atoi(time.substr(0,1).c_str());
-                            date.tm_min=atoi(time.substr(1,2).c_str());
-                            return true;
-                        }
+                date.tm_hour=atoi(time.substr(0,1).c_str());
+                date.tm_min=atoi(time.substr(1,2).c_str());
+                return true;
+            }
 
-                    }
-                }
+        }
+    }
     return false;
 }
 
@@ -501,13 +503,13 @@ bool Intellisense::processTimeFormat6 (tm &date, string time)
                 if(date.tm_hour>=24)
                 { date.tm_hour = 0;}
                 date.tm_min=atoi(time.substr(2,2).c_str());
-                 return true;
+                return true;
             }
             else
             {
                 date.tm_hour=atoi(time.substr(0,2).c_str());
                 date.tm_min=atoi(time.substr(2,2).c_str());
-                 return true;
+                return true;
             }
 
         }
@@ -544,7 +546,7 @@ bool Intellisense::processTimeFormat5 (tm &date, string time)
 
     }
 
-     return false;
+    return false;
 }
 //@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
@@ -566,20 +568,20 @@ bool Intellisense::processTimeFormat4 (tm &date, string checkString)
 bool Intellisense::processTimeFormat3 (tm &date, string time)
 {
     if(time.at(2) == ':' )
-                {
-                    if(time.size()==5)
-                    {
-                        time=removeChar(time,":");
-                        if(isAllInt(time))
-                        {
+    {
+        if(time.size()==5)
+        {
+            time=removeChar(time,":");
+            if(isAllInt(time))
+            {
 
-                            date.tm_hour=atoi(time.substr(0,2).c_str());
-                            date.tm_min=atoi(time.substr(2,2).c_str());
-                            return true;
-                        }
+                date.tm_hour=atoi(time.substr(0,2).c_str());
+                date.tm_min=atoi(time.substr(2,2).c_str());
+                return true;
+            }
 
-                    }
-                }
+        }
+    }
     return false;
 }
 
@@ -605,7 +607,7 @@ bool Intellisense::processTimeFormat2 (tm &date, string time)
                 date.tm_min=atoi(time.substr(2,2).c_str());
 
             }
-        return true;
+            return true;
         }
     }
 
@@ -617,30 +619,30 @@ bool Intellisense::processTimeFormat2 (tm &date, string time)
 bool Intellisense::processTimeFormat1 (tm &date, string time)
 {
 
- if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
+    if(checkString("PM",time.substr(1,2))|| checkString("AM",time.substr(1,2)))
+    {
+        if(isAllInt(string(1,time.at(0))))
+        {
+
+
+            if(checkString("PM",time.substr(1,2)))
             {
-                if(isAllInt(string(1,time.at(0))))
-                {
+                date.tm_hour=atoi(time.substr(0,2).c_str())+12;
+                date.tm_min=atoi(time.substr(2,2).c_str());
 
-
-                    if(checkString("PM",time.substr(1,2)))
-                    {
-                        date.tm_hour=atoi(time.substr(0,2).c_str())+12;
-                        date.tm_min=atoi(time.substr(2,2).c_str());
-
-                    }
-                    else
-                    {
-                        date.tm_hour=atoi(time.substr(0,2).c_str());
-                        date.tm_min=atoi(time.substr(2,2).c_str());
-
-                    }
-
-                    return true;
-
-                }
             }
-return false;
+            else
+            {
+                date.tm_hour=atoi(time.substr(0,2).c_str());
+                date.tm_min=atoi(time.substr(2,2).c_str());
+
+            }
+
+            return true;
+
+        }
+    }
+    return false;
 }
 
 //@PAN WENREN A0083711L
@@ -656,7 +658,7 @@ string Intellisense::getCategory(vector<string>& tokens)
         {
             category = it->substr(1,it->size()-1);
             it = tokens.erase(it);
-            return category;
+            break;
         }
 
         if(it != tokens.end())
@@ -710,7 +712,7 @@ void Intellisense::getImptDate(string _date, tm &date)
     date.tm_year=timeinfo->tm_year+1900;   // get current year format
 
 
-return ;
+    return ;
 }
 
 
@@ -723,15 +725,15 @@ bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
     vector<string>::iterator it1=tokens.begin();
     while (it1!=tokens.end())
     {
-       checkString = it1->c_str();
-       for(int i =0; i<=imptDatesSize;i++)
-       {
-           if(checkString.compare(imptDates[i].name)==0)
-           {
-               getImptDate(imptDates[i].date, date);
-               return true;
-           }
-       }
+        checkString = it1->c_str();
+        for(int i =0; i<=imptDatesSize;i++)
+        {
+            if(checkString.compare(imptDates[i].name)==0)
+            {
+                getImptDate(imptDates[i].date, date);
+                return true;
+            }
+        }
 
         if (it1!=tokens.end())
             ++it1;//only increment if it is not the last position
@@ -886,101 +888,101 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
 //returns true if date format is identified
 //functions checks for date in string entered by user and updates the fields in structure date
 //string format example " 16 may 2013 "
- bool Intellisense::checkDateStringFormat(vector<string>& tokens, tm &date)
- {
-      string checkString;
-     vector<string>::iterator it=tokens.begin();
+bool Intellisense::checkDateStringFormat(vector<string>& tokens, tm &date)
+{
+    string checkString;
+    vector<string>::iterator it=tokens.begin();
 
-         while (it!=tokens.end())
-         { checkString = it->c_str();
-         if(tokens.size()>=3)
-         {
-             int check=checkDateString(checkString);
+    while (it!=tokens.end())
+    { checkString = it->c_str();
+        if(tokens.size()>=3)
+        {
+            int check=checkDateString(checkString);
 
-             if(check !=-1)
-             {
-                 it--;
-                 vector<string>::iterator it_day = it++;
+            if(check !=-1)
+            {
+                it--;
+                vector<string>::iterator it_day = it++;
 
-                 if(++it == tokens.end())
-                 {                // wenbin's own note, iterator unexplained
-                     return false;
-                 }
-                 --it;
-                 vector<string>::iterator it_year = ++it;
+                if(++it == tokens.end())
+                {                // wenbin's own note, iterator unexplained
+                    return false;
+                }
+                --it;
+                vector<string>::iterator it_year = ++it;
 
-                 string day =it_day->c_str();
-                 if(day.size()>2 || day.size()<=0 || !isAllInt(day))
-                 {
-                     return false;
-                 }
-                 string year = it_year->c_str();
-                 if(year.size()!=4 || !isAllInt(year))
-                 {
-                     return false;
-                 }
-                 if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
-                 {
+                string day =it_day->c_str();
+                if(day.size()>2 || day.size()<=0 || !isAllInt(day))
+                {
+                    return false;
+                }
+                string year = it_year->c_str();
+                if(year.size()!=4 || !isAllInt(year))
+                {
+                    return false;
+                }
+                if(atoi(day.c_str())<=0 || atoi(year.c_str())<=0)
+                {
 
-                     return false;
-                 }
-                 int month = check;
-                 if(month>12)
-                 {month -=12;}
+                    return false;
+                }
+                int month = check;
+                if(month>12)
+                {month -=12;}
 
-                 it_day=tokens.erase(it_day);
-                 it_day=tokens.erase(it_day);
-                 it_day=tokens.erase(it_day);
+                it_day=tokens.erase(it_day);
+                it_day=tokens.erase(it_day);
+                it_day=tokens.erase(it_day);
 
-                 it=it_day;
+                it=it_day;
 
-                 date.tm_mday=atoi(day.c_str());
-                 date.tm_mon=month;
-                 date.tm_year=atoi(year.c_str());
-                 return true;
-
-
-             }
-         }
+                date.tm_mday=atoi(day.c_str());
+                date.tm_mon=month;
+                date.tm_year=atoi(year.c_str());
+                return true;
 
 
+            }
+        }
 
-         if (it!=tokens.end())
-             ++it;//only increment if it is not the last position
-     }
 
-         return false;
- }
+
+        if (it!=tokens.end())
+            ++it;//only increment if it is not the last position
+    }
+
+    return false;
+}
 
 //@CHAM WEN BIN U094659H
 //returns a tm struct containing date which user entered
- tm Intellisense::getDate(vector<string>& tokens)
- {
+tm Intellisense::getDate(vector<string>& tokens)
+{
 
-     tm date;
-     date.tm_hour=NULL;
-     date.tm_min=NULL;
-     date.tm_sec=NULL;
-     date.tm_mday=NULL;
-     date.tm_mon=NULL;
-     date.tm_year=NULL;
-
-
-     if(checkImptDate(tokens, date))
-     {return date=getTime(tokens,date);}
-
-     else if(checkDateNumericalFormat(tokens,date))
-     {return date=getTime(tokens,date);}
+    tm date;
+    date.tm_hour=NULL;
+    date.tm_min=NULL;
+    date.tm_sec=NULL;
+    date.tm_mday=NULL;
+    date.tm_mon=NULL;
+    date.tm_year=NULL;
 
 
-     else if(checkDateStringFormat(tokens,date))
-     {return date=getTime(tokens,date);}
+    if(checkImptDate(tokens, date))
+    {return date=getTime(tokens,date);}
 
-     else
-     {return date=getTime(tokens,date);}
+    else if(checkDateNumericalFormat(tokens,date))
+    {return date=getTime(tokens,date);}
 
 
- }
+    else if(checkDateStringFormat(tokens,date))
+    {return date=getTime(tokens,date);}
+
+    else
+    {return date=getTime(tokens,date);}
+
+
+}
 
 
 //@CHAM WEN BIN U094659H
@@ -1006,16 +1008,16 @@ string Intellisense::getEventName(vector<string>& tokens)
     stringstream ss;
 
     vector<string>::iterator it=tokens.begin();
-     while (it!=tokens.end())
-     {
+    while (it!=tokens.end())
+    {
         ss<<it->c_str();
         ++it;
         if (it!=tokens.end())
         {
             ss<<string(" ");
-           //only increment if it is not the last position
+            //only increment if it is not the last position
         }
-     }
+    }
     return ss.str();
 }
 
@@ -1028,22 +1030,11 @@ int Intellisense::getDateType(vector<string>& tokens)
     while(it!=tokens.end())
     {
         string lowerString = toLowerString(*it);
-        if( lowerString == WEEKLY )
-        {//may have to add more checks if weekly is used in event name
-            dType = task::DATEWEEKLY;
-            it = tokens.erase(it);
-        }
-        else if(lowerString == FORTNIGHTLY)
+        if(checkDateType(lowerString))
         {
-            dType = task::DATEFORTNIGHTLY;
+            dType = checkDateType(lowerString);
             it = tokens.erase(it);
         }
-        else if( lowerString == MONTHLY)
-        {
-            dType = task::DATEMONTHLY;
-            it = tokens.erase(it);
-        }
-
         if(it!= tokens.end())
             it++;//increment if it is not the last iterator
 
@@ -1051,7 +1042,26 @@ int Intellisense::getDateType(vector<string>& tokens)
     return dType;
 
 }
+//@PAN WENREN A0083711L
+int Intellisense::checkDateType(string lowerString)
+{
+    int dateTypeFound = task::DATENORMAL;
 
+    if( lowerString == WEEKLY )
+    {
+        dateTypeFound = task::DATEWEEKLY;
+    }
+    else if(lowerString == FORTNIGHTLY)
+    {
+        dateTypeFound = task::DATEFORTNIGHTLY;
+    }
+    else if( lowerString == MONTHLY)
+    {
+        dateTypeFound = task::DATEMONTHLY;
+    }
+
+    return dateTypeFound;
+}
 //@CHAM WEN BIN U094659H
 //returns true if string input only contains integer
 bool Intellisense::isAllInt(const string& s)
@@ -1308,16 +1318,16 @@ int Intellisense::daysMonth(int year, int month)
 {
     int numberOfDays;
     if (month == 4 || month == 6 || month == 9 || month == 11)
-      {numberOfDays = 30;}
+    {numberOfDays = 30;}
     else if (month == 2)
     { bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-      if (isLeapYear)
-       { numberOfDays = 29;}
-      else
-       { numberOfDays = 28;}
+        if (isLeapYear)
+        { numberOfDays = 29;}
+        else
+        { numberOfDays = 28;}
     }
     else
-     { numberOfDays = 31;}
+    { numberOfDays = 31;}
 
     return numberOfDays;
 }
@@ -1457,13 +1467,13 @@ tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
     tm now ={0,0,0,0,0,0,0,0,0};
     if(!isTimeEmpty(date) && date.tm_year == 0)
     {
-    time_t t = time(0);   // get time now
-    now = *localtime( & t );
-    now.tm_year +=1900;
-    now.tm_mon +=1;
-    now.tm_hour = date.tm_hour;
-    now.tm_min  = date.tm_min;
-    return now;
+        time_t t = time(0);   // get time now
+        now = *localtime( & t );
+        now.tm_year +=1900;
+        now.tm_mon +=1;
+        now.tm_hour = date.tm_hour;
+        now.tm_min  = date.tm_min;
+        return now;
     }
     else
     {return date;}
@@ -1473,28 +1483,28 @@ tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
 
 //@CHAM WEN BIN U094659H
 //returns tm struct autofill EndDate to be same as startDate, time is 23:59
- tm Intellisense::getEndOfDay(Action &task)
- {
-     tm  timeinfo;
-     tm  endDate = task.getEndDate();
-     if(endDate.tm_year == 0
-             && endDate.tm_mon == 0
-             && endDate.tm_mday == 0
-             && endDate.tm_hour == 0
-             && endDate.tm_min ==0 )
-     {
-     tm startDate = task.getStartDate();
-     timeinfo.tm_year = startDate.tm_year;
-     timeinfo.tm_mday = startDate.tm_mday;
-     timeinfo.tm_mon= startDate.tm_mon;
-     timeinfo.tm_hour=23;
-     timeinfo.tm_min=59;
-     timeinfo.tm_sec=0;
-      return timeinfo;
-     }else
-     {return endDate;}
+tm Intellisense::getEndOfDay(Action &task)
+{
+    tm  timeinfo;
+    tm  endDate = task.getEndDate();
+    if(endDate.tm_year == 0
+            && endDate.tm_mon == 0
+            && endDate.tm_mday == 0
+            && endDate.tm_hour == 0
+            && endDate.tm_min ==0 )
+    {
+        tm startDate = task.getStartDate();
+        timeinfo.tm_year = startDate.tm_year;
+        timeinfo.tm_mday = startDate.tm_mday;
+        timeinfo.tm_mon= startDate.tm_mon;
+        timeinfo.tm_hour=23;
+        timeinfo.tm_min=59;
+        timeinfo.tm_sec=0;
+        return timeinfo;
+    }else
+    {return endDate;}
 
- }
+}
 
 
 //@PAN WENREN A0083711L
@@ -1516,16 +1526,17 @@ Action Intellisense::editOperation(vector<string>& tokens)
     return task;
 }
 
-
 //@PAN WENREN A0083711L
-void Intellisense::setAllStatusFlag(Action task)
+void Intellisense::setNameFlag(Action task)
 {
-
     if(task.getEventName() == EMPTYEVENT )
         setStatusFlagAt(INAME,false);
     else
         setStatusFlagAt(INAME,true);
-
+}
+//@PAN WENREN A0083711L
+void Intellisense::setStartDateFlag(Action task)
+{
     bool isDateNotSet;
     isDateNotSet = (task.getStartDate().tm_year == 0	&&
                     task.getStartDate().tm_mon	== 0   &&
@@ -1534,31 +1545,54 @@ void Intellisense::setAllStatusFlag(Action task)
         setStatusFlagAt(IDATE,false);
     else
         setStatusFlagAt(IDATE,true);
+}
 
-    bool isDateEndNotSet;
-    isDateEndNotSet = (task.getEndDate().tm_year == 0	&&
-                       task.getEndDate().tm_mon	== 0   &&
-                       task.getEndDate().tm_mday == 0);
+//@PAN WENREN A0083711L
+void Intellisense::setEndDateFlag(Action task)
+{
+    bool isDateEndNotSet = (task.getEndDate().tm_year == 0	&&
+                            task.getEndDate().tm_mon	== 0   &&
+                            task.getEndDate().tm_mday == 0);
     if(isDateEndNotSet)
         setStatusFlagAt(IDATEEND,false);
     else
         setStatusFlagAt(IDATEEND,true);
 
+}
+//@PAN WENREN A0083711L
+void Intellisense::setPriorityFlag(Action task)
+{
     if(task.getPriority() == EMPTYPRIORITY )
         setStatusFlagAt(IPRIORITY,false);
     else
         setStatusFlagAt(IPRIORITY,true);
-
-
+}
+//@PAN WENREN A0083711L
+void Intellisense::setCategoryFlag(Action task)
+{
     if(task.getCategory() == EMPTYCATEGORY)
         setStatusFlagAt(ICATEGORY,false);
     else
         setStatusFlagAt(ICATEGORY,true);
-
+}
+//@PAN WENREN A0083711L
+void Intellisense::setIDFlag(Action task)
+{
     if(task.getID() == EMPTYID)
         setStatusFlagAt(IID,false);
     else
         setStatusFlagAt(IID,true);
+}
+
+//@PAN WENREN A0083711L
+void Intellisense::setAllStatusFlag(Action task)
+{
+    setNameFlag(task);
+    setStartDateFlag(task);
+    setEndDateFlag(task);
+    setPriorityFlag(task);
+    setCategoryFlag(task);
+    setIDFlag(task);
 }
 
 //@PAN WENREN A0083711L
@@ -1612,11 +1646,7 @@ void Intellisense::checkExitReq()
 void Intellisense::checkDelReq()
 {// need at least an ID to delete
     bool checkReqMet = false;
-    if (statusFlags[IID])
-    {
-        checkReqMet = true;
-    }
-    if (statusFlags[INAME])
+    if (statusFlags[IID] || statusFlags[INAME])
     {
         checkReqMet = true;
     }
@@ -1625,18 +1655,7 @@ void Intellisense::checkDelReq()
 //@PAN WENREN A0083711L
 void Intellisense::checkDspReq()
 {
-    bool dspReqMet = false;
-
-    /*if (statusFlags[ICATEGORY] )
-    {
-        dspReqMet = true;
-    }
-    if (statusFlags[IDATE] )
-    {
-        dspReqMet = true;
-    }
-    */
-    dspReqMet = true;//removed the requirements for display command without any parameters
+    bool dspReqMet = true;//removed the requirements for display command without any parameters
     requirementsMet = dspReqMet;
 
 }
@@ -1644,11 +1663,7 @@ void Intellisense::checkDspReq()
 void Intellisense::checkMarkReq()
 {
     bool markReqMet = false;
-    if (statusFlags[INAME])
-    {
-        markReqMet = true;
-    }
-    if (statusFlags[IDATE] )
+    if (statusFlags[INAME] || statusFlags[IDATE])
     {
         markReqMet = true;
     }
@@ -1658,15 +1673,7 @@ void Intellisense::checkMarkReq()
 void Intellisense::checkFindReq()
 {
     bool findReqMet = false;
-    if (statusFlags[IDATE] )
-    {
-        findReqMet = true;
-    }
-    if (statusFlags[ICATEGORY] )
-    {
-        findReqMet = true;
-    }
-    if (statusFlags[INAME])
+    if (statusFlags[IDATE] || statusFlags[ICATEGORY]  || statusFlags[INAME])
     {
         findReqMet = true;
     }
@@ -1688,143 +1695,155 @@ string Intellisense::getAddFeedBack()
 {
     if(getrequirementsMet())
     {
-            return ADDFEEDBACK_1 ;
+        return ADDFEEDBACK_1 ;
     }
 
- return ADDFEEDBACK_2 ;
+    return ADDFEEDBACK_2 ;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getEditFeedBack()
 {
+    string feedBack;
     if(getrequirementsMet())
     {
-      return EDITFEEDBACK_1 ;
+        feedBack = EDITFEEDBACK_1 ;
+    }
+    else
+    {
+        feedBack = EDITFEEDBACK_2 ;
     }
 
-      return EDITFEEDBACK_2 ;
+    return feedBack;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getDeleteFeedBack()
 {
-
+    string feedBack;
     if(getrequirementsMet())
     {
-            return DELFEEDBACK_1 ;
+        feedBack = DELFEEDBACK_1 ;
+    }
+    else
+    {
+        feedBack = DELFEEDBACK_2;
     }
 
-            return DELFEEDBACK_2;
-
+    return feedBack;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getExitFeedBack()
 {
-
     return EXITFEEDBACK_1;
-
 }
 //@PAN WENREN A0083711L
 string Intellisense::getDisplayFeedBack()
 {
-
+    string feedBack;
     if(getrequirementsMet())
     {
-        return DISPLAYFEEDBACK_1;
+        feedBack = DISPLAYFEEDBACK_1;
+    }
+    else
+    {
+        feedBack = DISPLAYFEEDBACK_2;
     }
 
-        return DISPLAYFEEDBACK_2;
+    return feedBack;
 
 }
 //@PAN WENREN A0083711L
 string Intellisense::getFindFeedBack()
 {
+    string feedBack;
     if(getrequirementsMet())
     {
-        return FINDFEEDBACK_1;
+        feedBack = FINDFEEDBACK_1;
+    }
+    else
+    {
+        feedBack = FINDFEEDBACK_2;
     }
 
-        return FINDFEEDBACK_2;
+    return feedBack;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getSortFeedBack()
 {
-
+    string feedBack;
     if(getrequirementsMet())
     {
-        return  SORTFEEDBACK_1;
+        feedBack =  SORTFEEDBACK_1;
+    }
+    else
+    {
+        feedBack = SORTFEEDBACK_2;
     }
 
-        return SORTFEEDBACK_2;
+    return feedBack;
 
 }
 //@PAN WENREN A0083711L
 string Intellisense::getRedoFeedBack()
 {
-    string feedback;
-    feedback = REDOFEEDBACK_1 ;
-    return feedback;
+    return REDOFEEDBACK_1;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getUndoFeedBack()
 {
-    string feedback;
-    feedback = UNDOFEEDBACK_1 ;
-    return feedback;
+    return UNDOFEEDBACK_1;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getMarkFeedBack()
 {
+    string feedBack;
     if(getrequirementsMet())
     {
-            return MARKFEEDBACK_1 ;
+        feedBack = MARKFEEDBACK_1 ;
+    }
+    else
+    {
+        feedBack = MARKFEEDBACK_2 ;
     }
 
-            return MARKFEEDBACK_2 ;
+    return feedBack;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getFeedback()
 {//later refactor this into functions
-    if(currentCommand == ADD)
+    switch(currentCommand)
     {
+    case ADD:
         _feedback = getAddFeedBack();
-    }
-    else if(currentCommand == EDIT)
-    {
+        break;
+    case EDIT:
         _feedback = getEditFeedBack();
-    }
-    else if(currentCommand == DELETE )
-    {
+        break;
+    case DELETE:
         _feedback = getDeleteFeedBack();
-    }
-    else if(currentCommand == EXIT )
-    {
+        break;
+    case EXIT:
         _feedback = getExitFeedBack();
-    }
-    else if(currentCommand == DISPLAY )
-    {
+        break;
+    case DISPLAY:
         _feedback = getDisplayFeedBack();
-    }
-    else if(currentCommand == FIND )
-    {
+        break;
+    case FIND:
         _feedback = getFindFeedBack();
-    }
-    else if(currentCommand == SORT )
-    {
+        break;
+    case SORT:
         _feedback = getSortFeedBack();
-    }
-    else if(currentCommand == REDO )
-    {
+        break;
+    case REDO:
         _feedback = getRedoFeedBack();
-    }
-
-    else if(currentCommand == UNDO )
-    {
+        break;
+    case UNDO:
         _feedback = getUndoFeedBack();
+        break;
+    case MARK:
+        _feedback = getMarkFeedBack();
+        break;
     }
 
-    else if(currentCommand == MARK )
-    {
-        _feedback = getMarkFeedBack();
-    }
 
     return _feedback;
 }
@@ -1834,58 +1853,141 @@ void Intellisense::setFeedback(string newFeedback)
     _feedback=newFeedback;
 }
 //@PAN WENREN A0083711L
+bool isValidAddPara(int parameter)
+{
+    bool valid = false;
+    if (parameter == INAME || parameter ==  IDATE || parameter == IPRIORITY ||
+            parameter == ICATEGORY || parameter == IDATEEND)
+    {
+        valid = true;
+    }
+
+    return valid;
+
+}
+//@PAN WENREN A0083711L
+bool isValidDelPara(int parameter)
+{
+    bool valid = false;
+    if (parameter == INAME || parameter == IID)
+        valid = true;
+
+    return valid;
+
+}
+//@PAN WENREN A0083711L
+bool isValidDisplayPara(int parameter)
+{
+    bool valid = false;
+    return valid;
+
+}
+//@PAN WENREN A0083711L
+bool isValidMarkPara(int parameter)
+{
+    bool valid = false;
+    if (parameter == INAME  )
+        valid =true;
+
+    return valid;
+
+}
+//@PAN WENREN A0083711L
+bool isValidFindPara(int parameter)
+{
+    bool valid = false;
+    if (parameter == INAME ||  parameter == ICATEGORY ||  parameter == IDATE)
+        valid =true;
+
+    return valid;
+
+}
+//@PAN WENREN A0083711L
+bool isValidEditPara(int parameter)
+{
+    bool valid = false;
+    if (parameter == INAME || parameter ==  IDATE || parameter == IPRIORITY ||
+            parameter == ICATEGORY || parameter == IDATEEND ||  parameter == IID)
+        valid =true;
+
+    return valid;
+}
+//@PAN WENREN A0083711L
+bool isValidExitPara(int parameter)
+{
+    bool valid = false;
+
+    return valid;
+}
+//@PAN WENREN A0083711L
+bool isValidSortPara(int parameter)
+{
+    bool valid = false;
+
+    return valid;
+}
+//@PAN WENREN A0083711L
 bool Intellisense::isValidParaForCmd(int cmd,int parameter)
 {//this determines if the parameter is valid to work with the command
     ASSERT(cmd>=0,"COMMAND CODE CANNOT BE LESS THAN ZERO");
     ASSERT(cmd>=0,"PARAMETER CANNOT BE LESS ZERO");
-    bool valid=false;
-    if (cmd == ADD)
+    bool valid = false;
+
+    switch(cmd)
     {
-        if (parameter == INAME || parameter ==  IDATE || parameter == IPRIORITY ||
-            parameter == ICATEGORY || parameter == IDATEEND)
-            valid =true;
-    }
-    if (cmd == DELETE)
-    {//delete command only valid with 2 parameter
-        if (parameter == INAME || parameter == IID)
-            valid =true;
-    }
-    if (cmd == DISPLAY)
+    case ADD:
     {
-         valid =false;
+        valid = isValidAddPara(parameter);
+        break;
     }
-    if (cmd == MARK)
+    case DELETE:
     {
-        if (parameter == INAME  )
-            valid =true;
+        valid = isValidDelPara(parameter);
+        break;
     }
-    if (cmd == FIND)
+    case DISPLAY:
     {
-        if (parameter == INAME ||  parameter == ICATEGORY ||  parameter == IDATE)
-            valid =true;
+        valid = isValidDisplayPara(parameter);
+        break;
     }
-    if (cmd == EDIT)
+    case MARK:
     {
-        if (parameter == INAME || parameter ==  IDATE || parameter == IPRIORITY ||
-            parameter == ICATEGORY || parameter == IDATEEND ||  parameter == IID)
-            valid =true;
+        valid = isValidMarkPara(parameter);
+        break;
     }
-    if (cmd == EXIT)
+    case FIND:
     {
-            valid =false;
+        valid = isValidFindPara(parameter);
+        break;
     }
-    if (cmd == SORT)
+    case EDIT:
     {
-            valid =false;
+        valid = isValidEditPara(parameter);
+        break;
     }
+    case EXIT:
+    {
+        valid = isValidExitPara(parameter);
+        break;
+    }
+    case SORT:
+    {
+        valid = isValidSortPara(parameter);
+        break;
+    }
+    }
+
     return valid;
 }
 //@PAN WENREN A0083711L
-string Intellisense::getParameter()
-{// output the string based on the flags set
-    //refactor into many small functions
-    _parameter ="";//erase first
-    if(isValidParaForCmd(currentCommand,INAME))//
+void Intellisense::clearPara()
+{
+    _parameter = "";//erase first
+}
+//@PAN WENREN A0083711L
+void Intellisense::updateNameInPara()
+{
+    if(isValidParaForCmd(currentCommand,INAME))
     {
         if(statusFlags[INAME])
         {
@@ -1896,6 +1998,10 @@ string Intellisense::getParameter()
             _parameter =_parameter + REDEVENTTEXT ;
         }
     }
+}
+//@PAN WENREN A0083711L
+void Intellisense::updateDateInPara()
+{
     if(isValidParaForCmd(currentCommand,IDATE))//
     {
         if(statusFlags[IDATE])
@@ -1907,7 +2013,10 @@ string Intellisense::getParameter()
             _parameter =_parameter + REDSTARTDATETEXT ;
         }
     }
-
+}
+//@PAN WENREN A0083711L
+void Intellisense::updateEndDateInPara()
+{
     if(isValidParaForCmd(currentCommand,IDATEEND))//
     {
         if(statusFlags[IDATEEND])
@@ -1919,7 +2028,10 @@ string Intellisense::getParameter()
             _parameter =_parameter + REDENDDATETEXT;
         }
     }
-
+}
+//@PAN WENREN A0083711L
+void Intellisense::updatePriorityInPara()
+{
     if(isValidParaForCmd(currentCommand,IPRIORITY))//
     {
         if(statusFlags[IPRIORITY])
@@ -1931,7 +2043,10 @@ string Intellisense::getParameter()
             _parameter =_parameter + REDPRIORITYTEXT ;
         }
     }
-
+}
+//@PAN WENREN A0083711L
+void Intellisense::updateCategoryInPara()
+{
     if(isValidParaForCmd(currentCommand,ICATEGORY))//
     {
         if(statusFlags[ICATEGORY])
@@ -1943,6 +2058,11 @@ string Intellisense::getParameter()
             _parameter =_parameter + REDCATEGORYTEXT ;
         }
     }
+}
+//@PAN WENREN A0083711L
+void Intellisense::updateIDInPara()
+{
+
     if(isValidParaForCmd(currentCommand,IID))//
     {
         if(statusFlags[IID])
@@ -1954,8 +2074,22 @@ string Intellisense::getParameter()
             _parameter =_parameter + REDIDTEXT ;
         }
     }
-    //this is for the example feedback string
-    _parameter = _parameter + "<br>" + getFeedback();
+}
+
+//@PAN WENREN A0083711L
+// output the string based on the flags set
+string Intellisense::getParameter()
+{
+    clearPara();
+    updateNameInPara();
+    updateDateInPara();
+    updateEndDateInPara();
+    updatePriorityInPara();
+    updateCategoryInPara();
+    updateIDInPara();
+
+    _parameter = _parameter + LINEBREAK + getFeedback();
+
     return _parameter;
 }
 //@PAN WENREN A0083711L
