@@ -17,7 +17,7 @@ SeampleView::SeampleView(QWidget *parent) :
     //sec window
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    _animation = new QPropertyAnimation(ui->frame, "geometry");
+    _animation = new QPropertyAnimation(ui->frame, ANIMATION_ATTRIBUTE.c_str());
     _allShortcuts.setShortcutsTo(this);
     setSignals();
 
