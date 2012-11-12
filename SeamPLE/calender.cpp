@@ -69,7 +69,7 @@ bool calender::addItem(task currentTask)
     {
         currentTask.setPriority("LOW");
     }
-        saveStringToStack(_addHistory, currentTask.getEventName());
+    saveStringToStack(_addHistory, currentTask.getEventName());
     saveStringToStack(_commandHistory, _ADDITION);
     lastCommandUndo = false;
     _storage.push_back(currentTask);
@@ -163,12 +163,12 @@ bool calender::deleteAll()
 {
     if (_storage.size() != 0)
     {
-    writeBackupFile();
-    _storage.clear();
-    saveStringToStack(_commandHistory, _DELETEALL);
-    lastCommandUndo = false;
-    writeFile();
-    return true;
+        writeBackupFile();
+        _storage.clear();
+        saveStringToStack(_commandHistory, _DELETEALL);
+        lastCommandUndo = false;
+        writeFile();
+        return true;
     }
     else
         return false;
@@ -278,13 +278,15 @@ bool calender::editTask( task _edited)
 
 }
 //@Riandy A0088392R
+//This function search the category given of every task in _storage and return the
+//tasks that match the category into a vector<task>
 vector<task> calender::SearchByCat(string searchItem)
 {
     vector<task> _bufferStorage;
     for (int i = 0; i < int(_storage.size()); i++)
     {
         string  bufferString = _storage[i].getCategory();
-         if (bufferString.compare(searchItem)==0)
+        if (bufferString.compare(searchItem)==0)
         {
             _bufferStorage.push_back(_storage[i]);
 
@@ -310,7 +312,7 @@ vector<task> calender::SearchByTask(string searchItem)
     return _bufferStorage;
 }
 
-//@Riandy A0088392R
+//@PAN WENREN A0083711L
 task* calender::pointerSearchByTask(string searchItem) //@WENREN
 // only return first match
 {
@@ -477,7 +479,7 @@ bool calender::undoAction()
         }
         else if (lastCommand == _DELETEALL)
         {
-         this->undoDeleteAll();
+            this->undoDeleteAll();
         }
         else
             _faulty->report("Calender class: Unknown undo command");
@@ -566,24 +568,24 @@ vector<task> calender::getToday()
 //@JOHN A0069517W
 void calender::saveStringToStack(stack<string>& thisStack, string thisString)
 {
-          if (thisStack.size() < 3)
-            thisStack.push(thisString);
-        else if (thisStack.size() == 3)
+    if (thisStack.size() < 3)
+        thisStack.push(thisString);
+    else if (thisStack.size() == 3)
+    {
+        stack<string> tempStack;
+        while (thisStack.size() != 1)
         {
-            stack<string> tempStack;
-            while (thisStack.size() != 1)
-            {
-                tempStack.push(thisStack.top());
-                thisStack.pop();
-            }
+            tempStack.push(thisStack.top());
             thisStack.pop();
-            while(thisStack.size() != 2)
-            {
-                thisStack.push(tempStack.top());
-                tempStack.pop();
-            }
-            thisStack.push(thisString);
         }
+        thisStack.pop();
+        while(thisStack.size() != 2)
+        {
+            thisStack.push(tempStack.top());
+            tempStack.pop();
+        }
+        thisStack.push(thisString);
+    }
 
 }
 
@@ -591,48 +593,48 @@ void calender::saveStringToStack(stack<string>& thisStack, string thisString)
 //@JOHN A0069517W
 void calender::saveToStack(stack<task>& thisStack, task thisTask)
 {
-          if (thisStack.size() < 3)
-            thisStack.push(thisTask);
-        else if (thisStack.size() == 3)
+    if (thisStack.size() < 3)
+        thisStack.push(thisTask);
+    else if (thisStack.size() == 3)
+    {
+        stack<task> tempStack;
+        while (thisStack.size() != 1)
         {
-            stack<task> tempStack;
-            while (thisStack.size() != 1)
-            {
-                tempStack.push(thisStack.top());
-                thisStack.pop();
-            }
+            tempStack.push(thisStack.top());
             thisStack.pop();
-            while(thisStack.size() != 2)
-            {
-                thisStack.push(tempStack.top());
-                tempStack.pop();
-            }
-            thisStack.push(thisTask);
         }
+        thisStack.pop();
+        while(thisStack.size() != 2)
+        {
+            thisStack.push(tempStack.top());
+            tempStack.pop();
+        }
+        thisStack.push(thisTask);
+    }
 
 }
 
 //@JOHN A0069517W
 void calender::saveIntToStack(stack<int>& thisStack, int thisInt)
 {
-          if (thisStack.size() < 3)
-            thisStack.push(thisInt);
-        else if (thisStack.size() == 3)
+    if (thisStack.size() < 3)
+        thisStack.push(thisInt);
+    else if (thisStack.size() == 3)
+    {
+        stack<int> tempStack;
+        while (thisStack.size() != 1)
         {
-            stack<int> tempStack;
-            while (thisStack.size() != 1)
-            {
-                tempStack.push(thisStack.top());
-                thisStack.pop();
-            }
+            tempStack.push(thisStack.top());
             thisStack.pop();
-            while(thisStack.size() != 2)
-            {
-                thisStack.push(tempStack.top());
-                tempStack.pop();
-            }
-            thisStack.push(thisInt);
         }
+        thisStack.pop();
+        while(thisStack.size() != 2)
+        {
+            thisStack.push(tempStack.top());
+            tempStack.pop();
+        }
+        thisStack.push(thisInt);
+    }
 
 }
 
@@ -645,6 +647,7 @@ void calender::SortByDate()
 }
 
 //@Riandy A0088392R
+//compare two given task with its startDate
 bool calender::taskDateComparator(task task1,task task2)
 {
     tm date1=task1.getStartDate();
@@ -653,6 +656,7 @@ bool calender::taskDateComparator(task task1,task task2)
 }
 
 //@Riandy A0088392R
+//compare the date given and return true if date1 is earlier than date2
 bool calender::dateComparator(tm date1,tm date2)
 {
     //check in the sequence of
@@ -663,7 +667,6 @@ bool calender::dateComparator(tm date1,tm date2)
         return true;
     else if(date1.tm_year==date2.tm_year)
     {
-
         if(date1.tm_mon<date2.tm_mon)
             result=true;
         else if(date1.tm_mon==date2.tm_mon)
@@ -704,7 +707,6 @@ vector<task> calender::SearchPastEvent()
 
     for(int i=0;i<_storage.size();i++)
         if(dateComparator(_storage[i].getEndDate(),now)==true && _storage[i].getDateType() != F10AT)
-
             bufferStorage.push_back(_storage[i]);
 
     return bufferStorage;
@@ -788,7 +790,7 @@ void calender::undoDelete()
     _undoHistory.push(_DELETE);
     task tempTask = _deletedTasks.top();
     _storage.push_back(tempTask);
-        saveStringToStack(_deleteHistory, tempTask.getEventName());
+    saveStringToStack(_deleteHistory, tempTask.getEventName());
     _deletedTasks.pop();
 }
 //@JOHN A0069517W
@@ -880,6 +882,9 @@ vector<task> calender::displayArchiveEvent()
 }
 
 //@Riandy A0088392R
+//This function is used to update the recurring events based on the datetypes
+//in every task/event. You should call this function in the constructor before archiving the past
+//events
 bool calender::updateRecurringEvents()
 {
     time_t t = time(0);   // get time now
@@ -912,6 +917,7 @@ bool calender::updateRecurringEvents()
 }
 
 //@Riandy A0088392R
+//This function updates the date supplied by num days
 void calender::updateDate(int num, tm &date)
 {
     int numOfDays=daysInAMonth(date.tm_mon,date.tm_year);
@@ -949,8 +955,13 @@ void calender::updateWeekly(task &event)
 }
 
 //@Riandy A0088392R
+//Return the number of days in a month, taking consideration of leap year
 int calender::daysInAMonth(int year,int month)
 {
+    //defensive coding
+    if(month<1 || month >12)
+        return 0;
+
     int numberOfDays;
     if (month == 4 || month == 6 || month == 9 || month == 11)
     {numberOfDays = 30;}
@@ -968,6 +979,7 @@ int calender::daysInAMonth(int year,int month)
 }
 
 //@Riandy A0088392R
+//Updates the fortnightly task provided in the parameter
 void calender::updateFortnightly(task &event)
 {
     tm startDate=event.getStartDate();
@@ -983,6 +995,9 @@ void calender::updateFortnightly(task &event)
 }
 
 //@Riandy A0088392R
+//This function is used to update a monthly task.
+//it will update both startDate and endDate
+//if current month is 12, then year will be auto added by 1
 void calender::updateMonthly(task &event)
 {
     tm startDate=event.getStartDate();
@@ -998,6 +1013,7 @@ void calender::updateMonthly(task &event)
 }
 
 //@Riandy A0088392R
+//This function is used to update the month on a provided date.
 void calender::updateMonth(int num, tm &date)
 {
 

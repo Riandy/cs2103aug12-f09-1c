@@ -78,6 +78,17 @@ private:
     vector<task> SearchPastEvent();
     string ensureUniqueName(string _name);
 
+    bool updateRecurringEvents();
+    int daysInAMonth(int year,int month);
+    void updateDate(int num,tm &date);
+    void updateMonth(int num,tm &date);
+    void updateWeekly(task &event);
+    void updateFortnightly(task &event);
+    void updateMonthly(task &event);
+
+    void SortByDate();
+    vector<task> SortByCategory();
+
 public:
 
     calender();
@@ -111,16 +122,6 @@ public:
     vector<task> displayDatabase();
     vector<task> displayArchiveEvent();
     vector<task> getToday();
-    vector<task> SortByEvent();
-    void SortByDate();
-    vector<task> SortByCategory();
     string convertToDate(tm _date);
-    bool updateRecurringEvents();
-    int daysInAMonth(int year,int month);
-    void updateDate(int num,tm &date);
-    void updateMonth(int num,tm &date);
-    void updateWeekly(task &event);
-    void updateFortnightly(task &event);
-    void updateMonthly(task &event);
 };
 #endif
