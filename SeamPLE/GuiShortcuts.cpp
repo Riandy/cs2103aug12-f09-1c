@@ -27,7 +27,6 @@ GuiShortcuts::GuiShortcuts()
     _changeScreenThreeView = NULL;
     _mark = NULL;
     _today = NULL;
-    //_showHideView = NULL;
 }
 
 //Destructor of class will ensure that all dynamically allocated memory
@@ -54,7 +53,6 @@ GuiShortcuts::~GuiShortcuts()
     removeChangeScreenThreeView();
     removeMark();
     removeToday();
-    //removeShowHideView();
 }
 
 
@@ -190,12 +188,6 @@ QAction* GuiShortcuts::getTodayKey()
 {
     return _today;
 }
-
-//QxtGlobalShortcut* GuiShortcuts::getShowHideViewKey()
-//{
-//    return _showHideView;
-//}
-
 
 //Following set____ functions create a shortcut entry in the Gui that is sent
 //in as a parameter into the function
@@ -582,12 +574,3 @@ void GuiShortcuts::removeToday()
         _today = NULL;
     }
 }
-
-//void GuiShortcuts::removeShowHideView()
-//{
-//    if (_showHideView != NULL)
-//    {
-//        delete _showHideView;
-//        _showHideView = NULL;
-//    }
-//}

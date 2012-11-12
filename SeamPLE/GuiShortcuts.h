@@ -87,7 +87,6 @@ private:
     void removeChangeScreenThreeView();
     void removeMark();
     void removeToday();
-    //void removeShowHideView();
 
 private:
     //Pointers to the shortcuts

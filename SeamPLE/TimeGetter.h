@@ -29,6 +29,7 @@ private:
 private:
     QTime getTime(QDateTime currDateAndTime);
     bool singleInstanceExist();
+    QString setTickingMotionFrom(QDateTime currDateAndTime);
 
 public:
     TimeGetter* getInstance();

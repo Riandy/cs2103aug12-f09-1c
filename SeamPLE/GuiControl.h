@@ -51,6 +51,8 @@ private slots:
     void displayTodaysEvents();
 
 private:
+    void updateInterface(QString input, QString inputChecked,
+                         bool inputBarHasFocus);
     void showOnlySeampleView(QString input, QString inputChecked,
                                 bool inputBarHasFocus);
     void showOnlyStandardView(QString input, QString inputChecked,
