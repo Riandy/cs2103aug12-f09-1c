@@ -64,7 +64,8 @@ private:
     void setStandardGuiSignals();
     void setSeampleGuiSignals();
     void setTimedSignals();
-
+    bool checkStandardViewRequired(QVector <QString> output);
+    QCharRef getInputColorFlag(QVector <QString> output);
 
 private:
     bool _standardViewFlag;
