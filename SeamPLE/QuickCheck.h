@@ -22,9 +22,8 @@ private:
     const static string TODAY_COMMAND;
     const static string FLOAT_COMMAND;
 
-
 public:
-    bool shortcutCheck(string input);
+    bool static shortcutCheck(string input);
 };
 
 #endif // QUICKCHECK_H
