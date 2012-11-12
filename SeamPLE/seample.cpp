@@ -70,18 +70,18 @@ void Seample::updateUserInput(string userInput)
 {
     this->userInput=userInput;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::updateIntellisenseFeedBack()
 {
         feedback.push_back(QString::fromStdString(intellisense->getParameter()));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::normalCommandHandler()
 {
     updateIntellisenseFeedBack();
     sendBoxColourFlag();
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::sendBoxColourFlag()
 {
     if (intellisense->getrequirementsMet())
@@ -93,7 +93,7 @@ void Seample::sendBoxColourFlag()
         feedback.push_back(QString::fromStdString(INVALIDBOXFLAG));
     }
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::editCommandHandler()
 {
     feedback += fireAction(); //append the results at the end
@@ -102,7 +102,7 @@ void Seample::editCommandHandler()
 
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::intellisenseHandler()
 {
     if( (response.getCommand()) != Intellisense::EDITCOMMAND )
@@ -116,7 +116,7 @@ void Seample::intellisenseHandler()
     }
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::interpretEditCommand()
 {
     if( (response.getCommand()) == Intellisense::EDITCOMMAND )
@@ -128,7 +128,7 @@ void Seample::schedulerHandler()
     feedback = fireAction();
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::distributeTasks(Command componentType)
 {
     if (componentType == TO_SCHEDULER_AND_RETURN_RESULTS && intellisense->getrequirementsMet())
@@ -146,18 +146,18 @@ void Seample::distributeTasks(Command componentType)
         feedback = convertQString(_scheduler->getTodayEvents());
     }
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::updateInternalInput(string _userInput)
 {
         userInput = _userInput;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::updateResponse()
 {
      response = intellisense->check(userInput);
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 QVector <QString> Seample::run(Command componentType, string _userInput)
 {
     updateInternalInput(_userInput);
