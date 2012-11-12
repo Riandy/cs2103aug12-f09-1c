@@ -7,7 +7,7 @@
 #include "GuiShortcuts.h"
 #include "SLineEdit.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 //This class contains the shared GUI items between SeampleView and
 //StandardView. Items seen here are meant to be used by both user interfaces

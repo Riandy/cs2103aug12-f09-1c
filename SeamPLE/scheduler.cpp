@@ -698,7 +698,7 @@ void scheduler::DisplayArchive()
     partialUpdateGUI(taskVector,"DISPLAYARCHIVE");
 }
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 //Get a list of today's events for StandardView
 vector<string> scheduler:: getTodayEvents()
 {
@@ -718,7 +718,7 @@ vector<string> scheduler:: getTodayEvents()
                                   threeCountFlag, threeTasks);
 }
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 //Called by getTodayEvents to retrieve the required parameters for making the returning
 //vector of strings
 void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firstPriorityFound,
@@ -749,7 +749,7 @@ void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firs
     }
 }
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 //Function creates a vector of strings according to parameters sent in for today's events
 vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
                                                  int highPriorityTasks, int size,
@@ -776,7 +776,7 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     return eventsOverview;
 }
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 //Take the content of both vectors and return as a single
 //vector of strings
 vector<string> scheduler:: combineStringVectors(
@@ -792,7 +792,8 @@ vector<string> scheduler:: combineStringVectors(
 
     return combined;
 }
-//@LIU WEIYUAN: A0086030R
+
+//@author: A0086030R
 //Get a string conversion from the integer that is sent in as the parameter
 string scheduler:: getStringFromInt(int subject)
 {

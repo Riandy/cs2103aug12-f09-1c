@@ -1,7 +1,7 @@
 #include "SeampleView.h"
 #include "ui_SeampleView.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 SeampleView* SeampleView::_seampleView = NULL;
 

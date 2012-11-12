@@ -5,8 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-#\
- #         testlib
+         #testlib
 
 TARGET = SeamPLE
 TEMPLATE = app
@@ -68,8 +67,5 @@ RESOURCES += \
 OTHER_FILES +=
 
 #CONFIG += static
-
-#CONFIG  += qxt
-#QXT     += core gui
 
 

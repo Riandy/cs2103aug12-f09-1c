@@ -6,7 +6,7 @@
 #include <fstream>
 #include <QString>
 
-//@LIU WEIYUAN A0086030R
+//@author: A0086030R
 
 //This class is to be used for logging of errors. As this class is a
 //singleton, a pointer is needed to be created for this class. Call

@@ -3,7 +3,7 @@
 
 #include "CommonView.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 //This class is the SeampleView as observed when running the program
 //It can be used by GuiControl in conjuction with StandardView, where only
 //one of the user interfaces will be shown one at a time

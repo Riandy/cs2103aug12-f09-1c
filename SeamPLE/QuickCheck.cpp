@@ -1,6 +1,6 @@
 #include "QuickCheck.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 const string QuickCheck::UNDO_COMMAND = "undo";
 const string QuickCheck::REDO_COMMAND = "redo";

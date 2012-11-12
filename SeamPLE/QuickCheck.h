@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 //This class is an alternative check for intellisense function. Since
 //Intellisense checks the input before setting the flag to allow users
