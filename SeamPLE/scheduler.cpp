@@ -690,7 +690,15 @@ void scheduler::Todo()
 }
 
 
-//@WEIYUAN A0086030R
+//@Riandy A0088392R
+//display the archive file to the GUI
+void scheduler::DisplayArchive()
+{
+    taskVector=eventCalender.displayArchiveEvent();
+    partialUpdateGUI(taskVector,"DISPLAYARCHIVE");
+}
+
+//@LIU WEIYUAN: A0086030R
 //Get a list of today's events for StandardView
 vector<string> scheduler:: getTodayEvents()
 {
@@ -709,7 +717,8 @@ vector<string> scheduler:: getTodayEvents()
                                   highPriorityTasks,size,
                                   threeCountFlag, threeTasks);
 }
-//@WEIYUAN A0086030R
+
+//@LIU WEIYUAN: A0086030R
 //Called by getTodayEvents to retrieve the required parameters for making the returning
 //vector of strings
 void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firstPriorityFound,
@@ -739,7 +748,8 @@ void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firs
         }
     }
 }
-//@WEIYUAN A0086030R
+
+//@LIU WEIYUAN: A0086030R
 //Function creates a vector of strings according to parameters sent in for today's events
 vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
                                                  int highPriorityTasks, int size,
@@ -765,7 +775,8 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     }
     return eventsOverview;
 }
-//@WEIYUAN A0086030R
+
+//@LIU WEIYUAN: A0086030R
 //Take the content of both vectors and return as a single
 //vector of strings
 vector<string> scheduler:: combineStringVectors(
@@ -781,19 +792,11 @@ vector<string> scheduler:: combineStringVectors(
 
     return combined;
 }
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 //Get a string conversion from the integer that is sent in as the parameter
 string scheduler:: getStringFromInt(int subject)
 {
     stringstream buffer;
     buffer << subject;
     return buffer.str();
-}
-
-//@Riandy A0088392R
-//display the archive file to the GUI
-void scheduler::DisplayArchive()
-{
-    taskVector=eventCalender.displayArchiveEvent();
-    partialUpdateGUI(taskVector,"DISPLAYARCHIVE");
 }
