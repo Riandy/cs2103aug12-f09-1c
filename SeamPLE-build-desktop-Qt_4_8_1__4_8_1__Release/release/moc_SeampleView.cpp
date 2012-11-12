@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SeampleView.h'
 **
-** Created: Mon 12. Nov 13:04:39 2012
+** Created: Mon 12. Nov 23:23:33 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
