@@ -55,6 +55,7 @@ void NotifyView::endInstance()
 {
     if (singleInstanceExists())
     {
+        _popUp->hide();
         delete _notificationInterface;
         _notificationInterface = NULL;
     }
