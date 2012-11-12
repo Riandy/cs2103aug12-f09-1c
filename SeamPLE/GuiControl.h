@@ -7,7 +7,7 @@
 #include "seample.h"
 #include "timekeeper.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 //GuiControl class is the control class for GUIs in this application.
 //Both SeampleView and StandardView are accessed only through this class
@@ -30,6 +30,8 @@ private:
     const static QString MESSAGE_ONLY_STAN_GUI_DISPLAY;
     const static QString MESSAGE_EMPTY;
 
+    const static string MESSAGE_CHANGING_AT_WRONG_INTERFACE;
+
 private:
     GuiControl();
     ~GuiControl();
@@ -40,18 +42,31 @@ public:
     void showGui();
     void setStandardViewFlag (bool flag);
 
-
-
 private slots:
     void check(QString input);
     void passScheduler(QString input, bool inputBarHasFocus);
-    void changeView(QString input, QString inputChecked,
+    void toggleView(QString input, QString inputChecked,
                     bool inputBarHasFocus);
-    //void showHideView();
     void showHelpView();
-    void getTodaysEvents();
+    void displayTodaysEvents();
 
 private:
+    void updateInterface(QString input, QString inputChecked,
+                         bool inputBarHasFocus);
+    void showOnlySeampleView(QString input, QString inputChecked,
+                                bool inputBarHasFocus);
+    void showOnlyStandardView(QString input, QString inputChecked,
+                                 bool inputBarHasFocus);
+    void execute(QString input,bool inputBarHasFocus);
+    void interpretResults(QVector <QString> output, bool inputBarHasFocus);
+    void processStandardViewForScheduler(QVector <QString> output,
+                                         bool inputBarHasFocus);
+    void processAnyViewForScheduler(QVector <QString> output);
+    void parse(QString input);
+    QVector <QString> getInvalidIntellisenseFeedback();
+    void processInputBarColour(QVector <QString> output);
+    void processForStandardView(QVector <QString> output, QString input);
+    void displayStandardMultipleResults(QVector <QString> results);
     bool singleInstanceExists();
     bool implementInputColorFlagFailure(QCharRef colorFlag) throw (string);
     bool interfaceIsStandardView();
@@ -64,7 +79,8 @@ private:
     void setStandardGuiSignals();
     void setSeampleGuiSignals();
     void setTimedSignals();
-
+    bool checkStandardViewRequired(QVector <QString> output);
+    QCharRef getInputColorFlag(QVector <QString> output);
 
 private:
     bool _standardViewFlag;

@@ -52,7 +52,7 @@ scheduler::~scheduler()
     _faulty->endInstance();
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
@@ -126,7 +126,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns the number of days in the month
 int scheduler::daysMonth(int year, int month)
 {
@@ -147,7 +147,7 @@ int scheduler::daysMonth(int year, int month)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //updates the date to a week later
 void scheduler::updateWeeklyTask(tm &_date)
 {
@@ -162,7 +162,7 @@ void scheduler::updateWeeklyTask(tm &_date)
 }
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //updates the date to 2 week later
 void scheduler::updateFornightlyTask(tm &_date)
 {
@@ -177,7 +177,7 @@ void scheduler::updateFornightlyTask(tm &_date)
 }
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //updates the date to a month later
 void scheduler::updateMonthlyTask(tm &_date)
 {
@@ -190,7 +190,7 @@ void scheduler::updateMonthlyTask(tm &_date)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //updates a task based on dateType, namely: weekly,monthly,fortnightly
 void scheduler::updateTask(task &_task)
 {
@@ -228,7 +228,7 @@ void scheduler::updateTask(task &_task)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //transvers throught the array to retrieve events that are going to occur
 string scheduler::getEventBasedOnTime(int hour, int min)
 {
@@ -254,7 +254,7 @@ string scheduler::getEventBasedOnTime(int hour, int min)
     return feedbackMessage.str();
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //Get Event name for any event today ending with the hour and minute
 string scheduler::getEventNameForEnd(int hour, int min)
 {
@@ -275,7 +275,7 @@ string scheduler::getEventNameForEnd(int hour, int min)
     }
     return feedbackMessage.str();
 }
-//@Riandy A0088392R
+//@author A0088392R
 //Get Event name for any event today starting with the hour and minute
 string scheduler::getEventNameForStart(int hour, int min)
 {
@@ -297,7 +297,7 @@ string scheduler::getEventNameForStart(int hour, int min)
     return feedbackMessage.str();
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function take the action object and extract the required information,
 //package it and store it as a task.
 //Note : If any field need to be added in the future, this part is to be added.
@@ -316,7 +316,7 @@ task scheduler::processAction(Action newAction)
     return newTask;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function takes in the tm date object and convert it to the appropriate format
 //using stringstream to be displayed in the GUI. Done extra checking if the date field is 0 or 1 digit,
 //will append extra 0 into it. so format will always be XX / XX / XXXX
@@ -356,7 +356,7 @@ string scheduler::convertToDate(tm _date)
 }
 
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the result to the GUI
 //it will convert the task vector into vector of string which will be used by
 //the GUI to display the result
@@ -403,7 +403,7 @@ void scheduler::updateGUI(string command)
     }
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the number of results found to the _result vector
 //which will be used by the GUI to display
 void scheduler::updateResultFound(int size)
@@ -415,7 +415,7 @@ void scheduler::updateResultFound(int size)
     _result.push_back(tempString.str());
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function check whether the field in the given tm struct
 //is all zero. if yes, return true, otherwise return false.
 bool scheduler::isTimeZero(tm time)
@@ -426,7 +426,7 @@ bool scheduler::isTimeZero(tm time)
         return false;
 }
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
 {
     if(command!="ADD")
@@ -469,14 +469,14 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
 }
 
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::printMessage(string _messageType)
 {
     _result.push_back(_messageType);
 }
 
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Add(task thisTask)
 {
     if(thisTask.getCategory() == "1NVAL1D")
@@ -508,7 +508,7 @@ void scheduler::Add(task thisTask)
    }
 }
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Delete(task thisTask)
 {
     if ((thisTask.getID() == -1) && (thisTask.getEventName() == ""))
@@ -543,7 +543,7 @@ void scheduler::Delete(task thisTask)
             }
 
             //delete by event name
-            else if(thisTask.getEventName()!="-" && eventCalender.deleteItem(thisTask.getEventName())) //@RIANDY
+            else if(thisTask.getEventName()!="-" && eventCalender.deleteItem(thisTask.getEventName())) //@author
             {
                 printMessage(MESSAGE_DELETE_SUCCESS);
             }
@@ -570,14 +570,14 @@ void scheduler::Delete(task thisTask)
 }
 
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void scheduler::Edit(task thisTask) //@WENREN
 {
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
     partialUpdateGUI(taskVector,"EDIT");
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void scheduler::EditEnter(task thisTask)
 {
     if (thisTask.getEventName()!="")
@@ -603,13 +603,13 @@ void scheduler::EditEnter(task thisTask)
            }
     updateGUI("EDIT");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Display()
 {
     taskVector=eventCalender.displayDatabase();
     partialUpdateGUI(taskVector,"DISPLAY");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Undo()
 {
     if (eventCalender.undoAction())
@@ -618,7 +618,7 @@ void scheduler::Undo()
            printMessage(MESSAGE_UNDO_FAILURE);
     updateGUI("UNDO");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Redo()
 {
     if (eventCalender.redoAction())
@@ -628,7 +628,7 @@ void scheduler::Redo()
     updateGUI("REDO");
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is to find the today's event and
 //update the result to _result through partialUpdateGui function
 void scheduler::Today()
@@ -637,7 +637,7 @@ void scheduler::Today()
     partialUpdateGUI(taskVector,"TODAY");
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to find a specific task in the database.
 //User can either find by category,eventName,date.
 //either than that 3 type, error message will be generated.
@@ -666,13 +666,13 @@ void scheduler::Find(task thisTask)
         _faulty->report("Scheduler:: Find function fail to find the result");
     }
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Exit()
 {
     exit(0);
 }
 
-//@John A0069517W
+//@author: A0069517W
 void scheduler::Mark(task thisTask)
 {
     if (  eventCalender.markTask(thisTask) )
@@ -682,7 +682,7 @@ void scheduler::Mark(task thisTask)
     updateGUI("MARK");
 }
 
-//@John A0069517W
+//@author: A0069517W
 void scheduler::Todo()
 {
     taskVector = eventCalender.getFloatingEvents();
@@ -690,7 +690,15 @@ void scheduler::Todo()
 }
 
 
-//@WEIYUAN A0086030R
+//@author A0088392R
+//display the archive file to the GUI
+void scheduler::DisplayArchive()
+{
+    taskVector=eventCalender.displayArchiveEvent();
+    partialUpdateGUI(taskVector,"DISPLAYARCHIVE");
+}
+
+//@LIU WEIYUAN: A0086030R
 //Get a list of today's events for StandardView
 vector<string> scheduler:: getTodayEvents()
 {
@@ -709,7 +717,8 @@ vector<string> scheduler:: getTodayEvents()
                                   highPriorityTasks,size,
                                   threeCountFlag, threeTasks);
 }
-//@WEIYUAN A0086030R
+
+//@LIU WEIYUAN: A0086030R
 //Called by getTodayEvents to retrieve the required parameters for making the returning
 //vector of strings
 void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firstPriorityFound,
@@ -739,7 +748,8 @@ void scheduler::getAllRequiredParameters(vector<task>& firstPriority, bool& firs
         }
     }
 }
-//@WEIYUAN A0086030R
+
+//@LIU WEIYUAN: A0086030R
 //Function creates a vector of strings according to parameters sent in for today's events
 vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, bool firstPriorityFound,
                                                  int highPriorityTasks, int size,
@@ -765,7 +775,8 @@ vector<string> scheduler::makeTodayStringResults(vector<task> firstPriority, boo
     }
     return eventsOverview;
 }
-//@WEIYUAN A0086030R
+
+//@LIU WEIYUAN: A0086030R
 //Take the content of both vectors and return as a single
 //vector of strings
 vector<string> scheduler:: combineStringVectors(
@@ -781,19 +792,11 @@ vector<string> scheduler:: combineStringVectors(
 
     return combined;
 }
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 //Get a string conversion from the integer that is sent in as the parameter
 string scheduler:: getStringFromInt(int subject)
 {
     stringstream buffer;
     buffer << subject;
     return buffer.str();
-}
-
-//@Riandy A0088392R
-//display the archive file to the GUI
-void scheduler::DisplayArchive()
-{
-    taskVector=eventCalender.displayArchiveEvent();
-    partialUpdateGUI(taskVector,"DISPLAYARCHIVE");
 }

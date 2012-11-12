@@ -1,4 +1,4 @@
-//@Riandy A0088392
+//@author A0088392
 //This is used to assert error message. Compared to the normal assert
 //this will provide more details such as filename, line that causes this assert and message.
 #ifndef NDEBUG

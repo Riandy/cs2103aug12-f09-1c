@@ -2,13 +2,13 @@
 #define SEAMPLE_H
 #include <QtGui/QApplication>
 
+#include <QDebug>
+#include <iostream>
 #include "Intellisense.h"
 #include "Action.h"
-#include <QDebug>
-#include <string>
-#include <iostream>
 #include "seample.h"
 #include "scheduler.h"
+#include "QuickCheck.h"
 
 enum Command
 {
@@ -53,16 +53,16 @@ private:
     void updateInternalInput(string _userInput);
     void updateResponse();
     void sendBoxColourFlag();
-    void setShortCutRequirementsMet(string);
-
 
 public:
-
     static Seample* getInstance();
     QVector <QString> run(Command operationType, string _userInput);
     QVector <QString> fireAction();
     void init(int argc, char *argv[]);
     bool requirementsMet();
+
+private:
+    void setShortCutRequirementsMet(string input);
 };
 
 #endif // SEAMPLE_H
