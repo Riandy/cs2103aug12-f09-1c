@@ -6,7 +6,7 @@ const int  task::DATEWEEKLY         = 1;
 const int  task::DATEFORTNIGHTLY     = 2;
 const int  task::DATEMONTHLY         = 3;
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
     //the get category and get functions have to change since they default indicator is set by all the getter functions
@@ -33,78 +33,78 @@ task::~task(void)
 {
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 string task::getEventName()
 {
     return _description;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void task::setEventName(string name)
 {
     _description = name;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 tm task::getStartDate()
 {
     return _startDate;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void task::setStartDate(tm newDate)
 {
     _startDate = newDate;
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 tm task::getEndDate()
 {
     return _endDate;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void task::setEndDate(tm newDate)
 {
     _endDate = newDate;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 string task::getPriority()
 {
     return _priority;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void task::setPriority(string newPriority)
 {
     _priority = newPriority;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 string task::getCategory()
 {
     return _category;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void task::setCategory(string newCategory)
 {
     _category = newCategory;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 int task::getID()
 {
     return _id;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void task::setID(int newID)
 {
     _id = newID;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 int task::getDateType()
 {
     return dateType;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void task::setDateType(int newType)
 {
     dateType= newType;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 string task::convertToDate(tm _date)
 {
     string _result;
@@ -114,7 +114,7 @@ string task::convertToDate(tm _date)
     _result=convert.str();
     return _result;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 vector<string> task::toString()
 {
     vector<string> result;
@@ -135,7 +135,7 @@ vector<string> task::toString()
     result.push_back("Category : "+getCategory());
     return result;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns from int to string
 string task:: convertInt(int number)
 {
@@ -143,7 +143,7 @@ string task:: convertInt(int number)
    ss << number;//add number to the stream
    return ss.str();//return a string with the contents of the stream
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 tm  task::getEmptyDateTm()
 {
 

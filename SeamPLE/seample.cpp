@@ -32,7 +32,7 @@ void DisplayEvent(Action task)
     cout<<string("******************")<<endl;
 }
 //Debugging Functions End
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //singleton constructor
 Seample::Seample()
 {
@@ -40,12 +40,12 @@ Seample::Seample()
     _scheduler=scheduler::getInstance();
 
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 Seample::~Seample()
 {
     instanceFlag = false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 Seample* Seample::getInstance()
 {
     if(!instanceFlag)
@@ -70,18 +70,18 @@ void Seample::updateUserInput(string userInput)
 {
     this->userInput=userInput;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::updateIntellisenseFeedBack()
 {
         feedback.push_back(QString::fromStdString(intellisense->getParameter()));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::normalCommandHandler()
 {
     updateIntellisenseFeedBack();
     sendBoxColourFlag();
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::sendBoxColourFlag()
 {
     if (intellisense->getrequirementsMet())
@@ -93,7 +93,7 @@ void Seample::sendBoxColourFlag()
         feedback.push_back(QString::fromStdString(INVALIDBOXFLAG));
     }
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::editCommandHandler()
 {
     feedback += fireAction(); //append the results at the end
@@ -102,7 +102,7 @@ void Seample::editCommandHandler()
 
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::intellisenseHandler()
 {
     if( (response.getCommand()) != Intellisense::EDITCOMMAND )
@@ -116,7 +116,7 @@ void Seample::intellisenseHandler()
     }
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::interpretEditCommand()
 {
     if( (response.getCommand()) == Intellisense::EDITCOMMAND )
@@ -128,7 +128,7 @@ void Seample::schedulerHandler()
     feedback = fireAction();
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::distributeTasks(Command componentType)
 {
     if (componentType == TO_SCHEDULER_AND_RETURN_RESULTS && intellisense->getrequirementsMet())
@@ -146,17 +146,18 @@ void Seample::distributeTasks(Command componentType)
         feedback = convertQString(_scheduler->getTodayEvents());
     }
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::updateInternalInput(string _userInput)
 {
         userInput = _userInput;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void Seample::updateResponse()
 {
      response = intellisense->check(userInput);
 }
-//@PAN WENREN A0083711L
+
+//@author: A0083711L
 QVector <QString> Seample::run(Command componentType, string _userInput)
 {
     updateInternalInput(_userInput);
@@ -169,21 +170,16 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
 
     return result;
 }
-//@CHAM WEN BIN U094659H
+
+//@author: U094659H
 //scheduler to perform a task and return feedback
 QVector <QString> Seample::fireAction()
 {
     vector <string> result =_scheduler->executeCommand(response);
     return convertQString(result);
 }
-//@LIU WEIYUAN A0086030R
-//Function to inform if the requirements of the edit bar
-//has been met
-bool Seample::requirementsMet()
-{
-    return intellisense->getrequirementsMet();
-}
-//@CHAM WEN BIN U094659H
+
+//@author: U094659H
 //Following function is for converting vector of QString
 //to QVector of QString
 QVector <QString> Seample::convertQString(vector <string> input)
@@ -198,11 +194,20 @@ QVector <QString> Seample::convertQString(vector <string> input)
 
     return converted;
 }
-//@LIU WEIYUAN A0086030R
-void Seample::setShortCutRequirementsMet(string command)
+
+//@LIU WEIYUAN: A0086030R
+bool Seample::requirementsMet()
 {
-    if (command == "undo" || command == "redo" || command == "display"
-            || command == "today" || command == "todo")
+    return intellisense->getrequirementsMet();
+}
+
+//@LIU WEIYUAN: A0086030R
+void Seample::setShortCutRequirementsMet(string input)
+{
+    QuickCheck evaluate;
+    bool inputIsAppropriate = evaluate.shortcutCheck(input);
+
+    if (inputIsAppropriate)
     {
         intellisense->setRequirementsMet(true);
     }

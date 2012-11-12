@@ -1,6 +1,6 @@
 #include "NotifyView.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 const QString NotifyView:: SYSTEM_ICON_LOCATION = ":/bg/pin icon.gif";
 const QString NotifyView:: SYSTEM_ICON_TOOLTIP = "SeamPLE";
@@ -55,6 +55,7 @@ void NotifyView::endInstance()
 {
     if (singleInstanceExists())
     {
+        _popUp->hide();
         delete _notificationInterface;
         _notificationInterface = NULL;
     }

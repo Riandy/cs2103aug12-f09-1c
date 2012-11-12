@@ -31,7 +31,7 @@ calender::~calender()
 
     _faulty->endInstance();
 }
-//@Riandy A0088392R
+//@author A0088392R
 //this function converts the given time to this format "dd / mm / yyyy - HH : MM : SS"
 //and return it as a string
 string calender::convertToDate(tm _date)
@@ -44,7 +44,7 @@ string calender::convertToDate(tm _date)
     return _dateString;
 
 }
-//@Riandy A0088392R
+//@author A0088392R
 //this function converts the given time to this format "dd / mm / yyyy"
 //and return it as a string
 string calender::convertToDateNoTime(tm _date)
@@ -57,7 +57,7 @@ string calender::convertToDateNoTime(tm _date)
 }
 
 
-//@John A0069517W
+//@author: A0069517W
 bool calender::addItem(task currentTask)
 {
     ASSERT(currentTask.getEventName() !="","Fail to add, task doesn't contain event name");
@@ -82,7 +82,7 @@ bool calender::addItem(task currentTask)
     }
 }
 
-//@John A0069517W
+//@author: A0069517W
 string calender::ensureUniqueName(string _name)
 {
     if (!checkNameExists(_name))
@@ -115,7 +115,7 @@ string calender::ensureUniqueName(string _name)
 
 }
 
-//@John A0069517W
+//@author: A0069517W
 bool calender::checkNameExists(string _name)
 {
     for (int i = 0; i < _storage.size(); i++)
@@ -125,7 +125,7 @@ bool calender::checkNameExists(string _name)
     }
     return false;
 }
-//@John A0069517W
+//@author: A0069517W
 bool calender::markTask(task markedTask)
 {
     if(this->deleteItem(markedTask.getEventName()))
@@ -137,7 +137,7 @@ bool calender::markTask(task markedTask)
         return false;
 
 }
-//@John A0069517W
+//@author: A0069517W
 vector<task> calender::getFloatingEvents()
 {
     vector<task> _bufferStorage;
@@ -148,7 +148,7 @@ vector<task> calender::getFloatingEvents()
     }
     return _bufferStorage;
 }
-//@John A0069517W
+//@author: A0069517W
 bool calender::deleteItem(int taskID)
 {
     saveStringToStack(_commandHistory, _DELETE);
@@ -158,7 +158,7 @@ bool calender::deleteItem(int taskID)
     writeFile();
     return true;
 }
-//@John A0069517W
+//@author: A0069517W
 bool calender::deleteAll()
 {
     if (_storage.size() != 0)
@@ -174,7 +174,7 @@ bool calender::deleteAll()
         return false;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function delete an event based on the eventName provided
 //return true if delete is successful, else return false
 //it will also update the History if successful in deleting
@@ -193,7 +193,7 @@ bool calender::deleteItem(string eventName)
     return false;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function is used to write _storage (vector of task)
 //to STORAGE_FILENAME (storage.txt)
 bool calender::writeFile()
@@ -212,14 +212,14 @@ bool calender::writeFile()
     return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::writeBackupFile()
 {
     std::ifstream    inFile(STORAGE_FILENAME);
     std::ofstream    outFile(BACKUP_FILENAME);
     outFile << inFile.rdbuf();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::checkID(int taskID)
 {
     if (taskID > int(_storage.size()) || taskID<1)
@@ -228,7 +228,7 @@ bool calender::checkID(int taskID)
         return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::editTask( task _edited)
 {
     task* taskMatch = pointerSearchByTask( _edited.getEventName());
@@ -277,7 +277,7 @@ bool calender::editTask( task _edited)
 
 
 }
-//@Riandy A0088392R
+//@author A0088392R
 //This function search the category given of every task in _storage and return the
 //tasks that match the category into a vector<task>
 vector<task> calender::SearchByCat(string searchItem)
@@ -295,7 +295,7 @@ vector<task> calender::SearchByCat(string searchItem)
     return _bufferStorage;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function search the database based on the string provided and return
 //all the results in vector<task>.
 vector<task> calender::SearchByTask(string searchItem)
@@ -312,7 +312,7 @@ vector<task> calender::SearchByTask(string searchItem)
     return _bufferStorage;
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 task* calender::pointerSearchByTask(string searchItem) //@WENREN
 // only return first match
 {
@@ -330,7 +330,7 @@ task* calender::pointerSearchByTask(string searchItem) //@WENREN
 }
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 int calender::getTaskID(string searchItem)
 {
     int taskID = NOTFOUND;
@@ -341,7 +341,7 @@ int calender::getTaskID(string searchItem)
     }
     return taskID;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
     string searchItemBuffer = searchItem.substr(0,searchItem.length());
@@ -358,7 +358,7 @@ vector<task> calender::SearchByPartialTask(string searchItem)
     }
     return _bufferStorage;
 }
-//@JOHN A0069517W
+//@author: A0069517W
 vector<task> calender::displayDatabase()
 {
     return _storage;
@@ -366,7 +366,7 @@ vector<task> calender::displayDatabase()
 
 
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function loads the data to vector<task> based on the filename provided
 //The format in the txt file is fixed.
 vector<task> calender::loadFile(char* fileName)
@@ -451,7 +451,7 @@ vector<task> calender::loadFile(char* fileName)
     return list;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::undoAction()
 {
     if (_commandHistory.size() == 0)
@@ -489,7 +489,7 @@ bool calender::undoAction()
 
     return true;
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::redoAction()
 {
     if (_undoHistory.size() == 0 || lastCommandUndo == false)
@@ -525,7 +525,7 @@ bool calender::redoAction()
     return true;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<task> calender::SearchByDate(string searchDate)
 {
 
@@ -544,7 +544,7 @@ vector<task> calender::SearchByDate(string searchDate)
     return _bufferStorage;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<task> calender::getToday()
 {
     vector<task> _bufferStorage;
@@ -565,7 +565,7 @@ vector<task> calender::getToday()
 
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::saveStringToStack(stack<string>& thisStack, string thisString)
 {
     if (thisStack.size() < 3)
@@ -590,7 +590,7 @@ void calender::saveStringToStack(stack<string>& thisStack, string thisString)
 }
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::saveToStack(stack<task>& thisStack, task thisTask)
 {
     if (thisStack.size() < 3)
@@ -614,7 +614,7 @@ void calender::saveToStack(stack<task>& thisStack, task thisTask)
 
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::saveIntToStack(stack<int>& thisStack, int thisInt)
 {
     if (thisStack.size() < 3)
@@ -638,7 +638,7 @@ void calender::saveIntToStack(stack<int>& thisStack, int thisInt)
 
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to sort the _storage vector according to the
 //taskDateComparator specified
 void calender::SortByDate()
@@ -646,7 +646,7 @@ void calender::SortByDate()
     sort(_storage.begin(),_storage.end(),taskDateComparator);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //compare two given task with its startDate
 bool calender::taskDateComparator(task task1,task task2)
 {
@@ -655,7 +655,7 @@ bool calender::taskDateComparator(task task1,task task2)
     return calender::dateComparator(date1,date2);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //compare the date given and return true if date1 is earlier than date2
 bool calender::dateComparator(tm date1,tm date2)
 {
@@ -695,7 +695,7 @@ bool calender::dateComparator(tm date1,tm date2)
 
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<task> calender::SearchPastEvent()
 {
     time_t t = time(0);   // get time now
@@ -712,7 +712,7 @@ vector<task> calender::SearchPastEvent()
     return bufferStorage;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 bool calender::archivePastEvent()
 {
     vector<task> pastEvents;
@@ -747,7 +747,7 @@ bool calender::archivePastEvent()
     return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::archiveEvent(task markedTask)
 {
     ofstream write (ARCHIVE_FILENAME, fstream::app);
@@ -760,7 +760,7 @@ bool calender::archiveEvent(task markedTask)
     return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::fileExists(const char *fileName)
 {
 
@@ -773,7 +773,7 @@ bool calender::fileExists(const char *fileName)
 
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::undoAdd()
 {
     _undoHistory.push(_ADDITION);
@@ -783,7 +783,7 @@ void calender::undoAdd()
     _storage.erase(_storage.begin()+ID);
     _addHistory.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::undoDelete()
 {
     ASSERT(_deletedTasks.size() != 0,"Nothing in deleted tasks stack");
@@ -793,7 +793,7 @@ void calender::undoDelete()
     saveStringToStack(_deleteHistory, tempTask.getEventName());
     _deletedTasks.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::undoEdit()
 {
     ASSERT(_undoNewEdits.size() != 0, "Nothing in undo stack");
@@ -814,7 +814,7 @@ bool calender::undoEdit()
         return false;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::undoDeleteAll()
 {
     _storage = loadFile(BACKUP_FILENAME);
@@ -824,7 +824,7 @@ void calender::undoDeleteAll()
     _undoHistory.push(_DELETEALL);
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::redoAdd()
 {
     task lastUndo =  _undoneAddTasks.top();
@@ -833,7 +833,7 @@ void calender::redoAdd()
     saveStringToStack(_addHistory, lastUndo.getEventName());
     _undoneAddTasks.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::redoDelete()
 {
     saveStringToStack(_commandHistory, _DELETE);
@@ -842,7 +842,7 @@ void calender::redoDelete()
     _storage.erase(_storage.begin()+ ID);
     _deleteHistory.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::redoEdit()
 {
     task tempTask = _redoNewEdits.top();
@@ -860,7 +860,7 @@ bool calender::redoEdit()
     else if (position == NOTFOUND)
         return false;
 }
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::redoDeleteAll()
 {
     writeBackupFile();
@@ -868,7 +868,7 @@ void calender::redoDeleteAll()
     saveStringToStack(_commandHistory, _DELETEALL);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to display the archive events store in the
 //ARCHIVE_FILENAME and return it as vector of task
 vector<task> calender::displayArchiveEvent()
@@ -881,7 +881,7 @@ vector<task> calender::displayArchiveEvent()
     return archive;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the recurring events based on the datetypes
 //in every task/event. You should call this function in the constructor before archiving the past
 //events
@@ -916,7 +916,7 @@ bool calender::updateRecurringEvents()
     return true;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function updates the date supplied by num days
 void calender::updateDate(int num, tm &date)
 {
@@ -938,7 +938,7 @@ void calender::updateDate(int num, tm &date)
     }
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function is used to update the weekly event
 void calender::updateWeekly(task &event)
 {
@@ -954,7 +954,7 @@ void calender::updateWeekly(task &event)
     event.setEndDate(endDate);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //Return the number of days in a month, taking consideration of leap year
 int calender::daysInAMonth(int year,int month)
 {
@@ -978,7 +978,7 @@ int calender::daysInAMonth(int year,int month)
     return numberOfDays;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //Updates the fortnightly task provided in the parameter
 void calender::updateFortnightly(task &event)
 {
@@ -994,7 +994,7 @@ void calender::updateFortnightly(task &event)
     event.setEndDate(endDate);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update a monthly task.
 //it will update both startDate and endDate
 //if current month is 12, then year will be auto added by 1
@@ -1012,7 +1012,7 @@ void calender::updateMonthly(task &event)
     event.setEndDate(endDate);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the month on a provided date.
 void calender::updateMonth(int num, tm &date)
 {

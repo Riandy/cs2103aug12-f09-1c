@@ -17,7 +17,7 @@ const string Timekeeper:: MESSAGE_START_TEN_MINS =
 const string Timekeeper:: MESSAGE_START_THIRTY_MINS =
         " will start in 30 minutes.";
 
-//@CHAM WEN BIN U094659H
+//@author: u094659h
 //singleton pattern constructor
 Timekeeper::Timekeeper()
 {
@@ -47,7 +47,7 @@ void Timekeeper::reachOneMinute()
     emit oneMinuteTrigger();
 }
 
-//@CHAM WEN BIN U094659H
+//@author: u094659h
 //retrieve task upon reaching the star time
 void Timekeeper:: getEventForPopUp()
 {

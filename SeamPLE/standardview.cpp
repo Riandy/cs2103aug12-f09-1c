@@ -1,9 +1,7 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
-#include <QDebug>
-
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 StandardView* StandardView::_standardView = NULL;
 
