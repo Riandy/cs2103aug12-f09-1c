@@ -126,7 +126,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //returns the number of days in the month
 int scheduler::daysMonth(int year, int month)
 {
@@ -147,7 +147,7 @@ int scheduler::daysMonth(int year, int month)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //updates the date to a week later
 void scheduler::updateWeeklyTask(tm &_date)
 {
@@ -162,7 +162,7 @@ void scheduler::updateWeeklyTask(tm &_date)
 }
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //updates the date to 2 week later
 void scheduler::updateFornightlyTask(tm &_date)
 {
@@ -177,7 +177,7 @@ void scheduler::updateFornightlyTask(tm &_date)
 }
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //updates the date to a month later
 void scheduler::updateMonthlyTask(tm &_date)
 {
@@ -190,7 +190,7 @@ void scheduler::updateMonthlyTask(tm &_date)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //updates a task based on dateType, namely: weekly,monthly,fortnightly
 void scheduler::updateTask(task &_task)
 {
@@ -228,7 +228,7 @@ void scheduler::updateTask(task &_task)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //transvers throught the array to retrieve events that are going to occur
 string scheduler::getEventBasedOnTime(int hour, int min)
 {

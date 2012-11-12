@@ -28,7 +28,7 @@ void DisplayEvent(Action task)
     cout<<string("******************")<<endl;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //singleton constructor
 Seample::Seample()
 {
@@ -36,12 +36,12 @@ Seample::Seample()
     _scheduler=scheduler::getInstance();
 
 }
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 Seample::~Seample()
 {
     instanceFlag = false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 Seample* Seample::getInstance()
 {
     if(!instanceFlag)
@@ -148,7 +148,7 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
 
     return result;
 }
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 //scheduler to perform a task and return feedback
 QVector <QString> Seample::fireAction()
 {

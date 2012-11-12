@@ -15,7 +15,7 @@ void UnitTest::dummyTest1() {
 
 #pragma region Intellisense UnitTesting
 
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 void UnitTest::testIntellisenseAdd()
 {//basic add
     Intellisense *intellisense;
@@ -57,7 +57,7 @@ void UnitTest::testIntellisenseAdd3()
     QCOMPARE(eventName, string("soccer match"));
     QCOMPARE(category, string("SPORTS"));
 }
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 void UnitTest::testIntellisenseAdd4()
 {
     Intellisense *intellisense;
@@ -74,7 +74,7 @@ void UnitTest::testIntellisenseAdd4()
     QCOMPARE( date.tm_min,  int(0));
     QCOMPARE( date.tm_hour, int(9));
 }
-//@CHAM WEN BIN U094659H
+//@author: U0904659H
 void UnitTest::testIntellisenseAdd5()
 {
     Intellisense *intellisense;
