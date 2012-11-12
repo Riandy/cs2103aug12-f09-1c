@@ -205,6 +205,10 @@ bool Seample::requirementsMet()
 void Seample::setShortCutRequirementsMet(string input)
 {
     QuickCheck evaluate;
-    bool evaluatedResults = evaluate.shortcutCheck(input);
-    intellisense->setRequirementsMet(evaluatedResults);
+    bool inputIsAppropriate = evaluate.shortcutCheck(input);
+
+    if (inputIsAppropriate)
+    {
+        intellisense->setRequirementsMet(true);
+    }
 }
