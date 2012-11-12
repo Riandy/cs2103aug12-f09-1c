@@ -342,15 +342,15 @@ int calender::getTaskID(string searchItem)
 //@PAN WENREN A0083711L
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
-    string searchItemBuffer = searchItem.substr(0,searchItem.length()/*-1*/);//remove the null charcter at the end of string
+    string searchItemBuffer = searchItem.substr(0,searchItem.length());
     vector<task> _bufferStorage;
     for (int i = 0; i < int(_storage.size()); i++)
     {
         string  bufferString = _storage[i].getEventName();
-        if(bufferString.length() >= searchItem.length()/*-1*/)//defensive programming
+        if(bufferString.length() >= searchItem.length())//defensive programming
         {
-            string compareString = (bufferString.substr(0, searchItem.length()/*-1*/));
-            if(compareString == searchItemBuffer) //match exactly
+            string compareString = (bufferString.substr(0, searchItem.length()));
+            if(compareString == searchItemBuffer)
                 _bufferStorage.push_back(_storage[i]);
         }
     }

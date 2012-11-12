@@ -105,12 +105,12 @@ void Seample::editCommandHandler()
 //@PAN WENREN A0083711L
 void Seample::intellisenseHandler()
 {
-    if( (response.getCommand()) != "EDIT" )
+    if( (response.getCommand()) != Intellisense::EDITCOMMAND )
     {
         normalCommandHandler();
     }
 
-    if( (response.getCommand()) == "EDIT" )
+    if( (response.getCommand()) == Intellisense::EDITCOMMAND )
     {
         editCommandHandler();
     }
@@ -119,8 +119,8 @@ void Seample::intellisenseHandler()
 //@PAN WENREN A0083711L
 void Seample::interpretEditCommand()
 {
-    if( (response.getCommand()) == "EDIT" )
-        response.setCommand("EDITENTER") ;
+    if( (response.getCommand()) == Intellisense::EDITCOMMAND )
+        response.setCommand(Intellisense::EDITENTERCOMMAND) ;
 }
 void Seample::schedulerHandler()
 {
@@ -138,7 +138,7 @@ void Seample::distributeTasks(Command componentType)
     else if (componentType == TO_INTELLISENSE)
     {
         intellisenseHandler();
-        DisplayEvent(response); //for debugging info only//remove
+        DisplayEvent(response); //for debugging info only
 
     }
     else if (componentType == TO_SCHEDULER_AND_RETURN_TODAY_EVENTS)
