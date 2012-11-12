@@ -119,7 +119,6 @@ private:
     const static string REDIDTEXT;
     const static char CATEGORYRECOGNISER;
     const static string LINEBREAK;
-        //end of added array support for commands
 
     bool statusFlags[MAXNOOFPARAMETERS];
     bool requirementsMet;
@@ -158,6 +157,11 @@ public:
     void updatePriorityInPara();
     void updateCategoryInPara();
     void updateIDInPara();
+    void writeDateToPara();
+    void writeEndDateToPara();
+    void writePriorityToPara();
+    void writeCategoryToPara();
+    void writeIDToPara();
 
 
     void setParameter(string);

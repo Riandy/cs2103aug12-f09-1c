@@ -1693,12 +1693,17 @@ void Intellisense::checkEditReq()
 //@PAN WENREN A0083711L
 string Intellisense::getAddFeedBack()
 {
+    string feedBack;
     if(getrequirementsMet())
     {
-        return ADDFEEDBACK_1 ;
+        feedBack = ADDFEEDBACK_1 ;
+    }
+    else
+    {
+        feedBack = ADDFEEDBACK_2 ;
     }
 
-    return ADDFEEDBACK_2 ;
+    return feedBack;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getEditFeedBack()
@@ -2004,14 +2009,31 @@ void Intellisense::updateDateInPara()
 {
     if(isValidParaForCmd(currentCommand,IDATE))//
     {
-        if(statusFlags[IDATE])
-        {
-            _parameter =_parameter + GREENSTARTDATETEXT ;
-        }
-        else
-        {
-            _parameter =_parameter + REDSTARTDATETEXT ;
-        }
+        writeDateToPara();
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writeDateToPara()
+{
+    if(statusFlags[IDATE])
+    {
+        _parameter =_parameter + GREENSTARTDATETEXT ;
+    }
+    else
+    {
+        _parameter =_parameter + REDSTARTDATETEXT ;
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writeEndDateToPara()
+{
+    if(statusFlags[IDATEEND])
+    {
+        _parameter =_parameter + GREENENDDATETEXT;
+    }
+    else
+    {
+        _parameter =_parameter + REDENDDATETEXT;
     }
 }
 //@PAN WENREN A0083711L
@@ -2019,14 +2041,19 @@ void Intellisense::updateEndDateInPara()
 {
     if(isValidParaForCmd(currentCommand,IDATEEND))//
     {
-        if(statusFlags[IDATEEND])
-        {
-            _parameter =_parameter + GREENENDDATETEXT;
-        }
-        else
-        {
-            _parameter =_parameter + REDENDDATETEXT;
-        }
+        writeEndDateToPara();
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writePriorityToPara()
+{
+    if(statusFlags[IPRIORITY])
+    {
+        _parameter =_parameter + GREENPRIORITYTEXT ;
+    }
+    else
+    {
+        _parameter =_parameter + REDPRIORITYTEXT ;
     }
 }
 //@PAN WENREN A0083711L
@@ -2034,35 +2061,33 @@ void Intellisense::updatePriorityInPara()
 {
     if(isValidParaForCmd(currentCommand,IPRIORITY))//
     {
-        if(statusFlags[IPRIORITY])
-        {
-            _parameter =_parameter + GREENPRIORITYTEXT ;
-        }
-        else
-        {
-            _parameter =_parameter + REDPRIORITYTEXT ;
-        }
+        writePriorityToPara();
     }
 }
+//@PAN WENREN A0083711L
+void Intellisense::writeCategoryToPara()
+{
+    if(statusFlags[ICATEGORY])
+    {
+        _parameter =_parameter + GREENCATEGORYTEXT;
+    }
+    else
+    {
+        _parameter =_parameter + REDCATEGORYTEXT ;
+    }
+}
+
 //@PAN WENREN A0083711L
 void Intellisense::updateCategoryInPara()
 {
     if(isValidParaForCmd(currentCommand,ICATEGORY))//
     {
-        if(statusFlags[ICATEGORY])
-        {
-            _parameter =_parameter + GREENCATEGORYTEXT;
-        }
-        else
-        {
-            _parameter =_parameter + REDCATEGORYTEXT ;
-        }
+        writeCategoryToPara();
     }
 }
 //@PAN WENREN A0083711L
-void Intellisense::updateIDInPara()
+void Intellisense::writeIDToPara()
 {
-
     if(isValidParaForCmd(currentCommand,IID))//
     {
         if(statusFlags[IID])
@@ -2074,6 +2099,12 @@ void Intellisense::updateIDInPara()
             _parameter =_parameter + REDIDTEXT ;
         }
     }
+}
+
+//@PAN WENREN A0083711L
+void Intellisense::updateIDInPara()
+{
+    writeIDToPara();
 }
 
 //@PAN WENREN A0083711L
