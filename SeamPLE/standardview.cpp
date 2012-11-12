@@ -208,6 +208,10 @@ void StandardView::displayTodayView(QVector<QString> info)
 //the opacity change effects when the window is shown
 void StandardView::show()
 {
+    if (_currentType == TODAY_EVENTS)
+    {
+        emit todayViewTriggered();
+    }
     _currentlyChanging = true;
 
     //Reset interface to original position
