@@ -31,7 +31,7 @@ calender::~calender()
 
     _faulty->endInstance();
 }
-//@Riandy A0088392R
+//@author A0088392R
 //this function converts the given time to this format "dd / mm / yyyy - HH : MM : SS"
 //and return it as a string
 string calender::convertToDate(tm _date)
@@ -44,7 +44,7 @@ string calender::convertToDate(tm _date)
     return _dateString;
 
 }
-//@Riandy A0088392R
+//@author A0088392R
 //this function converts the given time to this format "dd / mm / yyyy"
 //and return it as a string
 string calender::convertToDateNoTime(tm _date)
@@ -174,7 +174,7 @@ bool calender::deleteAll()
         return false;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function delete an event based on the eventName provided
 //return true if delete is successful, else return false
 //it will also update the History if successful in deleting
@@ -193,7 +193,7 @@ bool calender::deleteItem(string eventName)
     return false;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function is used to write _storage (vector of task)
 //to STORAGE_FILENAME (storage.txt)
 bool calender::writeFile()
@@ -277,7 +277,7 @@ bool calender::editTask( task _edited)
 
 
 }
-//@Riandy A0088392R
+//@author A0088392R
 //This function search the category given of every task in _storage and return the
 //tasks that match the category into a vector<task>
 vector<task> calender::SearchByCat(string searchItem)
@@ -295,7 +295,7 @@ vector<task> calender::SearchByCat(string searchItem)
     return _bufferStorage;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function search the database based on the string provided and return
 //all the results in vector<task>.
 vector<task> calender::SearchByTask(string searchItem)
@@ -366,7 +366,7 @@ vector<task> calender::displayDatabase()
 
 
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function loads the data to vector<task> based on the filename provided
 //The format in the txt file is fixed.
 vector<task> calender::loadFile(char* fileName)
@@ -525,7 +525,7 @@ bool calender::redoAction()
     return true;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<task> calender::SearchByDate(string searchDate)
 {
 
@@ -544,7 +544,7 @@ vector<task> calender::SearchByDate(string searchDate)
     return _bufferStorage;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<task> calender::getToday()
 {
     vector<task> _bufferStorage;
@@ -638,7 +638,7 @@ void calender::saveIntToStack(stack<int>& thisStack, int thisInt)
 
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to sort the _storage vector according to the
 //taskDateComparator specified
 void calender::SortByDate()
@@ -646,7 +646,7 @@ void calender::SortByDate()
     sort(_storage.begin(),_storage.end(),taskDateComparator);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //compare two given task with its startDate
 bool calender::taskDateComparator(task task1,task task2)
 {
@@ -655,7 +655,7 @@ bool calender::taskDateComparator(task task1,task task2)
     return calender::dateComparator(date1,date2);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //compare the date given and return true if date1 is earlier than date2
 bool calender::dateComparator(tm date1,tm date2)
 {
@@ -695,7 +695,7 @@ bool calender::dateComparator(tm date1,tm date2)
 
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<task> calender::SearchPastEvent()
 {
     time_t t = time(0);   // get time now
@@ -712,7 +712,7 @@ vector<task> calender::SearchPastEvent()
     return bufferStorage;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 bool calender::archivePastEvent()
 {
     vector<task> pastEvents;
@@ -868,7 +868,7 @@ void calender::redoDeleteAll()
     saveStringToStack(_commandHistory, _DELETEALL);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to display the archive events store in the
 //ARCHIVE_FILENAME and return it as vector of task
 vector<task> calender::displayArchiveEvent()
@@ -881,7 +881,7 @@ vector<task> calender::displayArchiveEvent()
     return archive;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the recurring events based on the datetypes
 //in every task/event. You should call this function in the constructor before archiving the past
 //events
@@ -916,7 +916,7 @@ bool calender::updateRecurringEvents()
     return true;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function updates the date supplied by num days
 void calender::updateDate(int num, tm &date)
 {
@@ -938,7 +938,7 @@ void calender::updateDate(int num, tm &date)
     }
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //this function is used to update the weekly event
 void calender::updateWeekly(task &event)
 {
@@ -954,7 +954,7 @@ void calender::updateWeekly(task &event)
     event.setEndDate(endDate);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //Return the number of days in a month, taking consideration of leap year
 int calender::daysInAMonth(int year,int month)
 {
@@ -978,7 +978,7 @@ int calender::daysInAMonth(int year,int month)
     return numberOfDays;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //Updates the fortnightly task provided in the parameter
 void calender::updateFortnightly(task &event)
 {
@@ -994,7 +994,7 @@ void calender::updateFortnightly(task &event)
     event.setEndDate(endDate);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update a monthly task.
 //it will update both startDate and endDate
 //if current month is 12, then year will be auto added by 1
@@ -1012,7 +1012,7 @@ void calender::updateMonthly(task &event)
     event.setEndDate(endDate);
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the month on a provided date.
 void calender::updateMonth(int num, tm &date)
 {

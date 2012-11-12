@@ -52,7 +52,7 @@ scheduler::~scheduler()
     _faulty->endInstance();
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 vector<string> scheduler::executeCommand(Action newAction)
 {
     //get the command type
@@ -254,7 +254,7 @@ string scheduler::getEventBasedOnTime(int hour, int min)
     return feedbackMessage.str();
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //Get Event name for any event today ending with the hour and minute
 string scheduler::getEventNameForEnd(int hour, int min)
 {
@@ -275,7 +275,7 @@ string scheduler::getEventNameForEnd(int hour, int min)
     }
     return feedbackMessage.str();
 }
-//@Riandy A0088392R
+//@author A0088392R
 //Get Event name for any event today starting with the hour and minute
 string scheduler::getEventNameForStart(int hour, int min)
 {
@@ -297,7 +297,7 @@ string scheduler::getEventNameForStart(int hour, int min)
     return feedbackMessage.str();
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function take the action object and extract the required information,
 //package it and store it as a task.
 //Note : If any field need to be added in the future, this part is to be added.
@@ -316,7 +316,7 @@ task scheduler::processAction(Action newAction)
     return newTask;
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function takes in the tm date object and convert it to the appropriate format
 //using stringstream to be displayed in the GUI. Done extra checking if the date field is 0 or 1 digit,
 //will append extra 0 into it. so format will always be XX / XX / XXXX
@@ -356,7 +356,7 @@ string scheduler::convertToDate(tm _date)
 }
 
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the result to the GUI
 //it will convert the task vector into vector of string which will be used by
 //the GUI to display the result
@@ -403,7 +403,7 @@ void scheduler::updateGUI(string command)
     }
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to update the number of results found to the _result vector
 //which will be used by the GUI to display
 void scheduler::updateResultFound(int size)
@@ -415,7 +415,7 @@ void scheduler::updateResultFound(int size)
     _result.push_back(tempString.str());
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function check whether the field in the given tm struct
 //is all zero. if yes, return true, otherwise return false.
 bool scheduler::isTimeZero(tm time)
@@ -543,7 +543,7 @@ void scheduler::Delete(task thisTask)
             }
 
             //delete by event name
-            else if(thisTask.getEventName()!="-" && eventCalender.deleteItem(thisTask.getEventName())) //@RIANDY
+            else if(thisTask.getEventName()!="-" && eventCalender.deleteItem(thisTask.getEventName())) //@author
             {
                 printMessage(MESSAGE_DELETE_SUCCESS);
             }
@@ -628,7 +628,7 @@ void scheduler::Redo()
     updateGUI("REDO");
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is to find the today's event and
 //update the result to _result through partialUpdateGui function
 void scheduler::Today()
@@ -637,7 +637,7 @@ void scheduler::Today()
     partialUpdateGUI(taskVector,"TODAY");
 }
 
-//@Riandy A0088392R
+//@author A0088392R
 //This function is used to find a specific task in the database.
 //User can either find by category,eventName,date.
 //either than that 3 type, error message will be generated.
@@ -690,7 +690,7 @@ void scheduler::Todo()
 }
 
 
-//@Riandy A0088392R
+//@author A0088392R
 //display the archive file to the GUI
 void scheduler::DisplayArchive()
 {
