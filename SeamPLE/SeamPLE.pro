@@ -4,11 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui\
-            testlib
+QT       += core gui
+#\
+ #         testlib
 
 TARGET = SeamPLE
 TEMPLATE = app
+
+CONFIG += static
 
 SOURCES += main.cpp\
     Sframe.cpp \
@@ -25,7 +28,7 @@ SOURCES += main.cpp\
     SLineEdit.cpp \
     CommonView.cpp \
     STimeLabel.cpp \
-    UnitTest.cpp \
+   #UnitTest.cpp \
     TimeGetter.cpp \
     NotifyView.cpp \
     timekeeper.cpp \
@@ -46,7 +49,7 @@ HEADERS  += \
     SLineEdit.h \
     CommonView.h \
     STimeLabel.h \
-    UnitTest.h \
+    #UnitTest.h \
     TimeGetter.h \
     NotifyView.h \
     ErrorLogger.h \

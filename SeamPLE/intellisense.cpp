@@ -10,76 +10,89 @@ const string Intellisense::months[24] = {"JANUARY","FEBRUARY","MARCH","APRIL","M
 imptDate imptDates[]= {  imptDate("CHRISTMAS","2512"),imptDate("NEWYEAR","0101")};
 int imptDatesSize = 2;
 
+const string Intellisense::ADDCOMMAND               = "ADD";
+const string Intellisense::DELETECOMMAND            = "DELETE";
+const string Intellisense::DISPLAYCOMMAND           = "DISPLAY";
+const string Intellisense::MARKCOMMAND              = "MARK";
+const string Intellisense::SORTCOMMAND              = "SORT";
+const string Intellisense::FINDCOMMAND              = "FIND";
+const string Intellisense::EDITCOMMAND              = "EDIT";
+const string Intellisense::EDITENTERCOMMAND         = "EDITENTER";
+const string Intellisense::EXITCOMMAND              = "EXIT";
+const string Intellisense::UNDOCOMMAND              = "UNDO";
+const string Intellisense::REDOCOMMAND              = "REDO";
+const string Intellisense::TODOCOMMAND              = "TODO";
+const string Intellisense::TODAYCOMMAND             = "TODAY";
+const string Intellisense::DISPLAYARCHIVECOMMAND    = "DISPLAYARCHIVE";
 
 //changed to array test
-const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++","-a"};
-const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel","-d" };
-const string Intellisense::markCommandArray[] = { "mark", "done","-m"};
-const string Intellisense::displayCommandArray[]= { "display" ,"show","-d","dsp"};
-const string Intellisense::exitCommandArray[] = {"exit","quit","-q"};
-const string Intellisense::sortCommandArray[] = {"sort","arrange","-s"};
-const string Intellisense::findCommandArray[] = {"find","search","-f"};
-const string Intellisense::editCommandArray[] = {"edit","change","-e","defer","reschedule","change"};
-const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
-const string Intellisense::redoCommandArray[] = {"redo","-r"};
-const string Intellisense::todoCommandArray[] = {"todo"};
-const string Intellisense::todayCommandArray[] = {"today"};
+const string Intellisense::addCommandArray[]            = { "add", "-a", "create" ,"new","++","-a"};
+const string Intellisense::deleteCommandArray[]         = { "delete","del","dd","cancel","-d" };
+const string Intellisense::markCommandArray[]           = { "mark", "done","-m"};
+const string Intellisense::displayCommandArray[]        = { "display" ,"show","-d","dsp"};
+const string Intellisense::exitCommandArray[]           = {"exit","quit","-q"};
+const string Intellisense::sortCommandArray[]           = {"sort","arrange","-s"};
+const string Intellisense::findCommandArray[]           = {"find","search","-f"};
+const string Intellisense::editCommandArray[]           = {"edit","change","-e","defer","reschedule","change"};
+const string Intellisense::undoCommandArray[]           = {"undo","revert","-u"};
+const string Intellisense::redoCommandArray[]           = {"redo","-r"};
+const string Intellisense::todoCommandArray[]           = {"todo"};
+const string Intellisense::todayCommandArray[]          = {"today"};
 const string Intellisense::displayarchiveCommandArray[] = {"displayarchive"};
 
 
-const string Intellisense::EMPTYCATEGORY = "#";
-const string Intellisense::EMPTYEVENT = "";
-const string Intellisense::EMPTYPRIORITY = "";
-const int    Intellisense::EMPTYID = -1;
-const string Intellisense::HIGHPRIORITY  = "HIGH";
-const string Intellisense::HIGHPRIORITY_L = "high";
-const string Intellisense::LOWPRIORITY  = "LOW";
-const string Intellisense::LOWPRIORITY_L = "low";
+const string Intellisense::EMPTYCATEGORY                = "#";
+const string Intellisense::EMPTYEVENT                   = "";
+const string Intellisense::EMPTYPRIORITY                = "";
+const int    Intellisense::EMPTYID                      = -1;
+const string Intellisense::HIGHPRIORITY                 = "HIGH";
+const string Intellisense::HIGHPRIORITY_L               = "high";
+const string Intellisense::LOWPRIORITY                  = "LOW";
+const string Intellisense::LOWPRIORITY_L                = "low";
 
-const string Intellisense::WEEKLY = "weekly";
-const string Intellisense::MONTHLY = "monthly";
-const string Intellisense::FORTNIGHTLY = "fortnightly";
+const string Intellisense::WEEKLY                       = "weekly";
+const string Intellisense::MONTHLY                      = "monthly";
+const string Intellisense::FORTNIGHTLY                  = "fortnightly";
 
-const string Intellisense::ADDFEEDBACK_1 = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
-const string Intellisense::ADDFEEDBACK_2 = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
-const string Intellisense::EDITFEEDBACK_1 = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
-const string Intellisense::EDITFEEDBACK_2 = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
-const string Intellisense::DELFEEDBACK_1= "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
-const string Intellisense::DELFEEDBACK_2= "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
-const string Intellisense::EXITFEEDBACK_1= " Are you sure you want to exit?";
-const string Intellisense::DISPLAYFEEDBACK_1= "Display will show all events. Press Enter to continue.";
-const string Intellisense::DISPLAYFEEDBACK_2= "Display will show all events. Press Enter to continue.";
-const string Intellisense::FINDFEEDBACK_1= "eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
-const string Intellisense::FINDFEEDBACK_2="eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
-const string Intellisense::SORTFEEDBACK_1=" The Events Will be Sorted By Date";
-const string Intellisense::SORTFEEDBACK_2=" The Events Will be Sorted By Date";
-const string Intellisense::REDOFEEDBACK_1="Press enter to redo your last operation";
-const string Intellisense::UNDOFEEDBACK_1="Press enter to undo your last operation";
-const string Intellisense::MARKFEEDBACK_1="eg. mark  Dinner with Myat";
-const string Intellisense::MARKFEEDBACK_2="eg. mark  Dinner with Myat";
+const string Intellisense::ADDFEEDBACK_1                = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
+const string Intellisense::ADDFEEDBACK_2                = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
+const string Intellisense::EDITFEEDBACK_1               = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
+const string Intellisense::EDITFEEDBACK_2               = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
+const string Intellisense::DELFEEDBACK_1                = "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
+const string Intellisense::DELFEEDBACK_2                = "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
+const string Intellisense::EXITFEEDBACK_1               = " Are you sure you want to exit?";
+const string Intellisense::DISPLAYFEEDBACK_1            = "Display will show all events. Press Enter to continue.";
+const string Intellisense::DISPLAYFEEDBACK_2            = "Display will show all events. Press Enter to continue.";
+const string Intellisense::FINDFEEDBACK_1               = "eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
+const string Intellisense::FINDFEEDBACK_2               = "eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
+const string Intellisense::SORTFEEDBACK_1               = " The Events Will be Sorted By Date";
+const string Intellisense::SORTFEEDBACK_2               = " The Events Will be Sorted By Date";
+const string Intellisense::REDOFEEDBACK_1               = "Press enter to redo your last operation";
+const string Intellisense::UNDOFEEDBACK_1               = "Press enter to undo your last operation";
+const string Intellisense::MARKFEEDBACK_1               = "eg. mark  Dinner with Myat";
+const string Intellisense::MARKFEEDBACK_2               = "eg. mark  Dinner with Myat";
 
-const  string Intellisense::GREENEVENTTEXT = "<font color=Chartreuse >[EventNAME] </font>";
-const  string Intellisense::REDEVENTTEXT  = "<font color=Salmon >[EventNAME] </font>";
+const  string Intellisense::GREENEVENTTEXT              = "<font color=Chartreuse >[EventNAME] </font>";
+const  string Intellisense::REDEVENTTEXT                = "<font color=Salmon >[EventNAME] </font>";
 
-const  string Intellisense::GREENSTARTDATETEXT = "<font color=Chartreuse>[StartDate] </font>" ;
-const  string Intellisense::REDSTARTDATETEXT = "<font color=Salmon   >[StartDate] </font>";
+const  string Intellisense::GREENSTARTDATETEXT          = "<font color=Chartreuse>[StartDate] </font>" ;
+const  string Intellisense::REDSTARTDATETEXT            = "<font color=Salmon   >[StartDate] </font>";
 
-const  string Intellisense::GREENENDDATETEXT = "<font color=Chartreuse>[EndDate] </font>";
-const  string Intellisense::REDENDDATETEXT = "<font color=Salmon  >[EndDate] </font>";
+const  string Intellisense::GREENENDDATETEXT            = "<font color=Chartreuse>[EndDate] </font>";
+const  string Intellisense::REDENDDATETEXT              = "<font color=Salmon  >[EndDate] </font>";
 
-const  string Intellisense::GREENPRIORITYTEXT = "<font color=Chartreuse>[PRIORITY] </font>";
-const  string Intellisense::REDPRIORITYTEXT = "<font color=Salmon>[PRIORITY] </font>";
+const  string Intellisense::GREENPRIORITYTEXT           = "<font color=Chartreuse>[PRIORITY] </font>";
+const  string Intellisense::REDPRIORITYTEXT             = "<font color=Salmon>[PRIORITY] </font>";
 
+const  string Intellisense::GREENCATEGORYTEXT           = "<font color=Chartreuse>[CATEGORY] </font>";
+const  string Intellisense::REDCATEGORYTEXT             = "<font color=Salmon >[CATEGORY] </font>";
 
-const  string Intellisense::GREENCATEGORYTEXT = "<font color=Chartreuse>[CATEGORY] </font>";
-const  string Intellisense::REDCATEGORYTEXT = "<font color=Salmon >[CATEGORY] </font>";
+const  string Intellisense::GREENIDTEXT                 = "<font color=Chartreuse>[ID] </font>";
+const  string Intellisense::REDIDTEXT                   = "<font color=Salmon>[ID] </font>";
 
-const  string Intellisense::GREENIDTEXT = "<font color=Chartreuse>[ID] </font>";
-const  string Intellisense::REDIDTEXT = "<font color=Salmon>[ID] </font>";
+const string Intellisense::LINEBREAK                    = "<br>";
 
-const string Intellisense::LINEBREAK = "<br>";
-
-const char Intellisense::CATEGORYRECOGNISER = '#' ;
+const char Intellisense::CATEGORYRECOGNISER             = '#' ;
 
 
 
@@ -1015,7 +1028,6 @@ string Intellisense::getEventName(vector<string>& tokens)
         if (it!=tokens.end())
         {
             ss<<string(" ");
-            //only increment if it is not the last position
         }
     }
     return ss.str();
@@ -1106,7 +1118,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
     Action task;
-    task.setCommand(getCommand(tokens,"ADD"));
+    task.setCommand(getCommand(tokens,ADDCOMMAND));
     task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
@@ -1125,7 +1137,7 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 {
     currentCommand = DELETE;
     Action task;
-    task.setCommand(getCommand(tokens,"DELETE"));
+    task.setCommand(getCommand(tokens,DELETECOMMAND));
     int ID = getID(tokens);
     if(ID == -1)
     {
@@ -1148,7 +1160,7 @@ Action Intellisense::exitOperation(vector<string>& tokens)
 {
     currentCommand = EXIT;
     Action task;
-    task.setCommand(getCommand(tokens,"EXIT"));
+    task.setCommand(getCommand(tokens,EXITCOMMAND));
     setAllStatusFlag(task);
     checkExitReq();
     return task;
@@ -1161,7 +1173,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 {
     currentCommand = DISPLAY;
     Action task;
-    task.setCommand(getCommand(tokens,"DISPLAY"));
+    task.setCommand(getCommand(tokens,DISPLAYCOMMAND));
     task.setStartDate(getDate(tokens));
     setAllStatusFlag(task);
     checkDspReq();
@@ -1175,7 +1187,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
 {
     currentCommand = MARK;
     Action task;
-    task.setCommand(getCommand(tokens,"MARK"));
+    task.setCommand(getCommand(tokens,MARKCOMMAND));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkMarkReq();
@@ -1190,7 +1202,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
     Action task;
-    task.setCommand("ADD");// we assume add if no command word is found
+    task.setCommand(ADDCOMMAND);// we assume add if no command word is found
     task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
@@ -1210,7 +1222,7 @@ Action Intellisense::undoOperation(vector<string>& tokens)
 {
     currentCommand = UNDO;
     Action task;
-    task.setCommand(getCommand(tokens,"UNDO"));
+    task.setCommand(getCommand(tokens,UNDOCOMMAND));
     setAllStatusFlag(task);
     return task;
 }
@@ -1238,7 +1250,7 @@ Action Intellisense::todayOperation(vector<string>& tokens)
 {
     currentCommand = TODAY;
     Action task;
-    task.setCommand("TODAY");
+    task.setCommand(TODAYCOMMAND);
     setAllStatusFlag(task);
     return task;
 }
@@ -1250,7 +1262,7 @@ Action Intellisense::todoOperation(vector<string>& tokens)
 {
     currentCommand = TODO;
     Action task;
-    task.setCommand("TODO");
+    task.setCommand(TODOCOMMAND);
     task.setDateType(4);
     setAllStatusFlag(task);
     return task;
@@ -1263,7 +1275,7 @@ Action Intellisense::redoOperation(vector<string>& tokens)
 {
     currentCommand = REDO;
     Action task;
-    task.setCommand(getCommand(tokens,"REDO"));
+    task.setCommand(getCommand(tokens,REDOCOMMAND));
     setAllStatusFlag(task);
     return task;
 }
@@ -1275,7 +1287,7 @@ Action Intellisense::sortOperation(vector<string>& tokens)
 {
     currentCommand = SORT;
     Action task;
-    task.setCommand(getCommand(tokens,"SORT"));
+    task.setCommand(getCommand(tokens,SORTCOMMAND));
     setAllStatusFlag(task);
     return task;
 }
@@ -1287,7 +1299,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
 {
     currentCommand = FIND;
     Action task;
-    task.setCommand(getCommand(tokens,"FIND"));
+    task.setCommand(getCommand(tokens,FINDCOMMAND));
     task.setPriority(getPriority(tokens));
     task.setCategory(getCategory(tokens));
     task.setStartDate(getDate(tokens));
@@ -1305,7 +1317,7 @@ Action Intellisense::displayarchiveOperation(vector<string>& tokens)
 {
     currentCommand = DISPLAYARCHIVE;
     Action task;
-    task.setCommand(getCommand(tokens,"DISPLAYARCHIVE"));
+    task.setCommand(getCommand(tokens,DISPLAYARCHIVECOMMAND));
     setAllStatusFlag(task);
     smartAutoFill(task,tokens);//auto fill some of the fields that are unentered
 
@@ -1693,12 +1705,17 @@ void Intellisense::checkEditReq()
 //@PAN WENREN A0083711L
 string Intellisense::getAddFeedBack()
 {
+    string feedBack;
     if(getrequirementsMet())
     {
-        return ADDFEEDBACK_1 ;
+        feedBack = ADDFEEDBACK_1 ;
+    }
+    else
+    {
+        feedBack = ADDFEEDBACK_2 ;
     }
 
-    return ADDFEEDBACK_2 ;
+    return feedBack;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getEditFeedBack()
@@ -2004,14 +2021,31 @@ void Intellisense::updateDateInPara()
 {
     if(isValidParaForCmd(currentCommand,IDATE))//
     {
-        if(statusFlags[IDATE])
-        {
-            _parameter =_parameter + GREENSTARTDATETEXT ;
-        }
-        else
-        {
-            _parameter =_parameter + REDSTARTDATETEXT ;
-        }
+        writeDateToPara();
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writeDateToPara()
+{
+    if(statusFlags[IDATE])
+    {
+        _parameter =_parameter + GREENSTARTDATETEXT ;
+    }
+    else
+    {
+        _parameter =_parameter + REDSTARTDATETEXT ;
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writeEndDateToPara()
+{
+    if(statusFlags[IDATEEND])
+    {
+        _parameter =_parameter + GREENENDDATETEXT;
+    }
+    else
+    {
+        _parameter =_parameter + REDENDDATETEXT;
     }
 }
 //@PAN WENREN A0083711L
@@ -2019,14 +2053,19 @@ void Intellisense::updateEndDateInPara()
 {
     if(isValidParaForCmd(currentCommand,IDATEEND))//
     {
-        if(statusFlags[IDATEEND])
-        {
-            _parameter =_parameter + GREENENDDATETEXT;
-        }
-        else
-        {
-            _parameter =_parameter + REDENDDATETEXT;
-        }
+        writeEndDateToPara();
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writePriorityToPara()
+{
+    if(statusFlags[IPRIORITY])
+    {
+        _parameter =_parameter + GREENPRIORITYTEXT ;
+    }
+    else
+    {
+        _parameter =_parameter + REDPRIORITYTEXT ;
     }
 }
 //@PAN WENREN A0083711L
@@ -2034,35 +2073,33 @@ void Intellisense::updatePriorityInPara()
 {
     if(isValidParaForCmd(currentCommand,IPRIORITY))//
     {
-        if(statusFlags[IPRIORITY])
-        {
-            _parameter =_parameter + GREENPRIORITYTEXT ;
-        }
-        else
-        {
-            _parameter =_parameter + REDPRIORITYTEXT ;
-        }
+        writePriorityToPara();
     }
 }
+//@PAN WENREN A0083711L
+void Intellisense::writeCategoryToPara()
+{
+    if(statusFlags[ICATEGORY])
+    {
+        _parameter =_parameter + GREENCATEGORYTEXT;
+    }
+    else
+    {
+        _parameter =_parameter + REDCATEGORYTEXT ;
+    }
+}
+
 //@PAN WENREN A0083711L
 void Intellisense::updateCategoryInPara()
 {
     if(isValidParaForCmd(currentCommand,ICATEGORY))//
     {
-        if(statusFlags[ICATEGORY])
-        {
-            _parameter =_parameter + GREENCATEGORYTEXT;
-        }
-        else
-        {
-            _parameter =_parameter + REDCATEGORYTEXT ;
-        }
+        writeCategoryToPara();
     }
 }
 //@PAN WENREN A0083711L
-void Intellisense::updateIDInPara()
+void Intellisense::writeIDToPara()
 {
-
     if(isValidParaForCmd(currentCommand,IID))//
     {
         if(statusFlags[IID])
@@ -2074,6 +2111,12 @@ void Intellisense::updateIDInPara()
             _parameter =_parameter + REDIDTEXT ;
         }
     }
+}
+
+//@PAN WENREN A0083711L
+void Intellisense::updateIDInPara()
+{
+    writeIDToPara();
 }
 
 //@PAN WENREN A0083711L

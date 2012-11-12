@@ -25,6 +25,12 @@ private:
     vector<task> _storage;
     ErrorLogger* _faulty;
 
+    /*
+    Our Undo and redo operations rely on stacks to fulfill the functionality.
+    This is based on the fact that undo and redo are first in, last out operations.
+    We use two functions to operate on the stacks so that the size never becomes
+    greater than 3.
+    */
     stack<string> _commandHistory;
     stack<string> _undoHistory;
 
@@ -42,15 +48,11 @@ private:
     bool lastCommandUndo;
 
 
-    void saveDeletedTask(int taskID);
-    void saveHistory(string command);
-    void undoOriginalEdits(task _oldtask);
-    void undoNewEdits(task _newtask);
-    void redoOriginalEdits(task _oldtask);
-    void redoNewEdits(task _newtask);
-    void saveAdd(string Item);
-    void saveUndoneDelete(string Item);
     void writeBackupFile();
+
+    void saveToStack(stack<task>& thisStack, task thisTask);
+    void saveStringToStack(stack<string>& thisStack, string thisString);
+    void saveIntToStack(stack<int>& thisStack, int thisInt);
 
     void undoAdd();
     void undoDelete();

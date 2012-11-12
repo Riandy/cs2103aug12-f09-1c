@@ -10,32 +10,29 @@ const int  task::DATEMONTHLY         = 3;
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
     //the get category and get functions have to change since they default indicator is set by all the getter functions
-    _description="";
-    _startDate.tm_year = 0 ;
-    _startDate.tm_mon	= 0;
-    _startDate.tm_mday = 0;
-    _startDate.tm_min =0;
-    _startDate.tm_hour=0;
-    _startDate.tm_sec=0;
-    _endDate.tm_year = 0 ;
-    _endDate.tm_mon	= 0;
-    _endDate.tm_mday = 0;
-    _endDate.tm_hour=0;
-    _endDate.tm_min=0;
-    _endDate.tm_sec=0;
-    _priority = "LOW";
-    _category = "#";
-    _description = "-";
-    _id=-1;
-    dateType = DATENORMAL;//normal mode
+    _description            = "";
+    _startDate.tm_year      = 0 ;
+    _startDate.tm_mon       = 0;
+    _startDate.tm_mday      = 0;
+    _startDate.tm_min       = 0;
+    _startDate.tm_hour      = 0;
+    _startDate.tm_sec       = 0;
+    _endDate.tm_year        = 0 ;
+    _endDate.tm_mon         = 0;
+    _endDate.tm_mday        = 0;
+    _endDate.tm_hour        = 0;
+    _endDate.tm_min         = 0;
+    _endDate.tm_sec         = 0;
+    _priority               = "LOW";
+    _category               = "#";
+    _description            = "-";
+    _id                     = -1;
+    dateType                = DATENORMAL;//normal mode
 }
-
-
 task::~task(void)
 {
 
 }
-
 //@PAN WENREN A0083711L
 string task::getEventName()
 {
@@ -55,7 +52,6 @@ tm task::getStartDate()
 void task::setStartDate(tm newDate)
 {
     _startDate = newDate;
-
 }
 
 //@PAN WENREN A0083711L
@@ -67,7 +63,6 @@ tm task::getEndDate()
 void task::setEndDate(tm newDate)
 {
     _endDate = newDate;
-
 }
 //@PAN WENREN A0083711L
 string task::getPriority()

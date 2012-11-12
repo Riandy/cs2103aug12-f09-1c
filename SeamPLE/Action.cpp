@@ -1,11 +1,10 @@
 #include "Action.h"
 
+const  string Action::EMPTYCOMMAND = "";
 //@PAN WENREN A0083711L
 Action::Action(void)
 {
-
-    this->_command = "";
-
+    this->_command = EMPTYCOMMAND;
 }
 
 
@@ -136,8 +135,8 @@ void Action::determineDate(tm date1,tm date2)
 //@PAN WENREN A0083711L
 void Action::setStartDateWithoutTime(tm newDate)
 {
-    newDate.tm_hour=0;
-    newDate.tm_min=0;
+    newDate.tm_hour     = 0;
+    newDate.tm_min      = 0;
     _task.setStartDate(newDate);
 
 }
