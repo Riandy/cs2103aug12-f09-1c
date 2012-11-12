@@ -176,14 +176,14 @@ QVector <QString> Seample::fireAction()
     vector <string> result =_scheduler->executeCommand(response);
     return convertQString(result);
 }
-
+//@LIU WEIYUAN A0086030R
 //Function to inform if the requirements of the edit bar
 //has been met
 bool Seample::requirementsMet()
 {
     return intellisense->getrequirementsMet();
 }
-
+//@CHAM WEN BIN U094659H
 //Following function is for converting vector of QString
 //to QVector of QString
 QVector <QString> Seample::convertQString(vector <string> input)
