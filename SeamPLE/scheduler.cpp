@@ -447,7 +447,6 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
             _endDate = convertToDate(taskVector[i].getEndDate());
 
         ostringstream convert;
-        //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
         convert << i+1;//i added this as a temporary replacement for the id above,remove this when u updated ur code
         string id= convert.str();
         _result.push_back(id);
@@ -459,9 +458,10 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
     }
     //decision to either view in standard or simple view
     if (vectorSize>0){
-        if(command=="ADD" || command=="DELETE"){
+        if(command=="ADD" || command=="DELETE")
+        {
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
-        }
+           }
         else{
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
         }
@@ -499,8 +499,7 @@ void scheduler::Add(task thisTask)
           vector<task> temp;
           temp.push_back(thisTask);
           partialUpdateGUI(temp,"ADD");
-          //updateGUI();
-         }
+            }
         else
           {
            _faulty->report("Scheduler class: Add command FAIL");
@@ -581,7 +580,7 @@ void scheduler::Edit(task thisTask) //@WENREN
 //@PAN WENREN A0083711L
 void scheduler::EditEnter(task thisTask)
 {
-    if (thisTask.getEventName()!= "")
+    if (thisTask.getEventName()!="")
            {
                taskVector = eventCalender.SearchByTask(thisTask.getEventName());
                if (taskVector.size() == 0) //if no match found
