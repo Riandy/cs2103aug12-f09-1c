@@ -1,5 +1,7 @@
 #include "GuiControl.h"
 
+#include <QDebug>
+
 //@LIU WEIYUAN A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
@@ -216,6 +218,7 @@ void GuiControl::parse(QString input)
 {
     QVector <QString> output =
             _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
+
     bool invalidIntellisenseReturn = (output.size() < MINIMUM_SIZE);
 
     if (invalidIntellisenseReturn)
