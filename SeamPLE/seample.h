@@ -27,32 +27,41 @@ private:
     const static string LINEBREAK;
     static bool instanceFlag;
     static Seample *seample;
-    Seample();
+
     string userInput;
     Action response;
     Intellisense *intellisense;
     scheduler  *_scheduler;
+
+    //string manipulation functions
     QVector <QString> feedback;
     QVector <QString> convertQString (vector <string> buffer);
-    void updateInternalInput(string _userInput);
-    void updateResponse();
-    void setShortCutRequirementsMet(string);
 
-public:
-    static Seample* getInstance();
+
+    Seample();
     ~Seample();
-    void init(int argc, char *argv[]);
-    void updateUserInput(string userInput);
-    QVector <QString> run(Command operationType, string _userInput);
+
+    void distributeTasks(Command componentType);
+
     void intellisenseHandler();
     void schedulerHandler();
+    void normalCommandHandler();
     void editCommandHandler();
     void interpretEditCommand();
-    void normalCommandHandler();
+    void updateUserInput(string userInput);
     void updateIntellisenseFeedBack();
-    void distributeTasks(Command componentType);
-    QVector <QString> fireAction();
+    void updateInternalInput(string _userInput);
+    void updateResponse();
     void sendBoxColourFlag();
+    void setShortCutRequirementsMet(string);
+
+
+public:
+
+    static Seample* getInstance();
+    QVector <QString> run(Command operationType, string _userInput);
+    QVector <QString> fireAction();
+    void init(int argc, char *argv[]);
     bool requirementsMet();
 };
 
