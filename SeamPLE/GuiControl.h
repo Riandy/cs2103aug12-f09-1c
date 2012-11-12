@@ -57,6 +57,11 @@ private:
                                 bool inputBarHasFocus);
     void showOnlyStandardView(QString input, QString inputChecked,
                                  bool inputBarHasFocus);
+    void execute(QString input,bool inputBarHasFocus);
+    void interpretResults(QVector <QString> output, bool inputBarHasFocus);
+    void processStandardViewForScheduler(QVector <QString> output,
+                                         bool inputBarHasFocus);
+    void processAnyViewForScheduler(QVector <QString> output);
     void parse(QString input);
     QVector <QString> getInvalidIntellisenseFeedback();
     void processInputBarColour(QVector <QString> output);
