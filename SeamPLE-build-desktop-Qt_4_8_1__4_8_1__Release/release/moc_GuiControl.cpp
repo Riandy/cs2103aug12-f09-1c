@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'GuiControl.h'
 **
-** Created: Mon 12. Nov 13:04:39 2012
+** Created: Mon 12. Nov 23:23:33 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -45,8 +45,8 @@ static const char qt_meta_stringdata_GuiControl[] = {
     "input,inputBarHasFocus\0"
     "passScheduler(QString,bool)\0"
     "input,inputChecked,inputBarHasFocus\0"
-    "changeView(QString,QString,bool)\0"
-    "showHelpView()\0getTodaysEvents()\0"
+    "toggleView(QString,QString,bool)\0"
+    "showHelpView()\0displayTodaysEvents()\0"
 };
 
 void GuiControl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -57,9 +57,9 @@ void GuiControl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->check((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->passScheduler((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 2: _t->changeView((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
+        case 2: _t->toggleView((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         case 3: _t->showHelpView(); break;
-        case 4: _t->getTodaysEvents(); break;
+        case 4: _t->displayTodaysEvents(); break;
         default: ;
         }
     }
