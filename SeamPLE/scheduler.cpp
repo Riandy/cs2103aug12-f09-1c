@@ -583,7 +583,7 @@ void scheduler::EditEnter(task thisTask)
     if (thisTask.getEventName()!="")
            {
                taskVector = eventCalender.SearchByTask(thisTask.getEventName());
-               if (taskVector.size() == 0) //if no match found
+               if (taskVector.size() == 0)
                {
                    printMessage(MESSAGE_ERROR_NOT_FOUND);
                }
