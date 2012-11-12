@@ -10,32 +10,29 @@ const int  task::DATEMONTHLY         = 3;
 task::task(void)
 {//whenever this part is changed the get requirements have to change and minimum requirements have to be checked
     //the get category and get functions have to change since they default indicator is set by all the getter functions
-    _description="";
-    _startDate.tm_year = 0 ;
-    _startDate.tm_mon	= 0;
-    _startDate.tm_mday = 0;
-    _startDate.tm_min =0;
-    _startDate.tm_hour=0;
-    _startDate.tm_sec=0;
-    _endDate.tm_year = 0 ;
-    _endDate.tm_mon	= 0;
-    _endDate.tm_mday = 0;
-    _endDate.tm_hour=0;
-    _endDate.tm_min=0;
-    _endDate.tm_sec=0;
-    _priority = "LOW";
-    _category = "#";
-    _description = "-";
-    _id=-1;
-    dateType = DATENORMAL;//normal mode
+    _description            = "";
+    _startDate.tm_year      = 0 ;
+    _startDate.tm_mon       = 0;
+    _startDate.tm_mday      = 0;
+    _startDate.tm_min       = 0;
+    _startDate.tm_hour      = 0;
+    _startDate.tm_sec       = 0;
+    _endDate.tm_year        = 0 ;
+    _endDate.tm_mon         = 0;
+    _endDate.tm_mday        = 0;
+    _endDate.tm_hour        = 0;
+    _endDate.tm_min         = 0;
+    _endDate.tm_sec         = 0;
+    _priority               = "LOW";
+    _category               = "#";
+    _description            = "-";
+    _id                     = -1;
+    dateType                = DATENORMAL;//normal mode
 }
-
-
 task::~task(void)
 {
 
 }
-
 //@PAN WENREN A0083711L
 string task::getEventName()
 {
@@ -55,7 +52,6 @@ tm task::getStartDate()
 void task::setStartDate(tm newDate)
 {
     _startDate = newDate;
-
 }
 
 //@PAN WENREN A0083711L
@@ -67,7 +63,6 @@ tm task::getEndDate()
 void task::setEndDate(tm newDate)
 {
     _endDate = newDate;
-
 }
 //@PAN WENREN A0083711L
 string task::getPriority()
@@ -109,7 +104,7 @@ void task::setDateType(int newType)
 {
     dateType= newType;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 string task::convertToDate(tm _date)
 {
     string _result;
@@ -119,7 +114,7 @@ string task::convertToDate(tm _date)
     _result=convert.str();
     return _result;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 vector<string> task::toString()
 {
     vector<string> result;
@@ -140,7 +135,7 @@ vector<string> task::toString()
     result.push_back("Category : "+getCategory());
     return result;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns from int to string
 string task:: convertInt(int number)
 {
@@ -148,7 +143,7 @@ string task:: convertInt(int number)
    ss << number;//add number to the stream
    return ss.str();//return a string with the contents of the stream
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 tm  task::getEmptyDateTm()
 {
 

@@ -1,6 +1,8 @@
 #include "GuiControl.h"
 
-//@LIU WEIYUAN A0086030R
+#include <QDebug>
+
+//@LIU WEIYUAN: A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
 int GuiControl::MINIMUM_SIZE = 2;
@@ -21,8 +23,11 @@ const QString GuiControl:: MESSAGE_GUI_DISPLAY =
         "%123TABLE_SEAMPLE_&987";
 const QString GuiControl:: MESSAGE_ONLY_STAN_GUI_DISPLAY =
         "%987TABLE_SEAMPLE_&123";
-
 const QString GuiControl:: MESSAGE_EMPTY = "";
+
+const string GuiControl::MESSAGE_CHANGING_AT_WRONG_INTERFACE =
+        "Changing at inappropriate user inteface. Flag setted wrongly.";
+
 
 //Constructor is used to set several default signals as well as to
 //get the singleton instances of different classes
@@ -36,10 +41,9 @@ GuiControl::GuiControl()
     _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
     setInputColourFlag(NONE);
-    getTodaysEvents();
+    displayTodaysEvents();
 }
 
-//Destructor is called to end the instances of the singletons
 GuiControl::~GuiControl()
 {
     _seampleGui->endInstance();
@@ -100,63 +104,7 @@ void GuiControl::check(QString input)
     }
     else
     {
-        QVector <QString> output =
-                _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
-        bool invalidSchedulerReturn = (output.size() < MINIMUM_SIZE);
-
-        if (invalidSchedulerReturn)
-        {
-            output.clear();
-            output.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
-            _faulty->report(MESSAGE_INTELLISENSE_INVALID_RETURN.toStdString());
-            setInputColourFlag(NONE);
-        }
-        else
-        {
-            //Minus 2 because last string holds the colour flag, and the
-            //second last flag is the code for parser to request Gui to display
-            //the contents in a table
-            bool needStandardView =
-                    (output[output.size()-MINIMUM_SIZE]
-                     == (MESSAGE_GUI_DISPLAY));
-
-            try
-            {
-                QCharRef flag = ((output[output.size()-1])[0]);
-                if (implementInputColorFlagFailure(flag))
-                {
-                    output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
-                }
-            }
-            catch (string& error)
-            {
-                _faulty->report(error);
-            }
-
-            if (needStandardView)
-            {
-                if (!interfaceIsStandardView())
-                {
-                    bool inputBarFocus = true;
-                    changeView(input,MESSAGE_EMPTY,inputBarFocus);
-                }
-                try
-                {
-                    //Start from position one as the feedback for the user is
-                    //at position 0. Amount to copy has a deduction of 3 as
-                    //the last position is the colour flag, the second last
-                    //position is the code flag, andalso of the feedback being
-                    //in the first position
-                    QVector <QString> results = output.mid(1,output.size()-3);
-                    _standardGui->instantiateTable(results);
-                }
-                catch (string& error)
-                {
-                    _faulty->report(error);
-                }
-            }
-        }
-        send(output[0]);
+        parse(input);
     }
 }
 
@@ -164,7 +112,6 @@ void GuiControl::check(QString input)
 //and relays this result to the Gui for display purposes
 void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 {
-    //Code to be implemented here to be sent into  scheduler classes
     bool emptyInput = (input.size() == 0);
 
     if (emptyInput)
@@ -180,23 +127,19 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         if (_inputProcessor->requirementsMet())
         {
             int capacity = output.size();
-            bool needStandardView =
-                    (output[output.size()-1] == MESSAGE_GUI_DISPLAY) ||
-                    (output[output.size()-1] == MESSAGE_ONLY_STAN_GUI_DISPLAY
-                     && interfaceIsStandardView());
-
+            bool needStandardView = checkStandardViewRequired(output);
             setInputColourFlag(NONE);
 
             if (needStandardView)
             {
-                if (!interfaceIsStandardView())
-                {
-                    changeView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
-                }
-                else
+                if (interfaceIsStandardView())
                 {
                     sendWithInputEditAndFocus(inputBarHasFocus,MESSAGE_EMPTY,
                                               output[0]);
+                }
+                else
+                {
+                    toggleView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
                 }
                 try
                 {
@@ -235,27 +178,18 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     }
 }
 
-//Function to change the GUI interface being displayed
-void GuiControl::changeView(QString input, QString inputChecked,
+//Function to toggle the GUI interface being displayed
+void GuiControl::toggleView(QString input, QString inputChecked,
                             bool inputBarHasFocus)
 {
-    if (!(_standardGui->interfaceCurrentlyChanging())&&
-            !(_seampleGui->interfaceCurrentlyChanging()))
+    bool allInterfaceNotCurrentlyChanging =
+            !(_standardGui->interfaceCurrentlyChanging())&&
+            !(_seampleGui->interfaceCurrentlyChanging());
+
+    if (allInterfaceNotCurrentlyChanging)
     {
         setStandardViewFlag(!interfaceIsStandardView());
-
-        if(interfaceIsStandardView())
-        {
-            _seampleGui->hide();
-            _standardGui->show();
-            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
-        }
-        else
-        {
-            _standardGui->hide();
-            _seampleGui->show();
-            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
-        }
+        updateInterface(input,inputChecked,inputBarHasFocus);
     }
 }
 
@@ -265,12 +199,142 @@ void GuiControl::showHelpView()
 {
     _standardGui->helpTriggered();
 }
-\
+
 //Function displays the day's events through _standardGui
-void GuiControl::getTodaysEvents()
+void GuiControl::displayTodaysEvents()
 {
-    _standardGui->displayTodayView(
-                _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,""));
+    QVector <QString> todayItems =
+            _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
+
+    _standardGui->displayTodayView(todayItems);
+}
+
+//Make any changes to interface if the flag is set at a different value
+void GuiControl::updateInterface(QString input, QString inputChecked,
+                     bool inputBarHasFocus)
+{
+    if(interfaceIsStandardView())
+    {
+        showOnlyStandardView(input,inputChecked,inputBarHasFocus);
+    }
+    else
+    {
+        showOnlySeampleView(input,inputChecked,inputBarHasFocus);
+    }
+}
+
+void GuiControl::showOnlySeampleView(QString input, QString inputChecked,
+                                        bool inputBarHasFocus)
+{
+    //Defensive programming in case flag is not set to seample view
+    if (!interfaceIsStandardView())
+    {
+        _standardGui->hide();
+        _seampleGui->show();
+        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+    }
+    else
+    {
+        _faulty->report(MESSAGE_CHANGING_AT_WRONG_INTERFACE);
+    }
+}
+
+void GuiControl::showOnlyStandardView(QString input, QString inputChecked,
+                                         bool inputBarHasFocus)
+{
+    //Defensive programming in case flag is not set to standard view
+    if (interfaceIsStandardView())
+    {
+        _seampleGui->hide();
+        _standardGui->show();
+        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+    }
+    else
+    {
+        _faulty->report(MESSAGE_CHANGING_AT_WRONG_INTERFACE);
+    }
+}
+
+void GuiControl::parse(QString input)
+{
+    QVector <QString> output =
+            _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
+
+    bool invalidIntellisenseReturn = (output.size() < MINIMUM_SIZE);
+    if (invalidIntellisenseReturn)
+    {
+        output = getInvalidIntellisenseFeedback();
+    }
+    else
+    {
+        processInputBarColour(output);
+        processForStandardView(output, input);
+    }
+    send(output[0]);
+}
+
+QVector <QString> GuiControl:: getInvalidIntellisenseFeedback()
+{
+    QVector <QString> feedback;
+    feedback.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
+    _faulty->report(MESSAGE_INTELLISENSE_INVALID_RETURN.toStdString());
+    setInputColourFlag(NONE);
+
+    return feedback;
+}
+
+//Process the input bar colour from the QString flag
+void GuiControl::processInputBarColour(QVector <QString> output)
+{
+    try
+    {
+        QCharRef flag = getInputColorFlag(output);
+        if (implementInputColorFlagFailure(flag))
+        {
+            output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
+        }
+    }
+    catch (string& error)
+    {
+        _faulty->report(error);
+    }
+}
+
+//Process intellisense results for standard view
+void GuiControl::processForStandardView(QVector<QString> output,QString input)
+{
+    bool needStandardView = (output[output.size()-MINIMUM_SIZE]
+                             == (MESSAGE_GUI_DISPLAY));
+    if (needStandardView)
+    {
+        if (!interfaceIsStandardView())
+        {
+            bool inputBarFocus = true;
+            toggleView(input,MESSAGE_EMPTY,inputBarFocus);
+        }
+        //Start from position one as the feedback for the user is
+        //at position 0. Amount to copy has a deduction of 3 as
+        //the last position is the colour flag, the second last
+        //position is the code flag, andalso of the feedback being
+        //in the first position
+        displayStandardMultipleResults(output.mid(1,output.size()-3));
+    }
+    else
+    {
+        _standardGui->resetAllTablesContents();
+    }
+}
+
+void GuiControl::displayStandardMultipleResults(QVector <QString> results)
+{
+    try
+    {
+        _standardGui->instantiateTable(results);
+    }
+    catch (string& error)
+    {
+        _faulty->report(error);
+    }
 }
 
 bool GuiControl:: singleInstanceExists()
@@ -296,8 +360,9 @@ bool GuiControl::implementInputColorFlagFailure(
         QCharRef colorFlag) throw (string)
 {
     bool result;
+    bool colorFlagPresent = colorFlag.isDigit();
 
-    if (colorFlag.isDigit())
+    if (colorFlagPresent)
     {
         setInputColourFlag( (InputBarFlag) colorFlag.digitValue());
         result = false;
@@ -409,10 +474,10 @@ void GuiControl::setStandardGuiSignals()
             this,SLOT(passScheduler(QString, bool)));
 
     connect(_standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
-            this,SLOT(changeView(QString, QString, bool)));
+            this,SLOT(toggleView(QString, QString, bool)));
 
     connect(_standardGui,SIGNAL(todayViewTriggered()),
-            this, SLOT(getTodaysEvents()));
+            this, SLOT(displayTodaysEvents()));
 }
 
 //Function set all required signals from _seampleGui to local slots in
@@ -426,7 +491,7 @@ void GuiControl::setSeampleGuiSignals()
             this,SLOT(passScheduler(QString, bool)));
 
     connect(_seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
-            this,SLOT(changeView(QString, QString, bool)));
+            this,SLOT(toggleView(QString, QString, bool)));
 
     connect(_seampleGui,SIGNAL(getHelpView()),
             this,SLOT(showHelpView()));
@@ -437,9 +502,23 @@ void GuiControl::setSeampleGuiSignals()
 void GuiControl:: setTimedSignals()
 {
     connect(&_timeControl,SIGNAL(oneMinuteTrigger()),
-            this, SLOT(getTodaysEvents()));
+            this, SLOT(displayTodaysEvents()));
 }
 
+//Function returns a bool value if the scheduler results needs to
+//be displayed fully in standardview or not
+bool GuiControl::checkStandardViewRequired(QVector <QString> output)
+{
+    return (output[output.size()-1] == MESSAGE_GUI_DISPLAY) ||
+            (output[output.size()-1] == MESSAGE_ONLY_STAN_GUI_DISPLAY
+             && interfaceIsStandardView());
+}
 
+//Function returns the input color flag from the QVector of
+//QStrings returned from seample
+QCharRef GuiControl::getInputColorFlag(QVector <QString> output)
+{
+    return ((output[output.size()-1])[0]);
+}
 
 

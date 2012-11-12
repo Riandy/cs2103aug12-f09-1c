@@ -10,76 +10,89 @@ const string Intellisense::months[24] = {"JANUARY","FEBRUARY","MARCH","APRIL","M
 imptDate imptDates[]= {  imptDate("CHRISTMAS","2512"),imptDate("NEWYEAR","0101")};
 int imptDatesSize = 2;
 
+const string Intellisense::ADDCOMMAND               = "ADD";
+const string Intellisense::DELETECOMMAND            = "DELETE";
+const string Intellisense::DISPLAYCOMMAND           = "DISPLAY";
+const string Intellisense::MARKCOMMAND              = "MARK";
+const string Intellisense::SORTCOMMAND              = "SORT";
+const string Intellisense::FINDCOMMAND              = "FIND";
+const string Intellisense::EDITCOMMAND              = "EDIT";
+const string Intellisense::EDITENTERCOMMAND         = "EDITENTER";
+const string Intellisense::EXITCOMMAND              = "EXIT";
+const string Intellisense::UNDOCOMMAND              = "UNDO";
+const string Intellisense::REDOCOMMAND              = "REDO";
+const string Intellisense::TODOCOMMAND              = "TODO";
+const string Intellisense::TODAYCOMMAND             = "TODAY";
+const string Intellisense::DISPLAYARCHIVECOMMAND    = "DISPLAYARCHIVE";
 
 //changed to array test
-const string Intellisense::addCommandArray[] = { "add", "-a", "create" ,"new","++","-a"};
-const string Intellisense::deleteCommandArray[] = { "delete","del","dd","cancel","-d" };
-const string Intellisense::markCommandArray[] = { "mark", "done","-m"};
-const string Intellisense::displayCommandArray[]= { "display" ,"show","-d","dsp"};
-const string Intellisense::exitCommandArray[] = {"exit","quit","-q"};
-const string Intellisense::sortCommandArray[] = {"sort","arrange","-s"};
-const string Intellisense::findCommandArray[] = {"find","search","-f"};
-const string Intellisense::editCommandArray[] = {"edit","change","-e","defer","reschedule","change"};
-const string Intellisense::undoCommandArray[] = {"undo","revert","-u"};
-const string Intellisense::redoCommandArray[] = {"redo","-r"};
-const string Intellisense::todoCommandArray[] = {"todo"};
-const string Intellisense::todayCommandArray[] = {"today"};
+const string Intellisense::addCommandArray[]            = { "add", "-a", "create" ,"new","++","-a"};
+const string Intellisense::deleteCommandArray[]         = { "delete","del","dd","cancel","-d" };
+const string Intellisense::markCommandArray[]           = { "mark", "done","-m"};
+const string Intellisense::displayCommandArray[]        = { "display" ,"show","-d","dsp"};
+const string Intellisense::exitCommandArray[]           = {"exit","quit","-q"};
+const string Intellisense::sortCommandArray[]           = {"sort","arrange","-s"};
+const string Intellisense::findCommandArray[]           = {"find","search","-f"};
+const string Intellisense::editCommandArray[]           = {"edit","change","-e","defer","reschedule","change"};
+const string Intellisense::undoCommandArray[]           = {"undo","revert","-u"};
+const string Intellisense::redoCommandArray[]           = {"redo","-r"};
+const string Intellisense::todoCommandArray[]           = {"todo"};
+const string Intellisense::todayCommandArray[]          = {"today"};
 const string Intellisense::displayarchiveCommandArray[] = {"displayarchive"};
 
 
-const string Intellisense::EMPTYCATEGORY = "#";
-const string Intellisense::EMPTYEVENT = "";
-const string Intellisense::EMPTYPRIORITY = "";
-const int    Intellisense::EMPTYID = -1;
-const string Intellisense::HIGHPRIORITY  = "HIGH";
-const string Intellisense::HIGHPRIORITY_L = "high";
-const string Intellisense::LOWPRIORITY  = "LOW";
-const string Intellisense::LOWPRIORITY_L = "low";
+const string Intellisense::EMPTYCATEGORY                = "#";
+const string Intellisense::EMPTYEVENT                   = "";
+const string Intellisense::EMPTYPRIORITY                = "";
+const int    Intellisense::EMPTYID                      = -1;
+const string Intellisense::HIGHPRIORITY                 = "HIGH";
+const string Intellisense::HIGHPRIORITY_L               = "high";
+const string Intellisense::LOWPRIORITY                  = "LOW";
+const string Intellisense::LOWPRIORITY_L                = "low";
 
-const string Intellisense::WEEKLY = "weekly";
-const string Intellisense::MONTHLY = "monthly";
-const string Intellisense::FORTNIGHTLY = "fortnightly";
+const string Intellisense::WEEKLY                       = "weekly";
+const string Intellisense::MONTHLY                      = "monthly";
+const string Intellisense::FORTNIGHTLY                  = "fortnightly";
 
-const string Intellisense::ADDFEEDBACK_1 = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
-const string Intellisense::ADDFEEDBACK_2 = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
-const string Intellisense::EDITFEEDBACK_1 = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
-const string Intellisense::EDITFEEDBACK_2 = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
-const string Intellisense::DELFEEDBACK_1= "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
-const string Intellisense::DELFEEDBACK_2= "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
-const string Intellisense::EXITFEEDBACK_1= " Are you sure you want to exit?";
-const string Intellisense::DISPLAYFEEDBACK_1= "Display will show all events. Press Enter to continue.";
-const string Intellisense::DISPLAYFEEDBACK_2= "Display will show all events. Press Enter to continue.";
-const string Intellisense::FINDFEEDBACK_1= "eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
-const string Intellisense::FINDFEEDBACK_2="eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
-const string Intellisense::SORTFEEDBACK_1=" The Events Will be Sorted By Date";
-const string Intellisense::SORTFEEDBACK_2=" The Events Will be Sorted By Date";
-const string Intellisense::REDOFEEDBACK_1="Press enter to redo your last operation";
-const string Intellisense::UNDOFEEDBACK_1="Press enter to undo your last operation";
-const string Intellisense::MARKFEEDBACK_1="eg. mark  Dinner with Myat";
-const string Intellisense::MARKFEEDBACK_2="eg. mark  Dinner with Myat";
+const string Intellisense::ADDFEEDBACK_1                = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
+const string Intellisense::ADDFEEDBACK_2                = "eg. add Mum's Birthday 24012012 25122012 HIGH #family";
+const string Intellisense::EDITFEEDBACK_1               = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
+const string Intellisense::EDITFEEDBACK_2               = "eg. edit Jogging at the Park #HIGH <font color = LemonChiffon>OR</font> edit Jogging at the Park 25122012";
+const string Intellisense::DELFEEDBACK_1                = "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
+const string Intellisense::DELFEEDBACK_2                = "eg. del 3   <font color = LemonChiffon>OR</font> eg. del Mum's Birthday";
+const string Intellisense::EXITFEEDBACK_1               = " Are you sure you want to exit?";
+const string Intellisense::DISPLAYFEEDBACK_1            = "Display will show all events. Press Enter to continue.";
+const string Intellisense::DISPLAYFEEDBACK_2            = "Display will show all events. Press Enter to continue.";
+const string Intellisense::FINDFEEDBACK_1               = "eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
+const string Intellisense::FINDFEEDBACK_2               = "eg.find birthday <font color = LemonChiffon>OR</font>  eg.find 24012012 <font color = LemonChiffon>OR</font> eg.find #SPORTS";
+const string Intellisense::SORTFEEDBACK_1               = " The Events Will be Sorted By Date";
+const string Intellisense::SORTFEEDBACK_2               = " The Events Will be Sorted By Date";
+const string Intellisense::REDOFEEDBACK_1               = "Press enter to redo your last operation";
+const string Intellisense::UNDOFEEDBACK_1               = "Press enter to undo your last operation";
+const string Intellisense::MARKFEEDBACK_1               = "eg. mark  Dinner with Myat";
+const string Intellisense::MARKFEEDBACK_2               = "eg. mark  Dinner with Myat";
 
-const  string Intellisense::GREENEVENTTEXT = "<font color=Chartreuse >[EventNAME] </font>";
-const  string Intellisense::REDEVENTTEXT  = "<font color=Salmon >[EventNAME] </font>";
+const  string Intellisense::GREENEVENTTEXT              = "<font color=Chartreuse >[EventNAME] </font>";
+const  string Intellisense::REDEVENTTEXT                = "<font color=Salmon >[EventNAME] </font>";
 
-const  string Intellisense::GREENSTARTDATETEXT = "<font color=Chartreuse>[StartDate] </font>" ;
-const  string Intellisense::REDSTARTDATETEXT = "<font color=Salmon   >[StartDate] </font>";
+const  string Intellisense::GREENSTARTDATETEXT          = "<font color=Chartreuse>[StartDate] </font>" ;
+const  string Intellisense::REDSTARTDATETEXT            = "<font color=Salmon   >[StartDate] </font>";
 
-const  string Intellisense::GREENENDDATETEXT = "<font color=Chartreuse>[EndDate] </font>";
-const  string Intellisense::REDENDDATETEXT = "<font color=Salmon  >[EndDate] </font>";
+const  string Intellisense::GREENENDDATETEXT            = "<font color=Chartreuse>[EndDate] </font>";
+const  string Intellisense::REDENDDATETEXT              = "<font color=Salmon  >[EndDate] </font>";
 
-const  string Intellisense::GREENPRIORITYTEXT = "<font color=Chartreuse>[PRIORITY] </font>";
-const  string Intellisense::REDPRIORITYTEXT = "<font color=Salmon>[PRIORITY] </font>";
+const  string Intellisense::GREENPRIORITYTEXT           = "<font color=Chartreuse>[PRIORITY] </font>";
+const  string Intellisense::REDPRIORITYTEXT             = "<font color=Salmon>[PRIORITY] </font>";
 
+const  string Intellisense::GREENCATEGORYTEXT           = "<font color=Chartreuse>[CATEGORY] </font>";
+const  string Intellisense::REDCATEGORYTEXT             = "<font color=Salmon >[CATEGORY] </font>";
 
-const  string Intellisense::GREENCATEGORYTEXT = "<font color=Chartreuse>[CATEGORY] </font>";
-const  string Intellisense::REDCATEGORYTEXT = "<font color=Salmon >[CATEGORY] </font>";
+const  string Intellisense::GREENIDTEXT                 = "<font color=Chartreuse>[ID] </font>";
+const  string Intellisense::REDIDTEXT                   = "<font color=Salmon>[ID] </font>";
 
-const  string Intellisense::GREENIDTEXT = "<font color=Chartreuse>[ID] </font>";
-const  string Intellisense::REDIDTEXT = "<font color=Salmon>[ID] </font>";
+const string Intellisense::LINEBREAK                    = "<br>";
 
-const string Intellisense::LINEBREAK = "<br>";
-
-const char Intellisense::CATEGORYRECOGNISER = '#' ;
+const char Intellisense::CATEGORYRECOGNISER             = '#' ;
 
 
 
@@ -87,7 +100,7 @@ const char Intellisense::CATEGORYRECOGNISER = '#' ;
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns a char in lower case
 char toLower(char in){
     if(in<='Z' && in>='A')
@@ -96,7 +109,7 @@ char toLower(char in){
 }
 
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //singleton pattern instance
 Intellisense* Intellisense::getInstance()
 {
@@ -112,7 +125,7 @@ Intellisense* Intellisense::getInstance()
     }
 
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //singleton constructor
 Intellisense::Intellisense(void)
 {
@@ -131,14 +144,14 @@ void Intellisense::initFlags()
 }
 
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 Intellisense::~Intellisense(void)
 {
     instanceFlag=false;
     logger->endInstance();
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //parses string input and perfom task according the command word detected
 //return a action class containing the parsed information in each fields
 Action Intellisense::check(string query)
@@ -206,7 +219,7 @@ Action Intellisense::check(string query)
 
 
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns operation type based on the first string token
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
@@ -266,7 +279,7 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     }
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //compares 2 strings words irregardless of upper/lower casing
 //returns true if both strings are the same, false otherwise
 bool Intellisense::checkString(const string& input, const string& command)
@@ -320,14 +333,14 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
     }
 
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns the first string token
 string Intellisense::getfirst_Word(string command)
 {
     return tokenize(command)[0];
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns the command word from string tokens
 string Intellisense::getCommand(vector<string>& tokens,string _command)
 {
@@ -337,7 +350,7 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 
     return command;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns an int representing an ID
 int Intellisense::getID(vector<string>& tokens)
 {
@@ -352,7 +365,7 @@ int Intellisense::getID(vector<string>& tokens)
 
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns HIGH or LOW if keyword "HIGH" or "LOW" is detected at the head or end of token
 string Intellisense::getPriority(vector<string>& tokens)
 {
@@ -389,7 +402,7 @@ string Intellisense::getPriority(vector<string>& tokens)
     return EMPTYPRIORITY;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns a struct tm which contains the date and time after parsing through the tokens
 //different processing is performed based on the size of string
 tm Intellisense::getTime(vector<string>& tokens,tm &date)
@@ -449,7 +462,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
     return date;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "x:xx"
 bool Intellisense::processTimeFormat8 (tm &date, string time)
@@ -472,7 +485,7 @@ bool Intellisense::processTimeFormat8 (tm &date, string time)
     return false;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "12:xxPM"
 bool Intellisense::processTimeFormat7 (tm &date, string checkString)
@@ -487,7 +500,7 @@ bool Intellisense::processTimeFormat7 (tm &date, string checkString)
     return false;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "12xxPM"
 bool Intellisense::processTimeFormat6 (tm &date, string time)
@@ -518,7 +531,7 @@ bool Intellisense::processTimeFormat6 (tm &date, string time)
     return false;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "9xxPM"
 bool Intellisense::processTimeFormat5 (tm &date, string time)
@@ -548,7 +561,7 @@ bool Intellisense::processTimeFormat5 (tm &date, string time)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "9:xxPM"
 bool Intellisense::processTimeFormat4 (tm &date, string checkString)
@@ -562,7 +575,7 @@ bool Intellisense::processTimeFormat4 (tm &date, string checkString)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "xx:xx"
 bool Intellisense::processTimeFormat3 (tm &date, string time)
@@ -585,7 +598,7 @@ bool Intellisense::processTimeFormat3 (tm &date, string time)
     return false;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "XXPM" . e.g. 12PM
 bool Intellisense::processTimeFormat2 (tm &date, string time)
@@ -613,7 +626,7 @@ bool Intellisense::processTimeFormat2 (tm &date, string time)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "XPM" . e.g. 1PM
 bool Intellisense::processTimeFormat1 (tm &date, string time)
@@ -669,7 +682,7 @@ string Intellisense::getCategory(vector<string>& tokens)
     return category;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //removes characters from string as indicated
 string Intellisense::removeChar(string s,char chars[])
 {
@@ -679,26 +692,26 @@ string Intellisense::removeChar(string s,char chars[])
     }
     return s;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //removes blank spaces from the front of the string
 string& Intellisense::trim_left_inplace( string& s,  const string& delimiters)
 {
     return s.erase(  0, s.find_first_not_of( delimiters ) );
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //removes blank spaces from back of string
 string& Intellisense::trim_right_inplace( string& s, const string& delimiters)
 {
     return s.erase( s.find_last_not_of( delimiters ) + 1 );
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //removes blank spaces from front and back of string
 string& Intellisense::trim(string& s ,const string& delimiters )
 {
     return trim_left_inplace( trim_right_inplace( s, delimiters ), delimiters );
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //checks for the string idenifier and returns the date for the holiday event
 void Intellisense::getImptDate(string _date, tm &date)
 {
@@ -716,7 +729,7 @@ void Intellisense::getImptDate(string _date, tm &date)
 }
 
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //retrieve date holiday event keywords such as "CHRISTMAS" & "NEWYEAR"
 //functions updates the date with the occasion
 bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
@@ -743,7 +756,7 @@ bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
     return false;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date format is identified
 // function checks for date format in the form "DDMMYYYY"
 bool Intellisense::checkDateFormat1(string checkString, tm &date)
@@ -759,7 +772,7 @@ bool Intellisense::checkDateFormat1(string checkString, tm &date)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date format is identified
 // function checks for date format in the form "DD/MM/YYYY"
 bool Intellisense::checkDateFormat2(string checkString, tm &date)
@@ -779,7 +792,7 @@ bool Intellisense::checkDateFormat2(string checkString, tm &date)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date format is identified
 // function checks for date format in the form "D/M/YYYY"
 bool Intellisense::checkDateFormat3(string checkString, tm &date)
@@ -799,7 +812,7 @@ bool Intellisense::checkDateFormat3(string checkString, tm &date)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date format is identified
 // function checks for date format in the form "DD/M/YYYY"
 bool Intellisense::checkDateFormat4(string checkString, tm &date)
@@ -819,7 +832,7 @@ bool Intellisense::checkDateFormat4(string checkString, tm &date)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date format is identified
 // function checks for date format in the form "D/MM/YYYY"
 bool Intellisense::checkDateFormat5(string checkString, tm &date)
@@ -839,7 +852,7 @@ bool Intellisense::checkDateFormat5(string checkString, tm &date)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date format is identified
 //functions checks for date in numerical entered by user and updates the fields in structure date
 //string format example " 16/5/2013 "
@@ -884,7 +897,7 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
     }
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date format is identified
 //functions checks for date in string entered by user and updates the fields in structure date
 //string format example " 16 may 2013 "
@@ -954,7 +967,7 @@ bool Intellisense::checkDateStringFormat(vector<string>& tokens, tm &date)
     return false;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns a tm struct containing date which user entered
 tm Intellisense::getDate(vector<string>& tokens)
 {
@@ -985,7 +998,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 }
 
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns an int representative of month
 //example. march = 3
 int Intellisense::checkMonthByString(string token)
@@ -1015,7 +1028,6 @@ string Intellisense::getEventName(vector<string>& tokens)
         if (it!=tokens.end())
         {
             ss<<string(" ");
-            //only increment if it is not the last position
         }
     }
     return ss.str();
@@ -1062,7 +1074,7 @@ int Intellisense::checkDateType(string lowerString)
 
     return dateTypeFound;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if string input only contains integer
 bool Intellisense::isAllInt(const string& s)
 {
@@ -1076,7 +1088,7 @@ bool Intellisense::isAllInt(const string& s)
     return true;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //string tokenizer
 //returns a vector of tokens
 vector<string> Intellisense::tokenize(string command)
@@ -1106,7 +1118,7 @@ Action Intellisense::addOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
     Action task;
-    task.setCommand(getCommand(tokens,"ADD"));
+    task.setCommand(getCommand(tokens,ADDCOMMAND));
     task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
@@ -1125,7 +1137,7 @@ Action Intellisense::deleteOperation(vector<string>& tokens)
 {
     currentCommand = DELETE;
     Action task;
-    task.setCommand(getCommand(tokens,"DELETE"));
+    task.setCommand(getCommand(tokens,DELETECOMMAND));
     int ID = getID(tokens);
     if(ID == -1)
     {
@@ -1148,7 +1160,7 @@ Action Intellisense::exitOperation(vector<string>& tokens)
 {
     currentCommand = EXIT;
     Action task;
-    task.setCommand(getCommand(tokens,"EXIT"));
+    task.setCommand(getCommand(tokens,EXITCOMMAND));
     setAllStatusFlag(task);
     checkExitReq();
     return task;
@@ -1161,7 +1173,7 @@ Action Intellisense::displayOperation(vector<string>& tokens)
 {
     currentCommand = DISPLAY;
     Action task;
-    task.setCommand(getCommand(tokens,"DISPLAY"));
+    task.setCommand(getCommand(tokens,DISPLAYCOMMAND));
     task.setStartDate(getDate(tokens));
     setAllStatusFlag(task);
     checkDspReq();
@@ -1175,7 +1187,7 @@ Action Intellisense::markOperation(vector<string>& tokens)
 {
     currentCommand = MARK;
     Action task;
-    task.setCommand(getCommand(tokens,"MARK"));
+    task.setCommand(getCommand(tokens,MARKCOMMAND));
     task.setEventName(getEventName(tokens));
     setAllStatusFlag(task);
     checkMarkReq();
@@ -1190,7 +1202,7 @@ Action Intellisense::quickAddOperation(vector<string>& tokens)
 {
     currentCommand = ADD;
     Action task;
-    task.setCommand("ADD");// we assume add if no command word is found
+    task.setCommand(ADDCOMMAND);// we assume add if no command word is found
     task.determineDate(getDate(tokens),getDate(tokens));
     task.setCategory(getCategory(tokens));
     task.setPriority(getPriority(tokens));
@@ -1210,12 +1222,12 @@ Action Intellisense::undoOperation(vector<string>& tokens)
 {
     currentCommand = UNDO;
     Action task;
-    task.setCommand(getCommand(tokens,"UNDO"));
+    task.setCommand(getCommand(tokens,UNDOCOMMAND));
     setAllStatusFlag(task);
     return task;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns int representative of the month entered
 int Intellisense::checkDateString(string token)
 {
@@ -1231,39 +1243,39 @@ int Intellisense::checkDateString(string token)
     return -1;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //Performs operation "today" command
 //returns an Action package containin user input and fields
 Action Intellisense::todayOperation(vector<string>& tokens)
 {
     currentCommand = TODAY;
     Action task;
-    task.setCommand("TODAY");
+    task.setCommand(TODAYCOMMAND);
     setAllStatusFlag(task);
     return task;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //Performs operation "todo" command
 //returns an Action package containin user input and fields
 Action Intellisense::todoOperation(vector<string>& tokens)
 {
     currentCommand = TODO;
     Action task;
-    task.setCommand("TODO");
+    task.setCommand(TODOCOMMAND);
     task.setDateType(4);
     setAllStatusFlag(task);
     return task;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //Performs operation "redo" command
 //returns an Action package containin user input and fields
 Action Intellisense::redoOperation(vector<string>& tokens)
 {
     currentCommand = REDO;
     Action task;
-    task.setCommand(getCommand(tokens,"REDO"));
+    task.setCommand(getCommand(tokens,REDOCOMMAND));
     setAllStatusFlag(task);
     return task;
 }
@@ -1275,7 +1287,7 @@ Action Intellisense::sortOperation(vector<string>& tokens)
 {
     currentCommand = SORT;
     Action task;
-    task.setCommand(getCommand(tokens,"SORT"));
+    task.setCommand(getCommand(tokens,SORTCOMMAND));
     setAllStatusFlag(task);
     return task;
 }
@@ -1287,7 +1299,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
 {
     currentCommand = FIND;
     Action task;
-    task.setCommand(getCommand(tokens,"FIND"));
+    task.setCommand(getCommand(tokens,FINDCOMMAND));
     task.setPriority(getPriority(tokens));
     task.setCategory(getCategory(tokens));
     task.setStartDate(getDate(tokens));
@@ -1298,21 +1310,21 @@ Action Intellisense::findOperation(vector<string>& tokens)
     return task;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //Performs operation "displayarchive" command
 //returns an Action package containin user input and fields
 Action Intellisense::displayarchiveOperation(vector<string>& tokens)
 {
     currentCommand = DISPLAYARCHIVE;
     Action task;
-    task.setCommand(getCommand(tokens,"DISPLAYARCHIVE"));
+    task.setCommand(getCommand(tokens,DISPLAYARCHIVECOMMAND));
     setAllStatusFlag(task);
     smartAutoFill(task,tokens);//auto fill some of the fields that are unentered
 
     return task;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns the maximum number of days in that month
 int Intellisense::daysMonth(int year, int month)
 {
@@ -1331,7 +1343,7 @@ int Intellisense::daysMonth(int year, int month)
 
     return numberOfDays;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date is valid, eg. number of days does not exist 32, there is no month with 32 days
 bool Intellisense::isDateValid(Action task)
 {
@@ -1361,7 +1373,7 @@ bool Intellisense::isDateValid(Action task)
 
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if date has pass, checks if startDate with today's date
 bool Intellisense::isDateOver(Action _task)
 {
@@ -1389,7 +1401,7 @@ bool Intellisense::isDateOver(Action _task)
 
 
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //updates category field in task to be invalid if an invalid date is detected
 void Intellisense::handleInvalidDate(Action &task)
 {
@@ -1399,7 +1411,7 @@ void Intellisense::handleInvalidDate(Action &task)
     }
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //function marks the task as floating task if no date is entered
 void Intellisense::handleNoDateEntered(Action &task)
 {  tm emptyDate ={0,0,0,0,0,0,0,0,0};
@@ -1412,7 +1424,7 @@ void Intellisense::handleNoDateEntered(Action &task)
 
     }
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //function marks the task as floating task if date has passed
 void Intellisense::handleDateOver(Action &task)
 {  tm emptyDate ={0,0,0,0,0,0,0,0,0};
@@ -1426,7 +1438,7 @@ void Intellisense::handleDateOver(Action &task)
     }
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //function sets the EndDate to expire at 23:59 if not enddate is specified
 void Intellisense::handleNoEndDate(Action &task)
 {
@@ -1451,7 +1463,7 @@ void Intellisense::smartAutoFill(Action &task,vector<string>& tokens)
 
 
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns true if startDate time is empty
 bool Intellisense::isTimeEmpty(tm date)
 {
@@ -1460,7 +1472,7 @@ bool Intellisense::isTimeEmpty(tm date)
 
     return false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns tm struct autofill date input, time is left untouched
 tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
 {
@@ -1481,7 +1493,7 @@ tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
 
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns tm struct autofill EndDate to be same as startDate, time is 23:59
 tm Intellisense::getEndOfDay(Action &task)
 {
@@ -1693,12 +1705,17 @@ void Intellisense::checkEditReq()
 //@PAN WENREN A0083711L
 string Intellisense::getAddFeedBack()
 {
+    string feedBack;
     if(getrequirementsMet())
     {
-        return ADDFEEDBACK_1 ;
+        feedBack = ADDFEEDBACK_1 ;
+    }
+    else
+    {
+        feedBack = ADDFEEDBACK_2 ;
     }
 
-    return ADDFEEDBACK_2 ;
+    return feedBack;
 }
 //@PAN WENREN A0083711L
 string Intellisense::getEditFeedBack()
@@ -2004,14 +2021,31 @@ void Intellisense::updateDateInPara()
 {
     if(isValidParaForCmd(currentCommand,IDATE))//
     {
-        if(statusFlags[IDATE])
-        {
-            _parameter =_parameter + GREENSTARTDATETEXT ;
-        }
-        else
-        {
-            _parameter =_parameter + REDSTARTDATETEXT ;
-        }
+        writeDateToPara();
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writeDateToPara()
+{
+    if(statusFlags[IDATE])
+    {
+        _parameter =_parameter + GREENSTARTDATETEXT ;
+    }
+    else
+    {
+        _parameter =_parameter + REDSTARTDATETEXT ;
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writeEndDateToPara()
+{
+    if(statusFlags[IDATEEND])
+    {
+        _parameter =_parameter + GREENENDDATETEXT;
+    }
+    else
+    {
+        _parameter =_parameter + REDENDDATETEXT;
     }
 }
 //@PAN WENREN A0083711L
@@ -2019,14 +2053,19 @@ void Intellisense::updateEndDateInPara()
 {
     if(isValidParaForCmd(currentCommand,IDATEEND))//
     {
-        if(statusFlags[IDATEEND])
-        {
-            _parameter =_parameter + GREENENDDATETEXT;
-        }
-        else
-        {
-            _parameter =_parameter + REDENDDATETEXT;
-        }
+        writeEndDateToPara();
+    }
+}
+//@PAN WENREN A0083711L
+void Intellisense::writePriorityToPara()
+{
+    if(statusFlags[IPRIORITY])
+    {
+        _parameter =_parameter + GREENPRIORITYTEXT ;
+    }
+    else
+    {
+        _parameter =_parameter + REDPRIORITYTEXT ;
     }
 }
 //@PAN WENREN A0083711L
@@ -2034,35 +2073,33 @@ void Intellisense::updatePriorityInPara()
 {
     if(isValidParaForCmd(currentCommand,IPRIORITY))//
     {
-        if(statusFlags[IPRIORITY])
-        {
-            _parameter =_parameter + GREENPRIORITYTEXT ;
-        }
-        else
-        {
-            _parameter =_parameter + REDPRIORITYTEXT ;
-        }
+        writePriorityToPara();
     }
 }
+//@PAN WENREN A0083711L
+void Intellisense::writeCategoryToPara()
+{
+    if(statusFlags[ICATEGORY])
+    {
+        _parameter =_parameter + GREENCATEGORYTEXT;
+    }
+    else
+    {
+        _parameter =_parameter + REDCATEGORYTEXT ;
+    }
+}
+
 //@PAN WENREN A0083711L
 void Intellisense::updateCategoryInPara()
 {
     if(isValidParaForCmd(currentCommand,ICATEGORY))//
     {
-        if(statusFlags[ICATEGORY])
-        {
-            _parameter =_parameter + GREENCATEGORYTEXT;
-        }
-        else
-        {
-            _parameter =_parameter + REDCATEGORYTEXT ;
-        }
+        writeCategoryToPara();
     }
 }
 //@PAN WENREN A0083711L
-void Intellisense::updateIDInPara()
+void Intellisense::writeIDToPara()
 {
-
     if(isValidParaForCmd(currentCommand,IID))//
     {
         if(statusFlags[IID])
@@ -2074,6 +2111,12 @@ void Intellisense::updateIDInPara()
             _parameter =_parameter + REDIDTEXT ;
         }
     }
+}
+
+//@PAN WENREN A0083711L
+void Intellisense::updateIDInPara()
+{
+    writeIDToPara();
 }
 
 //@PAN WENREN A0083711L

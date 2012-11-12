@@ -1,6 +1,6 @@
 #include <QtGui/QApplication>
 #include "GuiControl.h"
-#include "UnitTest.h"
+//#include "UnitTest.h"
 
 #include "timekeeper.h"
 
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
         QApplication app1(argc, argv);
         int retval(0);
 
-        retval += QTest::qExec(&UnitTest(), argc, argv);
+        //retval += QTest::qExec(&UnitTest(), argc, argv);
         // Add more test like above here
 
         return (retval ? 1 : 0);

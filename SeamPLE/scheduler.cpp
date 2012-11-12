@@ -126,7 +126,7 @@ vector<string> scheduler::executeCommand(Action newAction)
     return _result;
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //returns the number of days in the month
 int scheduler::daysMonth(int year, int month)
 {
@@ -147,7 +147,7 @@ int scheduler::daysMonth(int year, int month)
 
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //updates the date to a week later
 void scheduler::updateWeeklyTask(tm &_date)
 {
@@ -162,7 +162,7 @@ void scheduler::updateWeeklyTask(tm &_date)
 }
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //updates the date to 2 week later
 void scheduler::updateFornightlyTask(tm &_date)
 {
@@ -177,7 +177,7 @@ void scheduler::updateFornightlyTask(tm &_date)
 }
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //updates the date to a month later
 void scheduler::updateMonthlyTask(tm &_date)
 {
@@ -190,7 +190,7 @@ void scheduler::updateMonthlyTask(tm &_date)
 
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //updates a task based on dateType, namely: weekly,monthly,fortnightly
 void scheduler::updateTask(task &_task)
 {
@@ -228,7 +228,7 @@ void scheduler::updateTask(task &_task)
 
 }
 
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 //transvers throught the array to retrieve events that are going to occur
 string scheduler::getEventBasedOnTime(int hour, int min)
 {
@@ -426,7 +426,7 @@ bool scheduler::isTimeZero(tm time)
         return false;
 }
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
 {
     if(command!="ADD")
@@ -447,7 +447,6 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
             _endDate = convertToDate(taskVector[i].getEndDate());
 
         ostringstream convert;
-        //convert << taskVector.at(i).getID()+1; // commented out as it pass incorrect id to gui
         convert << i+1;//i added this as a temporary replacement for the id above,remove this when u updated ur code
         string id= convert.str();
         _result.push_back(id);
@@ -459,10 +458,10 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
     }
     //decision to either view in standard or simple view
     if (vectorSize>0){
-        if(command=="ADD" || command=="DELETE"){
+        if(command=="ADD" || command=="DELETE")
+        {
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
-            cout<<"this is pushed"<<endl;
-        }
+           }
         else{
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
         }
@@ -470,14 +469,14 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
 }
 
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::printMessage(string _messageType)
 {
     _result.push_back(_messageType);
 }
 
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Add(task thisTask)
 {
     if(thisTask.getCategory() == "1NVAL1D")
@@ -500,8 +499,7 @@ void scheduler::Add(task thisTask)
           vector<task> temp;
           temp.push_back(thisTask);
           partialUpdateGUI(temp,"ADD");
-          //updateGUI();
-         }
+            }
         else
           {
            _faulty->report("Scheduler class: Add command FAIL");
@@ -510,7 +508,7 @@ void scheduler::Add(task thisTask)
    }
 }
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Delete(task thisTask)
 {
     if ((thisTask.getID() == -1) && (thisTask.getEventName() == ""))
@@ -575,7 +573,6 @@ void scheduler::Delete(task thisTask)
 //@PAN WENREN A0083711L
 void scheduler::Edit(task thisTask) //@WENREN
 {
-    ////cout<<"Edit execution with normal keypress"<<endl;
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
     partialUpdateGUI(taskVector,"EDIT");
 }
@@ -586,7 +583,7 @@ void scheduler::EditEnter(task thisTask)
     if (thisTask.getEventName()!="")
            {
                taskVector = eventCalender.SearchByTask(thisTask.getEventName());
-               if (taskVector.size() == 0) //if no match found
+               if (taskVector.size() == 0)
                {
                    printMessage(MESSAGE_ERROR_NOT_FOUND);
                }
@@ -606,13 +603,13 @@ void scheduler::EditEnter(task thisTask)
            }
     updateGUI("EDIT");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Display()
 {
     taskVector=eventCalender.displayDatabase();
     partialUpdateGUI(taskVector,"DISPLAY");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Undo()
 {
     if (eventCalender.undoAction())
@@ -621,7 +618,7 @@ void scheduler::Undo()
            printMessage(MESSAGE_UNDO_FAILURE);
     updateGUI("UNDO");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Redo()
 {
     if (eventCalender.redoAction())
@@ -669,13 +666,13 @@ void scheduler::Find(task thisTask)
         _faulty->report("Scheduler:: Find function fail to find the result");
     }
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Exit()
 {
     exit(0);
 }
 
-//@John A0069517W
+//@author: A0069517W
 void scheduler::Mark(task thisTask)
 {
     if (  eventCalender.markTask(thisTask) )
@@ -685,7 +682,7 @@ void scheduler::Mark(task thisTask)
     updateGUI("MARK");
 }
 
-//@John A0069517W
+//@author: A0069517W
 void scheduler::Todo()
 {
     taskVector = eventCalender.getFloatingEvents();

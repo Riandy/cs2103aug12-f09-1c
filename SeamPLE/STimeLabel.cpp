@@ -1,6 +1,6 @@
 #include "STimeLabel.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 STimeLabel::STimeLabel(QWidget *parent):
     QLabel(parent)
@@ -21,8 +21,10 @@ void STimeLabel::setAutoDateAndTimeDisplay()
 {
     _dateAndTime = _dateAndTime->getInstance();
     _interval = new QTimer(this);
-    connect(_interval, SIGNAL(timeout()), _dateAndTime, SLOT(getStringDateAndTime()));
-    connect(_dateAndTime, SIGNAL(relayStringDateAndTime(QString)), this, SLOT(setText(QString)));
+    connect(_interval, SIGNAL(timeout()),
+            _dateAndTime, SLOT(getStringDateAndTime()));
+    connect(_dateAndTime, SIGNAL(relayStringDateAndTime(QString)),
+            this, SLOT(setText(QString)));
     _interval->setSingleShot(false);
     _interval->start(1000);
 }

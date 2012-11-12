@@ -2,7 +2,11 @@
 
 bool Seample::instanceFlag=false;
 Seample* Seample::seample=NULL;
+const string Seample::VALIDBOXFLAG = "1";
+const string Seample::INVALIDBOXFLAG = "2";
+const string Seample::LINEBREAK = "<br>";
 
+//Debugging Functions start
 void DisplayDate(tm date)
 {
     cout<<string("Date : ")<<date.tm_mday;
@@ -27,8 +31,8 @@ void DisplayEvent(Action task)
 
     cout<<string("******************")<<endl;
 }
-
-//@author: U0904659H
+//Debugging Functions End
+//@CHAM WEN BIN U094659H
 //singleton constructor
 Seample::Seample()
 {
@@ -36,12 +40,12 @@ Seample::Seample()
     _scheduler=scheduler::getInstance();
 
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 Seample::~Seample()
 {
     instanceFlag = false;
 }
-//@author: U0904659H
+//@CHAM WEN BIN U094659H
 Seample* Seample::getInstance()
 {
     if(!instanceFlag)
@@ -66,75 +70,74 @@ void Seample::updateUserInput(string userInput)
 {
     this->userInput=userInput;
 }
-
-QVector <QString> Seample::run(Command componentType, string _userInput)
+//@PAN WENREN A0083711L
+void Seample::updateIntellisenseFeedBack()
 {
-    userInput = _userInput;
-    response = intellisense->check(userInput);
-    setShortCutRequirementsMet(_userInput);
-    //cout<<"Requirements met:"<<intellisense->getrequirementsMet()<<endl;
-    if (componentType == TO_SCHEDULER_AND_RETURN_RESULTS && intellisense->getrequirementsMet())
-        //only allow action to be sent to scheduler if min req met to reduce check done by scheduler
-        //if for user experience we can call upon GUI to erase what user last typed,and indicate with a tick or a cross to simulate sending
+        feedback.push_back(QString::fromStdString(intellisense->getParameter()));
+}
+//@PAN WENREN A0083711L
+void Seample::normalCommandHandler()
+{
+    updateIntellisenseFeedBack();
+    sendBoxColourFlag();
+}
+//@PAN WENREN A0083711L
+void Seample::sendBoxColourFlag()
+{
+    if (intellisense->getrequirementsMet())
     {
-        //added adhoc edit code
-        if( (response.getCommand()) == "EDIT" )
-            response.setCommand("EDITENTER") ;
-        //end of adhoc edit code
-        feedback = fireAction(); 
+        feedback.push_back(QString::fromStdString(VALIDBOXFLAG));
+    }
+    else
+    {
+        feedback.push_back(QString::fromStdString(INVALIDBOXFLAG));
+    }
+}
+//@PAN WENREN A0083711L
+void Seample::editCommandHandler()
+{
+    feedback += fireAction(); //append the results at the end
+    feedback[0] = QString::fromStdString( intellisense->getParameter() + LINEBREAK ) + feedback[0];
+    sendBoxColourFlag();
+
+}
+
+//@PAN WENREN A0083711L
+void Seample::intellisenseHandler()
+{
+    if( (response.getCommand()) != Intellisense::EDITCOMMAND )
+    {
+        normalCommandHandler();
+    }
+
+    if( (response.getCommand()) == Intellisense::EDITCOMMAND )
+    {
+        editCommandHandler();
+    }
+
+}
+//@PAN WENREN A0083711L
+void Seample::interpretEditCommand()
+{
+    if( (response.getCommand()) == Intellisense::EDITCOMMAND )
+        response.setCommand(Intellisense::EDITENTERCOMMAND) ;
+}
+void Seample::schedulerHandler()
+{
+    interpretEditCommand();
+    feedback = fireAction();
+}
+
+//@PAN WENREN A0083711L
+void Seample::distributeTasks(Command componentType)
+{
+    if (componentType == TO_SCHEDULER_AND_RETURN_RESULTS && intellisense->getrequirementsMet())
+    {
+        schedulerHandler();
     }
     else if (componentType == TO_INTELLISENSE)
     {
-            if( (response.getCommand()) != "EDIT" )//crude way to do it since i have no idea the format of display
-            {// have to make this work with the below part together with teh table
-                feedback.push_back(QString::fromStdString(intellisense->getParameter()));
-                if (intellisense->getrequirementsMet())
-                {
-                    feedback.push_back("1");
-                }
-                else
-                {
-                    feedback.push_back("2");//red
-                }
-            }
-
-//----------------------------------startof adhoc edit code------------------------------------------------------------------
-            if( (response.getCommand()) == "EDIT" )
-            {
-                //cout<<"running la"<<endl;
-                feedback += fireAction(); //append the results at the end
-
-                feedback[0] = QString::fromStdString(intellisense->getParameter()) + "<br>" + feedback[0];
-
-                if (intellisense->getrequirementsMet())
-                {
-                    feedback.push_back("1");
-                }
-                else
-                {
-                    feedback.push_back("2");//red
-                }
-                //Copy and paste end
-
-//                if(feedback.size()<2)
-//                {
-//                    //feedback.push_back("1");//push empty line to bypass the crude check GuiControl::check(QString input)
-//                    feedback.push_back("1");
-//                }
-
-            }
-            else
-            {
-                //cout<<"This didnt RUN!!!!!"<<endl;
-            }
-            //crap
-            //cout<<endl<<endl;
-           // for(int t=0; t<feedback.size();t++)
-            //cout<<(feedback.at(t)).toStdString()<<endl;
-                  //end crap
-//--------------------end of adhoc edit code------------------------------------------------------------------
-
-
+        intellisenseHandler();
         DisplayEvent(response); //for debugging info only
 
     }
@@ -142,13 +145,33 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
     {
         feedback = convertQString(_scheduler->getTodayEvents());
     }
+}
+//@PAN WENREN A0083711L
+void Seample::updateInternalInput(string _userInput)
+{
+        userInput = _userInput;
+}
+//@PAN WENREN A0083711L
+void Seample::updateResponse()
+{
+     response = intellisense->check(userInput);
+}
+
+//@PAN WENREN A0083711L
+QVector <QString> Seample::run(Command componentType, string _userInput)
+{
+    updateInternalInput(_userInput);
+    updateResponse();
+    setShortCutRequirementsMet(_userInput);
+    distributeTasks(componentType);
 
     QVector <QString> result = feedback;
     feedback.clear();
 
     return result;
 }
-//@author: U0904659H
+
+//@CHAM WEN BIN U094659H
 //scheduler to perform a task and return feedback
 QVector <QString> Seample::fireAction()
 {
@@ -156,13 +179,7 @@ QVector <QString> Seample::fireAction()
     return convertQString(result);
 }
 
-//Function to inform if the requirements of the edit bar
-//has been met
-bool Seample::requirementsMet()
-{
-    return intellisense->getrequirementsMet();
-}
-
+//@CHAM WEN BIN U094659H
 //Following function is for converting vector of QString
 //to QVector of QString
 QVector <QString> Seample::convertQString(vector <string> input)
@@ -178,10 +195,19 @@ QVector <QString> Seample::convertQString(vector <string> input)
     return converted;
 }
 
-void Seample::setShortCutRequirementsMet(string command)
+//@LIU WEIYUAN: A0086030R
+bool Seample::requirementsMet()
 {
-    if (command == "undo" || command == "redo" || command == "display"
-            || command == "today" || command == "todo")
+    return intellisense->getrequirementsMet();
+}
+
+//@LIU WEIYUAN: A0086030R
+void Seample::setShortCutRequirementsMet(string input)
+{
+    QuickCheck evaluate;
+    bool inputIsAppropriate = evaluate.shortcutCheck(input);
+
+    if (inputIsAppropriate)
     {
         intellisense->setRequirementsMet(true);
     }

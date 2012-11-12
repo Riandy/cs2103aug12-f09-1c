@@ -1,6 +1,6 @@
 #include "TimeGetter.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 TimeGetter* TimeGetter:: _timeGetter = NULL;
 
@@ -48,6 +48,24 @@ bool TimeGetter::singleInstanceExist()
     return result;
 }
 
+QString TimeGetter:: setTickingMotionFrom(QDateTime currDateAndTime)
+{
+    QString timeStr;
+    bool currSecondIsEvenNumber = getTime(currDateAndTime).second() % 2 == 0;
+
+    //Following if-else conditions are to show the ticking motion of a clock
+    if (currSecondIsEvenNumber)
+    {
+        timeStr = currDateAndTime.toString(SET_TIME_FORMAT_TICK);
+    }
+    else
+    {
+        timeStr = currDateAndTime.toString(SET_TIME_FORMAT_TICKLESS);
+    }
+
+    return timeStr;
+}
+
 //This function returns the address of the singleton existence of this class
 TimeGetter* TimeGetter::getInstance()
 {
@@ -76,21 +94,7 @@ void TimeGetter::getStringDateAndTime()
     QDateTime currDateAndTime = QDateTime::currentDateTime();
     QString date = currDateAndTime.toString(SET_DATE_FORMAT);
     date = SET_DATE_FONT_FORMAT_AND_TAG + date + SET_END_FONT_TAG;
-
-    bool currSecondIsEvenNumber = getTime(currDateAndTime).second() % 2 == 0;
-
-    QString time;
-
-    //Following if-else conditions are to show the ticking motion of a clock
-    if (currSecondIsEvenNumber)
-    {
-        time = currDateAndTime.toString(SET_TIME_FORMAT_TICK);
-    }
-    else
-    {
-        time = currDateAndTime.toString(SET_TIME_FORMAT_TICKLESS);
-    }
-
+    QString time = setTickingMotionFrom(currDateAndTime);
     time = SET_TIME_FONT_FORMAT_AND_TAG + time + SET_END_FONT_TAG;
 
     emit relayStringDateAndTime(date+SET_START_NEXT_SENTENCE+time+SET_END_NEXT_SENTENCE);

@@ -2,13 +2,13 @@
 #define SEAMPLE_H
 #include <QtGui/QApplication>
 
+#include <QDebug>
+#include <iostream>
 #include "Intellisense.h"
 #include "Action.h"
-#include <QDebug>
-#include <string>
-#include <iostream>
 #include "seample.h"
 #include "scheduler.h"
+#include "QuickCheck.h"
 
 enum Command
 {
@@ -22,29 +22,47 @@ class Seample
 {
 
 private:
+    const static string VALIDBOXFLAG;
+    const static string INVALIDBOXFLAG;
+    const static string LINEBREAK;
     static bool instanceFlag;
     static Seample *seample;
-    Seample();
+
     string userInput;
     Action response;
     Intellisense *intellisense;
     scheduler  *_scheduler;
-    QVector <QString> feedback;
 
-    //Following function is for converting vector of QString
-    //to QVector of QString
+    //string manipulation functions
+    QVector <QString> feedback;
     QVector <QString> convertQString (vector <string> buffer);
 
-    void setShortCutRequirementsMet(string);
+
+    Seample();
+    ~Seample();
+
+    void distributeTasks(Command componentType);
+
+    void intellisenseHandler();
+    void schedulerHandler();
+    void normalCommandHandler();
+    void editCommandHandler();
+    void interpretEditCommand();
+    void updateUserInput(string userInput);
+    void updateIntellisenseFeedBack();
+    void updateInternalInput(string _userInput);
+    void updateResponse();
+    void sendBoxColourFlag();
 
 public:
     static Seample* getInstance();
-    ~Seample();
-    void init(int argc, char *argv[]);
-    void updateUserInput(string userInput);
     QVector <QString> run(Command operationType, string _userInput);
     QVector <QString> fireAction();
+    void init(int argc, char *argv[]);
     bool requirementsMet();
+
+private:
+    void setShortCutRequirementsMet(string input);
 };
 
 #endif // SEAMPLE_H

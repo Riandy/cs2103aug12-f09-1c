@@ -1,6 +1,6 @@
 #include "SLineEdit.h"
 
-//@WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 //Set memory position to be NON_EXISTENT since initially there
 //is no command save in the memory
