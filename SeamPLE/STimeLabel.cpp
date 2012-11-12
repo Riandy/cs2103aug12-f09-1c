@@ -1,6 +1,6 @@
 #include "STimeLabel.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 STimeLabel::STimeLabel(QWidget *parent):
     QLabel(parent)

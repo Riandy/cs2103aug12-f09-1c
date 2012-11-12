@@ -195,13 +195,13 @@ QVector <QString> Seample::convertQString(vector <string> input)
     return converted;
 }
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 bool Seample::requirementsMet()
 {
     return intellisense->getrequirementsMet();
 }
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 void Seample::setShortCutRequirementsMet(string input)
 {
     QuickCheck evaluate;

@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #include <QApplication>
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 //This class holds all the configurations for setting up shortcuts in
 //the application. By calling the setShortcutTo or setStandardShortcuts

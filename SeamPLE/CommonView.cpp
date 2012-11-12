@@ -1,6 +1,6 @@
 #include "CommonView.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 //Following will contain strings containing properties of the stylesheets for
 //the input line of the GUI
 const QString CommonView::STYLESHEET_INPUT_LINE_BORDER_RADIUS =

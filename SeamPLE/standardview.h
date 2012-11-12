@@ -6,7 +6,7 @@
 #include <QLabel>
 #include "CommonView.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 //This class is the StandardView as observed when running the program
 //It can be used by GuiControl in conjuction with SeampleView, where only
