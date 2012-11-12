@@ -23,8 +23,11 @@ const QString GuiControl:: MESSAGE_GUI_DISPLAY =
         "%123TABLE_SEAMPLE_&987";
 const QString GuiControl:: MESSAGE_ONLY_STAN_GUI_DISPLAY =
         "%987TABLE_SEAMPLE_&123";
-
 const QString GuiControl:: MESSAGE_EMPTY = "";
+
+const string GuiControl::MESSAGE_CHANGING_AT_WRONG_INTERFACE =
+        "Changing at inappropriate user inteface. Flag setted wrongly.";
+
 
 //Constructor is used to set several default signals as well as to
 //get the singleton instances of different classes
@@ -38,7 +41,7 @@ GuiControl::GuiControl()
     _faulty = _faulty->getInstance();
     _inputProcessor = Seample::getInstance();
     setInputColourFlag(NONE);
-    getTodaysEvents();
+    displayTodaysEvents();
 }
 
 GuiControl::~GuiControl()
@@ -136,7 +139,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
                 }
                 else
                 {
-                    changeView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
+                    toggleView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
                 }
                 try
                 {
@@ -175,26 +178,24 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     }
 }
 
-//Function to change the GUI interface being displayed
-void GuiControl::changeView(QString input, QString inputChecked,
+//Function to toggle the GUI interface being displayed
+void GuiControl::toggleView(QString input, QString inputChecked,
                             bool inputBarHasFocus)
 {
-    if (!(_standardGui->interfaceCurrentlyChanging())&&
-            !(_seampleGui->interfaceCurrentlyChanging()))
+    bool allInterfaceNotCurrentlyChanging =
+            !(_standardGui->interfaceCurrentlyChanging())&&
+            !(_seampleGui->interfaceCurrentlyChanging());
+
+    if (allInterfaceNotCurrentlyChanging)
     {
         setStandardViewFlag(!interfaceIsStandardView());
-
         if(interfaceIsStandardView())
         {
-            _seampleGui->hide();
-            _standardGui->show();
-            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+            showOnlyStandardView(input,inputChecked,inputBarHasFocus);
         }
         else
         {
-            _standardGui->hide();
-            _seampleGui->show();
-            sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+            showOnlySeampleView(input,inputChecked,inputBarHasFocus);
         }
     }
 }
@@ -207,12 +208,45 @@ void GuiControl::showHelpView()
 }
 \
 //Function displays the day's events through _standardGui
-void GuiControl::getTodaysEvents()
+void GuiControl::displayTodaysEvents()
 {
-    _standardGui->displayTodayView(
-                _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,""));
+    QVector <QString> todayItems =
+            _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
+
+    _standardGui->displayTodayView(todayItems);
 }
 
+void GuiControl::showOnlySeampleView(QString input, QString inputChecked,
+                                        bool inputBarHasFocus)
+{
+    //Defensive programming in case flag is not set to seample view
+    if (!interfaceIsStandardView())
+    {
+        _standardGui->hide();
+        _seampleGui->show();
+        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+    }
+    else
+    {
+        _faulty->report(MESSAGE_CHANGING_AT_WRONG_INTERFACE);
+    }
+}
+
+void GuiControl::showOnlyStandardView(QString input, QString inputChecked,
+                                         bool inputBarHasFocus)
+{
+    //Defensive programming in case flag is not set to standard view
+    if (interfaceIsStandardView())
+    {
+        _seampleGui->hide();
+        _standardGui->show();
+        sendWithInputEditAndFocus(inputBarHasFocus, input, inputChecked);
+    }
+    else
+    {
+        _faulty->report(MESSAGE_CHANGING_AT_WRONG_INTERFACE);
+    }
+}
 
 void GuiControl::parse(QString input)
 {
@@ -220,55 +254,80 @@ void GuiControl::parse(QString input)
             _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
 
     bool invalidIntellisenseReturn = (output.size() < MINIMUM_SIZE);
-
     if (invalidIntellisenseReturn)
     {
-        output.clear();
-        output.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
-        _faulty->report(MESSAGE_INTELLISENSE_INVALID_RETURN.toStdString());
-        setInputColourFlag(NONE);
+        output = getInvalidIntellisenseFeedback();
     }
     else
     {
-        try
-        {
-            QCharRef flag = getInputColorFlag(output);
-            if (implementInputColorFlagFailure(flag))
-            {
-                output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
-            }
-        }
-        catch (string& error)
-        {
-            _faulty->report(error);
-        }
-
-        bool needStandardView = (output[output.size()-MINIMUM_SIZE]
-                                 == (MESSAGE_GUI_DISPLAY));
-        if (needStandardView)
-        {
-            if (!interfaceIsStandardView())
-            {
-                bool inputBarFocus = true;
-                changeView(input,MESSAGE_EMPTY,inputBarFocus);
-            }
-            try
-            {
-                //Start from position one as the feedback for the user is
-                //at position 0. Amount to copy has a deduction of 3 as
-                //the last position is the colour flag, the second last
-                //position is the code flag, andalso of the feedback being
-                //in the first position
-                QVector <QString> results = output.mid(1,output.size()-3);
-                _standardGui->instantiateTable(results);
-            }
-            catch (string& error)
-            {
-                _faulty->report(error);
-            }
-        }
+        processInputBarColour(output);
+        processForStandardView(output, input);
     }
     send(output[0]);
+}
+
+QVector <QString> GuiControl:: getInvalidIntellisenseFeedback()
+{
+    QVector <QString> feedback;
+    feedback.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
+    _faulty->report(MESSAGE_INTELLISENSE_INVALID_RETURN.toStdString());
+    setInputColourFlag(NONE);
+
+    return feedback;
+}
+
+//Process the input bar colour from the QString flag
+void GuiControl::processInputBarColour(QVector <QString> output)
+{
+    try
+    {
+        QCharRef flag = getInputColorFlag(output);
+        if (implementInputColorFlagFailure(flag))
+        {
+            output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
+        }
+    }
+    catch (string& error)
+    {
+        _faulty->report(error);
+    }
+}
+
+//Process intellisense results for standard view
+void GuiControl::processForStandardView(QVector<QString> output,QString input)
+{
+    bool needStandardView = (output[output.size()-MINIMUM_SIZE]
+                             == (MESSAGE_GUI_DISPLAY));
+    if (needStandardView)
+    {
+        if (!interfaceIsStandardView())
+        {
+            bool inputBarFocus = true;
+            toggleView(input,MESSAGE_EMPTY,inputBarFocus);
+        }
+        //Start from position one as the feedback for the user is
+        //at position 0. Amount to copy has a deduction of 3 as
+        //the last position is the colour flag, the second last
+        //position is the code flag, andalso of the feedback being
+        //in the first position
+        displayStandardMultipleResults(output.mid(1,output.size()-3));
+    }
+    else
+    {
+        _standardGui->resetAllTablesContents();
+    }
+}
+
+void GuiControl::displayStandardMultipleResults(QVector <QString> results)
+{
+    try
+    {
+        _standardGui->instantiateTable(results);
+    }
+    catch (string& error)
+    {
+        _faulty->report(error);
+    }
 }
 
 bool GuiControl:: singleInstanceExists()
@@ -407,10 +466,10 @@ void GuiControl::setStandardGuiSignals()
             this,SLOT(passScheduler(QString, bool)));
 
     connect(_standardGui,SIGNAL(toSeampleView(QString, QString, bool)),
-            this,SLOT(changeView(QString, QString, bool)));
+            this,SLOT(toggleView(QString, QString, bool)));
 
     connect(_standardGui,SIGNAL(todayViewTriggered()),
-            this, SLOT(getTodaysEvents()));
+            this, SLOT(displayTodaysEvents()));
 }
 
 //Function set all required signals from _seampleGui to local slots in
@@ -424,7 +483,7 @@ void GuiControl::setSeampleGuiSignals()
             this,SLOT(passScheduler(QString, bool)));
 
     connect(_seampleGui,SIGNAL(toStandardView(QString, QString, bool)),
-            this,SLOT(changeView(QString, QString, bool)));
+            this,SLOT(toggleView(QString, QString, bool)));
 
     connect(_seampleGui,SIGNAL(getHelpView()),
             this,SLOT(showHelpView()));
@@ -435,7 +494,7 @@ void GuiControl::setSeampleGuiSignals()
 void GuiControl:: setTimedSignals()
 {
     connect(&_timeControl,SIGNAL(oneMinuteTrigger()),
-            this, SLOT(getTodaysEvents()));
+            this, SLOT(displayTodaysEvents()));
 }
 
 //Function returns a bool value if the scheduler results needs to
