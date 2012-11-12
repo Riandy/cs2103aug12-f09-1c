@@ -8,7 +8,7 @@
 #include "ndebug.h"
 using namespace std;
 
-//@author: U0904659H
+//@author: u094659h
 class task
 {
 private:

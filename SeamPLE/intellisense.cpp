@@ -100,7 +100,7 @@ const char Intellisense::CATEGORYRECOGNISER             = '#' ;
 bool Intellisense::instanceFlag = false;
 Intellisense* Intellisense::intellisense = NULL;
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns a char in lower case
 char toLower(char in){
     if(in<='Z' && in>='A')
@@ -109,7 +109,7 @@ char toLower(char in){
 }
 
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //singleton pattern instance
 Intellisense* Intellisense::getInstance()
 {
@@ -125,7 +125,7 @@ Intellisense* Intellisense::getInstance()
     }
 
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //singleton constructor
 Intellisense::Intellisense(void)
 {
@@ -144,14 +144,14 @@ void Intellisense::initFlags()
 }
 
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 Intellisense::~Intellisense(void)
 {
     instanceFlag=false;
     logger->endInstance();
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //parses string input and perfom task according the command word detected
 //return a action class containing the parsed information in each fields
 Action Intellisense::check(string query)
@@ -219,7 +219,7 @@ Action Intellisense::check(string query)
 
 
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns operation type based on the first string token
 operation Intellisense::determinOperation(vector<string>& tokens)
 {
@@ -279,7 +279,7 @@ operation Intellisense::determinOperation(vector<string>& tokens)
     }
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //compares 2 strings words irregardless of upper/lower casing
 //returns true if both strings are the same, false otherwise
 bool Intellisense::checkString(const string& input, const string& command)
@@ -333,14 +333,14 @@ bool Intellisense::checkCommandArray(const string& input, const string command[]
     }
 
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns the first string token
 string Intellisense::getfirst_Word(string command)
 {
     return tokenize(command)[0];
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns the command word from string tokens
 string Intellisense::getCommand(vector<string>& tokens,string _command)
 {
@@ -350,7 +350,7 @@ string Intellisense::getCommand(vector<string>& tokens,string _command)
 
     return command;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns an int representing an ID
 int Intellisense::getID(vector<string>& tokens)
 {
@@ -365,7 +365,7 @@ int Intellisense::getID(vector<string>& tokens)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns HIGH or LOW if keyword "HIGH" or "LOW" is detected at the head or end of token
 string Intellisense::getPriority(vector<string>& tokens)
 {
@@ -402,7 +402,7 @@ string Intellisense::getPriority(vector<string>& tokens)
     return EMPTYPRIORITY;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns a struct tm which contains the date and time after parsing through the tokens
 //different processing is performed based on the size of string
 tm Intellisense::getTime(vector<string>& tokens,tm &date)
@@ -462,7 +462,7 @@ tm Intellisense::getTime(vector<string>& tokens,tm &date)
     return date;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "x:xx"
 bool Intellisense::processTimeFormat8 (tm &date, string time)
@@ -485,7 +485,7 @@ bool Intellisense::processTimeFormat8 (tm &date, string time)
     return false;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "12:xxPM"
 bool Intellisense::processTimeFormat7 (tm &date, string checkString)
@@ -500,7 +500,7 @@ bool Intellisense::processTimeFormat7 (tm &date, string checkString)
     return false;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "12xxPM"
 bool Intellisense::processTimeFormat6 (tm &date, string time)
@@ -531,7 +531,7 @@ bool Intellisense::processTimeFormat6 (tm &date, string time)
     return false;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "9xxPM"
 bool Intellisense::processTimeFormat5 (tm &date, string time)
@@ -561,7 +561,7 @@ bool Intellisense::processTimeFormat5 (tm &date, string time)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "9:xxPM"
 bool Intellisense::processTimeFormat4 (tm &date, string checkString)
@@ -575,7 +575,7 @@ bool Intellisense::processTimeFormat4 (tm &date, string checkString)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "xx:xx"
 bool Intellisense::processTimeFormat3 (tm &date, string time)
@@ -598,7 +598,7 @@ bool Intellisense::processTimeFormat3 (tm &date, string time)
     return false;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "XXPM" . e.g. 12PM
 bool Intellisense::processTimeFormat2 (tm &date, string time)
@@ -626,7 +626,7 @@ bool Intellisense::processTimeFormat2 (tm &date, string time)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if time is detected, date.tm_hour & date.tm_min is updated
 //function checks for time format "XPM" . e.g. 1PM
 bool Intellisense::processTimeFormat1 (tm &date, string time)
@@ -682,7 +682,7 @@ string Intellisense::getCategory(vector<string>& tokens)
     return category;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //removes characters from string as indicated
 string Intellisense::removeChar(string s,char chars[])
 {
@@ -692,26 +692,26 @@ string Intellisense::removeChar(string s,char chars[])
     }
     return s;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //removes blank spaces from the front of the string
 string& Intellisense::trim_left_inplace( string& s,  const string& delimiters)
 {
     return s.erase(  0, s.find_first_not_of( delimiters ) );
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //removes blank spaces from back of string
 string& Intellisense::trim_right_inplace( string& s, const string& delimiters)
 {
     return s.erase( s.find_last_not_of( delimiters ) + 1 );
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //removes blank spaces from front and back of string
 string& Intellisense::trim(string& s ,const string& delimiters )
 {
     return trim_left_inplace( trim_right_inplace( s, delimiters ), delimiters );
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //checks for the string idenifier and returns the date for the holiday event
 void Intellisense::getImptDate(string _date, tm &date)
 {
@@ -729,7 +729,7 @@ void Intellisense::getImptDate(string _date, tm &date)
 }
 
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //retrieve date holiday event keywords such as "CHRISTMAS" & "NEWYEAR"
 //functions updates the date with the occasion
 bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
@@ -756,7 +756,7 @@ bool Intellisense::checkImptDate(vector<string>& tokens, tm &date)
     return false;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date format is identified
 // function checks for date format in the form "DDMMYYYY"
 bool Intellisense::checkDateFormat1(string checkString, tm &date)
@@ -772,7 +772,7 @@ bool Intellisense::checkDateFormat1(string checkString, tm &date)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date format is identified
 // function checks for date format in the form "DD/MM/YYYY"
 bool Intellisense::checkDateFormat2(string checkString, tm &date)
@@ -792,7 +792,7 @@ bool Intellisense::checkDateFormat2(string checkString, tm &date)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date format is identified
 // function checks for date format in the form "D/M/YYYY"
 bool Intellisense::checkDateFormat3(string checkString, tm &date)
@@ -812,7 +812,7 @@ bool Intellisense::checkDateFormat3(string checkString, tm &date)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date format is identified
 // function checks for date format in the form "DD/M/YYYY"
 bool Intellisense::checkDateFormat4(string checkString, tm &date)
@@ -832,7 +832,7 @@ bool Intellisense::checkDateFormat4(string checkString, tm &date)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date format is identified
 // function checks for date format in the form "D/MM/YYYY"
 bool Intellisense::checkDateFormat5(string checkString, tm &date)
@@ -852,7 +852,7 @@ bool Intellisense::checkDateFormat5(string checkString, tm &date)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date format is identified
 //functions checks for date in numerical entered by user and updates the fields in structure date
 //string format example " 16/5/2013 "
@@ -897,7 +897,7 @@ bool Intellisense::checkDateNumericalFormat(vector<string>& tokens, tm &date)
     }
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date format is identified
 //functions checks for date in string entered by user and updates the fields in structure date
 //string format example " 16 may 2013 "
@@ -967,7 +967,7 @@ bool Intellisense::checkDateStringFormat(vector<string>& tokens, tm &date)
     return false;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns a tm struct containing date which user entered
 tm Intellisense::getDate(vector<string>& tokens)
 {
@@ -998,7 +998,7 @@ tm Intellisense::getDate(vector<string>& tokens)
 }
 
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns an int representative of month
 //example. march = 3
 int Intellisense::checkMonthByString(string token)
@@ -1074,7 +1074,7 @@ int Intellisense::checkDateType(string lowerString)
 
     return dateTypeFound;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if string input only contains integer
 bool Intellisense::isAllInt(const string& s)
 {
@@ -1088,7 +1088,7 @@ bool Intellisense::isAllInt(const string& s)
     return true;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //string tokenizer
 //returns a vector of tokens
 vector<string> Intellisense::tokenize(string command)
@@ -1227,7 +1227,7 @@ Action Intellisense::undoOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns int representative of the month entered
 int Intellisense::checkDateString(string token)
 {
@@ -1243,7 +1243,7 @@ int Intellisense::checkDateString(string token)
     return -1;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //Performs operation "today" command
 //returns an Action package containin user input and fields
 Action Intellisense::todayOperation(vector<string>& tokens)
@@ -1255,7 +1255,7 @@ Action Intellisense::todayOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //Performs operation "todo" command
 //returns an Action package containin user input and fields
 Action Intellisense::todoOperation(vector<string>& tokens)
@@ -1268,7 +1268,7 @@ Action Intellisense::todoOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //Performs operation "redo" command
 //returns an Action package containin user input and fields
 Action Intellisense::redoOperation(vector<string>& tokens)
@@ -1310,7 +1310,7 @@ Action Intellisense::findOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //Performs operation "displayarchive" command
 //returns an Action package containin user input and fields
 Action Intellisense::displayarchiveOperation(vector<string>& tokens)
@@ -1324,7 +1324,7 @@ Action Intellisense::displayarchiveOperation(vector<string>& tokens)
     return task;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns the maximum number of days in that month
 int Intellisense::daysMonth(int year, int month)
 {
@@ -1343,7 +1343,7 @@ int Intellisense::daysMonth(int year, int month)
 
     return numberOfDays;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date is valid, eg. number of days does not exist 32, there is no month with 32 days
 bool Intellisense::isDateValid(Action task)
 {
@@ -1373,7 +1373,7 @@ bool Intellisense::isDateValid(Action task)
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if date has pass, checks if startDate with today's date
 bool Intellisense::isDateOver(Action _task)
 {
@@ -1401,7 +1401,7 @@ bool Intellisense::isDateOver(Action _task)
 
 
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //updates category field in task to be invalid if an invalid date is detected
 void Intellisense::handleInvalidDate(Action &task)
 {
@@ -1411,7 +1411,7 @@ void Intellisense::handleInvalidDate(Action &task)
     }
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //function marks the task as floating task if no date is entered
 void Intellisense::handleNoDateEntered(Action &task)
 {  tm emptyDate ={0,0,0,0,0,0,0,0,0};
@@ -1424,7 +1424,7 @@ void Intellisense::handleNoDateEntered(Action &task)
 
     }
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //function marks the task as floating task if date has passed
 void Intellisense::handleDateOver(Action &task)
 {  tm emptyDate ={0,0,0,0,0,0,0,0,0};
@@ -1438,7 +1438,7 @@ void Intellisense::handleDateOver(Action &task)
     }
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //function sets the EndDate to expire at 23:59 if not enddate is specified
 void Intellisense::handleNoEndDate(Action &task)
 {
@@ -1463,7 +1463,7 @@ void Intellisense::smartAutoFill(Action &task,vector<string>& tokens)
 
 
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns true if startDate time is empty
 bool Intellisense::isTimeEmpty(tm date)
 {
@@ -1472,7 +1472,7 @@ bool Intellisense::isTimeEmpty(tm date)
 
     return false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns tm struct autofill date input, time is left untouched
 tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
 {
@@ -1493,7 +1493,7 @@ tm Intellisense::isTimeValid(tm date,vector<string>& tokens )
 
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns tm struct autofill EndDate to be same as startDate, time is 23:59
 tm Intellisense::getEndOfDay(Action &task)
 {
