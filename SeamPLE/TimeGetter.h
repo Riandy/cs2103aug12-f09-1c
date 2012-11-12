@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDateTime>
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 //This class is for getting the time and date to be implemented
 //in objects that is displayed in the UI as a clock. A ui object

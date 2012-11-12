@@ -7,7 +7,7 @@
 #include "seample.h"
 #include "timekeeper.h"
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 //GuiControl class is the control class for GUIs in this application.
 //Both SeampleView and StandardView are accessed only through this class

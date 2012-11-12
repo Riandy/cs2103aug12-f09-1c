@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
 int GuiControl::MINIMUM_SIZE = 2;

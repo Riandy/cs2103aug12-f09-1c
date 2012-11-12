@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-//@LIU WEIYUAN A0086030R
+//@LIU WEIYUAN: A0086030R
 
 StandardView* StandardView::_standardView = NULL;
 
