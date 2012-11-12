@@ -1,7 +1,5 @@
 #include "GuiControl.h"
 
-#include <QDebug>
-
 //@LIU WEIYUAN: A0086030R
 GuiControl* GuiControl::_guiControl = NULL;
 
