@@ -40,18 +40,16 @@ public:
     void showGui();
     void setStandardViewFlag (bool flag);
 
-
-
 private slots:
     void check(QString input);
     void passScheduler(QString input, bool inputBarHasFocus);
     void changeView(QString input, QString inputChecked,
                     bool inputBarHasFocus);
-    //void showHideView();
     void showHelpView();
     void getTodaysEvents();
 
 private:
+    void parse(QString input);
     bool singleInstanceExists();
     bool implementInputColorFlagFailure(QCharRef colorFlag) throw (string);
     bool interfaceIsStandardView();

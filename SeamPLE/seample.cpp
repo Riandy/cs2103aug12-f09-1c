@@ -156,6 +156,7 @@ void Seample::updateResponse()
 {
      response = intellisense->check(userInput);
 }
+
 //@PAN WENREN A0083711L
 QVector <QString> Seample::run(Command componentType, string _userInput)
 {
@@ -169,6 +170,7 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
 
     return result;
 }
+
 //@CHAM WEN BIN U094659H
 //scheduler to perform a task and return feedback
 QVector <QString> Seample::fireAction()
@@ -176,13 +178,7 @@ QVector <QString> Seample::fireAction()
     vector <string> result =_scheduler->executeCommand(response);
     return convertQString(result);
 }
-//@LIU WEIYUAN A0086030R
-//Function to inform if the requirements of the edit bar
-//has been met
-bool Seample::requirementsMet()
-{
-    return intellisense->getrequirementsMet();
-}
+
 //@CHAM WEN BIN U094659H
 //Following function is for converting vector of QString
 //to QVector of QString
@@ -198,12 +194,17 @@ QVector <QString> Seample::convertQString(vector <string> input)
 
     return converted;
 }
+
 //@LIU WEIYUAN A0086030R
-void Seample::setShortCutRequirementsMet(string command)
+bool Seample::requirementsMet()
 {
-    if (command == "undo" || command == "redo" || command == "display"
-            || command == "today" || command == "todo")
-    {
-        intellisense->setRequirementsMet(true);
-    }
+    return intellisense->getrequirementsMet();
+}
+
+//@LIU WEIYUAN A0086030R
+void Seample::setShortCutRequirementsMet(string input)
+{
+    QuickCheck evaluate;
+    bool evaluatedResults = evaluate.shortcutCheck(input);
+    intellisense->setRequirementsMet(evaluatedResults);
 }

@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     TimeGetter.cpp \
     NotifyView.cpp \
     timekeeper.cpp \
-    ErrorLogger.cpp
+    ErrorLogger.cpp \
+    QuickCheck.cpp
 
 HEADERS  += \
     Sframe.h \
@@ -54,7 +55,8 @@ HEADERS  += \
     NotifyView.h \
     ErrorLogger.h \
     timekeeper.h \
-    ndebug.h
+    ndebug.h \
+    QuickCheck.h
 
 FORMS    += \
     SeampleView.ui \
