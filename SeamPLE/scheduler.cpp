@@ -570,14 +570,14 @@ void scheduler::Delete(task thisTask)
 }
 
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void scheduler::Edit(task thisTask) //@WENREN
 {
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
     partialUpdateGUI(taskVector,"EDIT");
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void scheduler::EditEnter(task thisTask)
 {
     if (thisTask.getEventName()!="")
