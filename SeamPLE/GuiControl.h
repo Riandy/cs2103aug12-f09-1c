@@ -30,6 +30,8 @@ private:
     const static QString MESSAGE_ONLY_STAN_GUI_DISPLAY;
     const static QString MESSAGE_EMPTY;
 
+    const static string MESSAGE_CHANGING_AT_WRONG_INTERFACE;
+
 private:
     GuiControl();
     ~GuiControl();
@@ -43,13 +45,21 @@ public:
 private slots:
     void check(QString input);
     void passScheduler(QString input, bool inputBarHasFocus);
-    void changeView(QString input, QString inputChecked,
+    void toggleView(QString input, QString inputChecked,
                     bool inputBarHasFocus);
     void showHelpView();
-    void getTodaysEvents();
+    void displayTodaysEvents();
 
 private:
+    void showOnlySeampleView(QString input, QString inputChecked,
+                                bool inputBarHasFocus);
+    void showOnlyStandardView(QString input, QString inputChecked,
+                                 bool inputBarHasFocus);
     void parse(QString input);
+    QVector <QString> getInvalidIntellisenseFeedback();
+    void processInputBarColour(QVector <QString> output);
+    void processForStandardView(QVector <QString> output, QString input);
+    void displayStandardMultipleResults(QVector <QString> results);
     bool singleInstanceExists();
     bool implementInputColorFlagFailure(QCharRef colorFlag) throw (string);
     bool interfaceIsStandardView();

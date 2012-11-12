@@ -4,6 +4,7 @@
 #include <ctime>
 #include <string>
 #include <fstream>
+#include <QString>
 
 //@LIU WEIYUAN A0086030R
 
