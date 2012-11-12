@@ -461,7 +461,6 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
     if (vectorSize>0){
         if(command=="ADD" || command=="DELETE"){
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE_2);
-            cout<<"this is pushed"<<endl;
         }
         else{
             _result.push_back(MESSAGE_GUI_DISPLAY_TABLE);
@@ -575,7 +574,6 @@ void scheduler::Delete(task thisTask)
 //@PAN WENREN A0083711L
 void scheduler::Edit(task thisTask) //@WENREN
 {
-    ////cout<<"Edit execution with normal keypress"<<endl;
     taskVector = eventCalender.SearchByPartialTask(thisTask.getEventName());
     partialUpdateGUI(taskVector,"EDIT");
 }
@@ -583,7 +581,7 @@ void scheduler::Edit(task thisTask) //@WENREN
 //@PAN WENREN A0083711L
 void scheduler::EditEnter(task thisTask)
 {
-    if (thisTask.getEventName()!="")
+    if (thisTask.getEventName()!= "")
            {
                taskVector = eventCalender.SearchByTask(thisTask.getEventName());
                if (taskVector.size() == 0) //if no match found

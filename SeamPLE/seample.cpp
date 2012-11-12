@@ -6,7 +6,7 @@ const string Seample::VALIDBOXFLAG = "1";
 const string Seample::INVALIDBOXFLAG = "2";
 const string Seample::LINEBREAK = "<br>";
 
-//remove start
+//Debugging Functions start
 void DisplayDate(tm date)
 {
     cout<<string("Date : ")<<date.tm_mday;
@@ -31,7 +31,7 @@ void DisplayEvent(Action task)
 
     cout<<string("******************")<<endl;
 }
-//remove end
+//Debugging Functions End
 //@CHAM WEN BIN U094659H
 //singleton constructor
 Seample::Seample()

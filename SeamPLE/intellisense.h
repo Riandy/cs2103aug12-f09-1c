@@ -127,6 +127,21 @@ private:
     int currentCommand;
 
 public:
+    const static string ADDCOMMAND ;
+    const static string DELETECOMMAND ;
+    const static string DISPLAYCOMMAND ;
+    const static string MARKCOMMAND ;
+    const static string SORTCOMMAND ;
+    const static string FINDCOMMAND ;
+    const static string EDITCOMMAND ;
+    const static string EDITENTERCOMMAND ;
+    const static string EXITCOMMAND ;
+    const static string UNDOCOMMAND ;
+    const static string REDOCOMMAND ;
+    const static string TODOCOMMAND ;
+    const static string TODAYCOMMAND ;
+    const static string DISPLAYARCHIVECOMMAND ;
+
     static Intellisense* getInstance();
     ~Intellisense(void);
 

@@ -23,6 +23,7 @@ private :
     string _command;
 
 public:
+    const static string EMPTYCOMMAND;
     Action(void);
     ~Action(void);
 
