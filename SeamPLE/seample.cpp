@@ -32,7 +32,7 @@ void DisplayEvent(Action task)
     cout<<string("******************")<<endl;
 }
 //Debugging Functions End
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //singleton constructor
 Seample::Seample()
 {
@@ -40,12 +40,12 @@ Seample::Seample()
     _scheduler=scheduler::getInstance();
 
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 Seample::~Seample()
 {
     instanceFlag = false;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 Seample* Seample::getInstance()
 {
     if(!instanceFlag)
@@ -171,7 +171,7 @@ QVector <QString> Seample::run(Command componentType, string _userInput)
     return result;
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //scheduler to perform a task and return feedback
 QVector <QString> Seample::fireAction()
 {
@@ -179,7 +179,7 @@ QVector <QString> Seample::fireAction()
     return convertQString(result);
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //Following function is for converting vector of QString
 //to QVector of QString
 QVector <QString> Seample::convertQString(vector <string> input)
