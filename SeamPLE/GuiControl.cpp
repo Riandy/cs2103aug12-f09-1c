@@ -98,6 +98,7 @@ void GuiControl::setStandardViewFlag (bool flag)
 void GuiControl::check(QString input)
 {
     bool emptyInput = (input.size() == 0);
+
     if (emptyInput)
     {
         emptyResponse();
@@ -120,61 +121,7 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
     }
     else
     {
-        QVector <QString> output = _inputProcessor->run(
-                    TO_SCHEDULER_AND_RETURN_RESULTS,
-                    input.toStdString());
-
-        if (_inputProcessor->requirementsMet())
-        {
-            int capacity = output.size();
-            bool needStandardView = checkStandardViewRequired(output);
-            setInputColourFlag(NONE);
-
-            if (needStandardView)
-            {
-                if (interfaceIsStandardView())
-                {
-                    sendWithInputEditAndFocus(inputBarHasFocus,MESSAGE_EMPTY,
-                                              output[0]);
-                }
-                else
-                {
-                    toggleView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
-                }
-                try
-                {
-                    //Start from position one as the feedback for the user is
-                    //at position 0. Amount to copy has a deduction of 2 as
-                    //the last position is the code flag, and the feedback
-                    //position is not included for the copy
-                    QVector <QString> results = output.mid(1,capacity - 2);
-                    _standardGui->instantiateTable(results);
-                }
-                catch (string& error)
-                {
-                    _faulty->report(error);
-                }
-            }
-            else
-            {
-                //Scheduler must send results back. If not, we error handle it
-                //to produce an output that informs that no output is returned
-                bool invalidSchedulerReturn = (output.size() == 0);
-                if (invalidSchedulerReturn)
-                {
-                    output.push_front(MESSAGE_SCHEDULER_INVALID_RETURN);
-                    _faulty->report(
-                                MESSAGE_SCHEDULER_INVALID_RETURN.
-                                toStdString());
-                }
-
-                if (interfaceIsStandardView())
-                {
-                    _standardGui->resetAllTablesContents();
-                }
-                sendWithInputEditItem(MESSAGE_EMPTY,output[0]);
-            }
-        }
+        execute(input, inputBarHasFocus);
     }
 }
 
@@ -253,6 +200,85 @@ void GuiControl::showOnlyStandardView(QString input, QString inputChecked,
     {
         _faulty->report(MESSAGE_CHANGING_AT_WRONG_INTERFACE);
     }
+}
+
+void GuiControl::execute(QString input, bool inputBarHasFocus)
+{
+    QVector <QString> output = _inputProcessor->run(
+                TO_SCHEDULER_AND_RETURN_RESULTS,
+                input.toStdString());
+
+    if (_inputProcessor->requirementsMet())
+    {
+        interpretResults(output, inputBarHasFocus);
+    }
+}
+
+void GuiControl::interpretResults(QVector <QString> output,
+                                  bool inputBarHasFocus)
+{
+    bool needStandardView = checkStandardViewRequired(output);
+    setInputColourFlag(NONE);
+
+    if (needStandardView)
+    {
+        processStandardViewForScheduler(output,inputBarHasFocus);
+    }
+    else
+    {
+        processAnyViewForScheduler(output);
+    }
+}
+
+//Function for processing results from scheduler to be displayed in
+//standard view
+void GuiControl::processStandardViewForScheduler(QVector <QString> output,
+                                                 bool inputBarHasFocus)
+{
+    int capacity = output.size();
+
+    if (interfaceIsStandardView())
+    {
+        sendWithInputEditAndFocus(inputBarHasFocus,MESSAGE_EMPTY,
+                                  output[0]);
+    }
+    else
+    {
+        toggleView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
+    }
+    try
+    {
+        //Start from position one as the feedback for the user is
+        //at position 0. Amount to copy has a deduction of 2 as
+        //the last position is the code flag, and the feedback
+        //position is not included for the copy
+        displayStandardMultipleResults(output.mid(1,capacity - 2));
+    }
+    catch (string& error)
+    {
+        _faulty->report(error);
+    }
+}
+
+//Process minimum results from scheduler that any view can show
+void GuiControl::processAnyViewForScheduler(QVector <QString> output)
+{
+    //Scheduler must send results back. If not, we error handle it
+    //to produce an output that informs that no output is returned
+    bool invalidSchedulerReturn = (output.size() == 0);
+    if (invalidSchedulerReturn)
+    {
+        output.push_front(MESSAGE_SCHEDULER_INVALID_RETURN);
+        _faulty->report(
+                    MESSAGE_SCHEDULER_INVALID_RETURN.
+                    toStdString());
+    }
+
+    if (interfaceIsStandardView())
+    {
+        _standardGui->resetAllTablesContents();
+    }
+    sendWithInputEditItem(MESSAGE_EMPTY,output[0]);
 }
 
 void GuiControl::parse(QString input)
@@ -509,9 +535,13 @@ void GuiControl:: setTimedSignals()
 //be displayed fully in standardview or not
 bool GuiControl::checkStandardViewRequired(QVector <QString> output)
 {
-    return (output[output.size()-1] == MESSAGE_GUI_DISPLAY) ||
+    bool needStandardView = (output[output.size()-1] == MESSAGE_GUI_DISPLAY);
+    bool needWhenAtStandardView =
             (output[output.size()-1] == MESSAGE_ONLY_STAN_GUI_DISPLAY
              && interfaceIsStandardView());
+    bool standardViewRequired = needStandardView || needWhenAtStandardView;
+
+    return standardViewRequired;
 }
 
 //Function returns the input color flag from the QVector of
