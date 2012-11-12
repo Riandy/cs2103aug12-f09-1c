@@ -312,7 +312,7 @@ vector<task> calender::SearchByTask(string searchItem)
     return _bufferStorage;
 }
 
-//@PAN WENREN A0083711L
+//@author: A0083711L
 task* calender::pointerSearchByTask(string searchItem) //@WENREN
 // only return first match
 {
@@ -341,7 +341,7 @@ int calender::getTaskID(string searchItem)
     }
     return taskID;
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 vector<task> calender::SearchByPartialTask(string searchItem)
 {
     string searchItemBuffer = searchItem.substr(0,searchItem.length());
