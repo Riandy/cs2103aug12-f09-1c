@@ -426,7 +426,7 @@ bool scheduler::isTimeZero(tm time)
         return false;
 }
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
 {
     if(command!="ADD")
@@ -469,14 +469,14 @@ void scheduler::partialUpdateGUI(vector<task> taskVector,string command)
 }
 
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::printMessage(string _messageType)
 {
     _result.push_back(_messageType);
 }
 
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Add(task thisTask)
 {
     if(thisTask.getCategory() == "1NVAL1D")
@@ -508,7 +508,7 @@ void scheduler::Add(task thisTask)
    }
 }
 
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Delete(task thisTask)
 {
     if ((thisTask.getID() == -1) && (thisTask.getEventName() == ""))
@@ -603,13 +603,13 @@ void scheduler::EditEnter(task thisTask)
            }
     updateGUI("EDIT");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Display()
 {
     taskVector=eventCalender.displayDatabase();
     partialUpdateGUI(taskVector,"DISPLAY");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Undo()
 {
     if (eventCalender.undoAction())
@@ -618,7 +618,7 @@ void scheduler::Undo()
            printMessage(MESSAGE_UNDO_FAILURE);
     updateGUI("UNDO");
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Redo()
 {
     if (eventCalender.redoAction())
@@ -666,13 +666,13 @@ void scheduler::Find(task thisTask)
         _faulty->report("Scheduler:: Find function fail to find the result");
     }
 }
- //@JOHN A0069517W
+ //@author: A0069517W
 void scheduler::Exit()
 {
     exit(0);
 }
 
-//@John A0069517W
+//@author: A0069517W
 void scheduler::Mark(task thisTask)
 {
     if (  eventCalender.markTask(thisTask) )
@@ -682,7 +682,7 @@ void scheduler::Mark(task thisTask)
     updateGUI("MARK");
 }
 
-//@John A0069517W
+//@author: A0069517W
 void scheduler::Todo()
 {
     taskVector = eventCalender.getFloatingEvents();

@@ -57,7 +57,7 @@ string calender::convertToDateNoTime(tm _date)
 }
 
 
-//@John A0069517W
+//@author: A0069517W
 bool calender::addItem(task currentTask)
 {
     ASSERT(currentTask.getEventName() !="","Fail to add, task doesn't contain event name");
@@ -82,7 +82,7 @@ bool calender::addItem(task currentTask)
     }
 }
 
-//@John A0069517W
+//@author: A0069517W
 string calender::ensureUniqueName(string _name)
 {
     if (!checkNameExists(_name))
@@ -115,7 +115,7 @@ string calender::ensureUniqueName(string _name)
 
 }
 
-//@John A0069517W
+//@author: A0069517W
 bool calender::checkNameExists(string _name)
 {
     for (int i = 0; i < _storage.size(); i++)
@@ -125,7 +125,7 @@ bool calender::checkNameExists(string _name)
     }
     return false;
 }
-//@John A0069517W
+//@author: A0069517W
 bool calender::markTask(task markedTask)
 {
     if(this->deleteItem(markedTask.getEventName()))
@@ -137,7 +137,7 @@ bool calender::markTask(task markedTask)
         return false;
 
 }
-//@John A0069517W
+//@author: A0069517W
 vector<task> calender::getFloatingEvents()
 {
     vector<task> _bufferStorage;
@@ -148,7 +148,7 @@ vector<task> calender::getFloatingEvents()
     }
     return _bufferStorage;
 }
-//@John A0069517W
+//@author: A0069517W
 bool calender::deleteItem(int taskID)
 {
     saveStringToStack(_commandHistory, _DELETE);
@@ -158,7 +158,7 @@ bool calender::deleteItem(int taskID)
     writeFile();
     return true;
 }
-//@John A0069517W
+//@author: A0069517W
 bool calender::deleteAll()
 {
     if (_storage.size() != 0)
@@ -212,14 +212,14 @@ bool calender::writeFile()
     return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::writeBackupFile()
 {
     std::ifstream    inFile(STORAGE_FILENAME);
     std::ofstream    outFile(BACKUP_FILENAME);
     outFile << inFile.rdbuf();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::checkID(int taskID)
 {
     if (taskID > int(_storage.size()) || taskID<1)
@@ -228,7 +228,7 @@ bool calender::checkID(int taskID)
         return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::editTask( task _edited)
 {
     task* taskMatch = pointerSearchByTask( _edited.getEventName());
@@ -330,7 +330,7 @@ task* calender::pointerSearchByTask(string searchItem) //@WENREN
 }
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 int calender::getTaskID(string searchItem)
 {
     int taskID = NOTFOUND;
@@ -358,7 +358,7 @@ vector<task> calender::SearchByPartialTask(string searchItem)
     }
     return _bufferStorage;
 }
-//@JOHN A0069517W
+//@author: A0069517W
 vector<task> calender::displayDatabase()
 {
     return _storage;
@@ -451,7 +451,7 @@ vector<task> calender::loadFile(char* fileName)
     return list;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::undoAction()
 {
     if (_commandHistory.size() == 0)
@@ -489,7 +489,7 @@ bool calender::undoAction()
 
     return true;
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::redoAction()
 {
     if (_undoHistory.size() == 0 || lastCommandUndo == false)
@@ -565,7 +565,7 @@ vector<task> calender::getToday()
 
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::saveStringToStack(stack<string>& thisStack, string thisString)
 {
     if (thisStack.size() < 3)
@@ -590,7 +590,7 @@ void calender::saveStringToStack(stack<string>& thisStack, string thisString)
 }
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::saveToStack(stack<task>& thisStack, task thisTask)
 {
     if (thisStack.size() < 3)
@@ -614,7 +614,7 @@ void calender::saveToStack(stack<task>& thisStack, task thisTask)
 
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::saveIntToStack(stack<int>& thisStack, int thisInt)
 {
     if (thisStack.size() < 3)
@@ -747,7 +747,7 @@ bool calender::archivePastEvent()
     return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::archiveEvent(task markedTask)
 {
     ofstream write (ARCHIVE_FILENAME, fstream::app);
@@ -760,7 +760,7 @@ bool calender::archiveEvent(task markedTask)
     return true;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::fileExists(const char *fileName)
 {
 
@@ -773,7 +773,7 @@ bool calender::fileExists(const char *fileName)
 
 
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::undoAdd()
 {
     _undoHistory.push(_ADDITION);
@@ -783,7 +783,7 @@ void calender::undoAdd()
     _storage.erase(_storage.begin()+ID);
     _addHistory.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::undoDelete()
 {
     ASSERT(_deletedTasks.size() != 0,"Nothing in deleted tasks stack");
@@ -793,7 +793,7 @@ void calender::undoDelete()
     saveStringToStack(_deleteHistory, tempTask.getEventName());
     _deletedTasks.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::undoEdit()
 {
     ASSERT(_undoNewEdits.size() != 0, "Nothing in undo stack");
@@ -814,7 +814,7 @@ bool calender::undoEdit()
         return false;
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::undoDeleteAll()
 {
     _storage = loadFile(BACKUP_FILENAME);
@@ -824,7 +824,7 @@ void calender::undoDeleteAll()
     _undoHistory.push(_DELETEALL);
 }
 
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::redoAdd()
 {
     task lastUndo =  _undoneAddTasks.top();
@@ -833,7 +833,7 @@ void calender::redoAdd()
     saveStringToStack(_addHistory, lastUndo.getEventName());
     _undoneAddTasks.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::redoDelete()
 {
     saveStringToStack(_commandHistory, _DELETE);
@@ -842,7 +842,7 @@ void calender::redoDelete()
     _storage.erase(_storage.begin()+ ID);
     _deleteHistory.pop();
 }
-//@JOHN A0069517W
+//@author: A0069517W
 bool calender::redoEdit()
 {
     task tempTask = _redoNewEdits.top();
@@ -860,7 +860,7 @@ bool calender::redoEdit()
     else if (position == NOTFOUND)
         return false;
 }
-//@JOHN A0069517W
+//@author: A0069517W
 void calender::redoDeleteAll()
 {
     writeBackupFile();
