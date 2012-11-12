@@ -189,14 +189,7 @@ void GuiControl::toggleView(QString input, QString inputChecked,
     if (allInterfaceNotCurrentlyChanging)
     {
         setStandardViewFlag(!interfaceIsStandardView());
-        if(interfaceIsStandardView())
-        {
-            showOnlyStandardView(input,inputChecked,inputBarHasFocus);
-        }
-        else
-        {
-            showOnlySeampleView(input,inputChecked,inputBarHasFocus);
-        }
+        updateInterface(input,inputChecked,inputBarHasFocus);
     }
 }
 
@@ -206,7 +199,7 @@ void GuiControl::showHelpView()
 {
     _standardGui->helpTriggered();
 }
-\
+
 //Function displays the day's events through _standardGui
 void GuiControl::displayTodaysEvents()
 {
@@ -214,6 +207,20 @@ void GuiControl::displayTodaysEvents()
             _inputProcessor->run(TO_SCHEDULER_AND_RETURN_TODAY_EVENTS,"");
 
     _standardGui->displayTodayView(todayItems);
+}
+
+//Make any changes to interface if the flag is set at a different value
+void GuiControl::updateInterface(QString input, QString inputChecked,
+                     bool inputBarHasFocus)
+{
+    if(interfaceIsStandardView())
+    {
+        showOnlyStandardView(input,inputChecked,inputBarHasFocus);
+    }
+    else
+    {
+        showOnlySeampleView(input,inputChecked,inputBarHasFocus);
+    }
 }
 
 void GuiControl::showOnlySeampleView(QString input, QString inputChecked,
@@ -353,8 +360,9 @@ bool GuiControl::implementInputColorFlagFailure(
         QCharRef colorFlag) throw (string)
 {
     bool result;
+    bool colorFlagPresent = colorFlag.isDigit();
 
-    if (colorFlag.isDigit())
+    if (colorFlagPresent)
     {
         setInputColourFlag( (InputBarFlag) colorFlag.digitValue());
         result = false;

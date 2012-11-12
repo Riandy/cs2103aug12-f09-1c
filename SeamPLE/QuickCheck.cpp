@@ -13,12 +13,14 @@ const string QuickCheck::FLOAT_COMMAND = "todo";
 bool QuickCheck::shortcutCheck(string input)
 {
     bool outcome;
-
-    if (    input == UNDO_COMMAND    ||
+    bool commandAppropriate =
+            input == UNDO_COMMAND    ||
             input == REDO_COMMAND    ||
             input == DISPLAY_COMMAND ||
             input == TODAY_COMMAND   ||
-            input == FLOAT_COMMAND)
+            input == FLOAT_COMMAND;
+
+    if (commandAppropriate)
     {
         outcome = true;
     }
