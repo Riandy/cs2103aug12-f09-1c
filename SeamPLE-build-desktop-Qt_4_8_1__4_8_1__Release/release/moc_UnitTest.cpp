@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'UnitTest.h'
 **
-** Created: Sun 11. Nov 20:12:54 2012
+** Created: Mon 12. Nov 12:59:14 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_UnitTest[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      89,   14, // methods
+      94,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -107,19 +107,24 @@ static const uint qt_meta_data_UnitTest[] = {
     1285,    9,    9,    9, 0x08,
     1297,    9,    9,    9, 0x08,
     1309,    9,    9,    9, 0x08,
-    1323,    9,    9,    9, 0x08,
-    1344,    9,    9,    9, 0x08,
-    1372,    9,    9,    9, 0x08,
-    1401,    9,    9,    9, 0x08,
-    1415,    9,    9,    9, 0x08,
-    1430,    9,    9,    9, 0x08,
+    1333,    9,    9,    9, 0x08,
+    1358,    9,    9,    9, 0x08,
+    1383,    9,    9,    9, 0x08,
+    1397,    9,    9,    9, 0x08,
+    1418,    9,    9,    9, 0x08,
     1446,    9,    9,    9, 0x08,
-    1464,    9,    9,    9, 0x08,
-    1483,    9,    9,    9, 0x08,
-    1502,    9,    9,    9, 0x08,
-    1522,    9,    9,    9, 0x08,
-    1541,    9,    9,    9, 0x08,
-    1561,    9,    9,    9, 0x08,
+    1475,    9,    9,    9, 0x08,
+    1489,    9,    9,    9, 0x08,
+    1504,    9,    9,    9, 0x08,
+    1520,    9,    9,    9, 0x08,
+    1538,    9,    9,    9, 0x08,
+    1557,    9,    9,    9, 0x08,
+    1576,    9,    9,    9, 0x08,
+    1596,    9,    9,    9, 0x08,
+    1615,    9,    9,    9, 0x08,
+    1635,    9,    9,    9, 0x08,
+    1666,    9,    9,    9, 0x08,
+    1683,    9,    9,    9, 0x08,
 
        0        // eod
 };
@@ -159,7 +164,9 @@ static const char qt_meta_stringdata_UnitTest[] = {
     "testRedo11()\0testRedo12()\0testRedo13()\0"
     "testRedo14()\0testUndo15()\0testRedo15()\0"
     "testMark()\0testMark2()\0testMark3()\0"
-    "testMark4()\0testMark5()\0testAddItem()\0"
+    "testMark4()\0testMark5()\0testTodayEventNoEvent()\0"
+    "testTodayEventNoEvent2()\0"
+    "testTodayEventNoEvent3()\0testAddItem()\0"
     "testDeleteItemByID()\0testDeleteItemByEventName()\0"
     "testDeleteItemByEventName2()\0testcheckID()\0"
     "testcheckID2()\0testdeleteAll()\0"
@@ -167,6 +174,7 @@ static const char qt_meta_stringdata_UnitTest[] = {
     "testsearchByTask()\0testsearchByTask2()\0"
     "testsearchByDate()\0testconvertToDate()\0"
     "testconvertToDateWithoutTime()\0"
+    "testDeleteAll2()\0testDeleteAll3()\0"
 };
 
 void UnitTest::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -250,20 +258,25 @@ void UnitTest::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 72: _t->testMark3(); break;
         case 73: _t->testMark4(); break;
         case 74: _t->testMark5(); break;
-        case 75: _t->testAddItem(); break;
-        case 76: _t->testDeleteItemByID(); break;
-        case 77: _t->testDeleteItemByEventName(); break;
-        case 78: _t->testDeleteItemByEventName2(); break;
-        case 79: _t->testcheckID(); break;
-        case 80: _t->testcheckID2(); break;
-        case 81: _t->testdeleteAll(); break;
-        case 82: _t->testsearchByCat(); break;
-        case 83: _t->testsearchByCat2(); break;
-        case 84: _t->testsearchByTask(); break;
-        case 85: _t->testsearchByTask2(); break;
-        case 86: _t->testsearchByDate(); break;
-        case 87: _t->testconvertToDate(); break;
-        case 88: _t->testconvertToDateWithoutTime(); break;
+        case 75: _t->testTodayEventNoEvent(); break;
+        case 76: _t->testTodayEventNoEvent2(); break;
+        case 77: _t->testTodayEventNoEvent3(); break;
+        case 78: _t->testAddItem(); break;
+        case 79: _t->testDeleteItemByID(); break;
+        case 80: _t->testDeleteItemByEventName(); break;
+        case 81: _t->testDeleteItemByEventName2(); break;
+        case 82: _t->testcheckID(); break;
+        case 83: _t->testcheckID2(); break;
+        case 84: _t->testdeleteAll(); break;
+        case 85: _t->testsearchByCat(); break;
+        case 86: _t->testsearchByCat2(); break;
+        case 87: _t->testsearchByTask(); break;
+        case 88: _t->testsearchByTask2(); break;
+        case 89: _t->testsearchByDate(); break;
+        case 90: _t->testconvertToDate(); break;
+        case 91: _t->testconvertToDateWithoutTime(); break;
+        case 92: _t->testDeleteAll2(); break;
+        case 93: _t->testDeleteAll3(); break;
         default: ;
         }
     }
@@ -302,9 +315,9 @@ int UnitTest::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 89)
+        if (_id < 94)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 89;
+        _id -= 94;
     }
     return _id;
 }
