@@ -63,7 +63,7 @@ bool Action::checkDateEmpty(tm date)
         return false;}
 }
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 void Action::determineDate(tm date1,tm date2)
 {
     if(checkDateEmpty(date1))

@@ -104,7 +104,7 @@ void task::setDateType(int newType)
 {
     dateType= newType;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 string task::convertToDate(tm _date)
 {
     string _result;
@@ -114,7 +114,7 @@ string task::convertToDate(tm _date)
     _result=convert.str();
     return _result;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 vector<string> task::toString()
 {
     vector<string> result;
@@ -135,7 +135,7 @@ vector<string> task::toString()
     result.push_back("Category : "+getCategory());
     return result;
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 //returns from int to string
 string task:: convertInt(int number)
 {
@@ -143,7 +143,7 @@ string task:: convertInt(int number)
    ss << number;//add number to the stream
    return ss.str();//return a string with the contents of the stream
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 tm  task::getEmptyDateTm()
 {
 
