@@ -1,7 +1,7 @@
 #include "StandardView.h"
 #include "ui_StandardView.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 StandardView* StandardView::_standardView = NULL;
 

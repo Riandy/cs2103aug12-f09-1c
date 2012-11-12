@@ -15,7 +15,7 @@ void UnitTest::dummyTest1() {
 
 #pragma region Intellisense UnitTesting
 
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 void UnitTest::testIntellisenseAdd()
 {//basic add
     Intellisense *intellisense;
@@ -27,7 +27,7 @@ void UnitTest::testIntellisenseAdd()
     QCOMPARE(commandword ,string("ADD"));
     QCOMPARE(eventName, string("birthday"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseAdd2()
 {
     Intellisense *intellisense;
@@ -42,7 +42,7 @@ void UnitTest::testIntellisenseAdd2()
     QCOMPARE(eventName, string("soccer match"));
     QCOMPARE(priority, string("HIGH"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseAdd3()
 {
     Intellisense *intellisense;
@@ -57,7 +57,7 @@ void UnitTest::testIntellisenseAdd3()
     QCOMPARE(eventName, string("soccer match"));
     QCOMPARE(category, string("SPORTS"));
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 void UnitTest::testIntellisenseAdd4()
 {
     Intellisense *intellisense;
@@ -74,7 +74,7 @@ void UnitTest::testIntellisenseAdd4()
     QCOMPARE( date.tm_min,  int(0));
     QCOMPARE( date.tm_hour, int(9));
 }
-//@CHAM WEN BIN U094659H
+//@author: U094659H
 void UnitTest::testIntellisenseAdd5()
 {
     Intellisense *intellisense;
@@ -91,7 +91,7 @@ void UnitTest::testIntellisenseAdd5()
     QCOMPARE( date.tm_min,  int(0));
     QCOMPARE( date.tm_hour, int(21));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseDel()
 {
     Intellisense *intellisense;
@@ -108,7 +108,7 @@ void UnitTest::testIntellisenseDel()
     QCOMPARE(eventName, string("birthday"));//got space at the end
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseDel2()
 {//test delete by id
     Intellisense *intellisense;
@@ -123,7 +123,7 @@ void UnitTest::testIntellisenseDel2()
     QCOMPARE(id, 2);
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseDEL3()
  {
       Intellisense *intellisense;
@@ -142,7 +142,7 @@ void UnitTest::testIntellisenseDEL3()
       QCOMPARE( category , string("#"));
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseEdit()
 {
     Intellisense *intellisense;
@@ -153,7 +153,7 @@ void UnitTest::testIntellisenseEdit()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("EDIT"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseEdit2()
 {
     Intellisense *intellisense;
@@ -167,7 +167,7 @@ void UnitTest::testIntellisenseEdit2()
     QCOMPARE(eventName,string("birthday"));
     QCOMPARE(category,string("celebration"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseExit()
 {
     Intellisense *intellisense;
@@ -178,7 +178,7 @@ void UnitTest::testIntellisenseExit()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("EXIT"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseDisplay()
 {
     Intellisense *intellisense;
@@ -189,7 +189,7 @@ void UnitTest::testIntellisenseDisplay()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("DISPLAY"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseMark()
 {
     Intellisense *intellisense;
@@ -200,7 +200,7 @@ void UnitTest::testIntellisenseMark()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("MARK"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseQuickAdd()
 {
     Intellisense *intellisense;
@@ -219,7 +219,7 @@ void UnitTest::testIntellisenseQuickAdd()
     QCOMPARE(category, string("family"));
     QCOMPARE( dateType, task::DATENORMAL );
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseQuickAdd2()
 {
     Intellisense *intellisense;
@@ -241,7 +241,7 @@ void UnitTest::testIntellisenseQuickAdd2()
 
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseSort()
 {
     Intellisense *intellisense;
@@ -253,7 +253,7 @@ void UnitTest::testIntellisenseSort()
     QCOMPARE(commandword,string("SORT"));
 
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseFind()
 {
     Intellisense *intellisense;
@@ -264,7 +264,7 @@ void UnitTest::testIntellisenseFind()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("FIND"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseUndo()
 {
     Intellisense *intellisense;
@@ -275,7 +275,7 @@ void UnitTest::testIntellisenseUndo()
     string commandword = result.getCommand();
     QCOMPARE(commandword,string("UNDO"));
 }
-//@PAN WENREN A0083711L
+//@author: A0083711L
 void UnitTest::testIntellisenseRedo()
 {
     Intellisense *intellisense;
@@ -1187,7 +1187,7 @@ void UnitTest::testMark5()
     delete testTask;
 }
 
-//@LIU WEIYUAN A0086030R
+//@author: A0086030R
 //Test size of vector returned when no events for today
 void UnitTest::testTodayEventNoEvent()
 {
@@ -1201,7 +1201,7 @@ void UnitTest::testTodayEventNoEvent()
     delete testScheduler;
 }
 
-//@LIU WEIYUAN A0086030R
+//@author: A0086030R
 //Test for number of outstanding events returned when no events for today
 void UnitTest::testTodayEventNoEvent2()
 {
@@ -1215,7 +1215,7 @@ void UnitTest::testTodayEventNoEvent2()
     delete testScheduler;
 }
 
-//@LIU WEIYUAN A0086030R
+//@author: A0086030R
 //Test for number of priority events returned when no events for today
 void UnitTest::testTodayEventNoEvent3()
 {
@@ -1233,7 +1233,7 @@ void UnitTest::testTodayEventNoEvent3()
 
 #pragma region Calender Unit Testing
 
-//@Riandy A0088392R
+//@author: A0088392R
 //testing to add an event
 void UnitTest::testAddItem()
 {
@@ -1244,7 +1244,7 @@ void UnitTest::testAddItem()
     QCOMPARE(testCalender.addItem(testTask),true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 //testing to delete item ID that exist
 void UnitTest::testDeleteItemByID()
 {
@@ -1264,7 +1264,7 @@ void UnitTest::testDeleteItemByID()
     QCOMPARE(testCalender.deleteItem(1),true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 //test for the event name that does not exist
 void UnitTest::testDeleteItemByEventName()
 {
@@ -1284,7 +1284,7 @@ void UnitTest::testDeleteItemByEventName()
     QCOMPARE(testCalender.deleteItem("Hello"),false);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 //test for the event name that exist
 void UnitTest::testDeleteItemByEventName2()
 {
@@ -1304,7 +1304,7 @@ void UnitTest::testDeleteItemByEventName2()
     QCOMPARE(testCalender.deleteItem("This is to test Delete by EventName"),true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 //check for non existence ID
 void UnitTest::testcheckID()
 {
@@ -1334,7 +1334,7 @@ void UnitTest::testcheckID()
     QCOMPARE(testCalender.checkID(11),false);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 //check for existence ID
 void UnitTest::testcheckID2()
 {
@@ -1365,7 +1365,7 @@ void UnitTest::testcheckID2()
     QCOMPARE(testCalender.checkID(1),true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 //this unit test try to delete all the database
 void UnitTest::testdeleteAll()
 {
@@ -1393,7 +1393,7 @@ void UnitTest::testdeleteAll()
     QCOMPARE(testCalender.displayDatabase().size()==0,true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 void UnitTest::testsearchByCat()
 {
     calender testCalender;
@@ -1406,7 +1406,7 @@ void UnitTest::testsearchByCat()
     QCOMPARE(testCalender.SearchByCat("MEME").size()==0,true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 void UnitTest::testsearchByCat2()
 {
     calender testCalender;
@@ -1421,7 +1421,7 @@ void UnitTest::testsearchByCat2()
     QCOMPARE(testCalender.SearchByCat("meeting").size()==1,true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 void UnitTest::testsearchByTask()
 {
     calender taskCalender;
@@ -1438,7 +1438,7 @@ void UnitTest::testsearchByTask()
     QCOMPARE(taskCalender.SearchByTask("test").size()==0,false);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 void UnitTest::testsearchByTask2()
 {
     calender taskCalender;
@@ -1456,7 +1456,7 @@ void UnitTest::testsearchByTask2()
     QCOMPARE(taskCalender.SearchByTask("test").size()==resultBefore+5,true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 void UnitTest::testsearchByDate()
 {
     calender taskCalender;
@@ -1484,7 +1484,7 @@ void UnitTest::testsearchByDate()
     QCOMPARE(taskCalender.SearchByDate("12 / 1 / 2012").size()==1,true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 void UnitTest::testconvertToDate()
 {
     calender taskCalender;
@@ -1498,7 +1498,7 @@ void UnitTest::testconvertToDate()
     QCOMPARE(taskCalender.convertToDate(date).compare("11 / 11 / 2012 - 20 : 10 : 0")==0,true);
 }
 
-//@Riandy A0088392R
+//@author: A0088392R
 void UnitTest::testconvertToDateWithoutTime()
 {
     calender taskCalender;

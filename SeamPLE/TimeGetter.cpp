@@ -1,6 +1,6 @@
 #include "TimeGetter.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 TimeGetter* TimeGetter:: _timeGetter = NULL;
 

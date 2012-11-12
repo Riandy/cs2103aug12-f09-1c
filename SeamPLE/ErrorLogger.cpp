@@ -1,6 +1,6 @@
 #include "ErrorLogger.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 //Static pointer containing address of the single instance
 ErrorLogger* ErrorLogger::_logger = NULL;
 

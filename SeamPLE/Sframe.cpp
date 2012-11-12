@@ -1,6 +1,6 @@
 #include "Sframe.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 Sframe::Sframe(QWidget *parent)
     : QFrame(parent)

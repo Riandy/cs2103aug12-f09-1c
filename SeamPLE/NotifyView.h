@@ -3,7 +3,7 @@
 
 #include <QSystemTrayIcon>
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 //NotifyView is a singleton class. To get an instance of this class, create a
 //pointer and call getInstance to get the address of the instance. Delete by

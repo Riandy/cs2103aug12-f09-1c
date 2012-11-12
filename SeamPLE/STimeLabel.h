@@ -5,7 +5,7 @@
 #include <QTimer>
 #include "TimeGetter.h"
 
-//@LIU WEIYUAN: A0086030R
+//@author: A0086030R
 
 //The following label ui component is implemented as a clock, which contains
 //the time parameters required to display to the user.
