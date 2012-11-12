@@ -24,7 +24,7 @@ private:
 
 
 public:
-    static bool shortcutCheck(string input);
+    bool shortcutCheck(string input);
 };
 
 #endif // QUICKCHECK_H
