@@ -99,58 +99,7 @@ void GuiControl::check(QString input)
     }
     else
     {
-        QVector <QString> output =
-                _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
-        bool invalidIntellisenseReturn = (output.size() < MINIMUM_SIZE);
-
-        if (invalidIntellisenseReturn)
-        {
-            output.clear();
-            output.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
-            _faulty->report(MESSAGE_INTELLISENSE_INVALID_RETURN.toStdString());
-            setInputColourFlag(NONE);
-        }
-        else
-        {
-            try
-            {
-                QCharRef flag = getInputColorFlag(output);
-                if (implementInputColorFlagFailure(flag))
-                {
-                    output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
-                }
-            }
-            catch (string& error)
-            {
-                _faulty->report(error);
-            }
-
-            bool needStandardView = (output[output.size()-MINIMUM_SIZE]
-                                     == (MESSAGE_GUI_DISPLAY));
-            if (needStandardView)
-            {
-                if (!interfaceIsStandardView())
-                {
-                    bool inputBarFocus = true;
-                    changeView(input,MESSAGE_EMPTY,inputBarFocus);
-                }
-                try
-                {
-                    //Start from position one as the feedback for the user is
-                    //at position 0. Amount to copy has a deduction of 3 as
-                    //the last position is the colour flag, the second last
-                    //position is the code flag, andalso of the feedback being
-                    //in the first position
-                    QVector <QString> results = output.mid(1,output.size()-3);
-                    _standardGui->instantiateTable(results);
-                }
-                catch (string& error)
-                {
-                    _faulty->report(error);
-                }
-            }
-        }
-        send(output[0]);
+        parse(input);
     }
 }
 
