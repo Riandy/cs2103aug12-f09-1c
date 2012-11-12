@@ -12,7 +12,6 @@ const string QuickCheck::FLOAT_COMMAND = "todo";
 //check if the input corresponds to the shortcut for the GUIs
 bool QuickCheck::shortcutCheck(string input)
 {
-    bool outcome;
     bool commandAppropriate =
             input == UNDO_COMMAND    ||
             input == REDO_COMMAND    ||
@@ -20,14 +19,5 @@ bool QuickCheck::shortcutCheck(string input)
             input == TODAY_COMMAND   ||
             input == FLOAT_COMMAND;
 
-    if (commandAppropriate)
-    {
-        outcome = true;
-    }
-    else
-    {
-        outcome = false;
-    }
-
-    return outcome;
+    return commandAppropriate;
 }
