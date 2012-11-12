@@ -162,12 +162,17 @@ bool calender::deleteItem(int taskID)
 //@John A0069517W
 bool calender::deleteAll()
 {
+    if (_storage.size() != 0)
+    {
     writeBackupFile();
     _storage.clear();
     saveHistory(_DELETEALL);
     lastCommandUndo = false;
     writeFile();
     return true;
+    }
+    else
+        return false;
 }
 
 //@Riandy A0088392R
@@ -369,6 +374,7 @@ vector<task> calender::displayDatabase()
 //The format in the txt file is fixed.
 vector<task> calender::loadFile(char* fileName)
 {
+
     vector<task> list;
 
     ifstream readFile(fileName);
@@ -444,6 +450,7 @@ vector<task> calender::loadFile(char* fileName)
         list.push_back(*newTask);
 
     }
+
     return list;
 }
 
@@ -475,7 +482,7 @@ bool calender::undoAction()
         }
         else if (lastCommand == _DELETEALL)
         {
-            this->undoDeleteAll();
+         this->undoDeleteAll();
         }
         else
             _faulty->report("Calender class: Unknown undo command");
@@ -904,6 +911,7 @@ void calender::undoAdd()
     _undoHistory.push(_ADDITION);
     int ID = getTaskID(_addHistory.top());
     _undoneAddTasks.push(_storage[ID]);
+    ASSERT(ID != -1, "Database error");
     _storage.erase(_storage.begin()+ID);
     _addHistory.pop();
 }
@@ -937,10 +945,11 @@ bool calender::undoEdit()
     else if (position == NOTFOUND)
         return false;
 }
+
 //@JOHN A0069517W
 void calender::undoDeleteAll()
 {
-    loadFile(BACKUP_FILENAME);
+    _storage = loadFile(BACKUP_FILENAME);
 
     remove(BACKUP_FILENAME);
 

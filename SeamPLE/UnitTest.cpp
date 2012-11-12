@@ -293,7 +293,7 @@ void UnitTest::testIntellisenseRedo()
 
 #pragma region Scheduler UnitTesting
 //@JOHN A0069517W
-void UnitTest::testSchedulerAdd() //@JOHN
+void UnitTest::testSchedulerAdd()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -310,7 +310,8 @@ void UnitTest::testSchedulerAdd() //@JOHN
     delete testTask;
 
 }
-void UnitTest::testSchedulerAdd2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerAdd2()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -326,7 +327,9 @@ void UnitTest::testSchedulerAdd2() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testSchedulerAdd3() //@JOHN
+//@JOHN A0069517W
+
+void UnitTest::testSchedulerAdd3()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -342,7 +345,8 @@ void UnitTest::testSchedulerAdd3() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testSchedulerAdd4() //@JOHN
+    //@JOHN A0069517W
+void UnitTest::testSchedulerAdd4()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -358,8 +362,8 @@ void UnitTest::testSchedulerAdd4() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testSchedulerAdd5() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerAdd5()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -375,7 +379,8 @@ void UnitTest::testSchedulerAdd5() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testSchedulerDelete() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerDelete()
 {    scheduler *testScheduler;
      testScheduler = scheduler::getInstance();
 
@@ -390,7 +395,8 @@ void UnitTest::testSchedulerDelete() //@JOHN
      delete testAction;
      delete testTask;
 }
-void UnitTest::testSchedulerDelete2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerDelete2()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -406,7 +412,8 @@ void UnitTest::testSchedulerDelete2() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testSchedulerDelete3() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerDelete3()
 {
      scheduler *testScheduler;
      testScheduler = scheduler::getInstance();
@@ -422,7 +429,8 @@ void UnitTest::testSchedulerDelete3() //@JOHN
      delete testAction;
      delete testTask;
 }
-void UnitTest::testSchedulerDelete3_2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerDelete3_2()
 {
      scheduler *testScheduler;
      testScheduler = scheduler::getInstance();
@@ -438,7 +446,8 @@ void UnitTest::testSchedulerDelete3_2() //@JOHN
      delete testAction;
      delete testTask;
 }
-void UnitTest::testSchedulerDelete4() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerDelete4()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -455,7 +464,8 @@ void UnitTest::testSchedulerDelete4() //@JOHN
     delete testTask;
 }
 
-void UnitTest::testSchedulerUnknownCommand() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerUnknownCommand()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -470,7 +480,8 @@ void UnitTest::testSchedulerUnknownCommand() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testSchedulerUnknownCommand2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerUnknownCommand2()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -485,7 +496,8 @@ void UnitTest::testSchedulerUnknownCommand2() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testSchedulerUnknownCommand3() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerUnknownCommand3()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -500,7 +512,8 @@ void UnitTest::testSchedulerUnknownCommand3() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testSchedulerUnknownCommand4() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testSchedulerUnknownCommand4()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -515,8 +528,8 @@ void UnitTest::testSchedulerUnknownCommand4() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testUndo() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -531,8 +544,8 @@ void UnitTest::testUndo() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testUndo2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo2()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -547,7 +560,8 @@ void UnitTest::testUndo2() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo3() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo3()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -562,6 +576,7 @@ void UnitTest::testUndo3() //@JOHN
     delete testAction;
     delete testTask;
 }
+//@JOHN A0069517W
 void UnitTest::testUndo4() //@JOHN
 {
     scheduler *testScheduler;
@@ -577,8 +592,8 @@ void UnitTest::testUndo4() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testRedo() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -593,7 +608,8 @@ void UnitTest::testRedo() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo2()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -608,7 +624,8 @@ void UnitTest::testRedo2() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo3() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo3()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -623,7 +640,8 @@ void UnitTest::testRedo3() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo4() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo4()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -638,7 +656,8 @@ void UnitTest::testRedo4() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo5() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo5()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -653,8 +672,8 @@ void UnitTest::testUndo5() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testRedo5() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo5()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -669,7 +688,8 @@ void UnitTest::testRedo5() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testEdit() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testEdit()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -684,8 +704,8 @@ void UnitTest::testEdit() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testEdit2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testEdit2()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -702,7 +722,8 @@ void UnitTest::testEdit2() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testEdit3() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testEdit3()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -719,7 +740,8 @@ void UnitTest::testEdit3() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testEdit4() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testEdit4()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -737,7 +759,8 @@ void UnitTest::testEdit4() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testEdit5() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testEdit5()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -755,7 +778,8 @@ void UnitTest::testEdit5() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo9() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo9()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -770,8 +794,8 @@ void UnitTest::testUndo9() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testUndo8() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo8()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -786,7 +810,8 @@ void UnitTest::testUndo8() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo7() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo7()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -801,7 +826,8 @@ void UnitTest::testUndo7() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo6() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo6()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -817,7 +843,8 @@ void UnitTest::testUndo6() //@JOHN
     delete testTask;
 }
 
-void UnitTest::testRedo7() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo7()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -832,7 +859,8 @@ void UnitTest::testRedo7() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo8() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo8()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -847,7 +875,8 @@ void UnitTest::testRedo8() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo6() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo6()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -862,7 +891,8 @@ void UnitTest::testRedo6() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo9() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo9()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -877,7 +907,8 @@ void UnitTest::testRedo9() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo10() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo10()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -892,8 +923,8 @@ void UnitTest::testUndo10() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testRedo10() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo10()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -908,7 +939,8 @@ void UnitTest::testRedo10() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo11() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo11()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -923,8 +955,8 @@ void UnitTest::testUndo11() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testUndo12() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo12()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -939,7 +971,8 @@ void UnitTest::testUndo12() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo13() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo13()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -954,7 +987,8 @@ void UnitTest::testUndo13() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo14() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo14()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -969,8 +1003,8 @@ void UnitTest::testUndo14() //@JOHN
     delete testAction;
     delete testTask;
 }
-
-void UnitTest::testRedo11() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo11()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -985,7 +1019,8 @@ void UnitTest::testRedo11() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo12() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo12()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1000,7 +1035,8 @@ void UnitTest::testRedo12() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo13() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo13()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1015,7 +1051,8 @@ void UnitTest::testRedo13() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testRedo14() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo14()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1030,7 +1067,8 @@ void UnitTest::testRedo14() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testUndo15() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testUndo15()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1046,7 +1084,8 @@ void UnitTest::testUndo15() //@JOHN
     delete testTask;
 }
 
-void UnitTest::testRedo15() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testRedo15()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1062,7 +1101,8 @@ void UnitTest::testRedo15() //@JOHN
     delete testTask;
 }
 
-void UnitTest::testMark() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testMark()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1078,7 +1118,8 @@ void UnitTest::testMark() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testMark2() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testMark2()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1094,7 +1135,8 @@ void UnitTest::testMark2() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testMark3() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testMark3()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1110,7 +1152,8 @@ void UnitTest::testMark3() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testMark4() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testMark4()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1126,7 +1169,8 @@ void UnitTest::testMark4() //@JOHN
     delete testAction;
     delete testTask;
 }
-void UnitTest::testMark5() //@JOHN
+//@JOHN A0069517W
+void UnitTest::testMark5()
 {
     scheduler *testScheduler;
     testScheduler = scheduler::getInstance();
@@ -1464,5 +1508,25 @@ void UnitTest::testconvertToDateWithoutTime()
     date.tm_year=2012;
     QCOMPARE(taskCalender.convertToDateNoTime(date).compare("11 / 11 / 2012")==0,true);
 }
+
+//@JOHN A0069517W
+void UnitTest::testDeleteAll2()
+{
+    calender testCalender;
+    bool test = testCalender.deleteAll();
+    QCOMPARE(test, true);
+}
+
+//@JOHN A0069517W
+void UnitTest::testDeleteAll3()
+{
+    calender testCalender;
+    bool test = testCalender.deleteAll();
+    QCOMPARE(test, false);
+}
+
+
+
+
 
 #pragma endregion Calender Unit Testing
