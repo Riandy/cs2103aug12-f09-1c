@@ -102,9 +102,9 @@ void GuiControl::check(QString input)
     {
         QVector <QString> output =
                 _inputProcessor->run(TO_INTELLISENSE,input.toStdString());
-        bool invalidSchedulerReturn = (output.size() < MINIMUM_SIZE);
+        bool invalidIntellisenseReturn = (output.size() < MINIMUM_SIZE);
 
-        if (invalidSchedulerReturn)
+        if (invalidIntellisenseReturn)
         {
             output.clear();
             output.push_front(MESSAGE_INTELLISENSE_INVALID_RETURN);
@@ -113,16 +113,9 @@ void GuiControl::check(QString input)
         }
         else
         {
-            //Minus 2 because last string holds the colour flag, and the
-            //second last flag is the code for parser to request Gui to display
-            //the contents in a table
-            bool needStandardView =
-                    (output[output.size()-MINIMUM_SIZE]
-                     == (MESSAGE_GUI_DISPLAY));
-
             try
             {
-                QCharRef flag = ((output[output.size()-1])[0]);
+                QCharRef flag = getInputColorFlag(output);
                 if (implementInputColorFlagFailure(flag))
                 {
                     output.push_front(MESSAGE_INVALID_COLOUR_FLAG_RETURN);
@@ -133,6 +126,8 @@ void GuiControl::check(QString input)
                 _faulty->report(error);
             }
 
+            bool needStandardView = (output[output.size()-MINIMUM_SIZE]
+                                     == (MESSAGE_GUI_DISPLAY));
             if (needStandardView)
             {
                 if (!interfaceIsStandardView())
@@ -164,7 +159,6 @@ void GuiControl::check(QString input)
 //and relays this result to the Gui for display purposes
 void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
 {
-    //Code to be implemented here to be sent into  scheduler classes
     bool emptyInput = (input.size() == 0);
 
     if (emptyInput)
@@ -180,23 +174,19 @@ void GuiControl::passScheduler(QString input, bool inputBarHasFocus)
         if (_inputProcessor->requirementsMet())
         {
             int capacity = output.size();
-            bool needStandardView =
-                    (output[output.size()-1] == MESSAGE_GUI_DISPLAY) ||
-                    (output[output.size()-1] == MESSAGE_ONLY_STAN_GUI_DISPLAY
-                     && interfaceIsStandardView());
-
+            bool needStandardView = checkStandardViewRequired(output);
             setInputColourFlag(NONE);
 
             if (needStandardView)
             {
-                if (!interfaceIsStandardView())
-                {
-                    changeView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
-                }
-                else
+                if (interfaceIsStandardView())
                 {
                     sendWithInputEditAndFocus(inputBarHasFocus,MESSAGE_EMPTY,
                                               output[0]);
+                }
+                else
+                {
+                    changeView(MESSAGE_EMPTY,output[0], inputBarHasFocus);
                 }
                 try
                 {
@@ -440,6 +430,20 @@ void GuiControl:: setTimedSignals()
             this, SLOT(getTodaysEvents()));
 }
 
+//Function returns a bool value if the scheduler results needs to
+//be displayed fully in standardview or not
+bool GuiControl::checkStandardViewRequired(QVector <QString> output)
+{
+    return (output[output.size()-1] == MESSAGE_GUI_DISPLAY) ||
+            (output[output.size()-1] == MESSAGE_ONLY_STAN_GUI_DISPLAY
+             && interfaceIsStandardView());
+}
 
+//Function returns the input color flag from the QVector of
+//QStrings returned from seample
+QCharRef GuiControl::getInputColorFlag(QVector <QString> output)
+{
+    return ((output[output.size()-1])[0]);
+}
 
 
